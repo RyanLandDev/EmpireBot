@@ -7,10 +7,10 @@ import java.util.HashMap;
 
 public class CommandHandler {
 
-    private HashMap<String, Command> COMMANDS = new HashMap<>();
-    private HashMap<String, Command> ALIASES = new HashMap<>();
+    private static HashMap<String, Command> COMMANDS = new HashMap<>();
+    private static HashMap<String, Command> ALIASES = new HashMap<>();
 
-    public void register(Command... commands) {
+    public static void register(Command... commands) {
         for (Command command : commands) {
             COMMANDS.put(command.getName(), command);
             ALIASES.put(command.getName(), command);
