@@ -45,7 +45,7 @@ public enum Permission {
     public static final HashMap<String, Permission> PERMISSIONS = new HashMap<>();
 
     private void putPermission() {
-        PERMISSIONS.put(this.getId(), this);
+        PERMISSIONS.put(getId(), this);
     }
 
     public abstract boolean checkPermission(Member member);
