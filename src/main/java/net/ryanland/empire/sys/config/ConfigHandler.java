@@ -12,8 +12,7 @@ public class ConfigHandler {
     private Config CONFIG;
 
     public static Config loadConfig() throws IOException {
-        String content = ExternalFiles.CONFIG.getContent();
-        JsonObject rawJson = JsonParser.parseString(content).getAsJsonObject();
+        JsonObject rawJson = ExternalFiles.CONFIG.parseJson();
         return new Config(rawJson);
     }
 
