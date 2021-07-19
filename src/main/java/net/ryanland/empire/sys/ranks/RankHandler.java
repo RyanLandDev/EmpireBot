@@ -3,12 +3,9 @@ package net.ryanland.empire.sys.ranks;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.sun.jdi.InvalidTypeException;
 import net.dv8tion.jda.api.entities.User;
-import net.ryanland.empire.bot.command.permission.Permission;
-import net.ryanland.empire.bot.command.permission.PermissionHandler;
-import net.ryanland.empire.sys.config.Config;
+import net.ryanland.empire.bot.command.permissions.Permission;
+import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.sys.externalfiles.ExternalFiles;
 
 import java.io.IOException;

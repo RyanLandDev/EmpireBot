@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command;
 
+import net.ryanland.empire.bot.command.executor.CommandExecutor;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 
@@ -7,8 +8,9 @@ import java.util.HashMap;
 
 public class CommandHandler {
 
-    private static HashMap<String, Command> COMMANDS = new HashMap<>();
-    private static HashMap<String, Command> ALIASES = new HashMap<>();
+    private static final HashMap<String, Command> COMMANDS = new HashMap<>();
+    private static final HashMap<String, Command> ALIASES = new HashMap<>();
+    private static final CommandExecutor COMMAND_EXECUTOR = new CommandExecutor();
 
     public static void register(Command... commands) {
         for (Command command : commands) {
@@ -21,12 +23,11 @@ public class CommandHandler {
         }
     }
 
-    public Command getCommand(String alias) {
+    public static Command getCommand(String alias) {
         return ALIASES.get(alias);
     }
 
     public static void run(CommandEvent event) {
-        //TODO ...
+        COMMAND_EXECUTOR.run(event);
     }
-
 }

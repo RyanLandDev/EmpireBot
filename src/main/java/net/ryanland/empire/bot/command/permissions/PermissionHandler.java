@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.permission;
+package net.ryanland.empire.bot.command.permissions;
 
 import net.dv8tion.jda.api.entities.Member;
 
@@ -29,7 +29,7 @@ public class PermissionHandler {
             }
         }
 
-        return null;
+        throw new IllegalStateException();
     }
 
     public static void removePermissionCache(Member member) {

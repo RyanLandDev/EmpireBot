@@ -1,10 +1,12 @@
 package net.ryanland.empire.bot.command.impl.info;
 
 import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.bot.command.permission.Permission;
+import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 public class PingCommand extends Command {
+
     @Override
     public String getName() {
         return "ping";
@@ -17,6 +19,10 @@ public class PingCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
-        event.reply(":ping_pong: Pong! Ping: " + event.getJDA().getRestPing().complete() + "ms.");
+        event.reply(
+                new PresetBuilder(
+                        "Ping: " + event.getJDA().getRestPing().complete() + "ms."
+                )
+        );
     }
 }

@@ -1,6 +1,5 @@
-package net.ryanland.empire.bot.command.permission;
+package net.ryanland.empire.bot.command.permissions;
 
-import club.minnced.discord.webhook.IOUtil;
 import net.dv8tion.jda.api.entities.Member;
 import net.ryanland.empire.sys.ranks.RankHandler;
 
@@ -52,7 +51,7 @@ public enum Permission {
     public abstract boolean checkPermission(Member member);
 
     public boolean hasPermission(Member member) {
-        return false;//TODO
+        return PermissionHandler.getHighestPermission(member).getLevel() >= getLevel();
     }
 
     public String getId() {
