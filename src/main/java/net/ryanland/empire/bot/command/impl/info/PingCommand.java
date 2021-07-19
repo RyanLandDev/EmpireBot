@@ -12,7 +12,7 @@ public class PingCommand extends Command {
 
     @Override
     public Permission getPermission() {
-        return null; //TODO
+        return Permission.USER;
     }
 
     @Override

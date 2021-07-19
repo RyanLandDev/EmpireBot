@@ -13,21 +13,14 @@ public enum Permission {
             return true;
         }
     },
-    PROFILE("profile") {
-        @Override
-        public boolean checkPermission(Member member) {
-            //TODO
-            return false;
-        }
-    },
-
+    // -------------------------------------------------------------------
     SERVER_ADMIN("serverAdmin") {
         @Override
         public boolean checkPermission(Member member) {
             return member.hasPermission(net.dv8tion.jda.api.Permission.ADMINISTRATOR);
         }
     },
-
+    // -------------------------------------------------------------------
     DEVELOPER("developer") {
         @Override
         public boolean checkPermission(Member member) {

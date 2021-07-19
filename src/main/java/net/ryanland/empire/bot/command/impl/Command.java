@@ -11,6 +11,10 @@ public abstract class Command {
         return new String[0];
     }
 
+    public boolean requiresProfile() {
+        return false;
+    }
+
     public abstract Permission getPermission();
 
     public abstract void run(CommandEvent event);
