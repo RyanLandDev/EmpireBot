@@ -17,6 +17,6 @@ public class PingCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
-        //TODO
+        event.reply(":ping_pong: Pong! Ping: " + event.getJDA().getRestPing().complete() + "ms.");
     }
 }
