@@ -5,13 +5,14 @@ public interface ExternalFiles {
     ExternalFile CONFIG = new ExternalFileBuilder()
             .setName("config")
             .setFileType(ExternalFileType.JSON)
-            .setDefaultContent("{\n" +
-                    "  \"token\": \"\",\n" +
-                    "  \"client_id\": \"\",\n" +
-                    "  \"prefix\": \"\",\n" +
-                    "\n" +
-                    "  \"database_uri\": \"\"\n" +
-                    "}")
+            .setDefaultContent("""
+                    {
+                      "token": "",
+                      "client_id": "",
+                      "prefix": "",
+
+                      "database_uri": ""
+                    }""")
             .buildFile();
 
     ExternalFile RANKS = new ExternalFileBuilder()

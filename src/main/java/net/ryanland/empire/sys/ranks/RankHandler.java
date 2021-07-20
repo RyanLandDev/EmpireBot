@@ -39,6 +39,8 @@ public class RankHandler {
     }
 
     public static boolean hasRank(User user, Permission permission) {
-        return RANKED_USERS.get(permission).contains(user.getId());
+        List<String> allowedUsers = RANKED_USERS.get(permission);
+        if (allowedUsers == null) return false;
+        return allowedUsers.contains(user.getId());
     }
 }

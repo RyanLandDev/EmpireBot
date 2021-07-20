@@ -39,13 +39,11 @@ public enum Permission {
     Permission(String id) {
         this.id = id;
         this.level = ordinal();
-        this.putPermission();
+        putPermission();
     }
 
-    public static final HashMap<String, Permission> PERMISSIONS = new HashMap<>();
-
     private void putPermission() {
-        PERMISSIONS.put(this.getId(), this);
+        PermissionHandler.PERMISSIONS.put(getId(), this);
     }
 
     public abstract boolean checkPermission(Member member);

@@ -16,13 +16,13 @@ public class ExternalFile extends File {
     }
 
     public String getContent() throws IOException {
-        return new String(Files.readAllBytes(this.toPath()));
+        return new String(Files.readAllBytes(toPath()));
     }
 
     public void write(byte[] content) throws IOException {
-        this.delete();
-        this.createNewFile();
-        Files.write(this.toPath(), content, StandardOpenOption.WRITE);
+        delete();
+        createNewFile();
+        Files.write(toPath(), content, StandardOpenOption.WRITE);
     }
 
     public void write(String content) throws IOException {

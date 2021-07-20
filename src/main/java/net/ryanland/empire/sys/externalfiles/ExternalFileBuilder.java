@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.externalfiles;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class ExternalFileBuilder {
@@ -48,8 +49,8 @@ public class ExternalFileBuilder {
 
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException err) {
+            err.printStackTrace();
         }
         return file;
     }
