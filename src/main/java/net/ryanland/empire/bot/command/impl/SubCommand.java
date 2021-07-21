@@ -6,9 +6,4 @@ public abstract class SubCommand extends Command {
     public String getDescription() {
         throw new IllegalStateException();
     }
-
-    @Override
-    public boolean userExecutable() {
-        return false;
-    }
 }

@@ -18,7 +18,7 @@ public class CommandExecutor {
         String[] args = event.getRawArgs();
 
         Command command = CommandHandler.getCommand(args[0]);
-        if (command == null || !command.userExecutable()) return;
+        if (command == null) return;
         event.setCommand(command);
 
         execute(event, args);

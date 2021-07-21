@@ -23,8 +23,4 @@ public abstract class Command {
     public abstract ArgumentSet getArguments();
 
     public abstract void run(CommandEvent event);
-
-    public boolean userExecutable() {
-        return true;
-    }
 }
