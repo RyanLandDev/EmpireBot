@@ -34,6 +34,12 @@ public class PresetBuilder {
         this.title = title;
     }
 
+    public PresetBuilder(PresetType type) {
+        this.color = type.getColor();
+        this.description = "";
+        this.title = type.getDefaultTitle();
+    }
+
     public PresetBuilder(PresetType type, String description) {
         this.color = type.getColor();
         this.description = description;

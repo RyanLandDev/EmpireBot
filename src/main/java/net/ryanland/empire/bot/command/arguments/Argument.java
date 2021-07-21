@@ -1,27 +1,15 @@
 package net.ryanland.empire.bot.command.arguments;
 
-import net.ryanland.empire.bot.command.arguments.types.ArgumentType;
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.empire.bot.events.CommandEvent;
 
-public class Argument<T extends ArgumentType> {
+import java.util.Queue;
+
+public abstract class Argument<T> {
 
     private String name;
     private String id;
-    private boolean optional;
-
-    public Argument() {
-    }
-
-    public Argument(String name, String id) {
-        this.name = name;
-        this.id = id;
-        this.optional = false;
-    }
-
-    public Argument(String name, String id, boolean optional) {
-        this.name = name;
-        this.id = id;
-        this.optional = optional;
-    }
+    private boolean optional = false;
 
     public String getName() {
         return name;
@@ -49,4 +37,6 @@ public class Argument<T extends ArgumentType> {
         this.optional = true;
         return this;
     }
+
+    public abstract T parse(Queue<String> arguments, CommandEvent event) throws ArgumentException;
 }

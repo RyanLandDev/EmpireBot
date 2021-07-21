@@ -5,12 +5,14 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.ryanland.empire.Empire;
+import net.ryanland.empire.bot.command.arguments.parsing.ParsedArgumentMap;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 public class CommandEvent extends GuildMessageReceivedEvent {
 
     private Command command;
+    private ParsedArgumentMap parsedArgs;
 
     public CommandEvent(Message message) {
         super(message.getJDA(), 0, message);
@@ -22,6 +24,19 @@ public class CommandEvent extends GuildMessageReceivedEvent {
 
     public void setCommand(Command command) {
         this.command = command;
+    }
+
+    public ParsedArgumentMap getParsedArgs() {
+        return parsedArgs;
+    }
+
+    public void setParsedArgs(ParsedArgumentMap parsedArgs) {
+        this.parsedArgs = parsedArgs;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T getArgument(String id) {
+        return (T) parsedArgs.get(id);
     }
 
     private void sendReply(Message message) {

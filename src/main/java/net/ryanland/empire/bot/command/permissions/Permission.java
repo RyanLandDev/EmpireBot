@@ -3,8 +3,6 @@ package net.ryanland.empire.bot.command.permissions;
 import net.dv8tion.jda.api.entities.Member;
 import net.ryanland.empire.sys.ranks.RankHandler;
 
-import java.util.HashMap;
-
 public enum Permission {
     USER("user"){
         @Override

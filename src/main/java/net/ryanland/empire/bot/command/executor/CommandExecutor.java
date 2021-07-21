@@ -2,6 +2,7 @@ package net.ryanland.empire.bot.command.executor;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.ryanland.empire.bot.command.CommandHandler;
+import net.ryanland.empire.bot.command.arguments.parsing.ArgumentParser;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheck;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheckException;
 import net.ryanland.empire.bot.command.executor.checks.PermissionCheck;
@@ -34,7 +35,11 @@ public class CommandExecutor {
                 }
             }
 
-            command.run(event);
+            ArgumentParser argumentParser = new ArgumentParser(event, args);
+
+            if (argumentParser.parseArguments()) {
+                command.run(event);
+            }
 
         } catch (CommandCheckException ignored) {
         }

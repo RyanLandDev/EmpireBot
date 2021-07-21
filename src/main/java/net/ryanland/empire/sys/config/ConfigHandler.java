@@ -1,11 +1,9 @@
 package net.ryanland.empire.sys.config;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import net.ryanland.empire.sys.externalfiles.ExternalFiles;
 
 import java.io.IOException;
-import java.nio.file.Files;
 
 public class ConfigHandler {
 

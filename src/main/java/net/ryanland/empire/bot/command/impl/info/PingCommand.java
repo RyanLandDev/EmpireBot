@@ -1,8 +1,8 @@
 package net.ryanland.empire.bot.command.impl.info;
 
-import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.IntegerArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.DoubleArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.IntegerArgument;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
@@ -27,14 +27,11 @@ public class PingCommand extends Command {
 
     @Override
     public ArgumentSet getArguments() {
-        return new ArgumentSet().addArguments(
-
-        );
+        return new ArgumentSet();
     }
 
     @Override
     public void run(CommandEvent event) {
-        getArguments();
         event.reply(
                 new PresetBuilder(
                         "Ping: " + event.getJDA().getRestPing().complete() + "ms."
