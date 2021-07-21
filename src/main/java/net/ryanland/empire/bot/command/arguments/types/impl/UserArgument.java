@@ -6,6 +6,7 @@ import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
+import net.ryanland.empire.bot.events.CommandEvent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +16,7 @@ public class UserArgument extends SingleArgument<User> {
     private final Pattern pattern = Pattern.compile("<@!?(\\d+)>");
 
     @Override
-    public User parsed(String argument) throws ArgumentException {
+    public User parsed(String argument, CommandEvent event) throws ArgumentException {
         try {
             User user = Empire.getJda().retrieveUserById(argument).complete();
             if (user != null) return user;

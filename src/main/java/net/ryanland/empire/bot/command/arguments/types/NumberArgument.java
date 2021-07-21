@@ -11,11 +11,11 @@ public abstract class NumberArgument<T> extends SingleArgument<T> {
     @Override
     public T parse(Queue<String> arguments, CommandEvent event) throws ArgumentException {
         try {
-            return parsed(arguments.remove());
+            return parsed(arguments.remove(), event);
         } catch (NumberFormatException e) {
             throw new MalformedArgumentException("Invalid number provided.");
         }
     }
 
-    public abstract T parsed(String argument) throws ArgumentException;
+    public abstract T parsed(String argument, CommandEvent event) throws ArgumentException;
 }

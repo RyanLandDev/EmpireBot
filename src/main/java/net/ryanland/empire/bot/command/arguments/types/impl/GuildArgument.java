@@ -7,6 +7,7 @@ import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
+import net.ryanland.empire.bot.events.CommandEvent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
 public class GuildArgument extends SingleArgument<Guild> {
 
     @Override
-    public Guild parsed(String argument) throws ArgumentException {
+    public Guild parsed(String argument, CommandEvent event) throws ArgumentException {
         try {
             Guild guild = Empire.getJda().getGuildById(argument);
             if (guild != null) return guild;

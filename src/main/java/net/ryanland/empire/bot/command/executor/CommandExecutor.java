@@ -16,8 +16,6 @@ public class CommandExecutor {
     };
 
     public void run(CommandEvent event) {
-        //TODO ... argument parsing, etc
-
         Message message = event.getMessage();
         String messageContent = message.getContentRaw();
 
@@ -25,6 +23,7 @@ public class CommandExecutor {
         String commandRequest = args[0].substring(event.getPrefix().length());
 
         Command command = CommandHandler.getCommand(commandRequest);
+        if (command == null || !command.userExecutable()) return;
         event.setCommand(command);
 
         try {

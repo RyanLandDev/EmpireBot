@@ -24,4 +24,7 @@ public abstract class Command {
 
     public abstract void run(CommandEvent event);
 
+    public boolean userExecutable() {
+        return true;
+    }
 }
