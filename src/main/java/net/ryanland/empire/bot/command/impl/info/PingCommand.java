@@ -1,7 +1,6 @@
 package net.ryanland.empire.bot.command.impl.info;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.impl.DoubleArgument;
 import net.ryanland.empire.bot.command.arguments.types.impl.IntegerArgument;
 import net.ryanland.empire.bot.command.arguments.types.impl.QuoteStringArgument;
 import net.ryanland.empire.bot.command.impl.Command;

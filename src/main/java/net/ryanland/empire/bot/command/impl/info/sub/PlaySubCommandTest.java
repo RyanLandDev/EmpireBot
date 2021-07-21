@@ -1,16 +1,17 @@
 package net.ryanland.empire.bot.command.impl.info.sub;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.arguments.types.impl.IntegerArgument;
 import net.ryanland.empire.bot.command.arguments.types.impl.StringArgument;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 
-public class EditSubCommandTest extends SubCommand {
+public class PlaySubCommandTest extends SubCommand {
 
     @Override
     public String getName() {
-        return "edit";
+        return "play";
     }
 
     @Override
@@ -21,15 +22,15 @@ public class EditSubCommandTest extends SubCommand {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-            new StringArgument()
-                .name("test")
+            new IntegerArgument()
+                .name("test2")
                 .id("tid")
         );
     }
 
     @Override
     public void run(CommandEvent event) {
-        String arg = event.getArgument("tid");
-        event.reply(arg);
+        Integer arg = event.getArgument("tid");
+        event.reply(arg.toString());
     }
 }

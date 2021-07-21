@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.command.arguments.types.impl;
 
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.types.NumberArgument;
 import net.ryanland.empire.bot.events.CommandEvent;
 

@@ -30,4 +30,8 @@ public class CommandHandler {
     public static void run(CommandEvent event) {
         COMMAND_EXECUTOR.run(event);
     }
+
+    public static void execute(CommandEvent event, String[] args) {
+        COMMAND_EXECUTOR.execute(event, args);
+    }
 }

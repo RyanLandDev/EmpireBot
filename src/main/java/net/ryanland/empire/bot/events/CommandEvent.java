@@ -9,6 +9,10 @@ import net.ryanland.empire.bot.command.arguments.parsing.ParsedArgumentMap;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CommandEvent extends GuildMessageReceivedEvent {
 
     private Command command;
@@ -74,5 +78,15 @@ public class CommandEvent extends GuildMessageReceivedEvent {
     public String getPrefix() {
         //TODO for custom server prefixes
         return Empire.getConfig().getPrefix();
+    }
+
+    public String[] getRawArgs() {
+        String[] args = getMessage().getContentRaw().split("\\s+");
+        args[0] = args[0].substring(getPrefix().length());
+        return args;
+    }
+
+    public List<String> getRawArgsAsList() {
+        return new ArrayList<>(Arrays.asList(getRawArgs()));
     }
 }

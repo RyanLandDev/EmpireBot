@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.command.executor;
 
-import net.dv8tion.jda.api.entities.Message;
 import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.arguments.parsing.ArgumentParser;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheck;
@@ -16,15 +15,17 @@ public class CommandExecutor {
     };
 
     public void run(CommandEvent event) {
-        Message message = event.getMessage();
-        String messageContent = message.getContentRaw();
+        String[] args = event.getRawArgs();
 
-        String[] args = messageContent.split("\\s+");
-        String commandRequest = args[0].substring(event.getPrefix().length());
-
-        Command command = CommandHandler.getCommand(commandRequest);
+        Command command = CommandHandler.getCommand(args[0]);
         if (command == null || !command.userExecutable()) return;
         event.setCommand(command);
+
+        execute(event, args);
+    }
+
+    public void execute(CommandEvent event, String[] args) {
+        Command command = event.getCommand();
 
         try {
             for (CommandCheck check : checks) {
