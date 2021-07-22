@@ -20,7 +20,7 @@ public class HelpMaker {
         elements.add(event.getPrefix() + rawArgs[0]);
 
         if (command instanceof SubCommand) {
-            elements.add(event.getRawArgs()[1]);
+            elements.add(rawArgs[1]);
         }
 
         ArgumentSet arguments = command.getArguments();
