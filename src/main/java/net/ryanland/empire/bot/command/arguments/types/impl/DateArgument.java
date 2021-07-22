@@ -1,0 +1,32 @@
+package net.ryanland.empire.bot.command.arguments.types.impl;
+
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
+import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
+import net.ryanland.empire.bot.events.CommandEvent;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateArgument extends SingleArgument<Date> {
+
+    public final SimpleDateFormat format;
+
+    public DateArgument() {
+        this.format = new SimpleDateFormat("dd/MM/yyyy");
+    }
+
+    public DateArgument(String format) {
+        this.format = new SimpleDateFormat(format);
+    }
+
+    @Override
+    public Date parsed(String argument, CommandEvent event) throws ArgumentException {
+        try {
+            return format.parse(argument);
+        } catch (ParseException e) {
+            throw new MalformedArgumentException("Invalid date provided. Format: " + format.toPattern() + ".");
+        }
+    }
+}
