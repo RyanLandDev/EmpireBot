@@ -20,4 +20,12 @@ public interface ExternalFiles {
             .setFileType(ExternalFileType.JSON)
             .buildFile();
 
+    ExternalFile WEBHOOKS = new ExternalFileBuilder()
+            .setName("webhooks")
+            .setFileType(ExternalFileType.JSON)
+            .setDefaultContent("""
+                    {
+                        "guild_traffic": ""
+                    }""")
+            .buildFile();
 }

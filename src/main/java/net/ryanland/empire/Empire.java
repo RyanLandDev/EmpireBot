@@ -13,8 +13,10 @@ import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
 import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;
+import net.ryanland.empire.bot.events.logs.GuildTraffic;
 import net.ryanland.empire.sys.config.Config;
 import net.ryanland.empire.sys.config.ConfigHandler;
+import net.ryanland.empire.sys.webhooks.WebhookHandler;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -31,7 +33,10 @@ public class Empire {
         initialize(config);
     }
 
-    private static void initialize(Config config) throws LoginException {
+    private static void initialize(Config config) throws IOException, LoginException {
+        // Load configs
+        WebhookHandler.loadWebhooks();
+
         // Register commands
         CommandHandler.register(
                 // Information
@@ -46,8 +51,14 @@ public class Empire {
                 .setActivity(Activity.watching("for " + config.getPrefix() + "help"))
                 .setGatewayEncoding(GatewayEncoding.ETF)
                 .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
-                .addEventListeners(new MessageEvent(), new ButtonEvent());
+                .addEventListeners(
+        // Register events
+                    new MessageEvent(),
+                    new ButtonEvent(),
+                    new GuildTraffic()
+                );
 
+        // Build bot
         jda = builder.build();
     }
 
