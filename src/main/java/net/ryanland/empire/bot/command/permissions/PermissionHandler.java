@@ -12,6 +12,12 @@ public class PermissionHandler {
     public static final HashMap<String, Permission> PERMISSIONS = new HashMap<>();
     private static final HashMap<Member, Permission> MEMBER_PERMISSIONS = new HashMap<>();
 
+    public static void loadPermissions() {
+        for (Permission permission : Permission.values()) {
+            PermissionHandler.PERMISSIONS.put(permission.getId(), permission);
+        }
+    }
+
     public static Permission getPermission(String id) {
         return PERMISSIONS.get(id);
     }

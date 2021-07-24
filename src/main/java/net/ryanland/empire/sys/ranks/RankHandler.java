@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 
 public class RankHandler {
 
-    private static final HashMap<Permission, List<String>> RANKED_USERS = new HashMap<>();
+    private static final HashMap<Long, Permission> USER_RANKS = new HashMap<>();
 
     public static void loadRanks() throws IOException {
         JsonObject json = ExternalFiles.RANKS.parseJson();
@@ -26,21 +26,16 @@ public class RankHandler {
             if (permission == null) throw new NoSuchElementException();
 
             JsonArray array = json.getAsJsonArray(key);
-            List<String> users = new ArrayList<>();
             for (JsonElement element : array) {
-                users.add(element.getAsString());
+                USER_RANKS.put(element.getAsLong(), permission);
             }
-            RANKED_USERS.put(permission, users);
         }
     }
 
-    public List<String> getRankUsers(Permission permission) {
-        return RANKED_USERS.get(permission);
-    }
-
     public static boolean hasRank(User user, Permission permission) {
-        List<String> allowedUsers = RANKED_USERS.get(permission);
-        if (allowedUsers == null) return false;
-        return allowedUsers.contains(user.getId());
+        Permission perm = USER_RANKS.get(user.getIdLong());
+        if (perm == null) return false;
+
+        return perm.getLevel() >= permission.getLevel();
     }
 }

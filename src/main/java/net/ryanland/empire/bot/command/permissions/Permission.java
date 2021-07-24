@@ -45,11 +45,6 @@ public enum Permission {
         this.id = id;
         this.name = name;
         this.level = ordinal();
-        putPermission();
-    }
-
-    private void putPermission() {
-        PermissionHandler.PERMISSIONS.put(getId(), this);
     }
 
     public abstract boolean checkPermission(Member member);
