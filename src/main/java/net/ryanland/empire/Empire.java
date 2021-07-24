@@ -22,6 +22,7 @@ import net.ryanland.empire.bot.events.logs.GuildTraffic;
 import net.ryanland.empire.sys.config.Config;
 import net.ryanland.empire.sys.config.ConfigHandler;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
+import net.ryanland.empire.sys.database.MongoDB;
 import net.ryanland.empire.sys.webhooks.WebhookHandler;
 
 import javax.security.auth.login.LoginException;
@@ -40,7 +41,8 @@ public class Empire {
     }
 
     private static void initialize(Config config) throws IOException, LoginException {
-        // Load configs
+        // Initialize
+        MongoDB.initialize();
         PermissionHandler.loadPermissions();
         WebhookHandler.loadWebhooks();
         RankHandler.loadRanks();
@@ -63,6 +65,7 @@ public class Empire {
                 .setStatus(OnlineStatus.ONLINE)
                 .setActivity(Activity.watching("for " + config.getPrefix() + "help"))
                 .setGatewayEncoding(GatewayEncoding.ETF)
+                .setActivity(Activity.watching("empires | ;help"))
                 .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
                 .addEventListeners(
         // Register events

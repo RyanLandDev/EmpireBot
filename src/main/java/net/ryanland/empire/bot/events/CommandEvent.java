@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.parsing.ParsedArgumentMap;
 import net.ryanland.empire.bot.command.impl.Command;
+import net.ryanland.empire.sys.database.documents.GuildDocument;
+import net.ryanland.empire.sys.database.MongoDB;
+import net.ryanland.empire.sys.database.documents.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.ArrayList;
@@ -93,5 +96,13 @@ public class CommandEvent extends GuildMessageReceivedEvent {
 
     public User getUser() {
         return getAuthor();
+    }
+
+    public UserDocument getUserDocument() {
+        return MongoDB.getUserDocument(getUser());
+    }
+
+    public GuildDocument getGuildDocument() {
+        return MongoDB.getGuildDocument(getGuild());
     }
 }

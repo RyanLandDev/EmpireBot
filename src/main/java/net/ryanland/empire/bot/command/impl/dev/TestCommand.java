@@ -14,7 +14,7 @@ public class TestCommand extends Command {
     public CommandData getData() {
         return new CommandData()
                 .name("test")
-                .description("Dev command to test stuff")
+                .description("Developer command used for testing stuff.")
                 .permission(Permission.DEVELOPER)
                 .category(Category.DEVELOPER);
     }
@@ -27,7 +27,9 @@ public class TestCommand extends Command {
     @Override
     public void run(CommandEvent event) {
 
-
+        event.getGuildDocument()
+                .setPrefix("ee")
+                .update();
 
 
 
