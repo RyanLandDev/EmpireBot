@@ -14,6 +14,10 @@ public abstract class Command {
         return getData().getName();
     }
 
+    public String getUppercasedName() {
+        return getName().substring(0, 1).toUpperCase() + getName().substring(1);
+    }
+
     public String[] getAliases() {
         return getData().getAliases();
     }

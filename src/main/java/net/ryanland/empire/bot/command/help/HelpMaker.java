@@ -1,11 +1,13 @@
 package net.ryanland.empire.bot.command.help;
 
+import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.impl.SubCommandHolder;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +37,12 @@ public class HelpMaker {
 
         for (Argument<?> argument : arguments) {
             String usage = argument.getName();
-            if (argument.isOptional()) usage = "[" + usage + "]";
-            else usage = "<" + usage + ">";
+            if (argument.isOptional()) usage = String.format("[%s]", usage);
+            else usage = String.format("<%s>", usage);
 
             // highlight check
             if (highlighted != null && highlighted.getId().equals(argument.getId())) {
-                usage = "**" + usage + "**";
+                usage = String.format("**%s**", usage);
             }
 
             elements.add(usage);
@@ -63,6 +65,18 @@ public class HelpMaker {
 
     public static String formattedUsage(CommandEvent event) {
         return formattedUsage(event, null);
+    }
+
+    public static String formattedAliases(String[] aliases) {
+        return "`" + String.join("` `", aliases) + "`";
+    }
+
+    public static String formattedAliases(Command command) {
+        return formattedAliases(command.getAliases());
+    }
+
+    public static String formattedAliases(CommandEvent event) {
+        return formattedAliases(event.getCommand());
     }
 
     public static String formattedSubCommands(SubCommand[] subcommands) {
@@ -107,5 +121,21 @@ public class HelpMaker {
 
     public static String formattedSubCommandsUsage(CommandEvent event) {
         return formattedSubCommandsUsage(event.getCommand());
+    }
+
+    public static PresetBuilder commandEmbed(CommandEvent event, Command command) {
+        PresetBuilder embed = new PresetBuilder()
+                .setTitle(command.getUppercasedName() + " Command")
+                .setDescription(command.getDescription() + "\n\u200b")
+                .setThumbnail(Empire.getLogo())
+                .addField("Category", command.getCategory().getName())
+                .addField("Usage", String.format("```\n%s\n```", formattedUsage(event)));
+
+        System.out.println(Empire.getLogo());
+        if (command.getAliases().length > 0) {
+            embed.addField("Aliases", formattedAliases(command));
+        }
+
+        return embed;
     }
 }

@@ -2,7 +2,10 @@ package net.ryanland.empire.sys.message.builders;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.ryanland.empire.Empire;
 
+import java.time.Instant;
+import java.time.temporal.TemporalAccessor;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,38 +21,42 @@ public class PresetBuilder {
     private String footerIconUrl;
     private String image;
     private String thumbnail;
+    private TemporalAccessor timestamp;
     private List<MessageEmbed.Field> fields = new LinkedList<>();
 
+    public PresetBuilder() {
+        this("");
+    }
+
     public PresetBuilder(String description) {
-        PresetType type = PresetType.DEFAULT;
-        this.color = type.getColor();
-        this.description = description;
-        this.title = type.getDefaultTitle();
+        this(description, "");
     }
 
     public PresetBuilder(String description, String title) {
-        PresetType type = PresetType.DEFAULT;
-        this.color = type.getColor();
-        this.description = description;
-        this.title = title;
+        this(PresetType.DEFAULT, description, title);
     }
 
     public PresetBuilder(PresetType type) {
-        this.color = type.getColor();
-        this.description = "";
-        this.title = type.getDefaultTitle();
+        this(type, "");
     }
 
     public PresetBuilder(PresetType type, String description) {
-        this.color = type.getColor();
-        this.description = description;
-        this.title = type.getDefaultTitle();
+        this(type, description, "");
     }
 
     public PresetBuilder(PresetType type, String description, String title) {
+        this(type, description, title, type.shouldShowFooter());
+    }
+
+    public PresetBuilder(PresetType type, String description, String title, boolean showFooter) {
         this.color = type.getColor();
         this.description = description;
         this.title = title;
+        if (showFooter) {
+            this.footer = Empire.getSelfUser().getName();
+            this.footerIconUrl = Empire.getLogo();
+            this.timestamp = Instant.now();
+        }
     }
 
     public int getColor() {
@@ -142,6 +149,15 @@ public class PresetBuilder {
         return this;
     }
 
+    public TemporalAccessor getTimestamp() {
+        return timestamp;
+    }
+
+    public PresetBuilder setTimestamp(TemporalAccessor timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
     public List<MessageEmbed.Field> getFields() {
         return fields;
     }
@@ -151,6 +167,10 @@ public class PresetBuilder {
         return this;
     }
 
+    public PresetBuilder addField(String name, String value) {
+        return addField(name, value, false);
+    }
+
     public PresetBuilder addField(String name, String value, boolean inline) {
         this.fields.add(new MessageEmbed.Field(name, value, inline));
         return this;
@@ -158,15 +178,19 @@ public class PresetBuilder {
 
     public MessageEmbed build() {
         EmbedBuilder builder = new EmbedBuilder()
-                .setDescription(description)
                 .setTitle(title)
-                .setFooter(footer, footerIconUrl)
+                .setAuthor(authorName, authorUrl, authorIconUrl)
+                .setDescription(description)
                 .setColor(color)
-                .setAuthor(authorName, authorUrl, authorIconUrl);
+                .setThumbnail(thumbnail)
+                .setImage(image)
+                .setFooter(footer, footerIconUrl)
+                .setTimestamp(timestamp);
 
         for (MessageEmbed.Field field : fields) {
             builder.addField(field);
         }
+
         return builder.build();
     }
 }

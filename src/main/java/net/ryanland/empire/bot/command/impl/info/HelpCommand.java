@@ -4,8 +4,10 @@ import net.ryanland.empire.bot.command.arguments.types.impl.CommandArgument;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.help.HelpMaker;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 public class HelpCommand extends Command {
 
@@ -43,6 +45,6 @@ public class HelpCommand extends Command {
     }
 
     private void supplyCommandHelp(CommandEvent event, Command command) {
-
+        event.reply(HelpMaker.commandEmbed(event, command));
     }
 }
