@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.externalfiles;
+package net.ryanland.empire.sys.file.local;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
-public class ExternalFile extends File {
-    public ExternalFile(@NotNull String pathname) {
+public class LocalFile extends File {
+    public LocalFile(@NotNull String pathname) {
         super(pathname);
     }
 
@@ -37,7 +37,7 @@ public class ExternalFile extends File {
     }
 
     public JsonObject parseJson() throws IOException {
-        if (!getExtension().equals(ExternalFileType.JSON.getExtension())) {
+        if (!getExtension().equals(LocalFileType.JSON.getExtension())) {
             throw new UnsupportedOperationException();
         }
         return JsonParser.parseString(getContent()).getAsJsonObject();

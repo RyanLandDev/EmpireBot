@@ -1,7 +1,7 @@
 package net.ryanland.empire.sys.webhooks;
 
 import com.google.gson.JsonObject;
-import net.ryanland.empire.sys.externalfiles.ExternalFiles;
+import net.ryanland.empire.sys.file.local.LocalFiles;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ public class WebhookHandler {
     private static Webhook WEBHOOKS;
 
     public static void loadWebhooks() throws IOException {
-        JsonObject rawJson = ExternalFiles.WEBHOOKS.parseJson();
+        JsonObject rawJson = LocalFiles.WEBHOOKS.parseJson();
         WEBHOOKS = new Webhook(rawJson);
     }
 

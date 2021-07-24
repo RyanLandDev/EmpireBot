@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.impl;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.sys.file.StorageType;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.permissions.Permission;
@@ -40,6 +41,10 @@ public abstract class Command {
 
     public int getCooldownInMs() {
         return getCooldown() * 1000;
+    }
+
+    public StorageType getCooldownStorageType() {
+        return getData().getCooldownStorageType();
     }
 
     public boolean requiresProfile() {

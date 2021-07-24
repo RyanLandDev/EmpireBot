@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.help;
 
+import net.ryanland.empire.sys.file.StorageType;
 import net.ryanland.empire.bot.command.permissions.Permission;
 
 public class CommandData {
@@ -10,6 +11,7 @@ public class CommandData {
     private Category category;
     private Permission permission = Permission.USER;
     private int cooldown;
+    private StorageType cooldownStorageType = StorageType.MEMORY;
     private boolean requiresProfile = false;
 
     public CommandData name(String name) {
@@ -42,6 +44,11 @@ public class CommandData {
         return this;
     }
 
+    public CommandData cooldownStorage(StorageType cooldownStorageType) {
+        this.cooldownStorageType = cooldownStorageType;
+        return this;
+    }
+
     public CommandData requiresProfile() {
         this.requiresProfile = true;
         return this;
@@ -69,6 +76,10 @@ public class CommandData {
 
     public int getCooldown() {
         return cooldown;
+    }
+
+    public StorageType getCooldownStorageType() {
+        return cooldownStorageType;
     }
 
     public boolean isProfileRequired() {

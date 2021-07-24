@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
-import net.ryanland.empire.sys.externalfiles.ExternalFiles;
+import net.ryanland.empire.sys.file.local.LocalFiles;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class RankHandler {
     private static final HashMap<Long, Permission> USER_RANKS = new HashMap<>();
 
     public static void loadRanks() throws IOException {
-        JsonObject json = ExternalFiles.RANKS.parseJson();
+        JsonObject json = LocalFiles.RANKS.parseJson();
 
         for (String key : json.keySet()) {
             Permission permission = PermissionHandler.getPermission(key);

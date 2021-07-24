@@ -1,6 +1,6 @@
-package net.ryanland.empire.sys.externalfiles;
+package net.ryanland.empire.sys.file.local;
 
-public enum ExternalFileType {
+public enum LocalFileType {
     UNKNOWN("unk"),
 
     TEXT("txt"),
@@ -9,17 +9,17 @@ public enum ExternalFileType {
     private final String extension;
     private final byte[] defaultContent;
 
-    ExternalFileType(String extension, byte[] defaultContent) {
+    LocalFileType(String extension, byte[] defaultContent) {
         this.extension = extension;
         this.defaultContent = defaultContent;
     }
 
-    ExternalFileType(String extension, String defaultContent) {
+    LocalFileType(String extension, String defaultContent) {
         this.extension = extension;
         this.defaultContent = defaultContent.getBytes();
     }
 
-    ExternalFileType(String extension) {
+    LocalFileType(String extension) {
         this.extension = extension;
         this.defaultContent = null;
     }

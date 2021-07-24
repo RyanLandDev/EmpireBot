@@ -1,10 +1,10 @@
-package net.ryanland.empire.sys.externalfiles;
+package net.ryanland.empire.sys.file.local;
 
-public interface ExternalFiles {
+public interface LocalFiles {
 
-    ExternalFile CONFIG = new ExternalFileBuilder()
+    LocalFile CONFIG = new LocalFileBuilder()
             .setName("config")
-            .setFileType(ExternalFileType.JSON)
+            .setFileType(LocalFileType.JSON)
             .setDefaultContent("""
                     {
                       "token": "",
@@ -15,14 +15,14 @@ public interface ExternalFiles {
                     }""")
             .buildFile();
 
-    ExternalFile RANKS = new ExternalFileBuilder()
+    LocalFile RANKS = new LocalFileBuilder()
             .setName("ranks")
-            .setFileType(ExternalFileType.JSON)
+            .setFileType(LocalFileType.JSON)
             .buildFile();
 
-    ExternalFile WEBHOOKS = new ExternalFileBuilder()
+    LocalFile WEBHOOKS = new LocalFileBuilder()
             .setName("webhooks")
-            .setFileType(ExternalFileType.JSON)
+            .setFileType(LocalFileType.JSON)
             .setDefaultContent("""
                     {
                         "guild_traffic": ""
