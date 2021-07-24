@@ -2,12 +2,8 @@ package net.ryanland.empire.sys.interactions;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.ryanland.empire.Empire;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class ButtonHandler {

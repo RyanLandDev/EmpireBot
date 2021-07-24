@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.command.help;
 
-import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -11,7 +10,6 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class HelpMaker {
