@@ -6,10 +6,12 @@ import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.impl.SubCommandHolder;
+import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HelpMaker {
@@ -127,15 +129,28 @@ public class HelpMaker {
         PresetBuilder embed = new PresetBuilder()
                 .setTitle(command.getUppercasedName() + " Command")
                 .setDescription(command.getDescription() + "\n\u200b")
-                .setThumbnail(Empire.getLogo())
+                .addLogo()
                 .addField("Category", command.getCategory().getName())
-                .addField("Usage", String.format("```\n%s\n```", formattedUsage(event)));
+                .addField("Usage", String.format("```html\n%s\n```", formattedUsage(event)));
 
-        System.out.println(Empire.getLogo());
         if (command.getAliases().length > 0) {
             embed.addField("Aliases", formattedAliases(command));
         }
 
+        if (command.getPermission() != Permission.USER) {
+            embed.addField("Permission", command.getPermission().getName());
+        }
+
         return embed;
+    }
+
+    public static String formattedQuickCommandList(List<Command> commands) {
+        List<String> commandNames = new ArrayList<>();
+
+        for (Command command : commands) {
+            commandNames.add(command.getName());
+        }
+
+        return "`" + String.join("` `", commandNames) + "`";
     }
 }

@@ -29,7 +29,7 @@ public class PresetBuilder {
     }
 
     public PresetBuilder(String description) {
-        this(description, "");
+        this(description, "\u200b");
     }
 
     public PresetBuilder(String description, String title) {
@@ -37,11 +37,11 @@ public class PresetBuilder {
     }
 
     public PresetBuilder(PresetType type) {
-        this(type, "");
+        this(type, "\u200b");
     }
 
     public PresetBuilder(PresetType type, String description) {
-        this(type, description, "");
+        this(type, description, "\u200b");
     }
 
     public PresetBuilder(PresetType type, String description, String title) {
@@ -149,6 +149,11 @@ public class PresetBuilder {
         return this;
     }
 
+    public PresetBuilder addLogo() {
+        this.thumbnail = Empire.getLogo();
+        return this;
+    }
+
     public TemporalAccessor getTimestamp() {
         return timestamp;
     }
@@ -176,7 +181,7 @@ public class PresetBuilder {
         return this;
     }
 
-    public MessageEmbed build() {
+    public EmbedBuilder builder() {
         EmbedBuilder builder = new EmbedBuilder()
                 .setTitle(title)
                 .setAuthor(authorName, authorUrl, authorIconUrl)
@@ -191,6 +196,10 @@ public class PresetBuilder {
             builder.addField(field);
         }
 
-        return builder.build();
+        return builder;
+    }
+
+    public MessageEmbed build() {
+        return builder().build();
     }
 }

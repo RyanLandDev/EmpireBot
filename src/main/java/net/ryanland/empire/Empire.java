@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
+import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.sys.config.Config;
 import net.ryanland.empire.sys.config.ConfigHandler;
@@ -19,6 +20,8 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 
 public class Empire {
+
+    public static String RYANLAND = "RyanLand#0001";
 
     private static JDA jda;
     private static Config config;
@@ -43,7 +46,7 @@ public class Empire {
                 .setActivity(Activity.watching("for " + config.getPrefix() + "help"))
                 .setGatewayEncoding(GatewayEncoding.ETF)
                 .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
-                .addEventListeners(new MessageEvent());
+                .addEventListeners(new MessageEvent(), new ButtonEvent());
 
         jda = builder.build();
     }

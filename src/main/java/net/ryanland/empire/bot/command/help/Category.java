@@ -14,6 +14,12 @@ public enum Category {
         this.emoji = emoji;
     }
 
+    public static Category[] getCategories() {
+        return new Category[]{
+                INFORMATION
+        };
+    }
+
     public String getName() {
         return name;
     }
