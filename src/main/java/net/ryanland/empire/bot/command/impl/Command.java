@@ -34,6 +34,14 @@ public abstract class Command {
         return getData().getPermission();
     }
 
+    public int getCooldown() {
+        return getData().getCooldown();
+    }
+
+    public int getCooldownInMs() {
+        return getCooldown() * 1000;
+    }
+
     public boolean requiresProfile() {
         return getData().isProfileRequired();
     }

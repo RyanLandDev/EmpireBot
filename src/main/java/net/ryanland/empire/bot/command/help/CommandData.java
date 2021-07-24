@@ -9,6 +9,7 @@ public class CommandData {
     private String description;
     private Category category;
     private Permission permission = Permission.USER;
+    private int cooldown;
     private boolean requiresProfile = false;
 
     public CommandData name(String name) {
@@ -36,6 +37,11 @@ public class CommandData {
         return this;
     }
 
+    public CommandData cooldown(int cooldown) {
+        this.cooldown = cooldown;
+        return this;
+    }
+
     public CommandData requiresProfile() {
         this.requiresProfile = true;
         return this;
@@ -59,6 +65,10 @@ public class CommandData {
 
     public Permission getPermission() {
         return permission;
+    }
+
+    public int getCooldown() {
+        return cooldown;
     }
 
     public boolean isProfileRequired() {

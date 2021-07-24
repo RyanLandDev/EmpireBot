@@ -3,6 +3,7 @@ package net.ryanland.empire.bot.events;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.parsing.ParsedArgumentMap;
@@ -88,5 +89,9 @@ public class CommandEvent extends GuildMessageReceivedEvent {
 
     public List<String> getRawArgsAsList() {
         return new ArrayList<>(Arrays.asList(getRawArgs()));
+    }
+
+    public User getUser() {
+        return getAuthor();
     }
 }

@@ -1,5 +1,6 @@
-package net.ryanland.empire.bot.command.executor.checks;
+package net.ryanland.empire.bot.command.executor.checks.impl;
 
+import net.ryanland.empire.bot.command.executor.checks.CommandCheck;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;

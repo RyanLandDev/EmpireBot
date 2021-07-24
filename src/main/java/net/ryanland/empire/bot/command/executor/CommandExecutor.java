@@ -4,14 +4,22 @@ import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.arguments.parsing.ArgumentParser;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheck;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheckException;
-import net.ryanland.empire.bot.command.executor.checks.PermissionCheck;
+import net.ryanland.empire.bot.command.executor.checks.impl.CooldownCheck;
+import net.ryanland.empire.bot.command.executor.checks.impl.PermissionCheck;
+import net.ryanland.empire.bot.command.executor.finalizers.CommandFinalizer;
+import net.ryanland.empire.bot.command.executor.finalizers.CooldownFinalizer;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 
 public class CommandExecutor {
 
     private final CommandCheck[] checks = new CommandCheck[]{
-            new PermissionCheck()
+            new PermissionCheck(),
+            new CooldownCheck()
+    };
+
+    private final CommandFinalizer[] finalizers = new CommandFinalizer[]{
+            new CooldownFinalizer()
     };
 
     public void run(CommandEvent event) {
@@ -38,6 +46,10 @@ public class CommandExecutor {
             ArgumentParser argumentParser = new ArgumentParser(event, args);
 
             if (argumentParser.parseArguments()) {
+                for (CommandFinalizer finalizer : finalizers) {
+                    finalizer.finalize(event);
+                }
+
                 command.run(event);
             }
 

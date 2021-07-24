@@ -24,7 +24,8 @@ public class HelpCommand extends Command {
                 .name("help")
                 .aliases("commands", "command")
                 .description("Get a list of all commands or information about a specific one.")
-                .category(Category.INFORMATION);
+                .category(Category.INFORMATION)
+                .cooldown(3);
     }
 
     @Override

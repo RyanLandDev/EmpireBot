@@ -41,7 +41,7 @@ public class PresetBuilder {
     }
 
     public PresetBuilder(PresetType type, String description) {
-        this(type, description, null);
+        this(type, description, type.getDefaultTitle());
     }
 
     public PresetBuilder(PresetType type, String description, String title) {

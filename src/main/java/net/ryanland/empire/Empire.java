@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.impl.dev.EvalCommand;
 import net.ryanland.empire.bot.command.impl.dev.MimicCommand;
+import net.ryanland.empire.bot.command.impl.dev.PurgeCooldownsCommand;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
 import net.ryanland.empire.bot.command.permissions.Permission;
@@ -49,7 +50,8 @@ public class Empire {
                 new PingCommand(),
                 // Developer
                 new MimicCommand(),
-                new EvalCommand()
+                new EvalCommand(),
+                new PurgeCooldownsCommand()
         );
 
         // Build bot
