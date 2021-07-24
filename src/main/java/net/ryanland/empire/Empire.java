@@ -1,18 +1,19 @@
 package net.ryanland.empire;
 
-import net.dv8tion.jda.api.*;
+import net.dv8tion.jda.api.GatewayEncoding;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.SelfUser;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-
 import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.impl.dev.EvalCommand;
 import net.ryanland.empire.bot.command.impl.dev.MimicCommand;
 import net.ryanland.empire.bot.command.impl.dev.PurgeCooldownsCommand;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
-import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;

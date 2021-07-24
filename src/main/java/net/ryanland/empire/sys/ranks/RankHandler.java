@@ -9,9 +9,7 @@ import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.sys.externalfiles.ExternalFiles;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 public class RankHandler {

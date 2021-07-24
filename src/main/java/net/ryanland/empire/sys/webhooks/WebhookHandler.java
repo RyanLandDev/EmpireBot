@@ -1,6 +1,5 @@
 package net.ryanland.empire.sys.webhooks;
 
-import club.minnced.discord.webhook.WebhookClient;
 import com.google.gson.JsonObject;
 import net.ryanland.empire.sys.externalfiles.ExternalFiles;
 
