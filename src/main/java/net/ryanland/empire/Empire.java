@@ -12,6 +12,7 @@ import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.impl.dev.EvalCommand;
 import net.ryanland.empire.bot.command.impl.dev.MimicCommand;
 import net.ryanland.empire.bot.command.impl.dev.PurgeCooldownsCommand;
+import net.ryanland.empire.bot.command.impl.dev.TestCommand;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
@@ -52,7 +53,8 @@ public class Empire {
                 // Developer
                 new MimicCommand(),
                 new EvalCommand(),
-                new PurgeCooldownsCommand()
+                new PurgeCooldownsCommand(),
+                new TestCommand()
         );
 
         // Build bot
