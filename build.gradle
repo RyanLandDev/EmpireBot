@@ -19,14 +19,22 @@ repositories {
 }
 
 dependencies {
+    // mongo database
     implementation 'org.mongodb:mongodb-driver-sync:4.2.3'
 
+    // log
     implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+    // jda
     implementation 'net.dv8tion:JDA:4.3.0_277'
     implementation group: 'club.minnced', name: 'discord-webhooks', version: '0.5.6'
 
+    // json
     implementation 'org.json:json:20210307'
     implementation 'com.google.code.gson:gson:2.8.7'
+
+    // eval
+    implementation group: 'org.codehaus.groovy', name: 'groovy-jsr223', version: '3.0.8'
 }
 
 compileJava.options.encoding = 'UTF-8'

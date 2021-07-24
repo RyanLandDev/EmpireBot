@@ -36,7 +36,7 @@ public class CommandData {
         return this;
     }
 
-    public CommandData profileRequired() {
+    public CommandData requiresProfile() {
         this.requiresProfile = true;
         return this;
     }
@@ -61,7 +61,7 @@ public class CommandData {
         return permission;
     }
 
-    public boolean requiresProfile() {
+    public boolean isProfileRequired() {
         return requiresProfile;
     }
 }

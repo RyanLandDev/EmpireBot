@@ -25,11 +25,11 @@ public class PresetBuilder {
     private List<MessageEmbed.Field> fields = new LinkedList<>();
 
     public PresetBuilder() {
-        this("");
+        this((String) null);
     }
 
     public PresetBuilder(String description) {
-        this(description, "\u200b");
+        this(description, null);
     }
 
     public PresetBuilder(String description, String title) {
@@ -37,11 +37,11 @@ public class PresetBuilder {
     }
 
     public PresetBuilder(PresetType type) {
-        this(type, "\u200b");
+        this(type, null);
     }
 
     public PresetBuilder(PresetType type, String description) {
-        this(type, description, "\u200b");
+        this(type, description, null);
     }
 
     public PresetBuilder(PresetType type, String description, String title) {

@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import net.ryanland.empire.bot.command.CommandHandler;
+import net.ryanland.empire.bot.command.impl.dev.EvalCommand;
 import net.ryanland.empire.bot.command.impl.dev.MimicCommand;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
@@ -47,7 +48,8 @@ public class Empire {
                 new HelpCommand(),
                 new PingCommand(),
                 // Developer
-                new MimicCommand()
+                new MimicCommand(),
+                new EvalCommand()
         );
 
         // Build bot

@@ -35,7 +35,7 @@ public abstract class Command {
     }
 
     public boolean requiresProfile() {
-        return getData().requiresProfile();
+        return getData().isProfileRequired();
     }
 
     public abstract ArgumentSet getArguments();
