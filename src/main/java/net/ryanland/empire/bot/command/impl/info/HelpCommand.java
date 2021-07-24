@@ -55,7 +55,9 @@ public class HelpCommand extends Command {
 
         // Add home to menu
         PresetBuilder homePage = new PresetBuilder(
-                "Use the buttons below to navigate through all command categories.\n\nBot made by "+ Empire.RYANLAND)
+                "Use the buttons below to navigate through all command categories.\n" +
+                        "You can get help for a specific command using "+HelpMaker.formattedUsageCode(event)
+                                + ".\n\nBot made by "+ Empire.RYANLAND)
                 .addLogo();
         menu.addPage("Home", homePage.builder(), true);
 

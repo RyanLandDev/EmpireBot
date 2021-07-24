@@ -67,6 +67,10 @@ public class HelpMaker {
         return formattedUsage(event, null);
     }
 
+    public static String formattedUsageCode(CommandEvent event) {
+        return "`" + formattedUsage(event) + "`";
+    }
+
     public static String formattedAliases(String[] aliases) {
         return "`" + String.join("` `", aliases) + "`";
     }
