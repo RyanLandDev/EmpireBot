@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.SelfUser;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+
 import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
