@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.interactions;
+package net.ryanland.empire.sys.message.interactions;
 
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;

@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.ranks;
+package net.ryanland.empire.bot.command.permissions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

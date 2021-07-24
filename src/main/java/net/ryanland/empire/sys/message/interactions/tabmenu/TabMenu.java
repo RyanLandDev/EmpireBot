@@ -1,12 +1,12 @@
-package net.ryanland.empire.sys.interactions.tabmenu;
+package net.ryanland.empire.sys.message.interactions.tabmenu;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.Empire;
-import net.ryanland.empire.sys.interactions.ButtonHandler;
-import net.ryanland.empire.sys.interactions.InteractionUtil;
+import net.ryanland.empire.sys.message.interactions.ButtonHandler;
+import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

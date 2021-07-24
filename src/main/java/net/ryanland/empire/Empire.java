@@ -20,7 +20,7 @@ import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.bot.events.logs.GuildTraffic;
 import net.ryanland.empire.sys.config.Config;
 import net.ryanland.empire.sys.config.ConfigHandler;
-import net.ryanland.empire.sys.ranks.RankHandler;
+import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.sys.webhooks.WebhookHandler;
 
 import javax.security.auth.login.LoginException;
