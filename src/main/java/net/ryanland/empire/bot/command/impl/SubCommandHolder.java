@@ -4,7 +4,7 @@ import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.SubCommandArgument;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.help.HelpMaker;
+import net.ryanland.empire.bot.command.help.HelpMaker;
 
 import java.util.List;
 

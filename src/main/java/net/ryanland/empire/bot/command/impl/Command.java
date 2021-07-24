@@ -1,24 +1,38 @@
 package net.ryanland.empire.bot.command.impl;
 
+import net.ryanland.empire.bot.command.help.Category;
+import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 
 public abstract class Command {
 
-    public abstract String getName();
+    public abstract CommandData getData();
 
-    public abstract String getDescription();
+    public String getName() {
+        return getData().getName();
+    }
 
     public String[] getAliases() {
-        return new String[0];
+        return getData().getAliases();
+    }
+
+    public String getDescription() {
+        return getData().getDescription();
+    }
+
+    public Category getCategory() {
+        return getData().getCategory();
+    }
+
+    public Permission getPermission() {
+        return getData().getPermission();
     }
 
     public boolean requiresProfile() {
-        return false;
+        return getData().requiresProfile();
     }
-
-    public abstract Permission getPermission();
 
     public abstract ArgumentSet getArguments();
 

@@ -2,7 +2,7 @@ package net.ryanland.empire.bot.command.arguments.parsing.exceptions;
 
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.help.HelpMaker;
+import net.ryanland.empire.bot.command.help.HelpMaker;
 
 public class ArgumentException extends Exception {
 

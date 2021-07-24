@@ -1,4 +1,4 @@
-package net.ryanland.empire.help;
+package net.ryanland.empire.bot.command.help;
 
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;

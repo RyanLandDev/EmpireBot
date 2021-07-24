@@ -12,7 +12,7 @@ public abstract class Argument<T> {
     private boolean optional = false;
 
     public String getName() {
-        return name;
+        return name == null ? id : name;
     }
 
     public Argument<T> name(String name) {

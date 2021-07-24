@@ -8,8 +8,8 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.CommandHandler;
+import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
-import net.ryanland.empire.bot.command.impl.info.sub.TestSubCommandHolder;
 import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.sys.config.Config;
 import net.ryanland.empire.sys.config.ConfigHandler;
@@ -30,8 +30,9 @@ public class Empire {
     private static void initialize(Config config) throws LoginException {
         // Register commands
         CommandHandler.register(
-                new PingCommand(),
-                new TestSubCommandHolder()
+                // Information
+                new HelpCommand(),
+                new PingCommand()
         );
 
         // Build bot

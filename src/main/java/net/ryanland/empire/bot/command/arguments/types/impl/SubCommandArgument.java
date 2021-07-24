@@ -6,7 +6,7 @@ import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.impl.SubCommandHolder;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.help.HelpMaker;
+import net.ryanland.empire.bot.command.help.HelpMaker;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
