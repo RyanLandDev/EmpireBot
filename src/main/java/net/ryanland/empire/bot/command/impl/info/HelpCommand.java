@@ -82,7 +82,7 @@ public class HelpCommand extends Command {
         }
 
         // Build and send the menu
-        menu.build().send();
+        menu.build().send(event.getMessage());
     }
 
     private void supplyCommandHelp(CommandEvent event, Command command) {

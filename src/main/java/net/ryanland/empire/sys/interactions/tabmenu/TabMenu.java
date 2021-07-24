@@ -2,6 +2,7 @@ package net.ryanland.empire.sys.interactions.tabmenu;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.sys.interactions.ButtonHandler;
@@ -29,6 +30,10 @@ public class TabMenu {
     }
 
     public void send() {
+        send(null);
+    }
+
+    public void send(Message referMsg) {
         // Set all embed titles to match the category name
         for (TabMenuPage page : pages) {
             EmbedBuilder embed = page.getEmbed();
@@ -59,6 +64,7 @@ public class TabMenu {
 
         // Send the message and set the action rows
         Empire.getJda().getTextChannelById(channelId).sendMessage(pages[0].getEmbed().build())
+                .reference(referMsg).mentionRepliedUser(false)
                 .setActionRows(InteractionUtil.of(buttons)).queue(message -> {
         // Add a listener for when a button is clicked
             ButtonHandler.addListener(message, userId, event -> {
