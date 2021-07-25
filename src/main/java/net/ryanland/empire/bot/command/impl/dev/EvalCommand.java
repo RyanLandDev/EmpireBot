@@ -10,9 +10,8 @@ import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
+import net.ryanland.empire.sys.util.EvalUtil;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -52,17 +51,15 @@ public class EvalCommand extends Command {
     public void run(CommandEvent event) {
         String code = event.getArgument("code");
 
-        ScriptEngine engine = new ScriptEngineManager().getEngineByName("groovy");
-        engine.put("jda", event.getJDA());
-        engine.put("event", event);
-
         EmbedBuilder builder = new PresetBuilder(PresetType.DEFAULT).builder();
         builder.addField("Code", String.format("```js\n%s```", code), true);
 
         code = IMPORTS.stream().map(s -> "import " + s + ".*;").collect(Collectors.joining(" ")) + " " + code;
 
+        EvalUtil Eval = new EvalUtil("groovy", event);
+
         try {
-            Object object = engine.eval(code); // Returns an object of the eval
+            Object object = Eval.eval(code); // Returns an object of the eval
 
             builder.setTitle("Eval Result");
             builder.addField("Object Returned:", String.format("```js\n%s```", object), false);

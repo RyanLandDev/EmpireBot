@@ -5,6 +5,7 @@ import java.util.Locale;
 
 public class NumberUtil {
 
+
     public static String format(Integer number) {
         return NumberFormat.getInstance(Locale.US).format(number);
     }

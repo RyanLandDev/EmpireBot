@@ -20,13 +20,14 @@ import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.bot.events.logs.GuildTraffic;
 import net.ryanland.empire.sys.config.Config;
-import net.ryanland.empire.sys.config.ConfigHandler;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
+import net.ryanland.empire.sys.config.ConfigHandler;
 import net.ryanland.empire.sys.database.MongoDB;
 import net.ryanland.empire.sys.webhooks.WebhookHandler;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
+
 
 public class Empire {
 
@@ -36,6 +37,7 @@ public class Empire {
     private static Config config;
 
     public static void main(String[] args) throws IOException, LoginException {
+
         config = ConfigHandler.loadConfig();
         initialize(config);
     }
