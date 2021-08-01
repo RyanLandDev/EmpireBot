@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.database.documents;
 
 import com.mongodb.client.model.Updates;
+import net.ryanland.empire.bot.command.impl.Command;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -15,6 +16,10 @@ public abstract class BaseDocument extends Document {
     }
 
     protected void checkUpdate(List<Bson> updates, String newValue, String oldValue, String key) {
+        if (!newValue.equals(oldValue)) updates.add(Updates.set(key, newValue));
+    }
+
+    protected void checkUpdate(List<Bson> updates, List<Command> newValue, List<Command> oldValue, String key) {
         if (!newValue.equals(oldValue)) updates.add(Updates.set(key, newValue));
     }
 }

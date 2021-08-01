@@ -21,7 +21,6 @@ public class GuildDocument extends BaseDocument {
 
         checkUpdate(updates, prefix, getPrefix(), "prefix");
 
-
         MongoDB.GUILD_DB.updateMany(Filters.eq("id", getId()), updates);
     }
 

@@ -5,15 +5,19 @@ import net.ryanland.empire.bot.command.arguments.parsing.ArgumentParser;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheck;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheckException;
 import net.ryanland.empire.bot.command.executor.checks.impl.CooldownCheck;
+import net.ryanland.empire.bot.command.executor.checks.impl.DisabledCheck;
 import net.ryanland.empire.bot.command.executor.checks.impl.PermissionCheck;
 import net.ryanland.empire.bot.command.executor.finalizers.CommandFinalizer;
 import net.ryanland.empire.bot.command.executor.finalizers.CooldownFinalizer;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class CommandExecutor {
 
     private final CommandCheck[] checks = new CommandCheck[]{
+            new DisabledCheck(),
             new PermissionCheck(),
             new CooldownCheck()
     };
@@ -50,7 +54,15 @@ public class CommandExecutor {
                     finalizer.finalize(event);
                 }
 
-                command.run(event);
+                try {
+                    command.run(event);
+                } catch (Exception e) {
+                    event.reply(
+                            new PresetBuilder(PresetType.ERROR,
+                                    e.getMessage() == null ?
+                                            "Unknown error, please report it to a developer." :
+                                            e.getMessage()));
+                }
             }
 
         } catch (CommandCheckException ignored) {

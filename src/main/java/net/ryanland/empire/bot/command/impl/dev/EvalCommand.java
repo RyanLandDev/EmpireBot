@@ -3,6 +3,7 @@ package net.ryanland.empire.bot.command.impl.dev;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.EndlessStringArgument;
+import net.ryanland.empire.bot.command.executor.flags.Flag;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -26,7 +27,8 @@ public class EvalCommand extends Command {
                 .aliases("evaluate", "java", "ev")
                 .description("Evaluate Java code.")
                 .category(Category.DEVELOPER)
-                .permission(Permission.DEVELOPER);
+                .permission(Permission.DEVELOPER)
+                .flags(Flag.NO_DISABLE);
     }
 
     @Override

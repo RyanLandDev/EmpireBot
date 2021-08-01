@@ -1,7 +1,11 @@
 package net.ryanland.empire.bot.command.help;
 
-import net.ryanland.empire.sys.file.StorageType;
+import net.ryanland.empire.bot.command.executor.flags.Flag;
 import net.ryanland.empire.bot.command.permissions.Permission;
+import net.ryanland.empire.sys.file.StorageType;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class CommandData {
 
@@ -10,6 +14,7 @@ public class CommandData {
     private String description;
     private Category category;
     private Permission permission = Permission.USER;
+    private Flag[] flags = new Flag[0];
     private int cooldown;
     private StorageType cooldownStorageType = StorageType.MEMORY;
     private boolean requiresProfile = false;
@@ -36,6 +41,11 @@ public class CommandData {
 
     public CommandData permission(Permission permission) {
         this.permission = permission;
+        return this;
+    }
+
+    public CommandData flags(Flag... flags) {
+        this.flags = flags;
         return this;
     }
 
@@ -72,6 +82,18 @@ public class CommandData {
 
     public Permission getPermission() {
         return permission;
+    }
+
+    public Flag[] getFlags() {
+        return flags;
+    }
+
+    public List<Flag> getFlagsAsList() {
+        return Arrays.asList(getFlags());
+    }
+
+    public boolean flagsContain(Flag flag) {
+        return getFlagsAsList().contains(flag);
     }
 
     public int getCooldown() {

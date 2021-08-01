@@ -4,8 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.dv8tion.jda.api.entities.User;
-import net.ryanland.empire.bot.command.permissions.Permission;
-import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.sys.file.local.LocalFiles;
 
 import java.io.IOException;

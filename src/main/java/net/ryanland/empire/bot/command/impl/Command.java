@@ -1,11 +1,12 @@
 package net.ryanland.empire.bot.command.impl;
 
+import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.sys.file.StorageType;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.file.StorageType;
 
 public abstract class Command {
 
@@ -49,6 +50,10 @@ public abstract class Command {
 
     public boolean requiresProfile() {
         return getData().isProfileRequired();
+    }
+
+    public boolean isDisabled() {
+        return Empire.getDisabledCommandHandler().isDisabled(this);
     }
 
     public abstract ArgumentSet getArguments();

@@ -5,6 +5,7 @@ import com.mongodb.client.model.Filters;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.Empire;
+import net.ryanland.empire.sys.database.documents.GlobalDocument;
 import net.ryanland.empire.sys.database.documents.GuildDocument;
 import net.ryanland.empire.sys.database.documents.UserDocument;
 import org.bson.Document;
@@ -69,6 +70,24 @@ public class MongoDB {
         FindIterable<Document> iterDoc = GUILD_DB.find(Filters.eq("id", id));
         for (Document document : iterDoc) {
             return new GuildDocument(document);
+        }
+        return null;
+    }
+
+    public static GlobalDocument getGlobalDocument() {
+        GlobalDocument document = findGlobalDocument();
+        if (document == null) {
+            GLOBAL_DB.insertOne(new Document());
+            document = findGlobalDocument();
+        }
+
+        return document;
+    }
+
+    private static GlobalDocument findGlobalDocument() {
+        FindIterable<Document> iterDoc = GUILD_DB.find();
+        for (Document document : iterDoc) {
+            return new GlobalDocument(document);
         }
         return null;
     }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class FormulaUtil {
 
+    //TODO math parser
     private static final HashMap<String, Object> CACHE = new HashMap<>();
 
     private static String eval(String formula) throws ScriptException {
