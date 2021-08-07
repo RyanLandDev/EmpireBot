@@ -8,6 +8,7 @@ import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GlobalDocument extends BaseDocument {
 
@@ -35,7 +36,7 @@ public class GlobalDocument extends BaseDocument {
     }
 
     public List<Command> getDisabledCommands() {
-        return getList("disabledCommands", Command.class);
+        return Objects.requireNonNullElse(getList("disabledCommands", Command.class), new ArrayList<>());
     }
 
 }

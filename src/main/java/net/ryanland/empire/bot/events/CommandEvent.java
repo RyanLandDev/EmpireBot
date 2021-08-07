@@ -81,8 +81,7 @@ public class CommandEvent extends GuildMessageReceivedEvent {
     }
 
     public String getPrefix() {
-        //TODO for custom server prefixes
-        return Empire.getConfig().getPrefix();
+        return getGuildDocument().getPrefix();
     }
 
     public String[] getRawArgs() {

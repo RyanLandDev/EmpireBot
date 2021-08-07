@@ -1,12 +1,14 @@
 package net.ryanland.empire.sys.database.documents;
 
 import com.mongodb.client.model.Filters;
+import net.ryanland.empire.Empire;
 import net.ryanland.empire.sys.database.MongoDB;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GuildDocument extends BaseDocument {
 
@@ -34,7 +36,7 @@ public class GuildDocument extends BaseDocument {
     }
 
     public String getPrefix() {
-        return getString("prefix");
+        return Objects.requireNonNullElse(getString("prefix"), Empire.getConfig().getPrefix());
     }
 
 }

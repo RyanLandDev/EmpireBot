@@ -5,7 +5,6 @@ import net.ryanland.empire.bot.command.impl.Command;
 
 import java.util.List;
 
-// TODO test the disable and enable command
 public class DisabledCommandHandler {
 
     public List<Command> getDisabledCommands() {
