@@ -8,7 +8,6 @@ import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.file.local.LocalFiles;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.io.IOException;
@@ -16,8 +15,6 @@ import java.util.HashMap;
 
 
 public class DevNamesCommand extends Command {
-
-    private Object LocalFile;
 
     @Override
     public CommandData getData() {
