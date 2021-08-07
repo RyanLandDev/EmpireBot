@@ -34,4 +34,8 @@ public class RankHandler {
 
         return perm.getLevel() >= permission.getLevel();
     }
+
+    public static HashMap<Long, Permission> getUserRanks() {
+        return USER_RANKS;
+    }
 }

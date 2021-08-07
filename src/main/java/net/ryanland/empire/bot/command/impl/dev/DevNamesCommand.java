@@ -6,39 +6,46 @@ import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.permissions.Permission;
+import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.file.local.LocalFiles;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.builders.PresetType;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 
 public class DevNamesCommand extends Command {
+
+    private Object LocalFile;
 
     @Override
     public CommandData getData() {
         return new CommandData()
                 .name("devnames")
                 .description("Lists the current developers' names.")
-                .category(Category.DEVELOPER)
-                .permission(Permission.DEVELOPER)
-                .flags();
+                .category(Category.INFORMATION);
     }
 
     @Override
     public ArgumentSet getArguments() { return new ArgumentSet(); }
 
     @Override
-    public void run(CommandEvent event) {
-        // lol imagine reading json files (lame!)
-        // can always add that though, just needs caching though so that the file isn't read from every invocation.
-        event.reply(
-                new PresetBuilder(
-                        """
-                                The current developers are;
+    public void run(CommandEvent event) throws IOException {
+        // Gets a hashmap of all the user IDs with ranks
+        HashMap<Long, Permission> usersHashMap = RankHandler.getUserRanks();
+        // StringBuilder to construct the final output
+        StringBuilder devListBuilder = new StringBuilder();
 
-                                • <@808966728201666620> *Owner*
-                                • <@258509289377890305>
-                                • <@567665494518267904>
-                        """)
+        // Iterates through hashmap keys and adds the developers to the StringBuilder
+        devListBuilder.append("The current developers are;\n");
+        for (Long id : usersHashMap.keySet()) {
+            devListBuilder.append("\n• <@").append(id).append("> ").append(usersHashMap.get(id));
+        }
+
+        event.reply(
+                new PresetBuilder(devListBuilder.toString()
+                        )
                         .setTitle("Developers")
         );
     }
