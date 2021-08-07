@@ -12,7 +12,8 @@ import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
-
+import java.util.List;
+import java.util.ArrayList;
 
 public class DevNamesCommand extends Command {
 
@@ -30,18 +31,19 @@ public class DevNamesCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         // Gets a hashmap of all the user IDs with ranks
-        HashMap<Long, Permission> usersHashMap = RankHandler.getUserRanks();
+        HashMap<Long, Permission> userRanks = RankHandler.getUserRanks();
         // StringBuilder to construct the final output
-        StringBuilder devListBuilder = new StringBuilder();
+        List<String> devListBuilder = new ArrayList<>();
 
-        // Iterates through hashmap keys and adds the developers to the StringBuilder
-        devListBuilder.append("The current developers are;\n");
-        for (Long id : usersHashMap.keySet()) {
-            devListBuilder.append("\n• <@").append(id).append("> ").append(usersHashMap.get(id).getName());
+        // Iterates through hashmap keys and adds the developers to the list
+        devListBuilder.add("The current developers are;\n");
+        for (Long id : userRanks.keySet()) {
+            Permission value = userRanks.get(id);
+            devListBuilder.add(String.format("• <@%s> %s", id, value.getName());
         }
 
         event.reply(
-                new PresetBuilder(devListBuilder.toString()
+                new PresetBuilder(String.join("\n", devListBuilder)
                         )
                         .setTitle("Developers")
         );
