@@ -40,7 +40,7 @@ public class DevNamesCommand extends Command {
         // Iterates through hashmap keys and adds the developers to the StringBuilder
         devListBuilder.append("The current developers are;\n");
         for (Long id : usersHashMap.keySet()) {
-            devListBuilder.append("\n• <@").append(id).append("> ").append(usersHashMap.get(id));
+            devListBuilder.append("\n• <@").append(id).append("> ").append(usersHashMap.get(id).getName());
         }
 
         event.reply(
