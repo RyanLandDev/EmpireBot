@@ -39,7 +39,7 @@ public class DevNamesCommand extends Command {
         devListBuilder.add("The current developers are;\n");
         for (Long id : userRanks.keySet()) {
             Permission value = userRanks.get(id);
-            devListBuilder.add(String.format("• <@%s> %s", id, value.getName());
+            devListBuilder.add(String.format("• <@%s> %s", id, value.getName()));
         }
 
         event.reply(
