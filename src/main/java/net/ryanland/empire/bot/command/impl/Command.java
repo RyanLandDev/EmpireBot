@@ -8,8 +8,6 @@ import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.StorageType;
 
-import java.io.IOException;
-
 public abstract class Command {
 
     public abstract CommandData getData();
@@ -60,5 +58,5 @@ public abstract class Command {
 
     public abstract ArgumentSet getArguments();
 
-    public abstract void run(CommandEvent event) throws IOException;
+    public abstract void run(CommandEvent event);
 }
