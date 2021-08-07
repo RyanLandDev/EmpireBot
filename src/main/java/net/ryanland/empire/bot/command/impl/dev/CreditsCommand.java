@@ -10,17 +10,18 @@ import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
-public class DevNamesCommand extends Command {
+public class CreditsCommand extends Command {
 
     @Override
     public CommandData getData() {
         return new CommandData()
-                .name("devnames")
-                .description("Lists the current developers' names.")
+                .name("credits")
+                .description("Lists the bot's credits.")
                 .category(Category.INFORMATION);
     }
 
@@ -30,20 +31,27 @@ public class DevNamesCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         // Gets a hashmap of all the user IDs with ranks
-        HashMap<Long, Permission> usersHashMap = RankHandler.getUserRanks();
+        HashMap<Long, Permission> userRanks = RankHandler.getUserRanks();
         // StringBuilder to construct the final output
-        StringBuilder devListBuilder = new StringBuilder();
+        List<String> devListBuilder = new ArrayList<>();
 
-        // Iterates through hashmap keys and adds the developers to the StringBuilder
-        devListBuilder.append("The current developers are;\n");
-        for (Long id : usersHashMap.keySet()) {
-            devListBuilder.append("\n• <@").append(id).append("> ").append(usersHashMap.get(id).getName());
+        Permission oldValue = null;
+        // Iterates through hashmap keys and adds the developers to the list
+        for (Long id : userRanks.keySet()) {
+            Permission value = userRanks.get(id);
+            if (value.equals(oldValue)) {
+                devListBuilder.add(String.format("• <@%s>", id));
+            } else {
+                devListBuilder.add(String.format("\n**%s**",value.getName()));
+                devListBuilder.add(String.format("• <@%s>", id));
+                oldValue = value;
+            }
         }
 
         event.reply(
-                new PresetBuilder(devListBuilder.toString()
-                        )
-                        .setTitle("Developers")
+                new PresetBuilder(String.join("\n", devListBuilder)
+                )
+                        .setTitle("Credits")
         );
     }
 }

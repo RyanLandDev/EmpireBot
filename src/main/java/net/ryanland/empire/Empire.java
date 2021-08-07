@@ -63,7 +63,7 @@ public class Empire {
                 new TestCommand(),
                 new DisableCommand(),
                 new EnableCommand(),
-                new DevNamesCommand()
+                new CreditsCommand()
         );
 
         // Build bot
