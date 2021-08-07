@@ -62,7 +62,8 @@ public class Empire {
                 new PurgeCooldownsCommand(),
                 new TestCommand(),
                 new DisableCommand(),
-                new EnableCommand()
+                new EnableCommand(),
+                new DevNamesCommand()
         );
 
         // Build bot
