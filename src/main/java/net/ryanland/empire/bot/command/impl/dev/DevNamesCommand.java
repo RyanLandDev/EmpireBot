@@ -35,9 +35,9 @@ public class DevNamesCommand extends Command {
                         """
                                 The current developers are;
 
-                                • **Ryanland** (Owner)
-                                • **Erobus**
-                                • **General_Mudkip**
+                                • <@808966728201666620> *Owner*
+                                • <@258509289377890305>
+                                • <@567665494518267904>
                         """)
                         .setTitle("Developers")
         );
