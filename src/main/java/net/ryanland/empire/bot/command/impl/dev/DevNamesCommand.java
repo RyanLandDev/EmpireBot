@@ -28,7 +28,7 @@ public class DevNamesCommand extends Command {
     public ArgumentSet getArguments() { return new ArgumentSet(); }
 
     @Override
-    public void run(CommandEvent event) throws IOException {
+    public void run(CommandEvent event) {
         // Gets a hashmap of all the user IDs with ranks
         HashMap<Long, Permission> usersHashMap = RankHandler.getUserRanks();
         // StringBuilder to construct the final output
