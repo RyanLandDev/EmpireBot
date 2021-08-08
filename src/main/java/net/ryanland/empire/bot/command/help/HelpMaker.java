@@ -143,6 +143,10 @@ public class HelpMaker {
             embed.addField("Permission", command.getPermission().getName());
         }
 
+        if (command.isDisabled()) {
+            embed.setTitle(command.getUppercasedName() + " Command [Disabled]");
+        }
+
         return embed;
     }
 
@@ -150,7 +154,9 @@ public class HelpMaker {
         List<String> commandNames = new ArrayList<>();
 
         for (Command command : commands) {
-            commandNames.add(command.getName());
+            if (!command.isDisabled()) {
+                commandNames.add(command.getName());
+            }
         }
 
         return "`" + String.join("` `", commandNames) + "`";
