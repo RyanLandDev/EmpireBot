@@ -34,6 +34,11 @@ public class GlobalDocument extends BaseDocument {
 
     // --------------------------------------------------------------------------
 
+    public GlobalDocument setDisabledCommandsRaw(List<String> disabledCommands) {
+        this.disabledCommands = disabledCommands;
+        return this;
+    }
+
     public GlobalDocument setDisabledCommands(List<Command> disabledCommands) {
         this.disabledCommands = disabledCommandsProperToRaw(disabledCommands);
         return this;

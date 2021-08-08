@@ -3,6 +3,7 @@ package net.ryanland.empire.bot.command.impl.dev;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.CommandArgument;
+import net.ryanland.empire.bot.command.executor.disable.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.executor.flags.Flag;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
@@ -35,7 +36,7 @@ public class EnableCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         Command command = event.getArgument("command");
-        Empire.getDisabledCommandHandler().enable(command);
+        DisabledCommandHandler.getInstance().enable(command);
 
         event.reply(
                 new PresetBuilder(PresetType.SUCCESS,

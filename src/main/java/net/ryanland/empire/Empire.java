@@ -36,7 +36,6 @@ public class Empire {
 
     private static JDA jda;
     private static Config config;
-    private static DisabledCommandHandler disabledCommandHandler;
 
     public static void main(String[] args) throws IOException, LoginException {
 
@@ -50,7 +49,6 @@ public class Empire {
         PermissionHandler.loadPermissions();
         WebhookHandler.loadWebhooks();
         RankHandler.loadRanks();
-        disabledCommandHandler = new DisabledCommandHandler();
 
         // Register commands
         CommandHandler.register(
@@ -65,6 +63,7 @@ public class Empire {
                 new TestCommand(),
                 new DisableCommand(),
                 new EnableCommand(),
+                new StopCommand(),
                 new CreditsCommand()
         );
 
@@ -89,6 +88,8 @@ public class Empire {
         jda = builder.build();
     }
 
+    // Utility methods ------------------------------
+
     public static JDA getJda() {
         return jda;
     }
@@ -107,9 +108,5 @@ public class Empire {
 
     public static GlobalDocument getGlobalDocument() {
         return DocumentCache.getGlobal();
-    }
-
-    public static DisabledCommandHandler getDisabledCommandHandler() {
-        return disabledCommandHandler;
     }
 }

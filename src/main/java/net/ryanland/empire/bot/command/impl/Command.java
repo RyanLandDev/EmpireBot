@@ -2,6 +2,7 @@ package net.ryanland.empire.bot.command.impl;
 
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.executor.disable.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.permissions.Permission;
@@ -12,49 +13,53 @@ public abstract class Command {
 
     public abstract CommandData getData();
 
-    public String getName() {
+    // CommandData getters --------------------
+
+    public final String getName() {
         return getData().getName();
     }
 
-    public String getUppercasedName() {
+    public final String getUppercasedName() {
         return getName().substring(0, 1).toUpperCase() + getName().substring(1);
     }
 
-    public String[] getAliases() {
+    public final String[] getAliases() {
         return getData().getAliases();
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return getData().getDescription();
     }
 
-    public Category getCategory() {
+    public final Category getCategory() {
         return getData().getCategory();
     }
 
-    public Permission getPermission() {
+    public final Permission getPermission() {
         return getData().getPermission();
     }
 
-    public int getCooldown() {
+    public final int getCooldown() {
         return getData().getCooldown();
     }
 
-    public int getCooldownInMs() {
+    public final int getCooldownInMs() {
         return getCooldown() * 1000;
     }
 
-    public StorageType getCooldownStorageType() {
+    public final StorageType getCooldownStorageType() {
         return getData().getCooldownStorageType();
     }
 
-    public boolean requiresProfile() {
+    public final boolean requiresProfile() {
         return getData().isProfileRequired();
     }
 
-    public boolean isDisabled() {
-        return Empire.getDisabledCommandHandler().isDisabled(this);
+    public final boolean isDisabled() {
+        return DisabledCommandHandler.getInstance().isDisabled(this);
     }
+
+    // ---------------------------------------------------------
 
     public abstract ArgumentSet getArguments();
 
