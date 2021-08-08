@@ -1,8 +1,8 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.executor.cooldown.CooldownHandler;
-import net.ryanland.empire.bot.command.executor.flags.Flag;
+import net.ryanland.empire.bot.command.executor.data.CooldownHandler;
+import net.ryanland.empire.bot.command.executor.data.Flag;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.impl.Command;

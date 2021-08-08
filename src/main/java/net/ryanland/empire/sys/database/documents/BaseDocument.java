@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.database.documents;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.sys.database.DocumentCache;
@@ -10,6 +11,7 @@ import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public abstract class BaseDocument extends Document {
     public BaseDocument(Document document) {
@@ -31,5 +33,9 @@ public abstract class BaseDocument extends Document {
             updates.add(Updates.set(key, newValue));
             put(key, newValue);
         }
+    }
+
+    protected void performUpdate(MongoCollection<Document> collection, Bson filter, List<Bson> updates) {
+        if (updates.size() > 0) collection.updateOne(filter, updates);
     }
 }

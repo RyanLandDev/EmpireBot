@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.executor.cooldown;
+package net.ryanland.empire.bot.command.executor.data;
 
 import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.impl.Command;

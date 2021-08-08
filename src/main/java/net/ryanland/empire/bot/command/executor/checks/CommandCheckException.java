@@ -1,4 +1,6 @@
 package net.ryanland.empire.bot.command.executor.checks;
 
-public class CommandCheckException extends Exception {
+import net.ryanland.empire.bot.command.executor.CommandException;
+
+public class CommandCheckException extends CommandException {
 }

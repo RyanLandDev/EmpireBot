@@ -1,6 +1,7 @@
-package net.ryanland.empire.bot.command.executor.disable;
+package net.ryanland.empire.bot.command.executor.data;
 
 import net.ryanland.empire.Empire;
+import net.ryanland.empire.bot.command.executor.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
 
 import java.util.List;
@@ -29,14 +30,14 @@ public class DisabledCommandHandler {
         return getDisabledCommands().contains(command);
     }
 
-    public void enable(Command command) {
+    public void enable(Command command) throws CommandException {
         enable(command.getName());
     }
 
-    public void enable(String command) {
+    public void enable(String command) throws CommandException {
         List<String> disabled = getDisabledCommandsRaw();
         if (!disabled.contains(command)) {
-            throw new IllegalStateException("This command is already enabled.");
+            throw new CommandException("This command is already enabled.");
         }
         disabled.remove(command);
 
@@ -45,14 +46,14 @@ public class DisabledCommandHandler {
                 .update();
     }
 
-    public void disable(Command command) {
+    public void disable(Command command) throws CommandException {
         disable(command.getName());
     }
 
-    public void disable(String command) {
+    public void disable(String command) throws CommandException {
         List<String> disabled = getDisabledCommandsRaw();
         if (disabled.contains(command)) {
-            throw new IllegalStateException("This command is already disabled.");
+            throw new CommandException("This command is already disabled.");
         }
         disabled.add(command);
 

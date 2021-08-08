@@ -31,7 +31,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         checkUpdate(updates, xp, getXp(), "xp");
         checkUpdate(updates, wave, getWave(), "wave");
 
-        DocumentCache.USER_COLLECTION.updateMany(Filters.eq("id", getId()), updates);
+        performUpdate(DocumentCache.USER_COLLECTION, Filters.eq("id", getId()), updates);
     }
 
     @Override

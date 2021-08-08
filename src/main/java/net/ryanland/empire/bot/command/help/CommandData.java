@@ -1,6 +1,6 @@
 package net.ryanland.empire.bot.command.help;
 
-import net.ryanland.empire.bot.command.executor.flags.Flag;
+import net.ryanland.empire.bot.command.executor.data.Flag;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.sys.file.StorageType;
 

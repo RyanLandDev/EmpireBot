@@ -24,7 +24,7 @@ public class GlobalDocument extends BaseDocument {
     public void updated(List<Bson> updates) {
         checkUpdate(updates, disabledCommands, getDisabledCommandsRaw(), "disabledCommands");
 
-        DocumentCache.GLOBAL_COLLECTION.updateMany(Filters.empty(), updates);
+        performUpdate(DocumentCache.GLOBAL_COLLECTION, Filters.empty(), updates);
     }
 
     @Override

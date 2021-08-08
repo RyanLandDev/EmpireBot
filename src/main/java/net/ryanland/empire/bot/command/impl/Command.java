@@ -1,8 +1,8 @@
 package net.ryanland.empire.bot.command.impl;
 
-import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.executor.disable.DisabledCommandHandler;
+import net.ryanland.empire.bot.command.executor.CommandException;
+import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.permissions.Permission;
@@ -63,5 +63,5 @@ public abstract class Command {
 
     public abstract ArgumentSet getArguments();
 
-    public abstract void run(CommandEvent event);
+    public abstract void run(CommandEvent event) throws CommandException;
 }

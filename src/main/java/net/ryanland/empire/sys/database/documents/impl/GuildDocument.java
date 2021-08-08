@@ -24,7 +24,7 @@ public class GuildDocument extends BaseDocument implements SnowflakeDocument {
     public void updated(List<Bson> updates) {
         checkUpdate(updates, prefix, getPrefix(), "prefix");
 
-        DocumentCache.GUILD_COLLECTION.updateMany(Filters.eq("id", getId()), updates);
+        performUpdate(DocumentCache.GUILD_COLLECTION, Filters.eq("id", getId()), updates);
     }
 
     @Override

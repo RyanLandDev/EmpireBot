@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.webhooks;
+package net.ryanland.empire.sys.message.webhooks;
 
 import com.google.gson.JsonObject;
 import net.ryanland.empire.sys.file.local.LocalFiles;

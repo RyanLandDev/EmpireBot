@@ -1,10 +1,10 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.CommandArgument;
-import net.ryanland.empire.bot.command.executor.disable.DisabledCommandHandler;
-import net.ryanland.empire.bot.command.executor.flags.Flag;
+import net.ryanland.empire.bot.command.executor.CommandException;
+import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
+import net.ryanland.empire.bot.command.executor.data.Flag;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -34,7 +34,7 @@ public class EnableCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) {
+    public void run(CommandEvent event) throws CommandException {
         Command command = event.getArgument("command");
         DisabledCommandHandler.getInstance().enable(command);
 

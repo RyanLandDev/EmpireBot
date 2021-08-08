@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.config;
+package net.ryanland.empire.sys.file.config;
 
 import com.google.gson.JsonObject;
 
