@@ -7,6 +7,7 @@ import net.ryanland.empire.bot.command.executor.checks.CommandCheckException;
 import net.ryanland.empire.bot.command.executor.checks.impl.CooldownCheck;
 import net.ryanland.empire.bot.command.executor.checks.impl.DisabledCheck;
 import net.ryanland.empire.bot.command.executor.checks.impl.PermissionCheck;
+import net.ryanland.empire.bot.command.executor.checks.impl.RequiresProfileCheck;
 import net.ryanland.empire.bot.command.executor.finalizers.CommandFinalizer;
 import net.ryanland.empire.bot.command.executor.finalizers.CooldownFinalizer;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -19,6 +20,7 @@ public class CommandExecutor {
     private final CommandCheck[] checks = new CommandCheck[]{
             new DisabledCheck(),
             new PermissionCheck(),
+            new RequiresProfileCheck(),
             new CooldownCheck()
     };
 
@@ -41,7 +43,7 @@ public class CommandExecutor {
 
         try {
             for (CommandCheck check : checks) {
-                if (!check.check(event)) {
+                if (check.check(event)) {
                     event.reply(check.buildMessage(event));
                     throw new CommandCheckException();
                 }

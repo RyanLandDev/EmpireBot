@@ -9,7 +9,7 @@ public class PermissionCheck implements CommandCheck {
 
     @Override
     public boolean check(CommandEvent event) {
-        return event.getCommand().getPermission().hasPermission(event.getMember());
+        return !event.getCommand().getPermission().hasPermission(event.getMember());
     }
 
     @Override

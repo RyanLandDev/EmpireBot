@@ -9,7 +9,7 @@ public class DisabledCheck implements CommandCheck {
 
     @Override
     public boolean check(CommandEvent event) {
-        return !event.getCommand().isDisabled();
+        return event.getCommand().isDisabled();
     }
 
     @Override
