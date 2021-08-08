@@ -1,7 +1,9 @@
-package net.ryanland.empire.sys.database.documents;
+package net.ryanland.empire.sys.database.documents.impl;
 
 import com.mongodb.client.model.Filters;
-import net.ryanland.empire.sys.database.MongoDB;
+import net.ryanland.empire.sys.database.DocumentCache;
+import net.ryanland.empire.sys.database.documents.BaseDocument;
+import net.ryanland.empire.sys.database.documents.SnowflakeDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -9,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UserDocument extends BaseDocument {
+public class UserDocument extends BaseDocument implements SnowflakeDocument {
 
     public UserDocument(Document document) {
-        putAll(document);
+        super(document);
     }
 
     private int level = getLevel();
@@ -21,6 +23,7 @@ public class UserDocument extends BaseDocument {
     private int xp = getXp();
     private int wave = getWave();
 
+    @Override
     public void update() {
         List<Bson> updates = new ArrayList<>();
 
@@ -30,7 +33,13 @@ public class UserDocument extends BaseDocument {
         checkUpdate(updates, xp, getXp(), "xp");
         checkUpdate(updates, wave, getWave(), "wave");
 
-        MongoDB.USER_DB.updateMany(Filters.eq("id", getId()), updates);
+        DocumentCache.USER_COLLECTION.updateMany(Filters.eq("id", getId()), updates);
+        cache();
+    }
+
+    @Override
+    public void cache() {
+        DocumentCache.USER_CACHE.put(getId(), this);
     }
 
     public UserDocument setLevel(int level) {

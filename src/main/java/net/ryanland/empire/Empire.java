@@ -20,8 +20,9 @@ import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.bot.events.logs.GuildTraffic;
 import net.ryanland.empire.sys.config.Config;
 import net.ryanland.empire.sys.config.ConfigHandler;
+import net.ryanland.empire.sys.database.DocumentCache;
 import net.ryanland.empire.sys.database.MongoDB;
-import net.ryanland.empire.sys.database.documents.GlobalDocument;
+import net.ryanland.empire.sys.database.documents.impl.GlobalDocument;
 import net.ryanland.empire.sys.webhooks.WebhookHandler;
 
 import javax.security.auth.login.LoginException;
@@ -103,7 +104,7 @@ public class Empire {
     }
 
     public static GlobalDocument getGlobalDocument() {
-        return MongoDB.getGlobalDocument();
+        return DocumentCache.getGlobal();
     }
 
     public static DisabledCommandHandler getDisabledCommandHandler() {

@@ -5,13 +5,12 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.parsing.ParsedArgumentMap;
 import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.sys.database.MongoDB;
-import net.ryanland.empire.sys.database.documents.GlobalDocument;
-import net.ryanland.empire.sys.database.documents.GuildDocument;
-import net.ryanland.empire.sys.database.documents.UserDocument;
+import net.ryanland.empire.sys.database.DocumentCache;
+import net.ryanland.empire.sys.database.documents.impl.GlobalDocument;
+import net.ryanland.empire.sys.database.documents.impl.GuildDocument;
+import net.ryanland.empire.sys.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.ArrayList;
@@ -99,14 +98,14 @@ public class CommandEvent extends GuildMessageReceivedEvent {
     }
 
     public UserDocument getUserDocument() {
-        return MongoDB.getUserDocument(getUser());
+        return DocumentCache.get(getUser(), UserDocument.class);
     }
 
     public GuildDocument getGuildDocument() {
-        return MongoDB.getGuildDocument(getGuild());
+        return DocumentCache.get(getUser(), GuildDocument.class);
     }
 
     public GlobalDocument getGlobalDocument() {
-        return MongoDB.getGlobalDocument();
+        return DocumentCache.getGlobal();
     }
 }

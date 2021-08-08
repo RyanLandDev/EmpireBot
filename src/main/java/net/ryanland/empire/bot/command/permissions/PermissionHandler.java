@@ -2,15 +2,12 @@ package net.ryanland.empire.bot.command.permissions;
 
 import net.dv8tion.jda.api.entities.Member;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class PermissionHandler {
 
     public static final HashMap<String, Permission> PERMISSIONS = new HashMap<>();
-    private static final HashMap<Member, Permission> MEMBER_PERMISSIONS = new HashMap<>();
+    private static final WeakHashMap<Member, Permission> MEMBER_PERMISSIONS = new WeakHashMap<>();
 
     public static void loadPermissions() {
         for (Permission permission : Permission.values()) {
