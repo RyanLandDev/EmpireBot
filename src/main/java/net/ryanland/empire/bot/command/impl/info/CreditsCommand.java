@@ -33,7 +33,7 @@ public class CreditsCommand extends Command {
         // Gets a hashmap of all the user IDs with ranks
         // DOES NOT WORK IF RankHandler'S HASHMAP IS OUT OF ORDER.
         HashMap<Long, Permission> userRanks = RankHandler.getUserRanks();
-        // StringBuilder to construct the final output
+        // List to construct the final output
         List<String> devListBuilder = new ArrayList<>();
 
         Permission oldValue = null;
