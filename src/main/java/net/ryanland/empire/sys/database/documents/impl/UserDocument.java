@@ -24,9 +24,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private int wave = getWave();
 
     @Override
-    public void update() {
-        List<Bson> updates = new ArrayList<>();
-
+    public void updated(List<Bson> updates) {
         checkUpdate(updates, level, getLevel(), "level");
         checkUpdate(updates, crystals, getCrystals(), "crystals");
         checkUpdate(updates, gold, getGold(), "gold");
@@ -34,7 +32,6 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         checkUpdate(updates, wave, getWave(), "wave");
 
         DocumentCache.USER_COLLECTION.updateMany(Filters.eq("id", getId()), updates);
-        cache();
     }
 
     @Override

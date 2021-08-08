@@ -21,13 +21,10 @@ public class GlobalDocument extends BaseDocument {
     private List<String> disabledCommands;
 
     @Override
-    public void update() {
-        List<Bson> updates = new ArrayList<>();
-
+    public void updated(List<Bson> updates) {
         checkUpdate(updates, disabledCommands, getDisabledCommandsRaw(), "disabledCommands");
 
         DocumentCache.GLOBAL_COLLECTION.updateMany(Filters.empty(), updates);
-        cache();
     }
 
     @Override

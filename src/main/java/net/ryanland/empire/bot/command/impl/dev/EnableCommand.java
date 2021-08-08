@@ -17,7 +17,7 @@ public class EnableCommand extends Command {
     @Override
     public CommandData getData() {
         return new CommandData()
-                .name("enables")
+                .name("enable")
                 .description("Re-enables a globally disabled command.")
                 .category(Category.DEVELOPER)
                 .permission(Permission.DEVELOPER)

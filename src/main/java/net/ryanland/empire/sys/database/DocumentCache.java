@@ -1,6 +1,5 @@
 package net.ryanland.empire.sys.database;
 
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import net.dv8tion.jda.api.entities.ISnowflake;
@@ -13,6 +12,7 @@ import org.bson.Document;
 
 import java.util.Objects;
 import java.util.WeakHashMap;
+import java.util.function.Supplier;
 
 public class DocumentCache {
 
@@ -56,17 +56,17 @@ public class DocumentCache {
     // --------------------------------------------
 
     public static GlobalDocument getGlobal() {
-        return nullOr(GLOBAL_CACHE, retrieveGlobal());
+        return nullOr(GLOBAL_CACHE, DocumentCache::retrieveGlobal);
     }
 
     public static GlobalDocument retrieveGlobal() {
-        return nullOr(findGlobal(), insertGlobal());
+        return nullOr(findGlobal(), DocumentCache::insertGlobal);
     }
 
     public static GlobalDocument findGlobal() {
         Document document = GLOBAL_COLLECTION.find().first();
-
         if (document == null) return null;
+
         return new GlobalDocument(document);
     }
 
@@ -74,7 +74,6 @@ public class DocumentCache {
         Document document = new Document();
         GLOBAL_COLLECTION.insertOne(document);
 
-        cache(document, GlobalDocument.class);
         return new GlobalDocument(document);
     }
 
@@ -83,7 +82,7 @@ public class DocumentCache {
     }
 
     public static <T extends BaseDocument & SnowflakeDocument> T get(String id, Class<T> type) {
-        return nullOr(getFromCache(id, type), retrieve(id, type));
+        return nullOr(getFromCache(id, type), () -> retrieve(id, type));
     }
 
     @SuppressWarnings("unchecked")
@@ -92,14 +91,13 @@ public class DocumentCache {
     }
 
     public static <T extends BaseDocument & SnowflakeDocument> T retrieve(String id, Class<T> type) {
-        return nullOr(find(id, type), insert(id, type));
+        return nullOr(find(id, type), () -> insert(id, type));
     }
 
     public static <T extends BaseDocument & SnowflakeDocument> T find(String id, Class<T> type) {
         Document document = getCollection(type).find(Filters.eq("id", id)).first();
         if (document == null) return null;
 
-        cache(document, type);
         return castDocument(document, type);
     }
 
@@ -107,7 +105,6 @@ public class DocumentCache {
         Document document = new Document("id", id);
         getCollection(type).insertOne(document);
 
-        cache(document, type);
         return castDocument(document, type);
     }
 
@@ -133,10 +130,10 @@ public class DocumentCache {
     }
 
     /**
-     * Alternative to {@link Objects#requireNonNullElse(Object, Object)}
+     * Alternative to {@link Objects#requireNonNullElse(Object, Object)} with {@link Supplier}
      */
-    public static <T> T nullOr(T object, T compareTo) {
-        return object != null ? object : compareTo;
+    public static <T> T nullOr(T object, Supplier<T> compareTo) {
+        return object != null ? object : compareTo.get();
     }
 
 }
