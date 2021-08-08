@@ -129,7 +129,8 @@ public class HelpMaker {
 
     public static PresetBuilder commandEmbed(CommandEvent event, Command command) {
         PresetBuilder embed = new PresetBuilder()
-                .setTitle(command.getUppercasedName() + " Command")
+                .setTitle(command.getUppercasedName() + " Command" + 
+                         (command.isDisabled() ? " [Disabled]" : ""))
                 .setDescription(command.getDescription() + "\n\u200b")
                 .addLogo()
                 .addField("Category", command.getCategory().getName())
@@ -150,7 +151,9 @@ public class HelpMaker {
         List<String> commandNames = new ArrayList<>();
 
         for (Command command : commands) {
-            commandNames.add(command.getName());
+            if (!command.isDisabled()) {
+                commandNames.add(command.getName());
+            }
         }
 
         return "`" + String.join("` `", commandNames) + "`";
