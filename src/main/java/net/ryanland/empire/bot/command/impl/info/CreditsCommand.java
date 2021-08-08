@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.dev;
+package net.ryanland.empire.bot.command.impl.info;
 
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
@@ -10,18 +10,18 @@ import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
-public class DevNamesCommand extends Command {
+
+public class CreditsCommand extends Command {
 
     @Override
     public CommandData getData() {
         return new CommandData()
-                .name("devnames")
-                .description("Lists the current developers' names.")
+                .name("credits")
+                .description("Lists the bot's credits.")
                 .category(Category.INFORMATION);
     }
 
@@ -35,17 +35,23 @@ public class DevNamesCommand extends Command {
         // StringBuilder to construct the final output
         List<String> devListBuilder = new ArrayList<>();
 
+        Permission oldValue = null;
         // Iterates through hashmap keys and adds the developers to the list
-        devListBuilder.add("The current developers are;\n");
         for (Long id : userRanks.keySet()) {
             Permission value = userRanks.get(id);
-            devListBuilder.add(String.format("• <@%s> %s", id, value.getName()));
+            if (value.equals(oldValue)) {
+                devListBuilder.add(String.format("• <@%s>", id));
+            } else {
+                devListBuilder.add(String.format("\n**%s**",value.getName()));
+                devListBuilder.add(String.format("• <@%s>", id));
+                oldValue = value;
+            }
         }
 
         event.reply(
                 new PresetBuilder(String.join("\n", devListBuilder)
-                        )
-                        .setTitle("Developers")
+                )
+                        .setTitle("Credits")
         );
     }
 }

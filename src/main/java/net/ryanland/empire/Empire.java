@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.executor.disable.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.impl.dev.*;
+import net.ryanland.empire.bot.command.impl.info.CreditsCommand;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
