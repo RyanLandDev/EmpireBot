@@ -31,8 +31,9 @@ public class CreditsCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         // Gets a hashmap of all the user IDs with ranks
+        // DOES NOT WORK IF RankHandler'S HASHMAP IS OUT OF ORDER.
         HashMap<Long, Permission> userRanks = RankHandler.getUserRanks();
-        // StringBuilder to construct the final output
+        // List to construct the final output
         List<String> devListBuilder = new ArrayList<>();
 
         Permission oldValue = null;
@@ -42,6 +43,7 @@ public class CreditsCommand extends Command {
             if (value.equals(oldValue)) {
                 devListBuilder.add(String.format("• <@%s>", id));
             } else {
+                // Automatically creates a new category when a new permission level is reached.
                 devListBuilder.add(String.format("\n**%s**",value.getName()));
                 devListBuilder.add(String.format("• <@%s>", id));
                 oldValue = value;
