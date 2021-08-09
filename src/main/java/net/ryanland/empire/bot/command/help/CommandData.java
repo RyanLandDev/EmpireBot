@@ -1,10 +1,13 @@
 package net.ryanland.empire.bot.command.help;
 
 import net.ryanland.empire.bot.command.executor.data.Flag;
+import net.ryanland.empire.bot.command.impl.SubCommand;
+import net.ryanland.empire.bot.command.impl.SubCommandGroup;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.sys.file.StorageType;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class CommandData {
@@ -18,6 +21,10 @@ public class CommandData {
     private int cooldown;
     private StorageType cooldownStorageType = StorageType.MEMORY;
     private boolean requiresProfile = false;
+    private List<SubCommand> subCommands;
+    private List<SubCommandGroup> subCommandGroups;
+    private HashMap<String, SubCommand> subCommandMap;
+    private HashMap<String, SubCommandGroup> subCommandGroupMap;
 
     public CommandData name(String name) {
         this.name = name;
@@ -64,6 +71,24 @@ public class CommandData {
         return this;
     }
 
+    public CommandData subCommands(SubCommand... subCommands) {
+        this.subCommands = Arrays.asList(subCommands);
+        this.subCommandMap = new HashMap<>();
+        for (SubCommand cmd : subCommands) {
+            this.subCommandMap.put(cmd.getName(), cmd);
+        }
+        return this;
+    }
+
+    public CommandData subCommandGroups(SubCommandGroup... subCommandGroups) {
+        this.subCommandGroups = Arrays.asList(subCommandGroups);
+        this.subCommandGroupMap = new HashMap<>();
+        for (SubCommandGroup group : subCommandGroups) {
+            this.subCommandGroupMap.put(group.getName(), group);
+        }
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -106,5 +131,13 @@ public class CommandData {
 
     public boolean isProfileRequired() {
         return requiresProfile;
+    }
+
+    public List<SubCommand> getSubCommands() {
+        return subCommands;
+    }
+
+    public List<SubCommandGroup> getSubCommandGroups() {
+        return subCommandGroups;
     }
 }

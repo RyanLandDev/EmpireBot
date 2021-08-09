@@ -9,6 +9,7 @@ public abstract class Argument<T> {
 
     private String name;
     private String id;
+    private String description;
     private boolean optional = false;
 
     public String getName() {
@@ -36,6 +37,15 @@ public abstract class Argument<T> {
     public Argument<T> optional() {
         this.optional = true;
         return this;
+    }
+
+    public Argument<T> description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public abstract T parse(Queue<String> arguments, CommandEvent event) throws ArgumentException;
