@@ -17,14 +17,14 @@ import java.util.function.Supplier;
 public class DocumentCache {
 
     // Collections
-    public static MongoCollection<Document> GLOBAL_COLLECTION = MongoDB.DATABASE.getCollection("global");
-    public static MongoCollection<Document> GUILD_COLLECTION = MongoDB.DATABASE.getCollection("guilds");
-    public static MongoCollection<Document> USER_COLLECTION = MongoDB.DATABASE.getCollection("users");
+    public static final MongoCollection<Document> GLOBAL_COLLECTION = MongoDB.DATABASE.getCollection("global");
+    public static final MongoCollection<Document> GUILD_COLLECTION = MongoDB.DATABASE.getCollection("guilds");
+    public static final MongoCollection<Document> USER_COLLECTION = MongoDB.DATABASE.getCollection("users");
 
     // Caches
-    public static GlobalDocument GLOBAL_CACHE;
-    public static WeakHashMap<String, GuildDocument> GUILD_CACHE = new WeakHashMap<>();
-    public static WeakHashMap<String, UserDocument> USER_CACHE = new WeakHashMap<>();
+    public static volatile GlobalDocument GLOBAL_CACHE;
+    public static volatile WeakHashMap<String, GuildDocument> GUILD_CACHE = new WeakHashMap<>();
+    public static volatile WeakHashMap<String, UserDocument> USER_CACHE = new WeakHashMap<>();
 
     @SuppressWarnings("unchecked")
     public static <R, T extends BaseDocument> R getCache(Class<T> type) {
