@@ -22,7 +22,6 @@ public class TutorialMaker {
         if (body.contains("%field%")) {
             // If not, splits the body by %field% and iterates through the array adding new fields.
             String[] fieldValues = body.split("%field%");
-            System.out.println(fieldValues);
             for (String value : fieldValues) {
                 builder.addField("",value,false);
             }

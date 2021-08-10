@@ -75,7 +75,8 @@ public class Empire {
         // Register Tutorials
         TutorialHandler.register(
             Tutorial.CONTRIBUTE,
-            Tutorial.BEST
+            Tutorial.BEST,
+            Tutorial.PULL_REQUEST
         );
 
         // Build bot
