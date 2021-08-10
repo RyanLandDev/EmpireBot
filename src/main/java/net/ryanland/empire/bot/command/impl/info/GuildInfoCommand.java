@@ -2,6 +2,7 @@ package net.ryanland.empire.bot.command.impl.info;
 
 
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.IMentionable;
 import net.dv8tion.jda.api.entities.Role;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.help.Category;
@@ -29,10 +30,8 @@ public class GuildInfoCommand extends Command {
     public void run(CommandEvent event) {
         PresetBuilder builder = new PresetBuilder();
         final Guild GUILD = event.getGuild();
-        String roles = "";
-        for (Role role : GUILD.getRoles()) {
-            roles += role.getAsMention();
-        }
+        // Returns all the roles in the Discord as a string of mentions.
+        String roles = GUILD.getRoles().stream().map(IMentionable::getAsMention).collect(java.util.stream.Collectors.toList()).toString();
 
         builder
                 .setTitle(GUILD.getName())
