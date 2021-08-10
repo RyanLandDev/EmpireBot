@@ -12,6 +12,7 @@ import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.InvalidTestGuildException;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.info.CreditsCommand;
+import net.ryanland.empire.bot.command.impl.info.GuildInfoCommand;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
 import net.ryanland.empire.bot.command.impl.info.UserCommand;
@@ -68,16 +69,16 @@ public class Empire {
                 new DisableCommand(),
                 new EnableCommand(),
                 new StopCommand(),
-                new CreditsCommand()
+                new CreditsCommand(),
+                new GuildInfoCommand()
         );
 
         // Build bot
         JDABuilder builder = JDABuilder.createDefault(config.getToken())
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
                 .setStatus(OnlineStatus.ONLINE)
-                .setActivity(Activity.watching("for " + config.getPrefix() + "help"))
                 .setGatewayEncoding(GatewayEncoding.ETF)
-                .setActivity(Activity.watching("empires | ;help"))
+                .setActivity(Activity.watching("empires | /help"))
                 .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
                 .addEventListeners(
         // Register events
