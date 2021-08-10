@@ -13,8 +13,6 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
-import java.util.Arrays;
-
 public class TutorialCommand extends Command {
     @Override
     public CommandData getData() {
@@ -53,7 +51,7 @@ public class TutorialCommand extends Command {
 
         } catch (IndexOutOfBoundsException e) {
             String tutorialList = "";
-            for (Tutorial tutorial : Tutorial.getTutorials()) {
+            for (Tutorial tutorial : Tutorial.values()) {
                 tutorialList += String.format("`%s` ",tutorial.getExecutor());
             }
 

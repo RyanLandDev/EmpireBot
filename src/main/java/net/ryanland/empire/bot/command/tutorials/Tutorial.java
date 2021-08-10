@@ -1,7 +1,5 @@
 package net.ryanland.empire.bot.command.tutorials;
 
-import org.codehaus.groovy.control.CompilationUnit;
-
 import java.util.Objects;
 
 public enum Tutorial {
@@ -22,8 +20,6 @@ public enum Tutorial {
         this.body = body;
         this.thumbnail = thumbnail;
     }
-
-    public static Tutorial[] getTutorials() { return values(); }
 
     public String getExecutor() { return executor; }
 

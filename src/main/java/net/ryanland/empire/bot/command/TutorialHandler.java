@@ -2,13 +2,10 @@ package net.ryanland.empire.bot.command;
 
 import net.ryanland.empire.bot.command.tutorials.Tutorial;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class TutorialHandler {
 
-    private static final List<Tutorial> TUTORIALS = new ArrayList<>();
     private static final HashMap<String, Tutorial> EXECUTORS = new HashMap<>();
 
     public static void register(Tutorial... tutorials) {
@@ -19,12 +16,9 @@ public class TutorialHandler {
                         "- Tutorials must have at least an executor, name, description, and body.");
             }
 
-            TUTORIALS.add(tutorial);
             EXECUTORS.put(tutorial.getExecutor(), tutorial);
         }
     }
-
-    public static List<Tutorial> getTutorials() { return TUTORIALS; }
 
     public static HashMap<String, Tutorial> getExecutors() { return EXECUTORS; }
 
