@@ -10,13 +10,12 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.InvalidTestGuildException;
+import net.ryanland.empire.bot.command.TutorialHandler;
 import net.ryanland.empire.bot.command.impl.dev.*;
-import net.ryanland.empire.bot.command.impl.info.CreditsCommand;
-import net.ryanland.empire.bot.command.impl.info.HelpCommand;
-import net.ryanland.empire.bot.command.impl.info.PingCommand;
-import net.ryanland.empire.bot.command.impl.info.UserCommand;
+import net.ryanland.empire.bot.command.impl.info.*;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
+import net.ryanland.empire.bot.command.tutorials.Tutorial;
 import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.bot.events.SlashCommandListener;
@@ -68,16 +67,23 @@ public class Empire {
                 new DisableCommand(),
                 new EnableCommand(),
                 new StopCommand(),
-                new CreditsCommand()
+                new CreditsCommand(),
+                new GuildInfoCommand(),
+                new TutorialCommand()
+        );
+
+        // Register Tutorials
+        TutorialHandler.register(
+            Tutorial.CONTRIBUTE,
+            Tutorial.BEST
         );
 
         // Build bot
         JDABuilder builder = JDABuilder.createDefault(config.getToken())
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
                 .setStatus(OnlineStatus.ONLINE)
-                .setActivity(Activity.watching("for " + config.getPrefix() + "help"))
                 .setGatewayEncoding(GatewayEncoding.ETF)
-                .setActivity(Activity.watching("empires | ;help"))
+                .setActivity(Activity.watching("empires | /help"))
                 .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
                 .addEventListeners(
         // Register events
