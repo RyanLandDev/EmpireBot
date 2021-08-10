@@ -4,8 +4,12 @@ import java.util.Objects;
 
 public enum Tutorial {
 
-    CONTRIBUTE("contribute","How to Contribute", "Want to help out the bot?", "We have a support server and github repo. gl finding them ig",""),
-    BEST("best","How to identify an amazing person","It's a necessary life skill.", "If their name starts with General_ and ends with Mudkip you've found them.","https://cdn.discordapp.com/emojis/774263473483153418.png?v=1");
+    // Remember to add it to Empire.java lol
+    // %field% to create new fields.
+    CONTRIBUTE("contribute","How to Contribute", "Want to help out the bot?",
+            "We have a support server and GitHub repository which you can contribute to.",""),
+    BEST("best","How to identify an amazing person","It's a necessary life skill.",
+            "If their name starts with General_ and ends with Mudkip you've found them.%field%god I love mudkips.%field%%field%lovelovelove","https://cdn.discordapp.com/emojis/774263473483153418.png?v=1");
 
     private final String executor;
     private final String name;
