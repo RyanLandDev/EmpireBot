@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.impl.info;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.TutorialArgument;
 import net.ryanland.empire.bot.command.help.Category;
@@ -30,21 +31,39 @@ public class TutorialCommand extends Command {
                         .id("tutorial")
                         .name("tutorial")
                         .description("The name of the tutorial.")
+                        .optional()
         );
     }
 
     @Override
     public void run(CommandEvent event) {
-        String tutorialName = event.getRawArgs()[0];
 
-        Tutorial tutorial = TutorialHandler.getTutorial(tutorialName);
+        try {
+            String tutorialName = event.getRawArgs()[0];
 
-        if (tutorial == null) {
-            event.reply(new PresetBuilder(
-                    PresetType.ERROR, "Tutorial not found.", "Not found"
-            )).setEphemeral(true).queue();
-        } else {
-            supplyTutorialHelp(event, tutorial);
+            Tutorial tutorial = TutorialHandler.getTutorial(tutorialName);
+
+            if (tutorial == null) {
+                event.reply(new PresetBuilder(
+                        PresetType.ERROR, "Tutorial not found.", "Not found"
+                )).setEphemeral(true).queue();
+            } else {
+                supplyTutorialHelp(event, tutorial);
+            }
+
+        } catch (IndexOutOfBoundsException e) {
+            String tutorialList = "";
+            for (Tutorial tutorial : Tutorial.getTutorials()) {
+                tutorialList += String.format("`%s` ",tutorial.getExecutor());
+            }
+
+            EmbedBuilder builder = new EmbedBuilder();
+            builder
+                    .setTitle("Tutorials")
+                    .setDescription("Tutorials give you a brief overview of some of the mechanics of the bot.\n")
+                    .addField("Tutorials", tutorialList, true);
+
+            event.reply(builder.build()).queue();
         }
     }
 

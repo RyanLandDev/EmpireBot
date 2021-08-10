@@ -1,5 +1,7 @@
 package net.ryanland.empire.bot.command.tutorials;
 
+import org.codehaus.groovy.control.CompilationUnit;
+
 import java.util.Objects;
 
 public enum Tutorial {
