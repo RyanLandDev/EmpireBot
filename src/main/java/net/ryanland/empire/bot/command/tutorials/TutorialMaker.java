@@ -10,9 +10,10 @@ public class TutorialMaker {
     public static PresetBuilder tutorialEmbed(CommandEvent event, Tutorial tutorial) {
 
         return new PresetBuilder()
-                .setTitle(tutorial.getName() + " Tutorial")
-                .setDescription(tutorial.getDescription() + "\n\u200b")
+                .setTitle(tutorial.getName())
+                .setDescription("*"+tutorial.getDescription()+"*")
                 .addLogo()
-                .addField("",tutorial.getBody());
+                .addField("",tutorial.getBody())
+                .setThumbnail((tutorial.hasThumbnail()) ? (tutorial.getThumbnail()) : "https://upload.wikimedia.org/wikipedia/commons/4/43/Minimalist_info_Icon.png");
     }
 }

@@ -2,14 +2,17 @@ package net.ryanland.empire.bot.command.impl.info;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.TutorialArgument;
-import net.ryanland.empire.bot.command.executor.CommandException;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.impl.Command;
+import net.ryanland.empire.bot.command.TutorialHandler;
 import net.ryanland.empire.bot.command.tutorials.Tutorial;
 import net.ryanland.empire.bot.command.tutorials.TutorialMaker;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.message.interactions.tabmenu.TabMenuBuilder;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.PresetType;
+
+import java.util.Arrays;
 
 public class TutorialCommand extends Command {
     @Override
@@ -25,21 +28,27 @@ public class TutorialCommand extends Command {
         return new ArgumentSet().addArguments(
                 new TutorialArgument()
                         .id("tutorial")
-                        .description("description")
+                        .name("tutorial")
+                        .description("The name of the tutorial.")
         );
     }
 
     @Override
     public void run(CommandEvent event) {
-        Tutorial tutorial = event.getArgument("tutorial");
-        System.out.println(tutorial);
-        System.out.println(tutorial.getName());
-        System.out.println(tutorial.getBody());
+        String tutorialName = event.getRawArgs()[0];
 
-        supplyTutorialHelp(event, tutorial);
+        Tutorial tutorial = TutorialHandler.getTutorial(tutorialName);
+
+        if (tutorial == null) {
+            event.reply(new PresetBuilder(
+                    PresetType.ERROR, "Tutorial not found.", "Not found"
+            )).setEphemeral(true).queue();
+        } else {
+            supplyTutorialHelp(event, tutorial);
+        }
     }
 
     private void supplyTutorialHelp(CommandEvent event, Tutorial tutorial) {
-        event.reply(TutorialMaker.tutorialEmbed(event, tutorial)).queue();
+        event.reply(TutorialMaker.tutorialEmbed(event, tutorial).build()).queue();
     }
 }
