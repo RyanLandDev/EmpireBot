@@ -11,11 +11,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.CommandHandler;
 import net.ryanland.empire.bot.command.InvalidTestGuildException;
 import net.ryanland.empire.bot.command.impl.dev.*;
-import net.ryanland.empire.bot.command.impl.info.CreditsCommand;
-import net.ryanland.empire.bot.command.impl.info.GuildInfoCommand;
-import net.ryanland.empire.bot.command.impl.info.HelpCommand;
-import net.ryanland.empire.bot.command.impl.info.PingCommand;
-import net.ryanland.empire.bot.command.impl.info.UserCommand;
+import net.ryanland.empire.bot.command.impl.info.*;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.ButtonEvent;
@@ -70,7 +66,8 @@ public class Empire {
                 new EnableCommand(),
                 new StopCommand(),
                 new CreditsCommand(),
-                new GuildInfoCommand()
+                new GuildInfoCommand(),
+                new TutorialCommand()
         );
 
         // Build bot

@@ -24,7 +24,7 @@ public class TutorialCommand extends Command {
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
                 new TutorialArgument()
-                        .name("tutorial")
+                        .id("tutorial")
                         .description("description")
         );
     }
@@ -32,6 +32,11 @@ public class TutorialCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         Tutorial tutorial = event.getArgument("tutorial");
+        System.out.println(tutorial);
+        System.out.println(tutorial.getName());
+        System.out.println(tutorial.getBody());
+
+        supplyTutorialHelp(event, tutorial);
     }
 
     private void supplyTutorialHelp(CommandEvent event, Tutorial tutorial) {

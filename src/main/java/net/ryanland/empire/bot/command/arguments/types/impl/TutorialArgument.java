@@ -9,7 +9,7 @@ import net.ryanland.empire.bot.events.CommandEvent;
 
 public class TutorialArgument extends SingleArgument<Tutorial> {
 
-    public Tutorial parsed(String name, String description, String body) throws ArgumentException {
+    public Tutorial parsed(String name) throws ArgumentException {
         Tutorial tutorial = TutorialHandler.getTutorial(name);
 
         if (tutorial == null) {

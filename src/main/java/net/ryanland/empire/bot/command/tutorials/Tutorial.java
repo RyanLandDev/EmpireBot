@@ -2,7 +2,7 @@ package net.ryanland.empire.bot.command.tutorials;
 
 public enum Tutorial {
 
-    TEST("Test Tutorial", "This is a test!", "Test etst setstsetse tset set set");
+    TEST("test", "This is a test!", "Test etst setstsetse tset set set");
 
     private final String name;
     private final String description;
