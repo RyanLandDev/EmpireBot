@@ -65,6 +65,11 @@ public class CommandExecutor {
                 try {
                     command.run(event);
                 } catch (Exception e) {
+                    /*
+                     * Remove the comment below to print the stack trace. Instead of the printstacktrace the bot sends
+                     * the error message in chat in an embed, so if anything throws, the user notices. Advantage of that
+                     * is that you don't have to use try catch blocks in your .run() methods, if something throws it ends up here :)
+                     */
                     //if (!(e instanceof CommandException)) e.printStackTrace();
                     event.reply(
                             new PresetBuilder(PresetType.ERROR,
