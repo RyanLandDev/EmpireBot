@@ -12,6 +12,6 @@ public class SlashCommandListener extends ListenerAdapter {
         String commandName = event.getName();
         Command command = CommandHandler.getCommand(commandName);
 
-
+        CommandHandler.run(new CommandEvent(event));
     }
 }

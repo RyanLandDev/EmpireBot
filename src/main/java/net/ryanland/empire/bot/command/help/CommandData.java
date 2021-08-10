@@ -140,4 +140,12 @@ public class CommandData {
     public List<SubCommandGroup> getSubCommandGroups() {
         return subCommandGroups;
     }
+
+    public HashMap<String, SubCommand> getSubCommandMap() {
+        return subCommandMap;
+    }
+
+    public HashMap<String, SubCommandGroup> getSubCommandGroupMap() {
+        return subCommandGroupMap;
+    }
 }

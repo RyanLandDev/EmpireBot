@@ -28,6 +28,6 @@ public class PingCommand extends Command {
                 new PresetBuilder(
                         "Ping: " + event.getJDA().getRestPing().complete() + "ms."
                 )
-        );
+        ).queue();
     }
 }

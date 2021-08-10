@@ -30,6 +30,7 @@ public class DisableCommand extends Command {
         return new ArgumentSet().addArguments(
                 new CommandArgument()
                     .id("command")
+                    .description("Command to disable")
         );
     }
 
@@ -41,6 +42,6 @@ public class DisableCommand extends Command {
         event.reply(
                 new PresetBuilder(PresetType.SUCCESS,
                         "Disabled the `"+command.getName()+"` command.")
-        );
+        ).queue();
     }
 }

@@ -30,6 +30,7 @@ public class EnableCommand extends Command {
         return new ArgumentSet().addArguments(
                 new CommandArgument()
                     .id("command")
+                    .description("Command to enable")
         );
     }
 
@@ -41,6 +42,6 @@ public class EnableCommand extends Command {
         event.reply(
                 new PresetBuilder(PresetType.SUCCESS,
                         "Re-enabled the `"+command.getName()+"` command.")
-        );
+        ).queue();
     }
 }

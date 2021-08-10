@@ -36,6 +36,7 @@ public class EvalCommand extends Command {
         return new ArgumentSet().addArguments(
                 new EndlessStringArgument()
                     .id("code")
+                    .description("Code to execute")
         );
     }
 
@@ -65,7 +66,7 @@ public class EvalCommand extends Command {
 
             builder.setTitle("Eval Result");
             builder.addField("Object Returned:", String.format("```js\n%s```", object), false);
-            event.getChannel().sendMessage(builder.build()).queue();
+            event.reply(builder.build()).queue();
 
         } catch (Throwable e) {
             StringWriter sw = new StringWriter();
@@ -73,7 +74,7 @@ public class EvalCommand extends Command {
             String sStackTrace = sw.toString();
 
             builder.setTitle("Eval failed!");
-            event.getChannel().sendMessage(builder.build()).queue();
+            event.reply(builder.build()).queue();
             event.getChannel().sendMessage(String.format("```%s```", sStackTrace.length() >= 1500 ? sStackTrace.substring(0, 1500) : sStackTrace)).queue();
         }
     }

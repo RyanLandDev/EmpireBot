@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.Empire;
+import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 
@@ -33,7 +34,7 @@ public class TabMenu {
         send(null);
     }
 
-    public void send(Message referMsg) {
+    public void send(CommandEvent cmdEvent) {
         // Set all embed titles to match the category name
         for (TabMenuPage page : pages) {
             EmbedBuilder embed = page.getEmbed();
@@ -63,14 +64,13 @@ public class TabMenu {
         }
 
         // Send the message and set the action rows
-        Empire.getJda().getTextChannelById(channelId).sendMessage(pages[0].getEmbed().build())
-                .reference(referMsg).mentionRepliedUser(false)
-                .setActionRows(InteractionUtil.of(buttons)).queue(message -> {
+        cmdEvent.reply(pages[0].getEmbed().build())
+                .addActionRows(InteractionUtil.of(buttons)).queue(message -> {
         // Add a listener for when a button is clicked
             ButtonHandler.addListener(message, userId, event -> {
                 event.deferEdit().queue();
-                message.editMessage(pageMap.get(event.getComponentId()).getEmbed().build())
-                        .setActionRows(message.getActionRows()).queue();
+                message.editOriginalEmbeds(pageMap.get(event.getComponentId()).getEmbed().build())
+                        .queue();
             });
         });
     }

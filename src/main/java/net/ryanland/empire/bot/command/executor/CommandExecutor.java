@@ -31,7 +31,7 @@ public class CommandExecutor {
     public void run(CommandEvent event) {
         String[] args = event.getRawArgs();
 
-        Command command = CommandHandler.getCommand(args[0]);
+        Command command = CommandHandler.getCommand(event.getName());
         if (command == null) return;
         event.setCommand(command);
 
@@ -40,11 +40,17 @@ public class CommandExecutor {
 
     public void execute(CommandEvent event, String[] args) {
         Command command = event.getCommand();
+        if (event.getSubCommandGroup() != null) {
+            command = command.getData().getSubCommandGroupMap().get(event.getSubCommandGroup()).getSubCommand(event.getSubCommandName());
+        } else if (event.getSubCommandName() != null) {
+            command = command.getData().getSubCommandMap().get(event.getSubCommandName());
+        }
+        event.setCommand(command);
 
         try {
             for (CommandCheck check : checks) {
                 if (check.check(event)) {
-                    event.reply(check.buildMessage(event));
+                    event.reply(check.buildMessage(event), true).queue();
                     throw new CommandCheckException();
                 }
             }
@@ -59,13 +65,13 @@ public class CommandExecutor {
                 try {
                     command.run(event);
                 } catch (Exception e) {
-                    if (!(e instanceof CommandException)) e.printStackTrace();
+                    //if (!(e instanceof CommandException)) e.printStackTrace();
                     event.reply(
                             new PresetBuilder(PresetType.ERROR,
                                     e instanceof CommandException ?
                                             e.getMessage() :
-                                            "Unknown error, please report it to a developer."
-                            ));
+                                            "An error occurred while trying to perform your command: ```\n" + e.getMessage() + "```"
+                            ).setTitle("Oops, something went wrong..."), true).queue();
                 }
             }
 

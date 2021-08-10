@@ -35,6 +35,7 @@ public class HelpCommand extends Command {
                 new CommandArgument()
                     .id("command")
                     .optional()
+                    .description("Command to get information of")
         );
     }
 
@@ -53,7 +54,7 @@ public class HelpCommand extends Command {
         // Init menu
         TabMenuBuilder menu = new TabMenuBuilder()
                 .setChannelId(event.getChannel().getIdLong())
-                .setUserId(event.getAuthor().getIdLong());
+                .setUserId(event.getUser().getIdLong());
 
         // Add home to menu
         PresetBuilder homePage = new PresetBuilder(
@@ -84,10 +85,10 @@ public class HelpCommand extends Command {
         }
 
         // Build and send the menu
-        menu.build().send(event.getMessage());
+        menu.build().send(event);
     }
 
     private void supplyCommandHelp(CommandEvent event, Command command) {
-        event.reply(HelpMaker.commandEmbed(event, command));
+        event.reply(HelpMaker.commandEmbed(event, command)).queue();
     }
 }

@@ -19,10 +19,10 @@ public class HelpMaker {
         List<String> elements = new ArrayList<>();
 
         String[] rawArgs = event.getRawArgs();
-        elements.add(event.getPrefix() + rawArgs[0]);
+        elements.add("/" + event.getName());
 
         if (command instanceof SubCommand) {
-            elements.add(rawArgs[1]);
+            elements.add(rawArgs[0]);
         }
 
         ArgumentSet arguments = command.getArguments();

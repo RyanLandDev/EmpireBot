@@ -20,7 +20,7 @@ public class ArgumentParser {
 
     public ArgumentParser(CommandEvent event) {
         this.event = event;
-        this.args = event.getMessage().getContentRaw().split("\\s+");
+        this.args = event.getRawArgs();
     }
 
     public ArgumentParser(CommandEvent event, String[] args) {
@@ -30,7 +30,6 @@ public class ArgumentParser {
 
     public boolean parseArguments() {
         Queue<String> queue = new LinkedList<>(Arrays.asList(args));
-        queue.remove();
         ParsedArgumentMap parsedArgs = new ParsedArgumentMap();
 
         Command command = event.getCommand();
@@ -46,7 +45,7 @@ public class ArgumentParser {
                 event.reply(embed
                         .setDescription(e.getMessage(event, arg))
                         .setTitle("Invalid Argument")
-                );
+                , true).queue();
                 return false;
 
             } catch (MissingArgumentException e) {
@@ -54,7 +53,7 @@ public class ArgumentParser {
                     event.reply(embed
                             .setDescription(e.getMessage(event, arg))
                             .setTitle("Missing Argument")
-                    );
+                    , true).queue();
                     return false;
                 }
 

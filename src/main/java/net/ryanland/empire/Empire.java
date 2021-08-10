@@ -14,6 +14,7 @@ import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.info.CreditsCommand;
 import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
+import net.ryanland.empire.bot.command.impl.info.UserCommand;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.ButtonEvent;
@@ -57,6 +58,7 @@ public class Empire {
                 // Information
                 new HelpCommand(),
                 new PingCommand(),
+                new UserCommand(),
 
                 // Developer
                 new MimicCommand(),

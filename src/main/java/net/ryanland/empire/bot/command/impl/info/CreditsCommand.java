@@ -54,6 +54,6 @@ public class CreditsCommand extends Command {
                 new PresetBuilder(String.join("\n", devListBuilder)
                 )
                         .setTitle("Credits")
-        );
+        ).queue();
     }
 }

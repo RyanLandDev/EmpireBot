@@ -7,6 +7,8 @@ import net.ryanland.empire.bot.command.help.CommandData;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class MimicCommand extends Command {
 
@@ -24,6 +26,7 @@ public class MimicCommand extends Command {
         return new ArgumentSet().addArguments(
                 new EndlessStringArgument()
                     .id("message")
+                    .description("Message to send")
         );
     }
 
@@ -31,7 +34,7 @@ public class MimicCommand extends Command {
     public void run(CommandEvent event) {
         String message = event.getArgument("message");
 
-        event.getMessage().delete().queue();
+        event.reply(new PresetBuilder(PresetType.SUCCESS, "Your message was sent."), true).queue();
         event.getChannel().sendMessage(message).queue();
     }
 }

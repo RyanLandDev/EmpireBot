@@ -33,6 +33,6 @@ public class TestCommand extends Command {
 
 
 
-        event.reply(new PresetBuilder(PresetType.SUCCESS).setTitle("Test finished."));
+        event.reply(new PresetBuilder(PresetType.SUCCESS).setTitle("Test finished.")).queue();
     }
 }
