@@ -31,5 +31,5 @@ public enum Tutorial {
 
     public String getThumbnail() { return thumbnail; }
 
-    public Boolean hasThumbnail() { return (!Objects.equals(thumbnail, "")); }
+    public Boolean hasThumbnail() { return thumbnail.isEmpty(); }
 }
