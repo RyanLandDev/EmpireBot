@@ -1,6 +1,4 @@
-package net.ryanland.empire.bot.command;
-
-import net.ryanland.empire.bot.command.tutorials.Tutorial;
+package net.ryanland.empire.sys.tutorials;
 
 import java.util.HashMap;
 

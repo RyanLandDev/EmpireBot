@@ -1,6 +1,6 @@
 package net.ryanland.empire.bot.command.arguments.types.impl;
 
-import net.ryanland.empire.bot.command.CommandHandler;
+import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.arguments.types.SingleArgument;

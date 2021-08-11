@@ -4,19 +4,19 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.TutorialArgument;
 import net.ryanland.empire.bot.command.help.Category;
-import net.ryanland.empire.bot.command.help.CommandData;
+import net.ryanland.empire.bot.command.help.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.bot.command.TutorialHandler;
-import net.ryanland.empire.bot.command.tutorials.Tutorial;
-import net.ryanland.empire.bot.command.tutorials.TutorialMaker;
+import net.ryanland.empire.sys.tutorials.TutorialHandler;
+import net.ryanland.empire.sys.tutorials.Tutorial;
+import net.ryanland.empire.sys.tutorials.TutorialMaker;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class TutorialCommand extends Command {
     @Override
-    public CommandData getData() {
-        return new CommandData()
+    public CommandInfo getInfo() {
+        return new CommandInfo()
                 .name("tutorial")
                 .description("A set of tutorials explaining the mechanics of the bot.")
                 .category(Category.INFORMATION);

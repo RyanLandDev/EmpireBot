@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class CommandData {
+public class CommandInfo {
 
     private String name;
     private String[] aliases = new String[0];
@@ -26,52 +26,52 @@ public class CommandData {
     private HashMap<String, SubCommand> subCommandMap;
     private HashMap<String, SubCommandGroup> subCommandGroupMap;
 
-    public CommandData name(String name) {
+    public CommandInfo name(String name) {
         this.name = name;
         return this;
     }
 
-    public CommandData aliases(String... aliases) {
+    public CommandInfo aliases(String... aliases) {
         this.aliases = aliases;
         return this;
     }
 
-    public CommandData description(String description) {
+    public CommandInfo description(String description) {
         this.description = description;
         return this;
     }
 
-    public CommandData category(Category category) {
+    public CommandInfo category(Category category) {
         this.category = category;
         return this;
     }
 
-    public CommandData permission(Permission permission) {
+    public CommandInfo permission(Permission permission) {
         this.permission = permission;
         return this;
     }
 
-    public CommandData flags(Flag... flags) {
+    public CommandInfo flags(Flag... flags) {
         this.flags = flags;
         return this;
     }
 
-    public CommandData cooldown(int cooldown) {
+    public CommandInfo cooldown(int cooldown) {
         this.cooldown = cooldown;
         return this;
     }
 
-    public CommandData cooldownStorage(StorageType cooldownStorageType) {
+    public CommandInfo cooldownStorage(StorageType cooldownStorageType) {
         this.cooldownStorageType = cooldownStorageType;
         return this;
     }
 
-    public CommandData requiresProfile() {
+    public CommandInfo requiresProfile() {
         this.requiresProfile = true;
         return this;
     }
 
-    public CommandData subCommands(SubCommand... subCommands) {
+    public CommandInfo subCommands(SubCommand... subCommands) {
         this.subCommands = Arrays.asList(subCommands);
         this.subCommandMap = new HashMap<>();
         for (SubCommand cmd : subCommands) {
@@ -80,7 +80,7 @@ public class CommandData {
         return this;
     }
 
-    public CommandData subCommandGroups(SubCommandGroup... subCommandGroups) {
+    public CommandInfo subCommandGroups(SubCommandGroup... subCommandGroups) {
         this.subCommandGroups = Arrays.asList(subCommandGroups);
         this.subCommandGroupMap = new HashMap<>();
         for (SubCommandGroup group : subCommandGroups) {

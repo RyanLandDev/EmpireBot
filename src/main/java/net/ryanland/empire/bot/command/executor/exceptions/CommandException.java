@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.executor;
+package net.ryanland.empire.bot.command.executor.exceptions;
 
 public class CommandException extends Exception {
     public CommandException() {

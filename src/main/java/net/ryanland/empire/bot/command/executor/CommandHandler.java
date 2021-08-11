@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command;
+package net.ryanland.empire.bot.command.executor;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -7,8 +7,9 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.Argument;
-import net.ryanland.empire.bot.command.arguments.types.impl.CommandArgument;
 import net.ryanland.empire.bot.command.executor.CommandExecutor;
+import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
+import net.ryanland.empire.bot.command.help.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.impl.SubCommandGroup;
@@ -40,32 +41,37 @@ public class CommandHandler {
         }
     }
 
-    public static void upsertAll() throws InvalidTestGuildException {
+    public static void upsertAll() throws InvalidSupportGuildException {
 
-        Guild testGuild = Empire.getJda().getGuildById("832384230331252816");
-        if (testGuild == null) throw new InvalidTestGuildException("Bot is not on test guild or provided guild id is invalid!");
+        Guild testGuild = Empire.getJda().getGuildById(Empire.SUPPORT_GUILD);
+        if (testGuild == null) throw new InvalidSupportGuildException("Bot is not on test guild or provided guild ID is invalid!");
 
         for (Command command : COMMANDS) {
-            net.ryanland.empire.bot.command.help.CommandData cmdData = command.getData();
-            CommandData slashCmdData = new CommandData(cmdData.getName(), cmdData.getDescription());
+            CommandInfo cmdInfo = command.getInfo();
+            CommandData slashCmdData = new CommandData(cmdInfo.getName(), cmdInfo.getDescription());
 
-            if (cmdData.getSubCommands() == null && cmdData.getSubCommandGroups() == null) {
+            if (cmdInfo.getSubCommands() == null && cmdInfo.getSubCommandGroups() == null) {
+
                 for (Argument<?> arg : command.getArguments()) {
                     slashCmdData.addOption(OptionType.STRING, arg.getName(), arg.getDescription(), !arg.isOptional());
                 }
-            } else if (cmdData.getSubCommandGroups() == null) {
-                for (SubCommand subCmd : cmdData.getSubCommands()) {
+            } else if (cmdInfo.getSubCommandGroups() == null) {
+
+                for (SubCommand subCmd : cmdInfo.getSubCommands()) {
                     SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());
+
                     for (Argument<?> arg : subCmd.getArguments()) {
                         subCmdData.addOption(OptionType.STRING, arg.getName(), arg.getDescription(), !arg.isOptional());
                     }
                     slashCmdData.addSubcommands(subCmdData);
                 }
             } else {
-                for(SubCommandGroup group : cmdData.getSubCommandGroups()) {
+                for (SubCommandGroup group : cmdInfo.getSubCommandGroups()) {
                     SubcommandGroupData subCmdGroupData = new SubcommandGroupData(group.getName(), group.getDescription());
+
                     for (SubCommand subCmd : group.getSubCommands()) {
                         SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());
+
                         for (Argument<?> arg : subCmd.getArguments()) {
                             subCmdData.addOption(OptionType.STRING, arg.getName(), arg.getDescription(), !arg.isOptional());
                         }

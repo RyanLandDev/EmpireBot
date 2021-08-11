@@ -1,7 +1,7 @@
 package net.ryanland.empire.bot.command.executor.data;
 
 import net.ryanland.empire.Empire;
-import net.ryanland.empire.bot.command.executor.CommandException;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
 
 import java.util.List;
