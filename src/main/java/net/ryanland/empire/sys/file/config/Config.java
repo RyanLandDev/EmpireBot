@@ -8,7 +8,6 @@ public class Config {
 
     private final String token;
     private final String clientId;
-    private final String prefix;
     private final String databaseURI;
 
     public Config(JsonObject rawConfig) {
@@ -16,7 +15,6 @@ public class Config {
 
         this.token = rawConfig.get("token").getAsString();
         this.clientId = rawConfig.get("client_id").getAsString();
-        this.prefix = rawConfig.get("prefix").getAsString();
         this.databaseURI = rawConfig.get("database_uri").getAsString();
     }
 
@@ -30,10 +28,6 @@ public class Config {
 
     public String getClientId() {
         return this.clientId;
-    }
-
-    public String getPrefix() {
-        return this.prefix;
     }
 
     public String getDatabaseURI() {
