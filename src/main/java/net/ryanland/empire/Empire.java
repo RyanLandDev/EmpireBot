@@ -10,12 +10,12 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
+import net.ryanland.empire.sys.tutorials.Tutorial;
 import net.ryanland.empire.sys.tutorials.TutorialHandler;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.info.*;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
-import net.ryanland.empire.sys.tutorials.Tutorial;
 import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.bot.events.OnSlashCommandEvent;
@@ -77,7 +77,8 @@ public class Empire {
         // Register Tutorials
         TutorialHandler.register(
             Tutorial.CONTRIBUTE,
-            Tutorial.BEST
+            Tutorial.BEST,
+            Tutorial.PULL_REQUEST
         );
 
         // Build bot
