@@ -16,7 +16,7 @@ public class RequiresProfileCheck implements CommandCheck {
     public PresetBuilder buildMessage(CommandEvent event) {
         return new PresetBuilder(
                 PresetType.ERROR,
-                "This command requires a profile! Create one using `" + event.getPrefix() + "start`.",
+                "This command requires a profile! Create one using `/start`.",
                 "Requires Profile"
         );
     }

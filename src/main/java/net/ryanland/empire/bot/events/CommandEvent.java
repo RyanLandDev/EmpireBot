@@ -104,10 +104,6 @@ public class CommandEvent {
         return sendReply(embed.build(), ephemeral);
     }
 
-    public String getPrefix() {
-        return getGuildDocument().getPrefix();
-    }
-
     public String[] getRawArgs() {
         return getRawArgsAsList().toArray(String[]::new);
     }

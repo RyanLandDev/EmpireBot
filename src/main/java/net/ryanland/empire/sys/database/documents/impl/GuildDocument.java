@@ -18,12 +18,8 @@ public class GuildDocument extends BaseDocument implements SnowflakeDocument {
         super(document);
     }
 
-    private String prefix = getPrefix();
-
     @Override
     public void updated(List<Bson> updates) {
-        checkUpdate(updates, prefix, getPrefix(), "prefix");
-
         performUpdate(DocumentCache.GUILD_COLLECTION, Filters.eq("id", getId()), updates);
     }
 
@@ -36,15 +32,6 @@ public class GuildDocument extends BaseDocument implements SnowflakeDocument {
 
     public String getId() {
         return getString("id");
-    }
-
-    public GuildDocument setPrefix(String prefix) {
-        this.prefix = prefix;
-        return this;
-    }
-
-    public String getPrefix() {
-        return Objects.requireNonNullElse(getString("prefix"), Empire.getConfig().getPrefix());
     }
 
 }
