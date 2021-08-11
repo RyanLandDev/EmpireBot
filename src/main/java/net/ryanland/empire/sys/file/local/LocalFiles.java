@@ -9,7 +9,6 @@ public interface LocalFiles {
                     {
                       "token": "",
                       "client_id": "",
-                      "prefix": "",
 
                       "database_uri": ""
                     }""")
