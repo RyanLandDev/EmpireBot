@@ -3,21 +3,18 @@ package net.ryanland.empire.bot.command.impl.info;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.IMentionable;
-import net.dv8tion.jda.api.entities.Role;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.help.Category;
-import net.ryanland.empire.bot.command.help.CommandData;
+import net.ryanland.empire.bot.command.help.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
-import java.util.Objects;
-
 public class GuildInfoCommand extends Command {
 
     @Override
-    public CommandData getData() {
-        return new CommandData()
+    public CommandInfo getInfo() {
+        return new CommandInfo()
                 .name("guildinfo")
                 .description("Information about the guild you're currently in.")
                 .category(Category.INFORMATION);

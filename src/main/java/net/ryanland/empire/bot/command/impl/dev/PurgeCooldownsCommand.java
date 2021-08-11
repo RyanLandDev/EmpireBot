@@ -4,7 +4,7 @@ import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.executor.data.CooldownHandler;
 import net.ryanland.empire.bot.command.executor.data.Flag;
 import net.ryanland.empire.bot.command.help.Category;
-import net.ryanland.empire.bot.command.help.CommandData;
+import net.ryanland.empire.bot.command.help.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
@@ -15,8 +15,8 @@ import net.ryanland.empire.sys.message.builders.PresetType;
 public class PurgeCooldownsCommand extends Command {
 
     @Override
-    public CommandData getData() {
-        return new CommandData()
+    public CommandInfo getInfo() {
+        return new CommandInfo()
                 .name("purgecooldowns")
                 .description("Purges all locally active command cooldowns.")
                 .category(Category.DEVELOPER)

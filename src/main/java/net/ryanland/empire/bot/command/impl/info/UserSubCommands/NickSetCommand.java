@@ -4,8 +4,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.EndlessStringArgument;
 import net.ryanland.empire.bot.command.arguments.types.impl.MemberArgument;
-import net.ryanland.empire.bot.command.executor.CommandException;
-import net.ryanland.empire.bot.command.help.CommandData;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.empire.bot.command.help.CommandInfo;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
@@ -14,8 +14,8 @@ import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class NickSetCommand extends SubCommand {
     @Override
-    public CommandData getData() {
-        return new CommandData()
+    public CommandInfo getInfo() {
+        return new CommandInfo()
                 .name("set")
                 .description("Set the name of a guild member")
                 .permission(Permission.SERVER_ADMIN);

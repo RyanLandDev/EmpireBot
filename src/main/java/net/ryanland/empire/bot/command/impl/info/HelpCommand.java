@@ -1,15 +1,14 @@
 package net.ryanland.empire.bot.command.impl.info;
 
 import net.ryanland.empire.Empire;
-import net.ryanland.empire.bot.command.CommandHandler;
+import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.CommandArgument;
 import net.ryanland.empire.bot.command.help.Category;
-import net.ryanland.empire.bot.command.help.CommandData;
+import net.ryanland.empire.bot.command.help.CommandInfo;
 import net.ryanland.empire.bot.command.help.HelpMaker;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.file.StorageType;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.tabmenu.TabMenuBuilder;
 
@@ -20,8 +19,8 @@ import java.util.stream.Collectors;
 public class HelpCommand extends Command {
 
     @Override
-    public CommandData getData() {
-        return new CommandData()
+    public CommandInfo getInfo() {
+        return new CommandInfo()
                 .name("help")
                 .aliases("commands", "command")
                 .description("Get a list of all commands or information about a specific one.")

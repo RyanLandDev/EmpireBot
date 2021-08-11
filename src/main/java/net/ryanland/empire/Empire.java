@@ -8,14 +8,14 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.SelfUser;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import net.ryanland.empire.bot.command.CommandHandler;
-import net.ryanland.empire.bot.command.InvalidTestGuildException;
-import net.ryanland.empire.bot.command.TutorialHandler;
+import net.ryanland.empire.bot.command.executor.CommandHandler;
+import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
+import net.ryanland.empire.sys.tutorials.TutorialHandler;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.info.*;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
-import net.ryanland.empire.bot.command.tutorials.Tutorial;
+import net.ryanland.empire.sys.tutorials.Tutorial;
 import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.bot.events.SlashCommandListener;
@@ -33,19 +33,21 @@ import java.io.IOException;
 
 public class Empire {
 
-    public static String RYANLAND = "RyanLand#0001";
+    public static final String RYANLAND = "RyanLand#0001";
+    public static final String SUPPORT_GUILD = "832384230331252816";
+
     public static final boolean useTestGuild = true;
 
     private static JDA jda;
     private static Config config;
 
-    public static void main(String[] args) throws IOException, LoginException, InterruptedException, InvalidTestGuildException {
+    public static void main(String[] args) throws IOException, LoginException, InterruptedException, InvalidSupportGuildException {
 
         config = ConfigHandler.loadConfig();
         initialize(config);
     }
 
-    private static void initialize(Config config) throws IOException, LoginException, InterruptedException, InvalidTestGuildException {
+    private static void initialize(Config config) throws IOException, LoginException, InterruptedException, InvalidSupportGuildException {
         // Initialize
         MongoDB.initialize();
         PermissionHandler.loadPermissions();

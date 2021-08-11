@@ -1,6 +1,4 @@
-package net.ryanland.empire.bot.command.tutorials;
-
-import java.util.Objects;
+package net.ryanland.empire.sys.tutorials;
 
 public enum Tutorial {
 

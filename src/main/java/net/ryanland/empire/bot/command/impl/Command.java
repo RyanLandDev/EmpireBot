@@ -1,22 +1,22 @@
 package net.ryanland.empire.bot.command.impl;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.executor.CommandException;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.help.Category;
-import net.ryanland.empire.bot.command.help.CommandData;
+import net.ryanland.empire.bot.command.help.CommandInfo;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.StorageType;
 
 public abstract class Command {
 
-    public abstract CommandData getData();
+    public abstract CommandInfo getInfo();
 
     // CommandData getters --------------------
 
     public final String getName() {
-        return getData().getName();
+        return getInfo().getName();
     }
 
     public final String getUppercasedName() {
@@ -24,23 +24,23 @@ public abstract class Command {
     }
 
     public final String[] getAliases() {
-        return getData().getAliases();
+        return getInfo().getAliases();
     }
 
     public final String getDescription() {
-        return getData().getDescription();
+        return getInfo().getDescription();
     }
 
     public final Category getCategory() {
-        return getData().getCategory();
+        return getInfo().getCategory();
     }
 
     public final Permission getPermission() {
-        return getData().getPermission();
+        return getInfo().getPermission();
     }
 
     public final int getCooldown() {
-        return getData().getCooldown();
+        return getInfo().getCooldown();
     }
 
     public final int getCooldownInMs() {
@@ -48,11 +48,11 @@ public abstract class Command {
     }
 
     public final StorageType getCooldownStorageType() {
-        return getData().getCooldownStorageType();
+        return getInfo().getCooldownStorageType();
     }
 
     public final boolean requiresProfile() {
-        return getData().isProfileRequired();
+        return getInfo().isProfileRequired();
     }
 
     public final boolean isDisabled() {

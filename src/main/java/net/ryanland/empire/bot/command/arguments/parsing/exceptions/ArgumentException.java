@@ -1,7 +1,7 @@
 package net.ryanland.empire.bot.command.arguments.parsing.exceptions;
 
 import net.ryanland.empire.bot.command.arguments.Argument;
-import net.ryanland.empire.bot.command.executor.CommandException;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.help.HelpMaker;
 import net.ryanland.empire.bot.events.CommandEvent;
 

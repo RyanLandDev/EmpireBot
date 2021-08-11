@@ -1,7 +1,7 @@
 package net.ryanland.empire.bot.events;
 
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.ryanland.empire.bot.command.CommandHandler;
+import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.impl.Command;
 import org.jetbrains.annotations.NotNull;
 

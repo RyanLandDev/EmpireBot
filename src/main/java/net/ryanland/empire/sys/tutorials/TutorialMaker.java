@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.tutorials;
+package net.ryanland.empire.sys.tutorials;
 
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;

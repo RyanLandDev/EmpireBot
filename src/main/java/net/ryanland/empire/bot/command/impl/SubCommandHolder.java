@@ -1,6 +1,6 @@
 package net.ryanland.empire.bot.command.impl;
 
-import net.ryanland.empire.bot.command.CommandHandler;
+import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.SubCommandArgument;
 import net.ryanland.empire.bot.command.help.HelpMaker;
