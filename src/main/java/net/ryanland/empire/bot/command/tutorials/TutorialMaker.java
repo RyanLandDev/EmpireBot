@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.tutorials;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
@@ -10,7 +11,7 @@ public class TutorialMaker {
     public static PresetBuilder tutorialEmbed(CommandEvent event, Tutorial tutorial) {
         PresetBuilder builder = new PresetBuilder();
 
-        String body = tutorial.getBody();
+        MessageEmbed.Field[] fields = tutorial.getFields();
 
         builder
                 .setTitle(tutorial.getName())
@@ -18,15 +19,8 @@ public class TutorialMaker {
                 .addLogo()
                 .setThumbnail((tutorial.hasThumbnail()) ? (tutorial.getThumbnail()) : DEFAULT_THUMBNAIL);
 
-        // Checks if only 1 field needs to be made or not
-        if (body.contains("%field%")) {
-            // If not, splits the body by %field% and iterates through the array adding new fields.
-            String[] fieldValues = body.split("%field%");
-            for (String value : fieldValues) {
-                builder.addField("",value,false);
-            }
-        } else {
-            builder.addField("",body);
+        for (MessageEmbed.Field field : fields) {
+            builder.addField(field.getName(), field.getValue(), field.isInline());
         }
 
         return builder;

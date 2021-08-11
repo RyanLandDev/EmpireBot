@@ -1,28 +1,29 @@
 package net.ryanland.empire.bot.command.tutorials;
 
-import java.util.Objects;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public enum Tutorial {
 
     // Remember to add it to Empire.java lol
     // %field% to create new fields.
-    CONTRIBUTE("contribute","How to Contribute", "Want to help out the bot?",
-            "We have a support server and GitHub repository which you can contribute to.",""),
-    BEST("best","How to identify an amazing person","It's a necessary life skill.",
-            "If their name starts with General_ and ends with Mudkip you've found them.%field%god I love mudkips.%field%%field%lovelovelove","https://cdn.discordapp.com/emojis/774263473483153418.png?v=1"),
-    PULL_REQUEST("pr","MERGE MY PULL REQUEST","NOW","MERGE IT%field%MERGE IT%field%MERGE IT%field%MERGE IT%field%MERGE IT%field%MERGE IT%field%MERGE IT%field%MERGE IT%field%","");
-
+    CONTRIBUTE("contribute","How to Contribute", "Want to help out the bot?", "",
+            new MessageEmbed.Field("","We have a GitHub repository you can contribute to and a support Discord where you can ask questions.",false)),
+    BEST("best","How to identify an amazing person","It's a necessary life skill.", "https://cdn.discordapp.com/emojis/774263473483153418.png?v=1",
+            new MessageEmbed.Field("","If they name start with General_Mudkip and end with  you found them.",false),
+            new MessageEmbed.Field("hee","HEEEEEEE",true)),
+    PULL_REQUEST("pr","MERGE MY PULL REQUEST","NOW","",
+            new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true));
     private final String executor;
     private final String name;
     private final String description;
-    private final String body;
+    private final MessageEmbed.Field[] fields;
     private final String thumbnail;
 
-    Tutorial(String executor, String name, String description, String body, String thumbnail) {
+    Tutorial(String executor, String name, String description, String thumbnail, MessageEmbed.Field... fields) {
         this.executor = executor;
         this.name = name;
         this.description = description;
-        this.body = body;
+        this.fields = fields;
         this.thumbnail = thumbnail;
     }
 
@@ -32,9 +33,10 @@ public enum Tutorial {
 
     public String getDescription() { return description; }
 
-    public String getBody() { return body; }
-
     public String getThumbnail() { return thumbnail; }
 
     public Boolean hasThumbnail() { return !thumbnail.isEmpty(); }
+
+    public MessageEmbed.Field[] getFields() { return fields; }
+
 }

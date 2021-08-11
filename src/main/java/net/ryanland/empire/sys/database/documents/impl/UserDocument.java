@@ -39,6 +39,15 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         DocumentCache.USER_CACHE.put(getId(), this);
     }
 
+    public UserDocument initializeDefaults(int level, int crystals, int gold, int xp, int wave) {
+        this.level = 1;
+        this.xp = 0;
+        this.gold = 0;
+        this.crystals = 0;
+        this.wave = 0;
+        return this;
+    }
+
     public UserDocument setLevel(int level) {
         this.level = level;
         return this;
