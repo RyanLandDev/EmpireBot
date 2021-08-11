@@ -18,7 +18,7 @@ import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.sys.tutorials.Tutorial;
 import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;
-import net.ryanland.empire.bot.events.SlashCommandListener;
+import net.ryanland.empire.bot.events.OnSlashCommandEvent;
 import net.ryanland.empire.bot.events.logs.GuildTraffic;
 import net.ryanland.empire.sys.file.config.Config;
 import net.ryanland.empire.sys.file.config.ConfigHandler;
@@ -92,7 +92,7 @@ public class Empire {
                     // General
                     new MessageEvent(),
                     new ButtonEvent(),
-                    new SlashCommandListener(),
+                    new OnSlashCommandEvent(),
                     // Logs
                     new GuildTraffic()
                 );

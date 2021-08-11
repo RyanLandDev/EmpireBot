@@ -16,8 +16,8 @@ import java.time.Instant;
 
 public class GuildTraffic extends ListenerAdapter {
 
-    private static final String GUILD_TRAFFIC_WEBHOOK_URL = WebhookHandler.getWebhooks().getGuildTraffic();
-    private static final WebhookClient client = WebhookClient.withUrl(GUILD_TRAFFIC_WEBHOOK_URL);
+    private static final String WEBHOOK_URL = WebhookHandler.getWebhooks().getGuildTraffic();
+    private static final WebhookClient WEBHOOK_CLIENT = WebhookClient.withUrl(WEBHOOK_URL);
 
     public void onGuildJoin(GuildJoinEvent event) {
         sendEmbed(event.getGuild(), true);
@@ -54,6 +54,6 @@ public class GuildTraffic extends ListenerAdapter {
                 .addField(new WebhookEmbed.EmbedField(true, "Member Count", NumberUtil.format(guild.getMemberCount())))
                 .build();
 
-        client.send(embed);
+        WEBHOOK_CLIENT.send(embed);
     }
 }
