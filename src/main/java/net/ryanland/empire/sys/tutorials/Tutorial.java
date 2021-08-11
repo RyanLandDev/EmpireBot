@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.tutorials;
+package net.ryanland.empire.sys.tutorials;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
