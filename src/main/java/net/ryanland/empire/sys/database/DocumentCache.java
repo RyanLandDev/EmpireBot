@@ -116,6 +116,10 @@ public class DocumentCache {
         return castDocument(document, type);
     }
 
+    public static <T extends BaseDocument & SnowflakeDocument> void delete(String id, Class<T> type) {
+        getCollection(type).deleteOne(Filters.eq("id", id));
+    }
+
     @SuppressWarnings("unchecked")
     public static <T extends BaseDocument> T castDocument(Document document, Class<T> type) {
         if (document == null) return null;
