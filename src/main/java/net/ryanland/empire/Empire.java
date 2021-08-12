@@ -10,6 +10,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
+import net.ryanland.empire.bot.command.impl.empire.DeleteProfileCommand;
+import net.ryanland.empire.bot.command.impl.empire.EmpireCommand;
+import net.ryanland.empire.bot.command.impl.empire.StartCommand;
 import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
 import net.ryanland.empire.sys.tutorials.Tutorial;
 import net.ryanland.empire.sys.tutorials.TutorialHandler;
@@ -17,7 +20,6 @@ import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.info.*;
 import net.ryanland.empire.bot.command.permissions.PermissionHandler;
 import net.ryanland.empire.bot.command.permissions.RankHandler;
-import net.ryanland.empire.sys.tutorials.Tutorial;
 import net.ryanland.empire.bot.events.ButtonEvent;
 import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.bot.events.OnSlashCommandEvent;
@@ -73,7 +75,12 @@ public class Empire {
                 new StopCommand(),
                 new CreditsCommand(),
                 new GuildInfoCommand(),
-                new TutorialCommand()
+                new TutorialCommand(),
+
+                // Empire
+                new StartCommand(),
+                new EmpireCommand(),
+                new DeleteProfileCommand()
         );
 
         // Register Tutorials
