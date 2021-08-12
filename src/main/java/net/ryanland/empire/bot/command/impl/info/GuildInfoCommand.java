@@ -10,6 +10,8 @@ import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
+import java.util.List;
+
 public class GuildInfoCommand extends Command {
 
     @Override
@@ -28,7 +30,9 @@ public class GuildInfoCommand extends Command {
         PresetBuilder builder = new PresetBuilder();
         final Guild GUILD = event.getGuild();
         // Returns all the roles in the Discord as a string of mentions.
-        String roles = GUILD.getRoles().stream().map(IMentionable::getAsMention).collect(java.util.stream.Collectors.toList()).toString();
+        List<String> mentionableRoles = GUILD.getRoles().stream()
+                .map(IMentionable::getAsMention)
+                .collect(java.util.stream.Collectors.toList());
 
         builder
                 .setTitle(GUILD.getName())
@@ -42,7 +46,7 @@ public class GuildInfoCommand extends Command {
                 .addField("","", false)
                 .addField("Emoji Count", String.format("`%s`", GUILD.getEmotes().size()), true)
                 .addField("Sticker Count", "`-`", true)
-                .addField("Roles", roles)
+                .addField("Roles", String.join(" ", mentionableRoles))
                 .setImage(GUILD.getSplashUrl());
 
         event.reply(builder.build()).queue();

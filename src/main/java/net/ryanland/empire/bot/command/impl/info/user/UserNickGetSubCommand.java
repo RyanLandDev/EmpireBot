@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.info.UserSubCommands;
+package net.ryanland.empire.bot.command.impl.info.user;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
@@ -9,7 +9,7 @@ import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
-public class NickGetCommand extends SubCommand {
+public class UserNickGetSubCommand extends SubCommand {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()

@@ -78,11 +78,15 @@ public class DocumentCache {
     }
 
     public static <R extends BaseDocument & SnowflakeDocument, T extends ISnowflake> R get(T client, Class<R> type) {
-        return get(client.getId(), type);
+        return get(client, type, true);
     }
 
-    public static <T extends BaseDocument & SnowflakeDocument> T get(String id, Class<T> type) {
-        return nullOr(getFromCache(id, type), () -> retrieve(id, type));
+    public static <R extends BaseDocument & SnowflakeDocument, T extends ISnowflake> R get(T client, Class<R> type, boolean nullIfMissing) {
+        return get(client.getId(), type, nullIfMissing);
+    }
+
+    public static <T extends BaseDocument & SnowflakeDocument> T get(String id, Class<T> type, boolean nullIfMissing) {
+        return nullOr(getFromCache(id, type), () -> retrieve(id, type, nullIfMissing));
     }
 
     @SuppressWarnings("unchecked")
@@ -90,8 +94,12 @@ public class DocumentCache {
         return ((WeakHashMap<String, T>) getCache(type)).get(id);
     }
 
-    public static <T extends BaseDocument & SnowflakeDocument> T retrieve(String id, Class<T> type) {
-        return nullOr(find(id, type), () -> insert(id, type));
+    public static <T extends BaseDocument & SnowflakeDocument> T retrieve(String id, Class<T> type, boolean nullIfMissing) {
+        if (nullIfMissing) {
+            return find(id, type);
+        } else {
+            return nullOr(find(id, type), () -> insert(id, type));
+        }
     }
 
     public static <T extends BaseDocument & SnowflakeDocument> T find(String id, Class<T> type) {
