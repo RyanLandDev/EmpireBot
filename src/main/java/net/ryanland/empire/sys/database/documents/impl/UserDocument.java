@@ -73,6 +73,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return this;
     }
 
+    @Override
     public String getId() {
         return getString("id");
     }

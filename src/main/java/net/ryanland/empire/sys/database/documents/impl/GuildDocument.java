@@ -30,6 +30,7 @@ public class GuildDocument extends BaseDocument implements SnowflakeDocument {
 
     // ------------------------------------------------------
 
+    @Override
     public String getId() {
         return getString("id");
     }
