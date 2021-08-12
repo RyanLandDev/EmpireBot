@@ -32,8 +32,6 @@ public class StartCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         final User USER = event.getUser();
-        // TODO: - Check if user already has existing profile
-        //       - Call initializeDefaults() from UserDocument
         UserDocument document = DocumentCache.get(event.getUser(), UserDocument.class, true);
 
 
