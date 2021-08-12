@@ -13,6 +13,12 @@ import java.util.List;
 
 public class UserDocument extends BaseDocument implements SnowflakeDocument {
 
+    public static final int DEFAULT_LEVEL = 1;
+    public static final int DEFAULT_XP = 0;
+    public static final int DEFAULT_GOLD = 1000;
+    public static final int DEFAULT_CRYSTALS = 100;
+    public static final int DEFAULT_WAVE = 1;
+
     public UserDocument(Document document) {
         super(document);
     }
@@ -39,14 +45,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         DocumentCache.USER_CACHE.put(getId(), this);
     }
 
-    public UserDocument initializeDefaults(int level, int crystals, int gold, int xp, int wave) {
-        this.level = 1;
-        this.xp = 0;
-        this.gold = 0;
-        this.crystals = 0;
-        this.wave = 0;
-        return this;
-    }
+    // TODO buildings/layers
 
     public UserDocument setLevel(int level) {
         this.level = level;
@@ -79,23 +78,23 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     }
 
     public int getLevel() {
-        return getInteger("level", 1);
+        return getInteger("level", DEFAULT_LEVEL);
     }
 
     public int getCrystals() {
-        return getInteger("crystals", 0);
+        return getInteger("crystals", DEFAULT_CRYSTALS);
     }
 
     public int getGold() {
-        return getInteger("gold", 0);
+        return getInteger("gold", DEFAULT_GOLD);
     }
 
     public int getXp() {
-        return getInteger("xp", 0);
+        return getInteger("xp", DEFAULT_XP);
     }
 
     public int getWave() {
-        return getInteger("wave", 1);
+        return getInteger("wave", DEFAULT_WAVE);
     }
 
     public Date getCreated() {
