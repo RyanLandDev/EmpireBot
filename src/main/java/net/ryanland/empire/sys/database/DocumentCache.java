@@ -78,7 +78,7 @@ public class DocumentCache {
     }
 
     public static <R extends BaseDocument & SnowflakeDocument, T extends ISnowflake> R get(T client, Class<R> type) {
-        return get(client, type, true);
+        return get(client, type, false);
     }
 
     public static <R extends BaseDocument & SnowflakeDocument, T extends ISnowflake> R get(T client, Class<R> type, boolean nullIfMissing) {
