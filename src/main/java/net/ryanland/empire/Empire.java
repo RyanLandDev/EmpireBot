@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
+import net.ryanland.empire.bot.command.impl.empire.StartCommand;
 import net.ryanland.empire.sys.tutorials.Tutorial;
 import net.ryanland.empire.sys.tutorials.TutorialHandler;
 import net.ryanland.empire.bot.command.impl.dev.*;
@@ -71,7 +72,10 @@ public class Empire {
                 new StopCommand(),
                 new CreditsCommand(),
                 new GuildInfoCommand(),
-                new TutorialCommand()
+                new TutorialCommand(),
+
+                // Empire
+                new StartCommand()
         );
 
         // Register Tutorials
