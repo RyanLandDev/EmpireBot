@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.empire;
+package net.ryanland.empire.bot.command.impl.profile;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.help.Category;

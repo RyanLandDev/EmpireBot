@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.empire;
+package net.ryanland.empire.bot.command.impl.profile;
 
 import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
@@ -49,8 +49,9 @@ public class StartCommand extends Command {
 
             event.reply(new PresetBuilder(PresetType.SUCCESS)
                     .setTitle("Profile created!")
-                    .addField("Access it with /empire.","",false)
+                    .setDescription("Access it with `/empire`.")
                     .addLogo()
+                    .setTimestamp(new Date().toInstant())
             ).setEphemeral(true).queue();
         }
     }
