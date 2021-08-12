@@ -40,7 +40,7 @@ public class EmpireCommand extends Command {
                     "__**Statistics**__",
                     "\n**Level:** ", String.valueOf(document.getLevel()),
                     "\n**XP:** ", String.valueOf(document.getXp()),
-                    "\n**Created:** ", String.valueOf(document.getCreated()),
+                    "\n**Created:** ", String.valueOf(document.created),
                     "\n**Gold:** ", String.valueOf(document.getGold()),
                     "\n**Crystals:** ", String.valueOf(document.getCrystals())
             };

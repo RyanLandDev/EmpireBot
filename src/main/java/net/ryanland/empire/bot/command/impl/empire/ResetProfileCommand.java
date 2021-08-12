@@ -25,5 +25,7 @@ public class ResetProfileCommand extends Command {
     public void run(CommandEvent event) {
         UserDocument document = DocumentCache.get(event.getUser(), UserDocument.class, true);
         document.clear();
+
+        event.reply("Reset").setEphemeral(true).queue();
     }
 }

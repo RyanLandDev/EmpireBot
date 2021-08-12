@@ -17,6 +17,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     public static final int DEFAULT_GOLD = 1000;
     public static final int DEFAULT_CRYSTALS = 100;
     public static final int DEFAULT_WAVE = 1;
+    public static final Date DEFAULT_DATE = new Date();
 
     public UserDocument(Document document) {
         super(document);
@@ -27,7 +28,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private int gold = getGold();
     private int xp = getXp();
     private int wave = getWave();
-    private Date created = getCreated();
+    public Date created = getCreated();
 
     @Override
     public void updated(List<Bson> updates) {
@@ -104,7 +105,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     }
 
     public Date getCreated() {
-        return getDate("created");
+        return this.created;
     }
 
 }
