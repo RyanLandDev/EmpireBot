@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
-import net.ryanland.empire.bot.command.impl.empire.DeleteProfileCommand;
+import net.ryanland.empire.bot.command.impl.empire.ResetProfileCommand;
 import net.ryanland.empire.bot.command.impl.empire.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.empire.StartCommand;
 import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
@@ -80,7 +80,7 @@ public class Empire {
                 // Empire
                 new StartCommand(),
                 new EmpireCommand(),
-                new DeleteProfileCommand()
+                new ResetProfileCommand()
         );
 
         // Register Tutorials

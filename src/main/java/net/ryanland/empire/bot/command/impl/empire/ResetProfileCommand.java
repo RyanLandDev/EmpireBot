@@ -8,13 +8,13 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.database.DocumentCache;
 import net.ryanland.empire.sys.database.documents.impl.UserDocument;
 
-public class DeleteProfileCommand extends Command {
+public class ResetProfileCommand extends Command {
 
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("delete")
-                .description("Deletes your profile forever! This is UNREVERSIBLE.")
+                .name("reset")
+                .description("Resets your profile! This is IRREVERSIBLE.")
                 .category(Category.EMPIRE);
     }
 

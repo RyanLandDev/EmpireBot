@@ -47,7 +47,7 @@ public class StartCommand extends Command {
 
             event.reply(new PresetBuilder(PresetType.SUCCESS)
                     .setTitle("Profile created!")
-                    .addField("Access it with /profile.","",false)
+                    .addField("Access it with /empire.","",false)
                     .addLogo()
             ).setEphemeral(true).queue();
         }
