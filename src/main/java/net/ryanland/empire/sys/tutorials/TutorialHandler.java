@@ -9,7 +9,7 @@ public class TutorialHandler {
     public static void register(Tutorial... tutorials) {
         for (Tutorial tutorial : tutorials) {
             System.out.println(tutorial.getExecutor());
-            if (tutorial.getExecutor() == null || tutorial.getName() == null || tutorial.getDescription() == null || tutorial.getBody() == null ) {
+            if (tutorial.getExecutor() == null || tutorial.getName() == null || tutorial.getDescription() == null || tutorial.getFields() == null ) {
                 throw new IllegalStateException(tutorial.getClass().getName() +
                         "- Tutorials must have at least an executor, name, description, and body.");
             }

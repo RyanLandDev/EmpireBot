@@ -26,13 +26,6 @@ public class TestCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
-
-        event.getGuildDocument()
-                .setPrefix("ee")
-                .update();
-
-
-
         event.reply(new PresetBuilder(PresetType.SUCCESS).setTitle("Test finished.")).queue();
     }
 }
