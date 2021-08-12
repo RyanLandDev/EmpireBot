@@ -17,7 +17,6 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     public static final int DEFAULT_GOLD = 1000;
     public static final int DEFAULT_CRYSTALS = 100;
     public static final int DEFAULT_WAVE = 1;
-    public static final Date DEFAULT_DATE = new Date();
 
     public UserDocument(Document document) {
         super(document);
@@ -84,28 +83,28 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return getString("id");
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         return getInteger("level", DEFAULT_LEVEL);
     }
 
-    public int getCrystals() {
+    public Integer getCrystals() {
         return getInteger("crystals", DEFAULT_CRYSTALS);
     }
 
-    public int getGold() {
+    public Integer getGold() {
         return getInteger("gold", DEFAULT_GOLD);
     }
 
-    public int getXp() {
+    public Integer getXp() {
         return getInteger("xp", DEFAULT_XP);
     }
 
-    public int getWave() {
+    public Integer getWave() {
         return getInteger("wave", DEFAULT_WAVE);
     }
 
     public Date getCreated() {
-        return this.created;
+        return getDate("created");
     }
 
 }

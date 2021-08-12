@@ -21,7 +21,7 @@ public class StartCommand extends Command {
         return new CommandInfo()
                 .name("start")
                 .description("Initialize your profile!")
-                .category(Category.EMPIRE);
+                .category(Category.PROFILE);
     }
 
     @Override
@@ -43,7 +43,9 @@ public class StartCommand extends Command {
             ).setEphemeral(true).queue();
         } else {
             UserDocument newDocument = new UserDocument(new Document("id", event.getUser().getId()));
-            newDocument.setCreated(new Date());
+            newDocument
+                    .setCreated(new Date())
+                    .update();
 
             event.reply(new PresetBuilder(PresetType.SUCCESS)
                     .setTitle("Profile created!")

@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.impl.empire;
 
+import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandInfo;
@@ -15,7 +16,8 @@ public class ResetProfileCommand extends Command {
         return new CommandInfo()
                 .name("reset")
                 .description("Resets your profile! This is IRREVERSIBLE.")
-                .category(Category.EMPIRE);
+                .category(Category.PROFILE)
+                .requiresProfile();
     }
 
     @Override
@@ -23,8 +25,8 @@ public class ResetProfileCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
-        UserDocument document = DocumentCache.get(event.getUser(), UserDocument.class, true);
-        document.clear();
+        UserDocument document = event.getUserDocument();
+        DocumentCache.delete(document.getId(), UserDocument.class);
 
         event.reply("Reset").setEphemeral(true).queue();
     }

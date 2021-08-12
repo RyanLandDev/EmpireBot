@@ -77,7 +77,7 @@ public class Empire {
                 new GuildInfoCommand(),
                 new TutorialCommand(),
 
-                // Empire
+                // Profile commands
                 new StartCommand(),
                 new EmpireCommand(),
                 new ResetProfileCommand()

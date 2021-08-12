@@ -4,7 +4,7 @@ public enum Category {
 
     INFORMATION("Information", "Commands to get general information.", "📋"),
     DEVELOPER("Developer", "Utility commands for bot developers only.", "💻"),
-    EMPIRE("Empire","Commands that concern the actual game.","🎮");
+    PROFILE("Profile","Commands that concern the user profile.","🏰");
 
 
     private final String name;
