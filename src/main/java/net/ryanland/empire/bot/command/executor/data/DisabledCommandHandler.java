@@ -1,10 +1,13 @@
 package net.ryanland.empire.bot.command.executor.data;
 
 import net.ryanland.empire.Empire;
+import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DisabledCommandHandler {
 
@@ -61,4 +64,18 @@ public class DisabledCommandHandler {
                 .setDisabledCommandsRaw(disabled)
                 .update();
     }
+
+    public List<Command> deserialize(List<String> disabledCommands) {
+        return disabledCommands.stream()
+                .map(CommandHandler::getCommand)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> serialize(List<Command> disabledCommands) {
+        return disabledCommands.stream()
+                .map(Command::getName)
+                .collect(Collectors.toList());
+    }
+
+
 }

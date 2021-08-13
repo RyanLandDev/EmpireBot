@@ -2,6 +2,7 @@ package net.ryanland.empire.sys.database.documents.impl;
 
 import com.mongodb.client.model.Filters;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
+import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.sys.database.DocumentCache;
 import net.ryanland.empire.sys.database.documents.BaseDocument;
@@ -40,7 +41,7 @@ public class GlobalDocument extends BaseDocument {
     }
 
     public GlobalDocument setDisabledCommands(List<Command> disabledCommands) {
-        this.disabledCommands = disabledCommandsProperToRaw(disabledCommands);
+        this.disabledCommands = DisabledCommandHandler.getInstance().serialize(disabledCommands);
         return this;
     }
 
@@ -49,23 +50,7 @@ public class GlobalDocument extends BaseDocument {
     }
 
     public List<Command> getDisabledCommands() {
-        return disabledCommandsRawToProper();
-    }
-
-    private List<Command> disabledCommandsRawToProper() {
-        return disabledCommandsRawToProper(getDisabledCommandsRaw());
-    }
-
-    private static List<Command> disabledCommandsRawToProper(List<String> rawDisabledCommands) {
-        List<Command> result = new ArrayList<>();
-        rawDisabledCommands.forEach(e -> result.add(CommandHandler.getCommand(e)));
-        return result;
-    }
-
-    private static List<String> disabledCommandsProperToRaw(List<Command> properDisabledCommands) {
-        List<String> result = new ArrayList<>();
-        properDisabledCommands.forEach(e -> result.add(e.getName()));
-        return result;
+        return DisabledCommandHandler.getInstance().deserialize(getDisabledCommandsRaw());
     }
 
 }

@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.EndlessStringArgument;
 import net.ryanland.empire.bot.command.executor.data.Flag;
@@ -10,9 +9,9 @@ import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.builders.PresetType;
-import net.ryanland.empire.sys.util.EvalUtil;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -54,19 +53,23 @@ public class EvalCommand extends Command {
     public void run(CommandEvent event) {
         String code = event.getArgument("code");
 
-        EmbedBuilder builder = new PresetBuilder(PresetType.DEFAULT).builder();
-        builder.addField("Code", String.format("```js\n%s```", code), true);
+        PresetBuilder builder = new PresetBuilder()
+            .addField("Code", String.format("```js\n%s```", code), true);
 
-        code = IMPORTS.stream().map(s -> "import " + s + ".*;").collect(Collectors.joining(" ")) + " " + code;
+        code = IMPORTS.stream()
+                .map(s -> String.format("import %s.*;", s))
+                .collect(Collectors.joining(" ")) + " " + code;
 
-        EvalUtil Eval = new EvalUtil("groovy", event);
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("groovy");
+        engine.put("jda", event.getJDA());
+        engine.put("event", event);
 
         try {
-            Object object = Eval.eval(code); // Returns an object of the eval
+            Object object = engine.eval(code); // Returns an object of the eval
 
-            builder.setTitle("Eval Result");
-            builder.addField("Object Returned:", String.format("```js\n%s```", object), false);
-            event.reply(builder.build()).queue();
+            builder.setTitle("Eval Result")
+                    .addField("Object Returned:", String.format("```js\n%s```", object), false);
+            event.reply(builder).queue();
 
         } catch (Throwable e) {
             StringWriter sw = new StringWriter();
@@ -74,8 +77,10 @@ public class EvalCommand extends Command {
             String sStackTrace = sw.toString();
 
             builder.setTitle("Eval failed!");
-            event.reply(builder.build()).queue();
-            event.getChannel().sendMessage(String.format("```%s```", sStackTrace.length() >= 1500 ? sStackTrace.substring(0, 1500) : sStackTrace)).queue();
+            event.reply(builder).queue();
+            event.getChannel().sendMessage(String.format("```%s```",
+                    sStackTrace.length() >= 1500 ? sStackTrace.substring(0, 1500) : sStackTrace
+            )).queue();
         }
     }
 }

@@ -1,4 +1,4 @@
 package net.ryanland.empire.sys.gameplay.currency;
 
-public record Price(Currency currency, int amount) {
+public record Price<T extends Number>(Currency currency, T amount) {
 }
