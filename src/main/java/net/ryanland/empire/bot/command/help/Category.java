@@ -3,7 +3,9 @@ package net.ryanland.empire.bot.command.help;
 public enum Category {
 
     INFORMATION("Information", "Commands to get general information.", "📋"),
-    DEVELOPER("Developer", "Utility commands for bot developers only.", "💻");
+    DEVELOPER("Developer", "Utility commands for bot developers only.", "💻"),
+    PROFILE("Profile","Commands that concern the user profile.","🏰");
+
 
     private final String name;
     private final String description;

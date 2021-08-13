@@ -7,7 +7,6 @@ import net.ryanland.empire.sys.database.documents.SnowflakeDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private int gold = getGold();
     private int xp = getXp();
     private int wave = getWave();
+    public Date created = getCreated();
 
     @Override
     public void updated(List<Bson> updates) {
@@ -36,6 +36,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         checkUpdate(updates, gold, getGold(), "gold");
         checkUpdate(updates, xp, getXp(), "xp");
         checkUpdate(updates, wave, getWave(), "wave");
+        checkUpdate(updates, created, getCreated(), "created");
 
         performUpdate(DocumentCache.USER_COLLECTION, Filters.eq("id", getId()), updates);
     }
@@ -72,28 +73,33 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return this;
     }
 
+    public UserDocument setCreated(Date date) {
+        this.created = date;
+        return this;
+    }
+
     @Override
     public String getId() {
         return getString("id");
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         return getInteger("level", DEFAULT_LEVEL);
     }
 
-    public int getCrystals() {
+    public Integer getCrystals() {
         return getInteger("crystals", DEFAULT_CRYSTALS);
     }
 
-    public int getGold() {
+    public Integer getGold() {
         return getInteger("gold", DEFAULT_GOLD);
     }
 
-    public int getXp() {
+    public Integer getXp() {
         return getInteger("xp", DEFAULT_XP);
     }
 
-    public int getWave() {
+    public Integer getWave() {
         return getInteger("wave", DEFAULT_WAVE);
     }
 

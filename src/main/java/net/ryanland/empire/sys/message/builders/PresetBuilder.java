@@ -23,6 +23,7 @@ public class PresetBuilder {
     private String thumbnail;
     private TemporalAccessor timestamp;
     private List<MessageEmbed.Field> fields = new LinkedList<>();
+    private boolean isEphemeral;
 
     public PresetBuilder() {
         this((String) null);
@@ -57,6 +58,7 @@ public class PresetBuilder {
             this.footerIconUrl = Empire.getLogo();
             this.timestamp = Instant.now();
         }
+        this.isEphemeral = type.isEphemeral();
     }
 
     public int getColor() {

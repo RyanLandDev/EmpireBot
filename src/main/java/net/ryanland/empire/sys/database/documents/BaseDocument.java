@@ -1,17 +1,13 @@
 package net.ryanland.empire.sys.database.documents;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.sys.database.DocumentCache;
-import net.ryanland.empire.sys.database.MongoDB;
+
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public abstract class BaseDocument extends Document {
     public BaseDocument(Document document) {
