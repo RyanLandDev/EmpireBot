@@ -44,7 +44,7 @@ public class TutorialCommand extends Command {
             if (tutorial == null) {
                 event.reply(new PresetBuilder(
                         PresetType.ERROR, "Tutorial not found.", "Not found"
-                )).setEphemeral(true).queue();
+                )).queue();
             } else {
                 supplyTutorialHelp(event, tutorial);
             }
