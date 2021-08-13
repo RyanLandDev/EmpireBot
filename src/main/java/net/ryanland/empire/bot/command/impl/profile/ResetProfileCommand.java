@@ -25,7 +25,6 @@ public class ResetProfileCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         DocumentCache.delete(event.getUserDocument().getId(), UserDocument.class);
-
         event.reply("Reset").setEphemeral(true).queue();
     }
 }
