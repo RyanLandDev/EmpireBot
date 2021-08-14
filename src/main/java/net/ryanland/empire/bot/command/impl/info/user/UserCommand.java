@@ -6,9 +6,11 @@ import net.ryanland.empire.bot.command.help.Category;
 import net.ryanland.empire.bot.command.help.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.impl.SubCommandGroup;
+import net.ryanland.empire.bot.command.impl.SubCommandHolder;
 import net.ryanland.empire.bot.events.CommandEvent;
 
-public class UserCommand extends Command {
+public class UserCommand extends SubCommandHolder {
+
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
@@ -22,13 +24,4 @@ public class UserCommand extends Command {
                 );
     }
 
-    @Override
-    public ArgumentSet getArguments() {
-        return new ArgumentSet();
-    }
-
-    @Override
-    public void run(CommandEvent event) throws CommandException {
-
-    }
 }

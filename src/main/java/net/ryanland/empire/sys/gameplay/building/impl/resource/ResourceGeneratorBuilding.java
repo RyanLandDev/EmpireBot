@@ -20,5 +20,4 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
     public abstract Price<Double> getUnitPerMin();
 
-    public abstract Price<Integer> getCapacity();
 }

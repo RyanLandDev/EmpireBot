@@ -26,14 +26,6 @@ public class HelpMaker {
         }
 
         ArgumentSet arguments = command.getArguments();
-        if (command instanceof SubCommandHolder) {
-            try {
-                SubCommand subcommand = event.getArgument("subcommand");
-                elements.add(subcommand.getName());
-                arguments.addAll(subcommand.getArguments());
-            } catch (NullPointerException ignored) {
-            }
-        }
 
         for (Argument<?> argument : arguments) {
             String usage = argument.getName();
@@ -46,10 +38,6 @@ public class HelpMaker {
             }
 
             elements.add(usage);
-        }
-
-        if (command instanceof SubCommandHolder) {
-            elements.add("...");
         }
 
         return elements;
@@ -93,18 +81,6 @@ public class HelpMaker {
         return "`" + String.join("`, `", names) + "`";
     }
 
-    public static String formattedSubCommands(SubCommandHolder command) {
-        return formattedSubCommands(command.getSubCommands());
-    }
-
-    public static String formattedSubCommands(Command command) {
-        return formattedSubCommands((SubCommandHolder) command);
-    }
-
-    public static String formattedSubCommands(CommandEvent event) {
-        return formattedSubCommands(event.getCommand());
-    }
-
     public static String formattedSubCommandsUsage(SubCommand[] subcommands) {
         List<String> names = new ArrayList<>();
 
@@ -113,18 +89,6 @@ public class HelpMaker {
         }
 
         return String.join("/", names);
-    }
-
-    public static String formattedSubCommandsUsage(SubCommandHolder command) {
-        return formattedSubCommandsUsage(command.getSubCommands());
-    }
-
-    public static String formattedSubCommandsUsage(Command command) {
-        return formattedSubCommandsUsage((SubCommandHolder) command);
-    }
-
-    public static String formattedSubCommandsUsage(CommandEvent event) {
-        return formattedSubCommandsUsage(event.getCommand());
     }
 
     public static PresetBuilder commandEmbed(CommandEvent event, Command command) {

@@ -20,12 +20,18 @@ public class UserNickGetSubCommand extends SubCommand {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new MemberArgument().name("member").description("Member to get the nickname of").id("member")
+                new MemberArgument()
+                        .description("Member to get the nickname of")
+                        .id("member")
         );
     }
 
     @Override
     public void run(CommandEvent event) throws CommandException {
-        event.reply(new PresetBuilder(((Member) event.getArgument("member")).getUser().getName() + "'s nickname: " + ((Member) event.getArgument("member")).getEffectiveName())).queue();
+        Member member = event.getArgument("member");
+        event.reply(
+                new PresetBuilder(
+                        String.format("%s's nickname: %s", member.getUser().getName(), member.getEffectiveName())
+                )).queue();
     }
 }

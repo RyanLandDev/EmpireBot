@@ -7,6 +7,9 @@ public enum BuildingType {
 
     RESOURCE_GENERATOR(RESOURCE),
     RESOURCE_STORAGE(RESOURCE),
+
+    DEFENSE_THORNED(DEFENSE),
+    DEFENSE_RANGED(DEFENSE)
     ;
 
     private final BuildingType baseType;

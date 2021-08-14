@@ -2,15 +2,11 @@ package net.ryanland.empire.sys.gameplay.building.impl;
 
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
-import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 public abstract class Building {
 

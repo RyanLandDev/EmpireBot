@@ -14,7 +14,7 @@ public class EmpireCommand extends Command {
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("empire")
-                .description("Returns information about your empire!")
+                .description("Gives information about your Empire.")
                 .category(Category.PROFILE)
                 .requiresProfile();
     }
