@@ -8,6 +8,7 @@ import net.ryanland.empire.sys.file.serializer.user.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,7 +90,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return setBuildingsRaw(BuildingsSerializer.getInstance().serialize(buildings));
     }
 
-    public UserDocument setCreated(Date created) {
+    public UserDocument setCreated(@NotNull Date created) {
         this.created = created;
         return this;
     }
