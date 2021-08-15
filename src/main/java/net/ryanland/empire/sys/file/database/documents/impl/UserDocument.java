@@ -9,6 +9,7 @@ import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     public static final int DEFAULT_GOLD = 1000;
     public static final int DEFAULT_CRYSTALS = 100;
     public static final int DEFAULT_WAVE = 1;
+    @SuppressWarnings("all")
+    public static final List<List> DEFAULT_BUILDINGS = new ArrayList<>();
 
     public UserDocument(Document document) {
         super(document);
@@ -30,7 +33,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private int xp = getXp();
     private int wave = getWave();
     @SuppressWarnings("all")
-    private List<List> buildings;
+    private List<List> buildings = getBuildingsRaw();
     private Date created;
 
     @Override
@@ -86,8 +89,8 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return setBuildingsRaw(BuildingsSerializer.getInstance().serialize(buildings));
     }
 
-    public UserDocument setCreated(Date date) {
-        this.created = date;
+    public UserDocument setCreated(Date created) {
+        this.created = created;
         return this;
     }
 
@@ -118,7 +121,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
 
     @SuppressWarnings("all")
     public List<List> getBuildingsRaw() {
-        return getList("blds", List.class);
+        return getList("blds", List.class, DEFAULT_BUILDINGS);
     }
 
     public List<Building> getBuildings() {

@@ -31,28 +31,26 @@ public class StartCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
-        final User USER = event.getUser();
         UserDocument document = DocumentCache.get(event.getUser(), UserDocument.class, true);
 
-
         if (document != null) {
-            event.reply(new PresetBuilder(PresetType.ERROR)
-                    .setTitle("Error!")
-                    .addField("You already have an account.","",false)
+            event.reply(
+                    new PresetBuilder(PresetType.ERROR, "You already have a profile.")
                     .addLogo()
-            ).setEphemeral(true).queue();
+            ).queue();
+
         } else {
-            UserDocument newDocument = new UserDocument(new Document("id", event.getUser().getId()));
-            newDocument
+            event.getUserDocument()
                     .setCreated(new Date())
                     .update();
 
-            event.reply(new PresetBuilder(PresetType.SUCCESS)
-                    .setTitle("Profile created!")
-                    .setDescription("Access it with `/empire`.")
+            event.reply(
+                    new PresetBuilder(
+                            PresetType.SUCCESS,
+                            "Your profile has been created! Good luck!\n*It is recommended to use the /tutorial.*",
+                            "Profile created")
                     .addLogo()
-                    .setTimestamp(new Date().toInstant())
-            ).setEphemeral(true).queue();
+            ).queue();
         }
     }
 }

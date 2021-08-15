@@ -18,7 +18,7 @@ public class GlobalDocument extends BaseDocument {
         super(document);
     }
 
-    private List<String> disabledCommands;
+    private List<String> disabledCommands = getDisabledCommandsRaw();
 
     @Override
     public void updated(List<Bson> updates) {
