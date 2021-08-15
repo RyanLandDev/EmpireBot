@@ -10,10 +10,10 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
 import net.ryanland.empire.bot.command.arguments.parsing.ParsedArgumentMap;
 import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.sys.database.DocumentCache;
-import net.ryanland.empire.sys.database.documents.impl.GlobalDocument;
-import net.ryanland.empire.sys.database.documents.impl.GuildDocument;
-import net.ryanland.empire.sys.database.documents.impl.UserDocument;
+import net.ryanland.empire.sys.file.database.DocumentCache;
+import net.ryanland.empire.sys.file.database.documents.impl.GlobalDocument;
+import net.ryanland.empire.sys.file.database.documents.impl.GuildDocument;
+import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import org.jetbrains.annotations.NotNull;
 

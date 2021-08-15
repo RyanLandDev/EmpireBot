@@ -1,12 +1,10 @@
-package net.ryanland.empire.sys.database.documents.impl;
+package net.ryanland.empire.sys.file.database.documents.impl;
 
 import com.mongodb.client.model.Filters;
-import net.ryanland.empire.bot.command.executor.CommandHandler;
-import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.sys.database.DocumentCache;
-import net.ryanland.empire.sys.database.documents.BaseDocument;
-import net.ryanland.empire.sys.database.documents.serializer.global.DisabledCommandsSerializer;
+import net.ryanland.empire.sys.file.database.DocumentCache;
+import net.ryanland.empire.sys.file.database.documents.BaseDocument;
+import net.ryanland.empire.sys.file.serializer.global.DisabledCommandsSerializer;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 

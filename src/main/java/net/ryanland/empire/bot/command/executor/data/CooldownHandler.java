@@ -19,7 +19,7 @@ public class CooldownHandler {
             return MEMORY_USER_COOLDOWNS;
         }
         if (storage == StorageType.LOCAL) {
-            return null;
+            return null;//TODO
         }
         if (storage == StorageType.EXTERNAL) {
             return null;//TODO

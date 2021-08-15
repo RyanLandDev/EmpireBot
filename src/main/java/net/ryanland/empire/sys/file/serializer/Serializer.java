@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.database.documents.serializer;
+package net.ryanland.empire.sys.file.serializer;
 
 /**
  * Interface for serializer classes.

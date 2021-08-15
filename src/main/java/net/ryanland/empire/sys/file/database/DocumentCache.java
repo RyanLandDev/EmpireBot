@@ -1,13 +1,13 @@
-package net.ryanland.empire.sys.database;
+package net.ryanland.empire.sys.file.database;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import net.dv8tion.jda.api.entities.ISnowflake;
-import net.ryanland.empire.sys.database.documents.BaseDocument;
-import net.ryanland.empire.sys.database.documents.SnowflakeDocument;
-import net.ryanland.empire.sys.database.documents.impl.GlobalDocument;
-import net.ryanland.empire.sys.database.documents.impl.GuildDocument;
-import net.ryanland.empire.sys.database.documents.impl.UserDocument;
+import net.ryanland.empire.sys.file.database.documents.BaseDocument;
+import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
+import net.ryanland.empire.sys.file.database.documents.impl.GlobalDocument;
+import net.ryanland.empire.sys.file.database.documents.impl.GuildDocument;
+import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import org.bson.Document;
 
 import java.util.Objects;

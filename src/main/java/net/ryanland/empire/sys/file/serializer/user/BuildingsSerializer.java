@@ -1,6 +1,6 @@
-package net.ryanland.empire.sys.database.documents.serializer.user;
+package net.ryanland.empire.sys.file.serializer.user;
 
-import net.ryanland.empire.sys.database.documents.serializer.Serializer;
+import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 
 import java.util.Arrays;

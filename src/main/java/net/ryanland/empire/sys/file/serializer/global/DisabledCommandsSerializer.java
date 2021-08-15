@@ -1,10 +1,9 @@
-package net.ryanland.empire.sys.database.documents.serializer.global;
+package net.ryanland.empire.sys.file.serializer.global;
 
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.sys.database.documents.serializer.Serializer;
+import net.ryanland.empire.sys.file.serializer.Serializer;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.database.documents;
+package net.ryanland.empire.sys.file.database.documents;
 
 /**
  * Indicates this class extending {@link BaseDocument} is retrieved using a Discord snowflake

@@ -5,8 +5,8 @@ import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.database.DocumentCache;
-import net.ryanland.empire.sys.database.documents.impl.UserDocument;
+import net.ryanland.empire.sys.file.database.DocumentCache;
+import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 
 public class ResetProfileCommand extends Command {
 

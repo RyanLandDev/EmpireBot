@@ -1,10 +1,10 @@
-package net.ryanland.empire.sys.database.documents.impl;
+package net.ryanland.empire.sys.file.database.documents.impl;
 
 import com.mongodb.client.model.Filters;
-import net.ryanland.empire.sys.database.DocumentCache;
-import net.ryanland.empire.sys.database.documents.BaseDocument;
-import net.ryanland.empire.sys.database.documents.SnowflakeDocument;
-import net.ryanland.empire.sys.database.documents.serializer.user.BuildingsSerializer;
+import net.ryanland.empire.sys.file.database.DocumentCache;
+import net.ryanland.empire.sys.file.database.documents.BaseDocument;
+import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
+import net.ryanland.empire.sys.file.serializer.user.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -50,8 +50,6 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     public void cache() {
         DocumentCache.USER_CACHE.put(getId(), this);
     }
-
-    // TODO buildings/layers
 
     public UserDocument setLevel(int level) {
         this.level = level;

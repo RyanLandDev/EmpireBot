@@ -1,16 +1,13 @@
-package net.ryanland.empire.sys.database.documents.impl;
+package net.ryanland.empire.sys.file.database.documents.impl;
 
 import com.mongodb.client.model.Filters;
-import net.ryanland.empire.Empire;
-import net.ryanland.empire.sys.database.DocumentCache;
-import net.ryanland.empire.sys.database.documents.BaseDocument;
-import net.ryanland.empire.sys.database.documents.SnowflakeDocument;
+import net.ryanland.empire.sys.file.database.DocumentCache;
+import net.ryanland.empire.sys.file.database.documents.BaseDocument;
+import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class GuildDocument extends BaseDocument implements SnowflakeDocument {
 

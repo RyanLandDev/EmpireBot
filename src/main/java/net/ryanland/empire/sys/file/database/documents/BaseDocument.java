@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.database.documents;
+package net.ryanland.empire.sys.file.database.documents;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;

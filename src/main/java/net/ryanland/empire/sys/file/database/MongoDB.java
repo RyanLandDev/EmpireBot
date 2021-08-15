@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.database;
+package net.ryanland.empire.sys.file.database;
 
 import com.mongodb.client.*;
 import net.ryanland.empire.Empire;

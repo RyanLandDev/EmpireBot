@@ -26,9 +26,9 @@ import net.ryanland.empire.bot.events.OnSlashCommandEvent;
 import net.ryanland.empire.bot.events.logs.GuildTraffic;
 import net.ryanland.empire.sys.file.config.Config;
 import net.ryanland.empire.sys.file.config.ConfigHandler;
-import net.ryanland.empire.sys.database.DocumentCache;
-import net.ryanland.empire.sys.database.MongoDB;
-import net.ryanland.empire.sys.database.documents.impl.GlobalDocument;
+import net.ryanland.empire.sys.file.database.DocumentCache;
+import net.ryanland.empire.sys.file.database.MongoDB;
+import net.ryanland.empire.sys.file.database.documents.impl.GlobalDocument;
 import net.ryanland.empire.sys.message.webhooks.WebhookHandler;
 
 import javax.security.auth.login.LoginException;
