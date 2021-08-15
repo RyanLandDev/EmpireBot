@@ -1,10 +1,9 @@
-package net.ryanland.empire.bot.command.help;
+package net.ryanland.empire.bot.command.info;
 
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.impl.SubCommand;
-import net.ryanland.empire.bot.command.impl.SubCommandHolder;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;

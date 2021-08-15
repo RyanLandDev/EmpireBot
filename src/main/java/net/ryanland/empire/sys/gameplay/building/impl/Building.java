@@ -1,29 +1,63 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
+import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public abstract class Building {
 
     public static final int BASE_MAX_HEALTH = 100;
 
-    protected final int stage;
-    protected final int health;
-    protected final Date lastCollect;
+    @SuppressWarnings("all")
+    private static final Building[] BUILDINGS = new Building[]{
 
-    public Building(int stage, int health) {
-        this(stage, health, null);
+            // Defense Ranged
+            new ArcherBuilding(),
+            // Defense Thorned
+            new WallBuilding(),
+
+            // Resource Generator
+            new GoldMineBuilding(),
+            // Resource Storage
+            new BankBuilding(),
+
+    };
+
+    private static final HashMap<String, Building> NAME_BUILDINGS = new HashMap<>(
+            Arrays.stream(BUILDINGS)
+                    .collect(Collectors.toMap(Building::getName, Function.identity()))
+    );
+
+    private static final HashMap<Integer, Building> ID_BUILDINGS = new HashMap<>(
+            Arrays.stream(BUILDINGS)
+                    .collect(Collectors.toMap(Building::getId, Function.identity()))
+    );
+
+    protected int stage;
+    protected int health;
+    protected Date lastCollect;
+
+    public Building init(int stage, int health) {
+        return init(stage, health, null);
     }
 
-    public Building(int stage, int health, @Nullable Date lastCollect) {
+    public Building init(int stage, int health, @Nullable Date lastCollect) {
         this.stage = stage;
         this.health = health;
         this.lastCollect = lastCollect;
+        return this;
     }
 
     public int getStage() {
@@ -85,6 +119,14 @@ public abstract class Building {
     @SuppressWarnings("unchecked")
     public <T extends Building> T cast() {
         return (T) this;
+    }
+
+    public static Building of(int id) {
+        return ID_BUILDINGS.get(id);
+    }
+
+    public static Building of(String name) {
+        return NAME_BUILDINGS.get(name);
     }
 
 }

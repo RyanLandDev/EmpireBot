@@ -65,17 +65,4 @@ public class DisabledCommandHandler {
                 .update();
     }
 
-    public List<Command> deserialize(List<String> disabledCommands) {
-        return disabledCommands.stream()
-                .map(CommandHandler::getCommand)
-                .collect(Collectors.toList());
-    }
-
-    public List<String> serialize(List<Command> disabledCommands) {
-        return disabledCommands.stream()
-                .map(Command::getName)
-                .collect(Collectors.toList());
-    }
-
-
 }

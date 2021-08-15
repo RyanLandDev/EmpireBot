@@ -4,6 +4,8 @@ import com.mongodb.client.model.Filters;
 import net.ryanland.empire.sys.database.DocumentCache;
 import net.ryanland.empire.sys.database.documents.BaseDocument;
 import net.ryanland.empire.sys.database.documents.SnowflakeDocument;
+import net.ryanland.empire.sys.database.documents.serializer.user.BuildingsSerializer;
+import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -27,16 +29,19 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private int gold = getGold();
     private int xp = getXp();
     private int wave = getWave();
-    public Date created = getCreated();
+    @SuppressWarnings("all")
+    private List<List> buildings;
+    private Date created;
 
     @Override
     public void updated(List<Bson> updates) {
-        checkUpdate(updates, level, getLevel(), "level");
-        checkUpdate(updates, crystals, getCrystals(), "crystals");
+        checkUpdate(updates, level, getLevel(), "lvl");
+        checkUpdate(updates, crystals, getCrystals(), "crys");
         checkUpdate(updates, gold, getGold(), "gold");
         checkUpdate(updates, xp, getXp(), "xp");
-        checkUpdate(updates, wave, getWave(), "wave");
-        checkUpdate(updates, created, getCreated(), "created");
+        checkUpdate(updates, wave, getWave(), "wv");
+        checkUpdate(updates, buildings, getBuildingsRaw(), "blds");
+        checkUpdate(updates, created, getCreated(), "cr");
 
         performUpdate(DocumentCache.USER_COLLECTION, Filters.eq("id", getId()), updates);
     }
@@ -73,6 +78,16 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return this;
     }
 
+    @SuppressWarnings("all")
+    public UserDocument setBuildingsRaw(List<List> buildings) {
+        this.buildings = buildings;
+        return this;
+    }
+
+    public UserDocument setBuildings(List<Building> buildings) {
+        return setBuildingsRaw(BuildingsSerializer.getInstance().serialize(buildings));
+    }
+
     public UserDocument setCreated(Date date) {
         this.created = date;
         return this;
@@ -84,11 +99,11 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     }
 
     public Integer getLevel() {
-        return getInteger("level", DEFAULT_LEVEL);
+        return getInteger("lvl", DEFAULT_LEVEL);
     }
 
     public Integer getCrystals() {
-        return getInteger("crystals", DEFAULT_CRYSTALS);
+        return getInteger("crys", DEFAULT_CRYSTALS);
     }
 
     public Integer getGold() {
@@ -100,11 +115,20 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     }
 
     public Integer getWave() {
-        return getInteger("wave", DEFAULT_WAVE);
+        return getInteger("wv", DEFAULT_WAVE);
+    }
+
+    @SuppressWarnings("all")
+    public List<List> getBuildingsRaw() {
+        return getList("blds", List.class);
+    }
+
+    public List<Building> getBuildings() {
+        return BuildingsSerializer.getInstance().deserialize(getBuildingsRaw());
     }
 
     public Date getCreated() {
-        return getDate("created");
+        return getDate("cr");
     }
 
 }

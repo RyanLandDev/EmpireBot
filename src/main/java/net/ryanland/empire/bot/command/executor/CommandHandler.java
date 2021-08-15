@@ -7,12 +7,11 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.Argument;
-import net.ryanland.empire.bot.command.executor.CommandExecutor;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
-import net.ryanland.empire.bot.command.help.CommandInfo;
+import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.impl.SubCommand;
-import net.ryanland.empire.bot.command.impl.SubCommandGroup;
+import net.ryanland.empire.bot.command.info.SubCommandGroup;
 import net.ryanland.empire.bot.events.CommandEvent;
 
 import java.util.ArrayList;

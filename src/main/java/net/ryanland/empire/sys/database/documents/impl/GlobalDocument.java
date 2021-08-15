@@ -6,6 +6,7 @@ import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.sys.database.DocumentCache;
 import net.ryanland.empire.sys.database.documents.BaseDocument;
+import net.ryanland.empire.sys.database.documents.serializer.global.DisabledCommandsSerializer;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -41,7 +42,7 @@ public class GlobalDocument extends BaseDocument {
     }
 
     public GlobalDocument setDisabledCommands(List<Command> disabledCommands) {
-        this.disabledCommands = DisabledCommandHandler.getInstance().serialize(disabledCommands);
+        this.disabledCommands = DisabledCommandsSerializer.getInstance().serialize(disabledCommands);
         return this;
     }
 
@@ -50,7 +51,7 @@ public class GlobalDocument extends BaseDocument {
     }
 
     public List<Command> getDisabledCommands() {
-        return DisabledCommandHandler.getInstance().deserialize(getDisabledCommandsRaw());
+        return DisabledCommandsSerializer.getInstance().deserialize(getDisabledCommandsRaw());
     }
 
 }

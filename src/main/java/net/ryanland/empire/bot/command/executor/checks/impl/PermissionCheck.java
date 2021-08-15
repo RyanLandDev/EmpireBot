@@ -5,7 +5,7 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
-public class PermissionCheck implements CommandCheck {
+public class PermissionCheck extends CommandCheck {
 
     @Override
     public boolean check(CommandEvent event) {

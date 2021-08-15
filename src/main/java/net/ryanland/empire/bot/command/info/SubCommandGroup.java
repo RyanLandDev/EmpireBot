@@ -1,5 +1,6 @@
-package net.ryanland.empire.bot.command.impl;
+package net.ryanland.empire.bot.command.info;
 
+import net.ryanland.empire.bot.command.impl.SubCommand;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

@@ -7,7 +7,7 @@ import net.ryanland.empire.sys.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
-public class RequiresProfileCheck implements CommandCheck {
+public class RequiresProfileCheck extends CommandCheck {
 
     @Override
     public boolean check(CommandEvent event) {

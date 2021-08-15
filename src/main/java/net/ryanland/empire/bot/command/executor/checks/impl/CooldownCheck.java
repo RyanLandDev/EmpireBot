@@ -6,7 +6,7 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
-public class CooldownCheck implements CommandCheck {
+public class CooldownCheck extends CommandCheck {
 
     @Override
     public boolean check(CommandEvent event) {

@@ -7,10 +7,6 @@ import net.ryanland.empire.sys.gameplay.currency.Price;
 
 public class ArcherBuilding extends DefenseRangedBuilding {
 
-    public ArcherBuilding(int stage, int health) {
-        super(stage, health);
-    }
-
     @Override
     public int getId() {
         return 21;

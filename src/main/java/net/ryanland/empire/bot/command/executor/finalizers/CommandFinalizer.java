@@ -2,9 +2,19 @@ package net.ryanland.empire.bot.command.executor.finalizers;
 
 import net.ryanland.empire.bot.events.CommandEvent;
 
-public interface CommandFinalizer {
+/**
+ * Command finalizers are executed if a command is about to successfully run
+  */
+public abstract class CommandFinalizer {
 
-    // Finalizers are executed if a command is about to successfully run
+    @SuppressWarnings("all")
+    private final static CommandFinalizer[] FINALIZERS = new CommandFinalizer[]{
+            new CooldownFinalizer()
+    };
 
-    void finalize(CommandEvent event);
+    public static CommandFinalizer[] getFinalizers() {
+        return FINALIZERS;
+    }
+
+    public abstract void finalize(CommandEvent event);
 }

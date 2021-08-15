@@ -3,10 +3,6 @@ package net.ryanland.empire.bot.command.executor;
 import net.ryanland.empire.bot.command.arguments.parsing.ArgumentParser;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheck;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheckException;
-import net.ryanland.empire.bot.command.executor.checks.impl.CooldownCheck;
-import net.ryanland.empire.bot.command.executor.checks.impl.DisabledCheck;
-import net.ryanland.empire.bot.command.executor.checks.impl.PermissionCheck;
-import net.ryanland.empire.bot.command.executor.checks.impl.RequiresProfileCheck;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.executor.finalizers.CommandFinalizer;
 import net.ryanland.empire.bot.command.executor.finalizers.CooldownFinalizer;
@@ -16,17 +12,6 @@ import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class CommandExecutor {
-
-    private final CommandCheck[] checks = new CommandCheck[]{
-            new DisabledCheck(),
-            new PermissionCheck(),
-            new RequiresProfileCheck(),
-            new CooldownCheck()
-    };
-
-    private final CommandFinalizer[] finalizers = new CommandFinalizer[]{
-            new CooldownFinalizer()
-    };
 
     public void run(CommandEvent event) {
         String[] args = event.getRawArgs();
@@ -48,7 +33,7 @@ public class CommandExecutor {
         event.setCommand(command);
 
         try {
-            for (CommandCheck check : checks) {
+            for (CommandCheck check : CommandCheck.getChecks()) {
                 if (check.check(event)) {
                     event.reply(check.buildMessage(event), true).queue();
                     throw new CommandCheckException();
@@ -58,7 +43,7 @@ public class CommandExecutor {
             ArgumentParser argumentParser = new ArgumentParser(event, args);
 
             if (argumentParser.parseArguments()) {
-                for (CommandFinalizer finalizer : finalizers) {
+                for (CommandFinalizer finalizer : CommandFinalizer.getFinalizers()) {
                     finalizer.finalize(event);
                 }
 

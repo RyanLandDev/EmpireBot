@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.help;
+package net.ryanland.empire.bot.command.info;
 
 public enum Category {
 

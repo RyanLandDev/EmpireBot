@@ -1,8 +1,8 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.help.Category;
-import net.ryanland.empire.bot.command.help.CommandInfo;
+import net.ryanland.empire.bot.command.info.Category;
+import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.database.DocumentCache;
@@ -30,7 +30,7 @@ public class EmpireCommand extends Command {
                 "__**Statistics**__",
                 "\n**Level:** ", document.getLevel().toString(),
                 "\n**XP:** ", document.getXp().toString(),
-                "\n**Created:** ", String.valueOf(document.created),
+                "\n**Created:** ", String.valueOf(document.getCreated()),
                 "\n**Gold:** ", document.getGold().toString(),
                 "\n**Crystals:** ", document.getCrystals().toString()
         };

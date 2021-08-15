@@ -2,10 +2,6 @@ package net.ryanland.empire.sys.gameplay.building.impl.defense;
 
 public abstract class DefenseRangedBuilding extends DefenseBuilding {
 
-    public DefenseRangedBuilding(int stage, int health) {
-        super(stage, health);
-    }
-
     public abstract int getRange();
 
     public abstract int getDamage();

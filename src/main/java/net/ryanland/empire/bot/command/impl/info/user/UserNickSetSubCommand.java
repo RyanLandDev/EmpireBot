@@ -5,7 +5,7 @@ import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.EndlessStringArgument;
 import net.ryanland.empire.bot.command.arguments.types.impl.MemberArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.help.CommandInfo;
+import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;

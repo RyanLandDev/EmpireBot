@@ -1,15 +1,10 @@
 package net.ryanland.empire.sys.gameplay.building.impl.defense.thorned;
 
-import net.ryanland.empire.sys.gameplay.building.impl.defense.DefenseBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.DefenseThornedBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 
 public class WallBuilding extends DefenseThornedBuilding {
-
-    public WallBuilding(int stage, int health) {
-        super(stage, health);
-    }
 
     @Override
     public int getId() {

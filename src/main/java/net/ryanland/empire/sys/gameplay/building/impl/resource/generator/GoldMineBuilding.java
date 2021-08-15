@@ -10,10 +10,6 @@ import java.util.Date;
 
 public class GoldMineBuilding extends ResourceGeneratorBuilding {
 
-    public GoldMineBuilding(int stage, int health, @NotNull Date lastCollect) {
-        super(stage, health, lastCollect);
-    }
-
     @Override
     public int getId() {
         return 11;

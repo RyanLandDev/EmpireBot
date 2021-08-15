@@ -9,10 +9,6 @@ import java.util.Date;
 
 public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
-    public ResourceGeneratorBuilding(int stage, int health, @NotNull Date lastCollect) {
-        super(stage, health, lastCollect);
-    }
-
     @Override
     public BuildingType getBuildingType() {
         return BuildingType.RESOURCE_GENERATOR;

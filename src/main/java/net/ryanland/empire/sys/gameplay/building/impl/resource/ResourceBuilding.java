@@ -9,14 +9,6 @@ import java.util.Date;
 
 public abstract class ResourceBuilding extends Building {
 
-    public ResourceBuilding(int stage, int health) {
-        super(stage, health);
-    }
-
-    public ResourceBuilding(int stage, int health, @Nullable Date lastCollect) {
-        super(stage, health, lastCollect);
-    }
-
     public abstract Price<Integer> getCapacity();
 
     @Override
