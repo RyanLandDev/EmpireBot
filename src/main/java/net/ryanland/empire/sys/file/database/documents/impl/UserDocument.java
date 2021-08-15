@@ -6,11 +6,13 @@ import net.ryanland.empire.sys.file.database.documents.BaseDocument;
 import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
 import net.ryanland.empire.sys.file.serializer.user.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
+import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +24,15 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     public static final int DEFAULT_CRYSTALS = 100;
     public static final int DEFAULT_WAVE = 1;
     @SuppressWarnings("all")
-    public static final List<List> DEFAULT_BUILDINGS = new ArrayList<>();
+    public static final List<List> DEFAULT_BUILDINGS = getDefaultBuildings();
+
+    @SuppressWarnings("all")
+    private static List<List> getDefaultBuildings() {
+        List<List> result = new ArrayList<>();
+        result.add(Arrays.asList(GoldMineBuilding.ID, Building.BUILDING_START_STAGE));
+        //TODO
+        return null;
+    }
 
     public UserDocument(Document document) {
         super(document);

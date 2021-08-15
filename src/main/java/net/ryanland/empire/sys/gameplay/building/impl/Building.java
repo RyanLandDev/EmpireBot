@@ -1,5 +1,6 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
+import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuilding;
@@ -10,14 +11,17 @@ import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class Building {
+public abstract class Building implements Serializable {
 
+    public static final int BUILDING_START_STAGE = 1;
     public static final int BASE_MAX_HEALTH = 100;
 
     @SuppressWarnings("all")
@@ -31,7 +35,7 @@ public abstract class Building {
             // Resource Generator
             new GoldMineBuilding(),
             // Resource Storage
-            new BankBuilding(),
+            new BankBuilding()
 
     };
 
@@ -47,17 +51,15 @@ public abstract class Building {
 
     protected int stage;
     protected int health;
-    protected Date lastCollect;
 
-    public Building init(int stage, int health) {
-        return init(stage, health, null);
+    public Building deserialize(List<?> data) {
+        stage = (int) data.get(1);
+        health = (int) data.get(2);
+        return this;
     }
 
-    public Building init(int stage, int health, @Nullable Date lastCollect) {
-        this.stage = stage;
-        this.health = health;
-        this.lastCollect = lastCollect;
-        return this;
+    public List<?> serialize() {
+        return Arrays.asList(getId(), getStage(), getHealth());
     }
 
     public int getStage() {
@@ -66,14 +68,6 @@ public abstract class Building {
 
     public int getHealth() {
         return health;
-    }
-
-    public Date getLastCollect() {
-        if (!(this instanceof ResourceGeneratorBuilding)) {
-            throw new IllegalCallerException();
-        }
-
-        return lastCollect;
     }
 
     public int getMaxHealth() {

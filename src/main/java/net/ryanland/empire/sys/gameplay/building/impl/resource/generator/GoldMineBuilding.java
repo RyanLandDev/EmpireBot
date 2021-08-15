@@ -10,9 +10,11 @@ import java.util.Date;
 
 public class GoldMineBuilding extends ResourceGeneratorBuilding {
 
+    public static final int ID = 11;
+
     @Override
     public int getId() {
-        return 11;
+        return ID;
     }
 
     @Override
