@@ -42,7 +42,7 @@ public class ArgumentParser {
                 parsedArgs.put(arg.getId(), parsedArg);
 
             } catch (MalformedArgumentException e) {
-                event.reply(embed
+                event.performReply(embed
                         .setDescription(e.getMessage(event, arg))
                         .setTitle("Invalid Argument")
                 , true).queue();
@@ -50,7 +50,7 @@ public class ArgumentParser {
 
             } catch (MissingArgumentException e) {
                 if (!arg.isOptional()) {
-                    event.reply(embed
+                    event.performReply(embed
                             .setDescription(e.getMessage(event, arg))
                             .setTitle("Missing Argument")
                     , true).queue();

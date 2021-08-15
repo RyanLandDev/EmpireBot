@@ -24,7 +24,7 @@ public class PingCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
-        event.reply(
+        event.performReply(
                 new PresetBuilder(
                         "Ping: " + event.getJDA().getRestPing().complete() + "ms."
                 )

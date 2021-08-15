@@ -1,8 +1,8 @@
 package net.ryanland.empire.sys.message.builders;
 
 public enum PresetType {
-    DEFAULT(0x2f3136, true),
-    NOTIFICATION(0x5dadec, true),
+    DEFAULT(0x2f3136),
+    NOTIFICATION(0x5dadec),
     ERROR(0xdd2e44, "Error", true),
     WARNING(0xffcc4d, "Warning"),
     SUCCESS(0x4ccd6a, "Success");
@@ -17,14 +17,16 @@ public enum PresetType {
     }
 
     PresetType(int color, String defaultTitle) {
-        this(color, defaultTitle, false, false);
+        this(color, defaultTitle, false);
     }
 
     PresetType(int color, boolean showFooter) {
         this(color, null, showFooter, false);
     }
 
-    PresetType(int color, String defaultTitle, boolean isEphemeral) { this(color, defaultTitle, true, isEphemeral); }
+    PresetType(int color, String defaultTitle, boolean isEphemeral) {
+        this(color, defaultTitle, true, isEphemeral);
+    }
 
     PresetType(int color, String defaultTitle, boolean showFooter, boolean isEphemeral) {
         this.color = color;
@@ -45,5 +47,7 @@ public enum PresetType {
         return showFooter;
     }
 
-    public boolean isEphemeral() { return isEphemeral; }
+    public boolean isEphemeral() {
+        return isEphemeral;
+    }
 }

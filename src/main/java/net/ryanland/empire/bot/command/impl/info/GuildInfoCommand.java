@@ -49,6 +49,6 @@ public class GuildInfoCommand extends Command {
                 .addField("Roles", String.join(" ", mentionableRoles))
                 .setImage(GUILD.getSplashUrl());
 
-        event.reply(builder.build()).queue();
+        event.reply(builder);
     }
     }

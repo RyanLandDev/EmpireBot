@@ -5,7 +5,6 @@ import net.ryanland.empire.bot.command.executor.checks.CommandCheck;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheckException;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.executor.finalizers.CommandFinalizer;
-import net.ryanland.empire.bot.command.executor.finalizers.CooldownFinalizer;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
@@ -35,7 +34,7 @@ public class CommandExecutor {
         try {
             for (CommandCheck check : CommandCheck.getChecks()) {
                 if (check.check(event)) {
-                    event.reply(check.buildMessage(event), true).queue();
+                    event.performReply(check.buildMessage(event), true).queue();
                     throw new CommandCheckException();
                 }
             }
@@ -51,7 +50,7 @@ public class CommandExecutor {
                     command.run(event);
                 } catch (Exception e) {
                     if (!(e instanceof CommandException)) e.printStackTrace();
-                    event.reply(
+                    event.performReply(
                             new PresetBuilder(PresetType.ERROR,
                                     e instanceof CommandException ?
                                             e.getMessage() :

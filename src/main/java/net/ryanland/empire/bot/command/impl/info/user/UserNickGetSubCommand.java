@@ -29,7 +29,7 @@ public class UserNickGetSubCommand extends SubCommand {
     @Override
     public void run(CommandEvent event) throws CommandException {
         Member member = event.getArgument("member");
-        event.reply(
+        event.performReply(
                 new PresetBuilder(
                         String.format("%s's nickname: %s", member.getUser().getName(), member.getEffectiveName())
                 )).queue();

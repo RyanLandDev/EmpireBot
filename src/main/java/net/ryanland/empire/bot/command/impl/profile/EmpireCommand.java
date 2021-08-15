@@ -36,7 +36,7 @@ public class EmpireCommand extends Command {
         };
 
 
-        event.reply(new PresetBuilder()
+        event.performReply(new PresetBuilder()
                 .setTitle(String.format("%s's Empire",event.getUser().getName()))
                 .setDescription("Here's all the information about your current Empire.")
                 .addField("",

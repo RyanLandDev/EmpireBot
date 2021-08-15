@@ -26,6 +26,6 @@ public class TestCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
-        event.reply(new PresetBuilder(PresetType.SUCCESS).setTitle("Test finished.")).queue();
+        event.performReply(new PresetBuilder(PresetType.SUCCESS).setTitle("Test finished.")).queue();
     }
 }

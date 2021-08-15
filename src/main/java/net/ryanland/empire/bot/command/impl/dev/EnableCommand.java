@@ -39,7 +39,7 @@ public class EnableCommand extends Command {
         Command command = event.getArgument("command");
         DisabledCommandHandler.getInstance().enable(command);
 
-        event.reply(
+        event.performReply(
                 new PresetBuilder(PresetType.SUCCESS,
                         "Re-enabled the `"+command.getName()+"` command.")
         ).queue();

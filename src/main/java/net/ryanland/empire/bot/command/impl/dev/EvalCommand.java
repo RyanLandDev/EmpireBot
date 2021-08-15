@@ -69,7 +69,7 @@ public class EvalCommand extends Command {
 
             builder.setTitle("Eval Result")
                     .addField("Object Returned:", String.format("```js\n%s```", object), false);
-            event.reply(builder).queue();
+            event.performReply(builder).queue();
 
         } catch (Throwable e) {
             StringWriter sw = new StringWriter();
@@ -77,7 +77,7 @@ public class EvalCommand extends Command {
             String sStackTrace = sw.toString();
 
             builder.setTitle("Eval failed!");
-            event.reply(builder).queue();
+            event.performReply(builder).queue();
             event.getChannel().sendMessage(String.format("```%s```",
                     sStackTrace.length() >= 1500 ? sStackTrace.substring(0, 1500) : sStackTrace
             )).queue();

@@ -88,6 +88,6 @@ public class HelpCommand extends Command {
     }
 
     private void supplyCommandHelp(CommandEvent event, Command command) {
-        event.reply(HelpMaker.commandEmbed(event, command)).queue();
+        event.performReply(HelpMaker.commandEmbed(event, command)).queue();
     }
 }

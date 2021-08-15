@@ -8,6 +8,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ *         >> Database Building Structure <<
+ *             0 - ID
+ *             1 - Stage
+ *             2 - Health
+ *             3 - (RESOURCE_GENERATOR ONLY) lastCollect
+ */
 @SuppressWarnings("all")
 public class BuildingsSerializer implements Serializer<List<List>, List<Building>> {
 
@@ -16,14 +23,6 @@ public class BuildingsSerializer implements Serializer<List<List>, List<Building
     public static BuildingsSerializer getInstance() {
         return instance;
     }
-
-    /*
-        >> Database Building Structure <<
-            0 - ID
-            1 - Stage
-            2 - Health
-            3 - (RESOURCE_GENERATOR ONLY) lastCollect
-   */
 
     @Override
     public List<List> serialize(List<Building> toSerialize) {

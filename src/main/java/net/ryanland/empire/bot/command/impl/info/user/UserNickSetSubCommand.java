@@ -34,6 +34,6 @@ public class UserNickSetSubCommand extends SubCommand {
         Member member = event.getArgument("member");
         String newNick = event.getArgument("nick");
         member.modifyNickname(newNick).queue();
-        event.reply(new PresetBuilder(PresetType.SUCCESS, "Successfully changed " + member.getUser().getName() + "'s nickname to " + newNick)).queue();
+        event.performReply(new PresetBuilder(PresetType.SUCCESS, "Successfully changed " + member.getUser().getName() + "'s nickname to " + newNick)).queue();
     }
 }

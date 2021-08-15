@@ -13,6 +13,9 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class TutorialCommand extends Command {
     @Override
     public CommandInfo getInfo() {
@@ -42,7 +45,7 @@ public class TutorialCommand extends Command {
             Tutorial tutorial = TutorialHandler.getTutorial(tutorialName);
 
             if (tutorial == null) {
-                event.reply(new PresetBuilder(
+                event.performReply(new PresetBuilder(
                         PresetType.ERROR, "Tutorial not found.", "Not found"
                 )).queue();
             } else {
@@ -50,22 +53,19 @@ public class TutorialCommand extends Command {
             }
 
         } catch (IndexOutOfBoundsException e) {
-            String tutorialList = "";
-            for (Tutorial tutorial : Tutorial.values()) {
-                tutorialList += String.format("`%s` ",tutorial.getExecutor());
-            }
-
-            EmbedBuilder builder = new EmbedBuilder();
-            builder
-                    .setTitle("Tutorials")
-                    .setDescription("Tutorials give you a brief overview of some of the mechanics of the bot.\n")
-                    .addField("Tutorials", tutorialList, true);
-
-            event.reply(builder.build()).queue();
+            event.reply(new PresetBuilder(
+                    "Tutorials give you a brief overview of some of the mechanics of the bot.\n",
+                    "Tutorials")
+                    .addField("Tutorials",
+                            "`" +
+                                    Arrays.stream(Tutorial.values())
+                                    .map(Tutorial::getExecutor)
+                                    .collect(Collectors.joining("` `")) + "`",
+                            true));
         }
     }
 
     private void supplyTutorialHelp(CommandEvent event, Tutorial tutorial) {
-        event.reply(TutorialMaker.tutorialEmbed(event, tutorial).build()).queue();
+        event.reply(TutorialMaker.tutorialEmbed(event, tutorial));
     }
 }

@@ -61,6 +61,14 @@ public class PresetBuilder {
         this.isEphemeral = type.isEphemeral();
     }
 
+    public boolean isEphemeral() {
+        return isEphemeral;
+    }
+
+    public void setEphemeral(boolean isEphemeral) {
+        this.isEphemeral = isEphemeral;
+    }
+
     public int getColor() {
         return color;
     }

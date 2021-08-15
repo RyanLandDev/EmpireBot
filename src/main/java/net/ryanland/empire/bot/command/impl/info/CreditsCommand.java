@@ -50,7 +50,7 @@ public class CreditsCommand extends Command {
             }
         }
 
-        event.reply(
+        event.performReply(
                 new PresetBuilder(String.join("\n", devListBuilder)
                 )
                         .setTitle("Credits")

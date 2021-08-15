@@ -34,7 +34,7 @@ public class MimicCommand extends Command {
     public void run(CommandEvent event) {
         String message = event.getArgument("message");
 
-        event.reply(new PresetBuilder(PresetType.SUCCESS, "Your message was sent."), true).queue();
+        event.performReply(new PresetBuilder(PresetType.SUCCESS, "Your message was sent."), true).queue();
         event.getChannel().sendMessage(message).queue();
     }
 }

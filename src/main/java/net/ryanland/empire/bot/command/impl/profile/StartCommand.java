@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
-import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
@@ -10,7 +9,6 @@ import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
-import org.bson.Document;
 
 import java.util.Date;
 
@@ -34,7 +32,7 @@ public class StartCommand extends Command {
         UserDocument document = DocumentCache.get(event.getUser(), UserDocument.class, true);
 
         if (document != null) {
-            event.reply(
+            event.performReply(
                     new PresetBuilder(PresetType.ERROR, "You already have a profile.")
                     .addLogo()
             ).queue();
@@ -44,7 +42,7 @@ public class StartCommand extends Command {
                     .setCreated(new Date())
                     .update();
 
-            event.reply(
+            event.performReply(
                     new PresetBuilder(
                             PresetType.SUCCESS,
                             "Your profile has been created! Good luck!\n*It is recommended to use the /tutorial.*",

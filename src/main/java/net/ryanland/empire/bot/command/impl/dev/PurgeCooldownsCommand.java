@@ -32,7 +32,7 @@ public class PurgeCooldownsCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         CooldownHandler.purgeCooldowns(StorageType.MEMORY);
-        event.reply(new PresetBuilder(PresetType.SUCCESS,
+        event.performReply(new PresetBuilder(PresetType.SUCCESS,
                 "Successfully purged all active cooldowns in memory.")).queue();
     }
 }

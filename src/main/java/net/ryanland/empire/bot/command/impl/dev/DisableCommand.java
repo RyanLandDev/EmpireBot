@@ -39,7 +39,7 @@ public class DisableCommand extends Command {
         Command command = event.getArgument("command");
         DisabledCommandHandler.getInstance().disable(command);
 
-        event.reply(
+        event.performReply(
                 new PresetBuilder(PresetType.SUCCESS,
                         "Disabled the `"+command.getName()+"` command.")
         ).queue();

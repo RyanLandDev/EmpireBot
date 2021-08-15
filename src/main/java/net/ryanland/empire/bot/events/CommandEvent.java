@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.events;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -56,52 +55,89 @@ public class CommandEvent {
         return event.reply(message).setEphemeral(ephemeral);
     }
 
+    private ReplyAction sendReply(Message message) {
+        return sendReply(message, false);
+    }
+
     private ReplyAction sendReply(MessageEmbed embed, boolean ephemeral) {
-        return event.replyEmbeds(embed).setEphemeral(ephemeral);
+        return event.replyEmbeds(embed)
+                .setEphemeral(ephemeral);
+    }
+
+    private ReplyAction sendReply(MessageEmbed embed) {
+        return sendReply(embed, false);
     }
 
     private ReplyAction sendReply(String message, boolean ephemeral) {
         return event.reply(message).setEphemeral(ephemeral);
     }
 
-    public ReplyAction reply(Message message) {
+    private ReplyAction sendReply(String message) {
         return sendReply(message, false);
     }
 
-    public ReplyAction reply(Message message, boolean ephemeral) {
-        return sendReply(message, ephemeral);
+    private ReplyAction sendReply(PresetBuilder embed, boolean ephemeral) {
+        return sendReply(embed.build(), ephemeral);
     }
 
-    public ReplyAction reply(String message) {
-        return sendReply(message, false);
-    }
-
-    public ReplyAction reply(String message, boolean ephemeral) {
-        return sendReply(message, ephemeral);
-    }
-
-    public ReplyAction reply(MessageEmbed embed) {
+    private ReplyAction sendReply(PresetBuilder embed) {
         return sendReply(embed, false);
     }
 
-    public ReplyAction reply(MessageEmbed embed, boolean ephemeral) {
+    public ReplyAction performReply(Message message) {
+        return sendReply(message);
+    }
+
+    public ReplyAction performReply(Message message, boolean ephemeral) {
+        return sendReply(message, ephemeral);
+    }
+
+    public ReplyAction performReply(String message) {
+        return sendReply(message);
+    }
+
+    public ReplyAction performReply(String message, boolean ephemeral) {
+        return sendReply(message, ephemeral);
+    }
+
+    public ReplyAction performReply(PresetBuilder embed) {
+        return sendReply(embed, embed.isEphemeral());
+    }
+
+    public ReplyAction performReply(PresetBuilder embed, boolean ephemeral) {
         return sendReply(embed, ephemeral);
     }
 
-    public ReplyAction reply(EmbedBuilder embed) {
-        return sendReply(embed.build(), false);
+    public ReplyAction performReply(MessageEmbed embed) {
+        return sendReply(embed);
     }
 
-    public ReplyAction reply(EmbedBuilder embed, boolean ephemeral) {
-        return sendReply(embed.build(), ephemeral);
+    public ReplyAction performReply(MessageEmbed embed, boolean ephemeral) {
+        return sendReply(embed, ephemeral);
     }
 
-    public ReplyAction reply(PresetBuilder embed) {
-        return sendReply(embed.build(), false);
+    public void reply(Message message) {
+        sendReply(message);
     }
 
-    public ReplyAction reply(PresetBuilder embed, boolean ephemeral) {
-        return sendReply(embed.build(), ephemeral);
+    public void reply(Message message, boolean ephemeral) {
+        sendReply(message, ephemeral);
+    }
+
+    public void reply(String message) {
+        sendReply(message);
+    }
+
+    public void reply(String message, boolean ephemeral) {
+        sendReply(message, ephemeral);
+    }
+
+    public void reply(PresetBuilder embed) {
+        sendReply(embed);
+    }
+
+    public void reply(PresetBuilder embed, boolean ephemeral) {
+        sendReply(embed, ephemeral);
     }
 
     public String[] getRawArgs() {
@@ -224,5 +260,8 @@ public class CommandEvent {
         return event.getTimeCreated();
     }
 
+    public SlashCommandEvent getEvent() {
+        return event;
+    }
 
 }

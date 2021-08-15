@@ -34,7 +34,7 @@ public class TabMenu {
         send(null);
     }
 
-    public void send(CommandEvent cmdEvent) {
+    public void send(CommandEvent commandEvent) {
         // Set all embed titles to match the category name
         for (TabMenuPage page : pages) {
             EmbedBuilder embed = page.getEmbed();
@@ -64,7 +64,7 @@ public class TabMenu {
         }
 
         // Send the message and set the action rows
-        cmdEvent.reply(pages[0].getEmbed().build())
+        commandEvent.performReply(pages[0].getEmbed().build())
                 .addActionRows(InteractionUtil.of(buttons)).queue(message -> {
         // Add a listener for when a button is clicked
             ButtonHandler.addListener(message, userId, event -> {
