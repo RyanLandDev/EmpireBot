@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.arguments.types.impl.BooleanArgument;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -21,11 +22,19 @@ public class TestCommand extends Command {
 
     @Override
     public ArgumentSet getArguments() {
-        return new ArgumentSet();
+        return new ArgumentSet()
+                .addArguments(
+                        new BooleanArgument().id("testboolean").description("The boolean")
+                );
     }
 
     @Override
     public void run(CommandEvent event) {
+
+        Boolean b = event.getArgument("testboolean");
+        event.getChannel().sendMessage(b.toString()).queue();
+
+
         event.performReply(new PresetBuilder(PresetType.SUCCESS).setTitle("Test finished.")).queue();
     }
 }
