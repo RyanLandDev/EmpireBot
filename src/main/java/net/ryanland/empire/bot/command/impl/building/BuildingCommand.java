@@ -4,15 +4,20 @@ import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.BuildingArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
+import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 
 public class BuildingCommand extends Command {
-//TODO
+
     @Override
     public CommandInfo getInfo() {
-        return null;
+        return new CommandInfo()
+                .name("building")
+                .description("Gets information about a specific building in your Empire.")
+                .category(Category.BUILDING)
+                .requiresProfile();
     }
 
     @Override

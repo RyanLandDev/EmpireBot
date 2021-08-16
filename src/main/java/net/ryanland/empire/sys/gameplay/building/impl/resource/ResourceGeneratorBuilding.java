@@ -23,7 +23,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     @Override
-    public Building deserialize() {
+    public Building defaults() {
         stage = BUILDING_START_STAGE;
         health = getMaxHealth();
         lastCollect = new Date();
@@ -32,7 +32,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
     @Override
     public List<?> serialize() {
-        return Arrays.asList(getId(), getStage(), getHealth(), getLastCollect());
+        return Arrays.asList(getId(), getStage(), getHealth(), (Object) getLastCollect());
     }
 
     @Override

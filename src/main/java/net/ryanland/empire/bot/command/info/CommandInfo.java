@@ -66,24 +66,24 @@ public class CommandInfo {
     }
 
     public CommandInfo requiresProfile() {
-        this.requiresProfile = true;
+        requiresProfile = true;
         return this;
     }
 
     public CommandInfo subCommands(SubCommand... subCommands) {
         this.subCommands = Arrays.asList(subCommands);
-        this.subCommandMap = new HashMap<>();
+        subCommandMap = new HashMap<>();
         for (SubCommand cmd : subCommands) {
-            this.subCommandMap.put(cmd.getName(), cmd);
+            subCommandMap.put(cmd.getName(), cmd);
         }
         return this;
     }
 
     public CommandInfo subCommandGroups(SubCommandGroup... subCommandGroups) {
         this.subCommandGroups = Arrays.asList(subCommandGroups);
-        this.subCommandGroupMap = new HashMap<>();
+        subCommandGroupMap = new HashMap<>();
         for (SubCommandGroup group : subCommandGroups) {
-            this.subCommandGroupMap.put(group.getName(), group);
+            subCommandGroupMap.put(group.getName(), group);
         }
         return this;
     }

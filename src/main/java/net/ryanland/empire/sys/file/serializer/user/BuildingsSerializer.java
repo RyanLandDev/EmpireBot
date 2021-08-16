@@ -3,7 +3,6 @@ package net.ryanland.empire.sys.file.serializer.user;
 import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +32,7 @@ public class BuildingsSerializer implements Serializer<List<List>, List<Building
     @Override
     public List<Building> deserialize(List<List> toDeserialize) {
         return toDeserialize.stream()
-                .map(e -> Building.of((int) e.get(0)).deserialize(e))
+                .map(e -> Building.of((Integer) e.get(0)).deserialize(e))
                 .collect(Collectors.toList());
     }
 }

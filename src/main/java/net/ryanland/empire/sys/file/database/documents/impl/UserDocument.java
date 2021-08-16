@@ -25,18 +25,10 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     public static final int DEFAULT_CRYSTALS = 100;
     public static final int DEFAULT_WAVE = 1;
     @SuppressWarnings("all")
-    public static final List<List> DEFAULT_BUILDINGS = getDefaultBuildings();
-
-    @SuppressWarnings("all")
-    private static List<List> getDefaultBuildings() {
-        List<List> result = new ArrayList<>();
-        result.add(
-                Arrays.asList(
-                        Building.of(GoldMineBuilding.ID).deserialize(),
-                        Building.of(BankBuilding.ID).deserialize()
-                ));
-        return result;
-    }
+    public static final List<List> DEFAULT_BUILDINGS = Arrays.asList(
+            Building.of(GoldMineBuilding.ID).defaults().serialize(),
+            Building.of(BankBuilding.ID).defaults().serialize()
+    );
 
     public UserDocument(Document document) {
         super(document);

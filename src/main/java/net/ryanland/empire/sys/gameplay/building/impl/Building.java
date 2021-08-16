@@ -58,7 +58,7 @@ public abstract class Building implements Serializable {
         return this;
     }
 
-    public Building deserialize() {
+    public Building defaults() {
         stage = BUILDING_START_STAGE;
         health = getMaxHealth();
         return this;

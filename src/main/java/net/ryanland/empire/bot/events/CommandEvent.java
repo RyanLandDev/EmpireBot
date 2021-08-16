@@ -117,27 +117,27 @@ public class CommandEvent {
     }
 
     public void reply(Message message) {
-        sendReply(message);
+        sendReply(message).queue();
     }
 
     public void reply(Message message, boolean ephemeral) {
-        sendReply(message, ephemeral);
+        sendReply(message, ephemeral).queue();
     }
 
     public void reply(String message) {
-        sendReply(message);
+        sendReply(message).queue();
     }
 
     public void reply(String message, boolean ephemeral) {
-        sendReply(message, ephemeral);
+        sendReply(message, ephemeral).queue();
     }
 
     public void reply(PresetBuilder embed) {
-        sendReply(embed);
+        sendReply(embed).queue();
     }
 
     public void reply(PresetBuilder embed, boolean ephemeral) {
-        sendReply(embed, ephemeral);
+        sendReply(embed, ephemeral).queue();
     }
 
     public String[] getRawArgs() {
