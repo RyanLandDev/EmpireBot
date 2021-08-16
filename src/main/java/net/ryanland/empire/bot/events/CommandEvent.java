@@ -12,8 +12,10 @@ import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.impl.GlobalDocument;
 import net.ryanland.empire.sys.file.database.documents.impl.GuildDocument;
+import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;
@@ -147,6 +149,10 @@ public class CommandEvent {
         return DocumentCache.get(getUser(), UserDocument.class);
     }
 
+    public Profile getProfile() {
+        return new Profile(getUser());
+    }
+
     public GuildDocument getGuildDocument() {
         return DocumentCache.get(getUser(), GuildDocument.class);
     }
@@ -249,6 +255,22 @@ public class CommandEvent {
 
     public SlashCommandEvent getEvent() {
         return event;
+    }
+
+    public boolean isSelf(User user) {
+        return user.equals(getUser());
+    }
+
+    public String getPossessiveAdjective(User user) {
+        if (user.equals(getUser())) {
+            return "your";
+        } else {
+            return "their";
+        }
+    }
+
+    public String getCapitalizedPossessiveAdjective(User user) {
+        return StringUtil.capitalize(getPossessiveAdjective(user));
     }
 
 }

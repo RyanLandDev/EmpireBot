@@ -23,6 +23,8 @@ public abstract class Building implements Serializable {
 
     public static final int BUILDING_START_STAGE = 1;
     public static final int BASE_MAX_HEALTH = 100;
+    public static final int USABLE_HEALTH = 75;
+    public static final int LAYOUT_DISPLAY_PER_ROW = 7;
 
     @SuppressWarnings("all")
     private static final Building[] BUILDINGS = new Building[]{
@@ -80,6 +82,10 @@ public abstract class Building implements Serializable {
         return BASE_MAX_HEALTH;
     }
 
+    public boolean isUsable() {
+        return health >= USABLE_HEALTH;
+    }
+
     public Price<Integer> getSellPrice() {
         return new Price<>(getMainCurrency(),
                 (int) Math.floor(0.65f * stage * getPrice().amount()));
@@ -117,8 +123,8 @@ public abstract class Building implements Serializable {
     public abstract BuildingType getBuildingType();
 
     @SuppressWarnings("unchecked")
-    public <T extends Building> T cast() {
-        return (T) this;
+    public <R extends Building> R cast() {
+        return (R) this;
     }
 
     public static Building of(int id) {

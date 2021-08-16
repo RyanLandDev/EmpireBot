@@ -30,6 +30,7 @@ public class CommandInfo {
         return this;
     }
 
+    @Deprecated
     public CommandInfo aliases(String... aliases) {
         this.aliases = aliases;
         return this;

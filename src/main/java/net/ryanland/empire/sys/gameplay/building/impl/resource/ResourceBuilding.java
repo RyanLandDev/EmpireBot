@@ -2,6 +2,7 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource;
 
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
+import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,5 +15,9 @@ public abstract class ResourceBuilding extends Building {
     @Override
     public BuildingType getBuildingType() {
         return BuildingType.RESOURCE;
+    }
+
+    public Currency getEffectiveCurrency() {
+        return getCapacity().currency();
     }
 }

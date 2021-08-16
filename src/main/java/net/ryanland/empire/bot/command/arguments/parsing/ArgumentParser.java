@@ -35,10 +35,8 @@ public class ArgumentParser {
         Command command = event.getCommand();
         PresetBuilder embed = new PresetBuilder(PresetType.ERROR);
 
-        System.out.println("parsing");
-
         for (Argument<?> arg : command.getArguments()) {
-            System.out.println("parsing argument "+arg.getId());
+
             try {
                 Object parsedArg;
                 if (queue.peek() == null && arg.isOptional()) {

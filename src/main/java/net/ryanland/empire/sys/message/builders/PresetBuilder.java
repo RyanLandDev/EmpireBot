@@ -159,6 +159,10 @@ public class PresetBuilder {
         return this;
     }
 
+    /**
+     * Sets the embed thumbnail to the bot's profile picture.
+     * @return {@code this}
+     */
     public PresetBuilder addLogo() {
         this.thumbnail = Empire.getLogo();
         return this;

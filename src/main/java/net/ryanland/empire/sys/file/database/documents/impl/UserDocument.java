@@ -40,7 +40,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private int xp = getXp();
     private int wave = getWave();
     @SuppressWarnings("all")
-    private List<List> buildings = getBuildingsRaw();
+    private List<List> buildings = getBuildings();
     private Date created;
 
     @Override
@@ -50,7 +50,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         checkUpdate(updates, gold, getGold(), "gold");
         checkUpdate(updates, xp, getXp(), "xp");
         checkUpdate(updates, wave, getWave(), "wv");
-        checkUpdate(updates, buildings, getBuildingsRaw(), "blds");
+        checkUpdate(updates, buildings, getBuildings(), "blds");
         checkUpdate(updates, created, getCreated(), "cr");
 
         performUpdate(DocumentCache.USER_COLLECTION, Filters.eq("id", getId()), updates);
@@ -127,12 +127,8 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     }
 
     @SuppressWarnings("all")
-    public List<List> getBuildingsRaw() {
+    public List<List> getBuildings() {
         return getList("blds", List.class, DEFAULT_BUILDINGS);
-    }
-
-    public List<Building> getBuildings() {
-        return BuildingsSerializer.getInstance().deserialize(getBuildingsRaw());
     }
 
     public Date getCreated() {
