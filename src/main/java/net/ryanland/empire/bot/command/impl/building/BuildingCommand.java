@@ -34,4 +34,5 @@ public class BuildingCommand extends Command {
         Building building = event.getArgument("building");
         event.reply(building.getName());
     }
+
 }
