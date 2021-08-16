@@ -17,11 +17,10 @@ public class HelpMaker {
         Command command = event.getCommand();
         List<String> elements = new ArrayList<>();
 
-        String[] rawArgs = event.getRawArgs();
         elements.add("/" + event.getName());
 
         if (command instanceof SubCommand) {
-            elements.add(rawArgs[0]);
+            elements.add(event.getSubCommandName());
         }
 
         ArgumentSet arguments = command.getArguments();

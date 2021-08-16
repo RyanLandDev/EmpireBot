@@ -13,7 +13,7 @@ public abstract class Argument<T> {
     private String id;
     private String description;
     private boolean optional = false;
-    protected OptionType type;
+    protected OptionType type = OptionType.STRING;
 
     public String getName() {
         return name == null ? id : name;
