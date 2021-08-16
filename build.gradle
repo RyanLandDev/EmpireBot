@@ -32,6 +32,9 @@ dependencies {
     // json
     implementation 'org.json:json:20210307'
     implementation 'com.google.code.gson:gson:2.8.7'
+
+    // eval
+    implementation group: 'org.codehaus.groovy', name: 'groovy-jsr223', version: '3.0.8'
 }
 
 compileJava.options.encoding = 'UTF-8'
