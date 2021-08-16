@@ -12,7 +12,7 @@ public class BuildingArgument extends SingleArgument<Building> {
     @Override
     public Building parsed(OptionMapping argument, CommandEvent event) throws ArgumentException {
         try {
-            return event.getUserDocument().getBuildings().get(Integer.parseInt(argument.getAsString()) - 1);
+            return event.getUserDocument().getBuildings().get((int) (argument.getAsLong() - 1));
         } catch (IndexOutOfBoundsException e) {
             throw new MalformedArgumentException("No building exists at this position.");
         }
