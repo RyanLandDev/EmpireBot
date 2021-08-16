@@ -1,6 +1,8 @@
 package net.ryanland.empire.bot.command.impl.building;
 
+import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.components.ButtonStyle;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.BuildingArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
@@ -39,7 +41,7 @@ public class BuildingCommand extends Command {
 
         new ActionMenuBuilder()
                 .setEmbed(new PresetBuilder("lol"))
-                .addButton(Button.danger("id", "danger! xd " + building.getName()),
+                .addButton(Button.danger("id", "danger! xd " + building.getName()).withEmoji(Emoji.fromUnicode("😀")).asDisabled(),
                         buttonEvent -> event.getChannel().sendMessage("u clicked xd!!").queue())
                 .addButton(Button.success("id2", "i am scared pls help"),
                         buttonEvent -> event.getChannel().sendMessage("u are scared xd!!").queue())
