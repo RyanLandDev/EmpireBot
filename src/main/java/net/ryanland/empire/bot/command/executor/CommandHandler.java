@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.executor;
 
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -52,7 +53,7 @@ public class CommandHandler {
             if (cmdInfo.getSubCommands() == null && cmdInfo.getSubCommandGroups() == null) {
 
                 for (Argument<?> arg : command.getArguments()) {
-                    slashCmdData.addOption(OptionType.STRING, arg.getName(), arg.getDescription(), !arg.isOptional());
+                    slashCmdData.addOption(arg.getType(), arg.getName(), arg.getDescription(), !arg.isOptional());
                 }
             } else if (cmdInfo.getSubCommandGroups() == null) {
 
@@ -60,7 +61,7 @@ public class CommandHandler {
                     SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());
 
                     for (Argument<?> arg : subCmd.getArguments()) {
-                        subCmdData.addOption(OptionType.STRING, arg.getName(), arg.getDescription(), !arg.isOptional());
+                        subCmdData.addOption(arg.getType(), arg.getName(), arg.getDescription(), !arg.isOptional());
                     }
                     slashCmdData.addSubcommands(subCmdData);
                 }
@@ -72,7 +73,7 @@ public class CommandHandler {
                         SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());
 
                         for (Argument<?> arg : subCmd.getArguments()) {
-                            subCmdData.addOption(OptionType.STRING, arg.getName(), arg.getDescription(), !arg.isOptional());
+                            subCmdData.addOption(arg.getType(), arg.getName(), arg.getDescription(), !arg.isOptional());
                         }
                         subCmdGroupData.addSubcommands(subCmdData);
                     }
@@ -103,7 +104,7 @@ public class CommandHandler {
         COMMAND_EXECUTOR.run(event);
     }
 
-    public static void execute(CommandEvent event, String[] args) {
+    public static void execute(CommandEvent event, List<OptionMapping> args) {
         COMMAND_EXECUTOR.execute(event, args);
     }
 }

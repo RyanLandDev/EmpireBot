@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.arguments.types.impl;
 
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
@@ -9,8 +10,9 @@ import net.ryanland.empire.bot.events.CommandEvent;
 
 public class TutorialArgument extends SingleArgument<Tutorial> {
 
-    public Tutorial parsed(String id, String name, String description) throws ArgumentException {
-        Tutorial tutorial = TutorialHandler.getTutorial(id);
+    @Override
+    public Tutorial parsed(OptionMapping argument, CommandEvent event) throws ArgumentException {
+        Tutorial tutorial = TutorialHandler.getTutorial(argument.getAsString());
 
         if (tutorial == null) {
             throw new MalformedArgumentException(
@@ -19,10 +21,5 @@ public class TutorialArgument extends SingleArgument<Tutorial> {
         } else {
             return tutorial;
         }
-    }
-
-    @Override
-    public Tutorial parsed(String argument, CommandEvent event) throws ArgumentException {
-        return null;
     }
 }

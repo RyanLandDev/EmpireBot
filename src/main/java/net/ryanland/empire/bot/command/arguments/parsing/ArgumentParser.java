@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.arguments.parsing;
 
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
@@ -9,27 +10,27 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
-import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class ArgumentParser {
 
     private final CommandEvent event;
-    private final String[] args;
+    private final List<OptionMapping> args;
 
     public ArgumentParser(CommandEvent event) {
         this.event = event;
-        this.args = event.getRawArgs();
+        this.args = event.getOptions();
     }
 
-    public ArgumentParser(CommandEvent event, String[] args) {
+    public ArgumentParser(CommandEvent event, List<OptionMapping> args) {
         this.event = event;
         this.args = args;
     }
 
     public boolean parseArguments() {
-        Queue<String> queue = new LinkedList<>(Arrays.asList(args));
+        Queue<OptionMapping> queue = new LinkedList<>(args);
         ParsedArgumentMap parsedArgs = new ParsedArgumentMap();
 
         Command command = event.getCommand();
