@@ -9,25 +9,7 @@ public enum Tutorial {
     // %field% to create new fields.
     CONTRIBUTE("contribute","How to Contribute", "Want to help out the bot?", "",
             new MessageEmbed.Field("","We have a GitHub repository you can contribute to and a support Discord where you can ask questions.",false)),
-    BEST("best","How to identify an amazing person","It's a necessary life skill.", "https://cdn.discordapp.com/emojis/774263473483153418.png?v=1",
-            new MessageEmbed.Field("","If they name start with General_Mudkip and end with  you found them.",false),
-            new MessageEmbed.Field("hee","HEEEEEEE",true)),
-    PUTIN("putin", Emojis.PUTIN_WALK, Emojis.PUTIN_WALK, "https://cdn.discordapp.com/emojis/856509699020554240.gif?v=1",
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
-            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true)
-    );
+    ;
 
     private final String executor;
     private final String name;

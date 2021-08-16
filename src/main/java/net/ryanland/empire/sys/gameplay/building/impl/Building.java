@@ -7,19 +7,18 @@ import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuildi
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfo;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class Building implements Serializable {
+public abstract class Building implements Serializable, Serializer<List<?>, Building> {
 
     public static final int BUILDING_START_STAGE = 1;
     public static final int BASE_MAX_HEALTH = 100;
@@ -54,6 +53,7 @@ public abstract class Building implements Serializable {
     protected int stage;
     protected int health;
 
+    @Override
     public Building deserialize(List<?> data) {
         stage = (int) data.get(1);
         health = (int) data.get(2);
@@ -66,8 +66,13 @@ public abstract class Building implements Serializable {
         return this;
     }
 
-    public List<?> serialize() {
-        return Arrays.asList(getId(), getStage(), getHealth());
+    public final List<?> serialize() {
+        return serialize(this);
+    }
+
+    @Override
+    public List<?> serialize(Building building) {
+        return Arrays.asList(building.getId(), building.getStage(), building.getHealth());
     }
 
     public int getStage() {
@@ -84,6 +89,15 @@ public abstract class Building implements Serializable {
 
     public boolean isUsable() {
         return health >= USABLE_HEALTH;
+    }
+
+    public BuildingInfo getBuildingInfo() {
+        return null;//TODO
+    }
+
+    public List<ActionButton> getActionButtons() {
+        return new ArrayList<>();
+        //TODO
     }
 
     public Price<Integer> getSellPrice() {

@@ -1,8 +1,11 @@
 package net.ryanland.empire.sys.gameplay.building.impl.resource.generator;
 
+import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+
+import java.util.List;
 
 public class GoldMineBuilding extends ResourceGeneratorBuilding {
 
@@ -42,4 +45,5 @@ public class GoldMineBuilding extends ResourceGeneratorBuilding {
     public Price<Integer> getCapacity() {
         return new Price<>(Currency.GOLD, (stage - 1) * 90 + 425);
     }
+
 }

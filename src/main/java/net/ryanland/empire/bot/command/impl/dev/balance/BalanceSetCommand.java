@@ -3,7 +3,7 @@ package net.ryanland.empire.bot.command.impl.dev.balance;
 import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.*;
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Balances;
+import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Balance;
 import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.SubCommand;
@@ -28,7 +28,7 @@ public class BalanceSetCommand extends SubCommand {
                 new StringArgument()
                         .description("Balance to modify.")
                         .id("balance"),
-                new EnumArgument<Balances>()
+                new EnumArgument<Balance>()
                         .description("Value to set.")
                         .id("value"),
                 new UserArgument()

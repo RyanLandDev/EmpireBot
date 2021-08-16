@@ -14,6 +14,8 @@ import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 
+import java.util.ArrayList;
+
 public class BuildingCommand extends Command {
 
     @Override
@@ -41,7 +43,7 @@ public class BuildingCommand extends Command {
         event.reply(new ActionMenuBuilder()
                 .setEmbed(new PresetBuilder("lol"))
                 .addButtons(building.getActionButtons())
-                );
+        );
     }
 
 }

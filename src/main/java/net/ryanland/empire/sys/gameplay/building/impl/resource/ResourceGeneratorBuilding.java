@@ -29,8 +29,9 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     @Override
-    public List<?> serialize() {
-        return Arrays.asList(getId(), getStage(), getHealth(), (Object) getLastCollect());
+    public List<?> serialize(Building building) {
+        return Arrays.asList(building.getId(), building.getStage(), building.getHealth(),
+                (Object) ((ResourceGeneratorBuilding) building).getLastCollect());
     }
 
     @Override
