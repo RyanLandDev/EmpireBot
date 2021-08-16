@@ -155,12 +155,20 @@ public class CommandEvent {
         return event.getUser();
     }
 
+    public UserDocument getUserDocument(User user) {
+        return DocumentCache.get(user, UserDocument.class);
+    }
+
     public UserDocument getUserDocument() {
-        return DocumentCache.get(getUser(), UserDocument.class);
+        return getUserDocument(getUser());
+    }
+
+    public Profile getProfile(User user) {
+        return new Profile(user);
     }
 
     public Profile getProfile() {
-        return new Profile(getUser());
+        return getProfile(getUser());
     }
 
     public GuildDocument getGuildDocument() {
