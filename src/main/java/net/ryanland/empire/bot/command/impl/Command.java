@@ -23,6 +23,7 @@ public abstract class Command {
         return getName().substring(0, 1).toUpperCase() + getName().substring(1);
     }
 
+    @Deprecated
     public final String[] getAliases() {
         return getInfo().getAliases();
     }

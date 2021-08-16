@@ -93,6 +93,7 @@ public class CommandInfo {
         return name;
     }
 
+    @Deprecated
     public String[] getAliases() {
         return aliases;
     }
