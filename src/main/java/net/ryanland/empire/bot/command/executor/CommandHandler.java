@@ -2,7 +2,6 @@ package net.ryanland.empire.bot.command.executor;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
@@ -22,7 +21,7 @@ import java.util.List;
 public class CommandHandler {
 
     private static final List<Command> COMMANDS = new ArrayList<>();
-    private static final HashMap<String, Command> ALIASES = new HashMap<>();
+    private static final HashMap<String, Command> COMMAND_MAP = new HashMap<>();
     private static final CommandExecutor COMMAND_EXECUTOR = new CommandExecutor();
 
     public static void register(Command... commands) {
@@ -33,11 +32,7 @@ public class CommandHandler {
             }
 
             COMMANDS.add(command);
-            ALIASES.put(command.getName(), command);
-
-            for (String alias : command.getAliases()) {
-                ALIASES.put(alias, command);
-            }
+            COMMAND_MAP.put(command.getName(), command);
         }
     }
 
@@ -97,7 +92,7 @@ public class CommandHandler {
     }
 
     public static Command getCommand(String alias) {
-        return ALIASES.get(alias);
+        return COMMAND_MAP.get(alias);
     }
 
     public static void run(CommandEvent event) {

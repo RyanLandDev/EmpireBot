@@ -39,16 +39,13 @@ public class BuildingCommand extends Command {
     public void run(CommandEvent event) throws CommandException {
         Building building = event.getArgument("building");
 
-        new ActionMenuBuilder()
+        event.reply(new ActionMenuBuilder()
                 .setEmbed(new PresetBuilder("lol"))
                 .addButton(Button.danger("id", "danger! xd " + building.getName()).withEmoji(Emoji.fromUnicode("😀")).asDisabled(),
                         buttonEvent -> event.getChannel().sendMessage("u clicked xd!!").queue())
                 .addButton(Button.success("id2", "i am scared pls help"),
                         buttonEvent -> event.getChannel().sendMessage("u are scared xd!!").queue())
-                .build()
-                .send(event);
-
-        //TODO event.reply(menu interface)
+                );
     }
 
 }

@@ -12,7 +12,6 @@ import java.util.List;
 public class CommandInfo {
 
     private String name;
-    private String[] aliases = new String[0];
     private String description;
     private Category category;
     private Permission permission = Permission.USER;
@@ -20,6 +19,7 @@ public class CommandInfo {
     private int cooldown;
     private StorageType cooldownStorageType = StorageType.MEMORY;
     private boolean requiresProfile = false;
+
     private List<SubCommand> subCommands;
     private List<SubCommandGroup> subCommandGroups;
     private HashMap<String, SubCommand> subCommandMap;
@@ -27,12 +27,6 @@ public class CommandInfo {
 
     public CommandInfo name(String name) {
         this.name = name;
-        return this;
-    }
-
-    @Deprecated
-    public CommandInfo aliases(String... aliases) {
-        this.aliases = aliases;
         return this;
     }
 
@@ -93,11 +87,6 @@ public class CommandInfo {
         return name;
     }
 
-    @Deprecated
-    public String[] getAliases() {
-        return aliases;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -149,4 +138,5 @@ public class CommandInfo {
     public HashMap<String, SubCommandGroup> getSubCommandGroupMap() {
         return subCommandGroupMap;
     }
+
 }

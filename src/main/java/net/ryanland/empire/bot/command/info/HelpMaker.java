@@ -57,18 +57,6 @@ public class HelpMaker {
         return "`" + formattedUsage(event) + "`";
     }
 
-    public static String formattedAliases(String[] aliases) {
-        return "`" + String.join("` `", aliases) + "`";
-    }
-
-    public static String formattedAliases(Command command) {
-        return formattedAliases(command.getAliases());
-    }
-
-    public static String formattedAliases(CommandEvent event) {
-        return formattedAliases(event.getCommand());
-    }
-
     public static String formattedSubCommands(SubCommand[] subcommands) {
         List<String> names = new ArrayList<>();
 
@@ -97,10 +85,6 @@ public class HelpMaker {
                 .addLogo()
                 .addField("Category", command.getCategory().getName())
                 .addField("Usage", String.format("```html\n%s\n```", formattedUsage(event)));
-
-        if (command.getAliases().length > 0) {
-            embed.addField("Aliases", formattedAliases(command));
-        }
 
         if (command.getPermission() != Permission.USER) {
             embed.addField("Permission", command.getPermission().getName());

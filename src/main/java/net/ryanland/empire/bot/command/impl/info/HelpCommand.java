@@ -22,7 +22,6 @@ public class HelpCommand extends Command {
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("help")
-                .aliases("commands", "command")
                 .description("Get a list of all commands or information about a specific one.")
                 .category(Category.INFORMATION)
                 .cooldown(3);
