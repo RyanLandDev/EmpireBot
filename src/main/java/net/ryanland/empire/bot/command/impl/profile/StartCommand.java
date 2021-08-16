@@ -18,7 +18,7 @@ public class StartCommand extends Command {
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("start")
-                .description("Initialize your profile!")
+                .description("Start your Empire adventure.")
                 .category(Category.PROFILE);
     }
 

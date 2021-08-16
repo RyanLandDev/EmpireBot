@@ -48,6 +48,6 @@ public class TabMenuBuilder {
     }
 
     public TabMenu build() {
-        return new TabMenu(pages, channelId, userId);
+        return new TabMenu(pages, userId);
     }
 }

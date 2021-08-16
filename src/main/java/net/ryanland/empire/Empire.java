@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
 import net.ryanland.empire.bot.command.impl.building.BuildingCommand;
-import net.ryanland.empire.bot.command.impl.profile.ResetProfileCommand;
+import net.ryanland.empire.bot.command.impl.profile.ResetCommand;
 import net.ryanland.empire.bot.command.impl.profile.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.profile.StartCommand;
 import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
@@ -81,7 +81,7 @@ public class Empire {
                 // Profile
                 new StartCommand(),
                 new EmpireCommand(),
-                new ResetProfileCommand(),
+                new ResetCommand(),
 
                 // Building
                 new BuildingCommand()

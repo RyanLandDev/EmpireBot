@@ -8,13 +8,13 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 
-public class ResetProfileCommand extends Command {
+public class ResetCommand extends Command {
 
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("reset")
-                .description("Resets your profile! This is IRREVERSIBLE.")
+                .description("Reset everything.")
                 .category(Category.PROFILE)
                 .requiresProfile();
     }
@@ -24,6 +24,8 @@ public class ResetProfileCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
+
+        // TODO
         DocumentCache.delete(event.getUserDocument().getId(), UserDocument.class);
         event.performReply("Reset").setEphemeral(true).queue();
     }

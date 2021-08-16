@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public class ButtonHandler {
 
-    private static HashMap<Long, ButtonListener> BUTTON_LISTENERS = new HashMap<>();
+    private static final HashMap<Long, ButtonListener> BUTTON_LISTENERS = new HashMap<>();
 
     public static void addListener(InteractionHook message, Long userId, Consumer<ButtonClickEvent> consumer) {
         try {
@@ -32,14 +32,7 @@ public class ButtonHandler {
         }
     }
 
-    private static class ButtonListener {
+    private record ButtonListener(long userId, Consumer<ButtonClickEvent> consumer) {
 
-        private final long userId;
-        private final Consumer<ButtonClickEvent> consumer;
-
-        private ButtonListener(long userId, Consumer<ButtonClickEvent> consumer) {
-            this.userId = userId;
-            this.consumer = consumer;
-        }
     }
 }
