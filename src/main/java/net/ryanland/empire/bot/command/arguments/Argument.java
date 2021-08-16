@@ -1,5 +1,7 @@
 package net.ryanland.empire.bot.command.arguments;
 
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.events.CommandEvent;
 
@@ -11,6 +13,7 @@ public abstract class Argument<T> {
     private String id;
     private String description;
     private boolean optional = false;
+    protected OptionType type;
 
     public String getName() {
         return name == null ? id : name;
@@ -48,5 +51,9 @@ public abstract class Argument<T> {
         return description;
     }
 
-    public abstract T parse(Queue<String> arguments, CommandEvent event) throws ArgumentException;
+    public OptionType getType() {
+        return type;
+    }
+
+    public abstract T parse(Queue<OptionMapping> arguments, CommandEvent event) throws ArgumentException;
 }

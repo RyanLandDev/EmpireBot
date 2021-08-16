@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.arguments.types.impl;
 
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
@@ -12,19 +13,19 @@ import java.util.Queue;
 public class QuoteStringArgument extends Argument<String> {
 
     @Override
-    public String parse(Queue<String> arguments, CommandEvent event) throws ArgumentException {
+    public String parse(Queue<OptionMapping> arguments, CommandEvent event) throws ArgumentException {
         final String ERROR_MESSAGE = "Invalid quote, must start and end with `'` or `\"`.";
 
-        if (!(arguments.element().startsWith("'") || arguments.peek().startsWith("\""))) {
+        if (!(arguments.element().getAsString().startsWith("'") || arguments.peek().getAsString().startsWith("\""))) {
             throw new MalformedArgumentException(ERROR_MESSAGE);
         }
 
         List<String> elements = new ArrayList<>();
-        String argument = arguments.poll();
+        String argument = arguments.poll().getAsString();
         elements.add(argument);
 
         while (!(argument.endsWith("'") || argument.endsWith("\""))) {
-            argument = arguments.poll();
+            argument = arguments.poll().getAsString();
             if (argument == null) throw new MalformedArgumentException(ERROR_MESSAGE);
 
             elements.add(argument);

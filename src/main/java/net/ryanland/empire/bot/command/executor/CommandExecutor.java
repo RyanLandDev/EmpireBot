@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.executor;
 
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.ryanland.empire.bot.command.arguments.parsing.ArgumentParser;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheck;
 import net.ryanland.empire.bot.command.executor.checks.CommandCheckException;
@@ -10,10 +11,12 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
+import java.util.List;
+
 public class CommandExecutor {
 
     public void run(CommandEvent event) {
-        String[] args = event.getRawArgs();
+        List<OptionMapping> args = event.getOptions();
 
         Command command = CommandHandler.getCommand(event.getName());
         if (command == null) return;
@@ -22,7 +25,7 @@ public class CommandExecutor {
         execute(event, args);
     }
 
-    public void execute(CommandEvent event, String[] args) {
+    public void execute(CommandEvent event, List<OptionMapping> args) {
         Command command = event.getCommand();
         if (event.getSubCommandGroup() != null) {
             command = command.getInfo().getSubCommandGroupMap().get(event.getSubCommandGroup()).getSubCommand(event.getSubCommandName());

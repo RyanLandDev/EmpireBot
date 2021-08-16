@@ -17,7 +17,6 @@ import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommandEvent {
@@ -138,18 +137,6 @@ public class CommandEvent {
 
     public void reply(PresetBuilder embed, boolean ephemeral) {
         sendReply(embed, ephemeral).queue();
-    }
-
-    public String[] getRawArgs() {
-        return getRawArgsAsList().toArray(String[]::new);
-    }
-
-    public List<String> getRawArgsAsList() {
-        List<String> args = new ArrayList<>();
-        for (OptionMapping option : event.getOptions()) {
-            args.add(option.getAsString());
-        }
-        return args;
     }
 
     public User getUser() {

@@ -40,9 +40,7 @@ public class TutorialCommand extends Command {
     public void run(CommandEvent event) {
 
         try {
-            String tutorialName = event.getRawArgs()[0];
-
-            Tutorial tutorial = TutorialHandler.getTutorial(tutorialName);
+            Tutorial tutorial = event.getArgument("tutorial");
 
             if (tutorial == null) {
                 event.performReply(new PresetBuilder(

@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.arguments.types.impl;
 
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
@@ -22,9 +23,9 @@ public class DateArgument extends SingleArgument<Date> {
     }
 
     @Override
-    public Date parsed(String argument, CommandEvent event) throws ArgumentException {
+    public Date parsed(OptionMapping argument, CommandEvent event) throws ArgumentException {
         try {
-            return format.parse(argument);
+            return format.parse(argument.getAsString());
         } catch (ParseException e) {
             throw new MalformedArgumentException("Invalid date provided. Format: " + format.toPattern() + ".");
         }
