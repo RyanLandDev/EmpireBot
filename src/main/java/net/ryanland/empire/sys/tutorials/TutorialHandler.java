@@ -17,7 +17,11 @@ public class TutorialHandler {
         }
     }
 
-    public static HashMap<String, Tutorial> getExecutors() { return EXECUTORS; }
+    public static HashMap<String, Tutorial> getExecutors() {
+        return EXECUTORS;
+    }
 
-    public static Tutorial getTutorial(String executor) { return EXECUTORS.get(executor); }
+    public static Tutorial getTutorial(String executor) {
+        return EXECUTORS.get(executor);
+    }
 }
