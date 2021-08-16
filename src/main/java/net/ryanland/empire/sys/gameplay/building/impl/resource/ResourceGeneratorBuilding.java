@@ -23,6 +23,14 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     @Override
+    public Building deserialize() {
+        stage = BUILDING_START_STAGE;
+        health = getMaxHealth();
+        lastCollect = new Date();
+        return this;
+    }
+
+    @Override
     public List<?> serialize() {
         return Arrays.asList(getId(), getStage(), getHealth(), getLastCollect());
     }

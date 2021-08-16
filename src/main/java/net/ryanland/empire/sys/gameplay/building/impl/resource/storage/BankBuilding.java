@@ -6,9 +6,11 @@ import net.ryanland.empire.sys.gameplay.currency.Price;
 
 public class BankBuilding extends ResourceStorageBuilding {
 
+    public static final int ID = 12;
+
     @Override
     public int getId() {
-        return 12;
+        return ID;
     }
 
     @Override

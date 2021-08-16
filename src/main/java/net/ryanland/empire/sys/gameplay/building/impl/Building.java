@@ -58,6 +58,12 @@ public abstract class Building implements Serializable {
         return this;
     }
 
+    public Building deserialize() {
+        stage = BUILDING_START_STAGE;
+        health = getMaxHealth();
+        return this;
+    }
+
     public List<?> serialize() {
         return Arrays.asList(getId(), getStage(), getHealth());
     }
