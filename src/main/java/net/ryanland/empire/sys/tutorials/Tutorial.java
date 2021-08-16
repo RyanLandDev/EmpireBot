@@ -43,16 +43,28 @@ public enum Tutorial {
         this.thumbnail = thumbnail;
     }
 
-    public String getExecutor() { return executor; }
+    public String getExecutor() {
+        return executor;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public String getThumbnail() { return thumbnail; }
+    public String getThumbnail() {
+        return thumbnail;
+    }
 
-    public Boolean hasThumbnail() { return !thumbnail.isEmpty(); }
+    public Boolean hasThumbnail() {
+        return !thumbnail.isEmpty();
+    }
 
-    public MessageEmbed.Field[] getFields() { return fields; }
+    public MessageEmbed.Field[] getFields() {
+        return fields;
+    }
 
 }

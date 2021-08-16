@@ -35,7 +35,6 @@ dependencies {
 
     // eval
     implementation group: 'org.codehaus.groovy', name: 'groovy-jsr223', version: '3.0.8'
-    implementation 'org.openjdk.nashorn:nashorn-core:15.2'
 }
 
 compileJava.options.encoding = 'UTF-8'

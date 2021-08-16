@@ -5,6 +5,7 @@ public interface Emojis {
     String HORIZONTAL_LINE = "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯";
     String FILLED_BLOCK = "■";
     String UNFILLED_BLOCK = "□";
+    String ARROW_RIGHT = "➞";
     String AIR = "<:air:836902184926838814>";
 
     String PUTIN_WALK = "<a:putin_walk:856509699020554240>";

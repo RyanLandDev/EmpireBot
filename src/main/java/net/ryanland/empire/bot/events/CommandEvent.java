@@ -15,6 +15,8 @@ import net.ryanland.empire.sys.file.database.documents.impl.GuildDocument;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
+import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 import net.ryanland.empire.sys.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -139,6 +141,14 @@ public class CommandEvent {
 
     public void reply(PresetBuilder embed, boolean ephemeral) {
         sendReply(embed, ephemeral).queue();
+    }
+
+    public void reply(InteractionMenu menu) {
+        menu.send(this);
+    }
+
+    public void reply(InteractionMenuBuilder<?> menuBuilder) {
+        reply(menuBuilder.build());
     }
 
     public User getUser() {

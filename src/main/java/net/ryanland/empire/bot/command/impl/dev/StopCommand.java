@@ -16,7 +16,6 @@ public class StopCommand extends Command {
         return new CommandInfo()
                 .name("stop")
                 .description("Stops the bot.")
-                .aliases("shutdown")
                 .category(Category.DEVELOPER)
                 .permission(Permission.DEVELOPER);
     }

@@ -23,7 +23,6 @@ public class EvalCommand extends Command {
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("eval")
-                .aliases("evaluate", "java", "ev")
                 .description("Evaluate Java code.")
                 .category(Category.DEVELOPER)
                 .permission(Permission.DEVELOPER)
