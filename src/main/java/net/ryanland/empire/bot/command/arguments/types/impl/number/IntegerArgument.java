@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.arguments.types.impl;
+package net.ryanland.empire.bot.command.arguments.types.impl.number;
 
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
