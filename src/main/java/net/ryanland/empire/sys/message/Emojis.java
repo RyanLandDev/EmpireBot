@@ -1,7 +1,5 @@
 package net.ryanland.empire.sys.message;
 
-import net.ryanland.empire.sys.gameplay.currency.Currency;
-
 public interface Emojis {
 
     String HORIZONTAL_LINE = "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯";

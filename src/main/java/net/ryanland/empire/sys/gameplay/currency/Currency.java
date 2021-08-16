@@ -4,7 +4,6 @@ import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.message.Emojis;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public enum Currency implements Emojis {
 

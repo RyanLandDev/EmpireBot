@@ -9,11 +9,13 @@ import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMin
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
-import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -82,11 +84,6 @@ public abstract class Building implements Serializable {
 
     public boolean isUsable() {
         return health >= USABLE_HEALTH;
-    }
-
-    public List<ActionButton> getActionButtons() {
-        return new ArrayList<>();
-        //TODO
     }
 
     public Price<Integer> getSellPrice() {

@@ -1,6 +1,5 @@
 package net.ryanland.empire.sys.gameplay.building.impl.defense.ranged;
 
-import net.ryanland.empire.sys.gameplay.building.impl.defense.DefenseBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.DefenseRangedBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;

@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.tutorials;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.ryanland.empire.sys.message.Emojis;
 
 public enum Tutorial {
 
@@ -11,8 +12,23 @@ public enum Tutorial {
     BEST("best","How to identify an amazing person","It's a necessary life skill.", "https://cdn.discordapp.com/emojis/774263473483153418.png?v=1",
             new MessageEmbed.Field("","If they name start with General_Mudkip and end with  you found them.",false),
             new MessageEmbed.Field("hee","HEEEEEEE",true)),
-    PULL_REQUEST("pr","MERGE MY PULL REQUEST","NOW","",
-            new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true), new MessageEmbed.Field("MERGE IT", "MERGE IT", true));
+    PUTIN("putin", Emojis.PUTIN_WALK, Emojis.PUTIN_WALK, "https://cdn.discordapp.com/emojis/856509699020554240.gif?v=1",
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true),
+            new MessageEmbed.Field(Emojis.PUTIN_WALK, Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK + Emojis.PUTIN_WALK, true)
+    );
+
     private final String executor;
     private final String name;
     private final String description;
