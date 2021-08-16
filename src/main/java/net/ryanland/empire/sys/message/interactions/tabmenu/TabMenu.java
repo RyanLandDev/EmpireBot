@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
-import net.ryanland.empire.sys.message.interactions.ButtonListener;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 
 import java.util.*;

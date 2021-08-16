@@ -45,4 +45,8 @@ public class ButtonHandler {
         }
     }
 
+    private record ButtonListener(long userId, Consumer<ButtonClickEvent> consumer) {
+
+    }
+
 }
