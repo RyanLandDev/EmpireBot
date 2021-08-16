@@ -1,25 +1,15 @@
-package net.ryanland.empire.sys.message.interactions.tabmenu;
+package net.ryanland.empire.sys.message.interactions.menu.tab;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
-public class TabMenuBuilder {
+public class TabMenuBuilder implements InteractionMenuBuilder<TabMenu> {
 
-    private final ArrayList<TabMenuPage> pages = new ArrayList<>(10);
-    private long channelId;
-    private long userId;
-
-    public TabMenuBuilder setChannelId(long channelId) {
-        this.channelId = channelId;
-        return this;
-    }
-
-    public TabMenuBuilder setUserId(long userId) {
-        this.userId = userId;
-        return this;
-    }
+    private final List<TabMenuPage> pages = new ArrayList<>(10);
 
     public TabMenuBuilder addPage(TabMenuPage page) {
         pages.add(page);
@@ -48,6 +38,6 @@ public class TabMenuBuilder {
     }
 
     public TabMenu build() {
-        return new TabMenu(pages, userId);
+        return new TabMenu(pages);
     }
 }

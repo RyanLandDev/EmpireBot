@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.message.interactions.tabmenu;
+package net.ryanland.empire.sys.message.interactions.menu.tab;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emoji;
@@ -8,24 +8,24 @@ import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
+import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
 
 import java.util.*;
 import java.util.function.Consumer;
 
-public class TabMenu {
+public class TabMenu implements InteractionMenu {
 
     private final TabMenuPage[] pages;
-    private final long userId;
 
-    public TabMenu(List<TabMenuPage> pages, long userId) {
-        this(pages.toArray(new TabMenuPage[0]), userId);
+    public TabMenu(List<TabMenuPage> pages) {
+        this(pages.toArray(new TabMenuPage[0]));
     }
 
-    public TabMenu(TabMenuPage[] pages, long userId) {
+    public TabMenu(TabMenuPage[] pages) {
         this.pages = pages;
-        this.userId = userId;
     }
 
+    @Override
     public void send(CommandEvent commandEvent) {
         // Set all embed titles to match the category name
         for (TabMenuPage page : pages) {
@@ -45,7 +45,7 @@ public class TabMenu {
             }
 
             // Create the Button
-            Button button = Button.secondary("BUTTON:" + page.getName(), page.getName());
+            Button button = Button.secondary(page.getName(), page.getName());
             if (page.getEmoji() != null) {
                 button = button.withEmoji(Emoji.fromUnicode(page.getEmoji()));
             }
@@ -60,12 +60,11 @@ public class TabMenu {
                 .addActionRows(InteractionUtil.of(buttons)).complete();
 
         // Add a listener for when a button is clicked
-        Consumer<ButtonClickEvent> consumer = event -> {
+        ButtonHandler.addListener(hook, commandEvent.getUser().getIdLong(), event -> {
             event.deferEdit().queue();
             hook.editOriginalEmbeds(pageMap.get(event.getComponentId()).getEmbed().build())
-                        .queue();
-            };
-        ButtonHandler.addListener(hook, userId, consumer);
+                    .queue();
+        });
     }
 
 }

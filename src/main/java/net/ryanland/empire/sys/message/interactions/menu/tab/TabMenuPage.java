@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.message.interactions.tabmenu;
+package net.ryanland.empire.sys.message.interactions.menu.tab;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 

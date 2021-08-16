@@ -10,7 +10,7 @@ import net.ryanland.empire.bot.command.info.HelpMaker;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.interactions.tabmenu.TabMenuBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.tab.TabMenuBuilder;
 
 import java.util.Comparator;
 import java.util.List;
@@ -51,9 +51,7 @@ public class HelpCommand extends Command {
 
     private void supplyCommandList(CommandEvent event) {
         // Init menu
-        TabMenuBuilder menu = new TabMenuBuilder()
-                .setChannelId(event.getChannel().getIdLong())
-                .setUserId(event.getUser().getIdLong());
+        TabMenuBuilder menu = new TabMenuBuilder();
 
         // Add home to menu
         PresetBuilder homePage = new PresetBuilder(
