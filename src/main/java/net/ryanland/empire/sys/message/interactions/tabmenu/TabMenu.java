@@ -2,14 +2,16 @@ package net.ryanland.empire.sys.message.interactions.tabmenu;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
+import net.ryanland.empire.sys.message.interactions.ButtonListener;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class TabMenu {
 
@@ -55,16 +57,16 @@ public class TabMenu {
         }
 
         // Send the message and set the action rows
-        commandEvent.performReply(pages[0].getEmbed().build())
-                .addActionRows(InteractionUtil.of(buttons)).queue(message -> {
+        InteractionHook hook = commandEvent.performReply(pages[0].getEmbed().build())
+                .addActionRows(InteractionUtil.of(buttons)).complete();
 
         // Add a listener for when a button is clicked
-            ButtonHandler.addListener(message, userId, event -> {
-                event.deferEdit().queue();
-                message.editOriginalEmbeds(pageMap.get(event.getComponentId()).getEmbed().build())
+        Consumer<ButtonClickEvent> consumer = event -> {
+            event.deferEdit().queue();
+            hook.editOriginalEmbeds(pageMap.get(event.getComponentId()).getEmbed().build())
                         .queue();
-            });
-        });
+            };
+        ButtonHandler.addListener(hook, userId, consumer);
     }
 
 }
