@@ -5,4 +5,5 @@ public class MalformedArgumentException extends ArgumentException {
     public MalformedArgumentException(String message) {
         super(message);
     }
+
 }

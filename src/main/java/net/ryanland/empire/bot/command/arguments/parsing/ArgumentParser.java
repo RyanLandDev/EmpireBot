@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MissingArgumentException;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
@@ -36,10 +35,18 @@ public class ArgumentParser {
         Command command = event.getCommand();
         PresetBuilder embed = new PresetBuilder(PresetType.ERROR);
 
+        System.out.println("parsing");
+
         for (Argument<?> arg : command.getArguments()) {
+            System.out.println("parsing argument "+arg.getId());
             try {
-                if (queue.peek() == null) throw new MissingArgumentException("Expected an argument, but got nothing.");
-                Object parsedArg = arg.parse(queue, event);
+                Object parsedArg;
+                if (queue.peek() == null && arg.isOptional()) {
+                    parsedArg = arg.getOptionalFunction().apply(event);
+                } else {
+                    parsedArg = arg.parse(queue, event);
+                }
+
                 parsedArgs.put(arg.getId(), parsedArg);
 
             } catch (MalformedArgumentException e) {
@@ -48,15 +55,6 @@ public class ArgumentParser {
                         .setTitle("Invalid Argument")
                 , true).queue();
                 return false;
-
-            } catch (MissingArgumentException e) {
-                if (!arg.isOptional()) {
-                    event.performReply(embed
-                            .setDescription(e.getMessage(event, arg))
-                            .setTitle("Missing Argument")
-                    , true).queue();
-                    return false;
-                }
 
             } catch (ArgumentException ignored) {
             }

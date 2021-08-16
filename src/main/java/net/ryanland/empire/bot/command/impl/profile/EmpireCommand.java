@@ -1,6 +1,8 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
+import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.arguments.types.impl.UserArgument;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -14,16 +16,28 @@ public class EmpireCommand extends Command {
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("empire")
-                .description("Gives information about your Empire.")
+                .description("Gives information about an Empire.")
                 .category(Category.PROFILE)
                 .requiresProfile();
     }
 
     @Override
-    public ArgumentSet getArguments() { return new ArgumentSet(); }
+    public ArgumentSet getArguments() {
+        return new ArgumentSet().addArguments(
+                new UserArgument()
+                    .id("user")
+                    .description("User to view Empire of")
+                    .optional(CommandEvent::getUser)
+        );
+    }
 
     @Override
     public void run(CommandEvent event) {
+        User user = event.getArgument("user");
+
+        event.reply(user.getName());
+
+        /*
         UserDocument document = DocumentCache.get(event.getUser(), UserDocument.class, true);
 
         String[] statisticsString = new String[] {
@@ -43,5 +57,7 @@ public class EmpireCommand extends Command {
                         (String.join("",statisticsString)),
                         false)
         ).queue();
+
+         */
     }
 }

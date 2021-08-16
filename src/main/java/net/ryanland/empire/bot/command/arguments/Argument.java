@@ -6,6 +6,8 @@ import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentExce
 import net.ryanland.empire.bot.events.CommandEvent;
 
 import java.util.Queue;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public abstract class Argument<T> {
 
@@ -13,6 +15,7 @@ public abstract class Argument<T> {
     private String id;
     private String description;
     private boolean optional = false;
+    private Function<CommandEvent, T> optionalFunction = event -> null;
     protected OptionType type = OptionType.STRING;
 
     public String getName() {
@@ -37,8 +40,18 @@ public abstract class Argument<T> {
         return optional;
     }
 
+    public Function<CommandEvent, T> getOptionalFunction() {
+        return optionalFunction;
+    }
+
     public Argument<T> optional() {
-        this.optional = true;
+        optional = true;
+        return this;
+    }
+
+    public Argument<T> optional(Function<CommandEvent, T> defaultValue) {
+        optional = true;
+        optionalFunction = defaultValue;
         return this;
     }
 
