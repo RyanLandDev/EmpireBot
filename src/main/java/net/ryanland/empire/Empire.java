@@ -91,8 +91,10 @@ public class Empire {
         TutorialHandler.register(
             Tutorial.CONTRIBUTE,
             Tutorial.BEST,
-            Tutorial.PULL_REQUEST
+            Tutorial.PUTIN
         );
+
+
 
         // Build bot
         JDABuilder builder = JDABuilder.createDefault(config.getToken())
