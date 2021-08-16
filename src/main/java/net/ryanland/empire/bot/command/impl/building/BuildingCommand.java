@@ -40,10 +40,7 @@ public class BuildingCommand extends Command {
 
         event.reply(new ActionMenuBuilder()
                 .setEmbed(new PresetBuilder("lol"))
-                .addButton(Button.danger("id", "danger! xd " + building.getName()).withEmoji(Emoji.fromUnicode("😀")).asDisabled(),
-                        buttonEvent -> event.getChannel().sendMessage("u clicked xd!!").queue())
-                .addButton(Button.success("id2", "i am scared pls help"),
-                        buttonEvent -> event.getChannel().sendMessage("u are scared xd!!").queue())
+                .addButtons(building.getActionButtons())
                 );
     }
 
