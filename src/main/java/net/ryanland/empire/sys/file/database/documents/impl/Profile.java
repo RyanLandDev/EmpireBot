@@ -8,15 +8,12 @@ import net.ryanland.empire.sys.file.serializer.user.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
-import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
-import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceStorageBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.util.NumberUtil;
 import net.ryanland.empire.sys.util.StringUtil;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

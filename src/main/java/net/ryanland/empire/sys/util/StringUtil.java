@@ -1,7 +1,6 @@
 package net.ryanland.empire.sys.util;
 
 import net.ryanland.empire.sys.message.Emojis;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;

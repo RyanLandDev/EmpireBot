@@ -1,19 +1,15 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
-import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuilding;
-import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;

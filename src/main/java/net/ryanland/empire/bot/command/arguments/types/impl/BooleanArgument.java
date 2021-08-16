@@ -6,8 +6,6 @@ import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentExce
 import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
 import net.ryanland.empire.bot.events.CommandEvent;
 
-import javax.swing.text.html.Option;
-
 public class BooleanArgument extends SingleArgument<Boolean> {
 
     @Override

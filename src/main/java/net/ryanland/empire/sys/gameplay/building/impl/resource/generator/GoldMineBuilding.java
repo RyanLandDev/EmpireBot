@@ -3,10 +3,6 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource.generator;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Date;
 
 public class GoldMineBuilding extends ResourceGeneratorBuilding {
 

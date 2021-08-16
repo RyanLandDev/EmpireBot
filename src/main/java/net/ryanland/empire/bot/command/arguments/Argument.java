@@ -7,7 +7,6 @@ import net.ryanland.empire.bot.events.CommandEvent;
 
 import java.util.Queue;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public abstract class Argument<T> {
 

@@ -1,13 +1,11 @@
 package net.ryanland.empire.bot.command.impl.info;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.TutorialArgument;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.sys.tutorials.Tutorial;
-import net.ryanland.empire.sys.tutorials.TutorialHandler;
 import net.ryanland.empire.sys.tutorials.TutorialMaker;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
