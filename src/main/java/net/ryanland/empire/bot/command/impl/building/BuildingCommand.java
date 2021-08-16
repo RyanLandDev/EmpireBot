@@ -47,6 +47,8 @@ public class BuildingCommand extends Command {
                         buttonEvent -> event.getChannel().sendMessage("u are scared xd!!").queue())
                 .build()
                 .send(event);
+
+        //TODO event.reply(menu interface)
     }
 
 }
