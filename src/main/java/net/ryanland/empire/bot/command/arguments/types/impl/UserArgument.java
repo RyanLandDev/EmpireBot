@@ -15,9 +15,10 @@ import java.util.regex.Pattern;
 
 public class UserArgument extends SingleArgument<User> {
 
-    private final Pattern pattern = Pattern.compile("<@!?(\\d+)>");
-
-    public UserArgument() { this.type = OptionType.USER; }
+    @Override
+    public OptionType getType() {
+        return OptionType.USER;
+    }
 
     @Override
     public User parsed(OptionMapping argument, CommandEvent event) throws ArgumentException {

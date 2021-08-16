@@ -10,8 +10,9 @@ import javax.swing.text.html.Option;
 
 public class BooleanArgument extends SingleArgument<Boolean> {
 
-    public BooleanArgument() {
-        this.type = OptionType.BOOLEAN;
+    @Override
+    public OptionType getType() {
+        return OptionType.BOOLEAN;
     }
 
     @Override

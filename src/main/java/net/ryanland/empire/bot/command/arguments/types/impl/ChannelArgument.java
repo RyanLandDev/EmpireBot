@@ -9,7 +9,10 @@ import net.ryanland.empire.bot.events.CommandEvent;
 
 public class ChannelArgument extends SingleArgument<MessageChannel> {
 
-    public ChannelArgument() { this.type = OptionType.CHANNEL; }
+    @Override
+    public OptionType getType() {
+        return OptionType.CHANNEL;
+    }
 
     @Override
     public MessageChannel parsed(OptionMapping argument, CommandEvent event) throws ArgumentException {

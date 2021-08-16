@@ -1,7 +1,7 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.impl.EndlessStringArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.StringArgument;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -24,7 +24,7 @@ public class MimicCommand extends Command {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new EndlessStringArgument()
+                new StringArgument()
                     .id("message")
                     .description("Message to send")
         );

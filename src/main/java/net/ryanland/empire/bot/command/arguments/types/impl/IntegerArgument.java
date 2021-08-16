@@ -7,7 +7,10 @@ import net.ryanland.empire.bot.events.CommandEvent;
 
 public class IntegerArgument extends NumberArgument<Integer> {
 
-    public IntegerArgument() { this.type = OptionType.INTEGER; }
+    @Override
+    public OptionType getType() {
+        return OptionType.INTEGER;
+    }
 
     @Override
     public Integer parsed(OptionMapping argument, CommandEvent event) {

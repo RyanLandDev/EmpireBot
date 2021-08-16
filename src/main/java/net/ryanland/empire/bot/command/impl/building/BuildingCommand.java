@@ -29,7 +29,7 @@ public class BuildingCommand extends Command {
         return new ArgumentSet().addArguments(
                 new BuildingArgument()
                     .id("building")
-                    .description("The building to retrieve information from.")
+                    .description("The position of the building to retrieve information from.")
         );
     }
 
@@ -41,6 +41,8 @@ public class BuildingCommand extends Command {
                 .setEmbed(new PresetBuilder("lol"))
                 .addButton(Button.danger("id", "danger! xd " + building.getName()),
                         buttonEvent -> event.getChannel().sendMessage("u clicked xd!!").queue())
+                .addButton(Button.success("id2", "i am scared pls help"),
+                        buttonEvent -> event.getChannel().sendMessage("u are scared xd!!").queue())
                 .build()
                 .send(event);
     }

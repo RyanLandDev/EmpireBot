@@ -2,8 +2,8 @@ package net.ryanland.empire.bot.command.impl.info.user;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.impl.EndlessStringArgument;
 import net.ryanland.empire.bot.command.arguments.types.impl.MemberArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.StringArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.SubCommand;
@@ -24,8 +24,13 @@ public class UserNickSetSubCommand extends SubCommand {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new MemberArgument().name("member").id("member").description("The affected member"),
-                new EndlessStringArgument().name("nickname").id("nick").description("That nickname will be applied to the given member")
+                new MemberArgument()
+                        .id("member")
+                        .description("The affected member"),
+                new StringArgument()
+                        .name("nickname")
+                        .id("nick")
+                        .description("That nickname will be applied to the given member")
         );
     }
 
