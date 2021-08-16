@@ -119,6 +119,10 @@ public class Profile implements SnowflakeDocument, Emojis {
         return getBuildings().get(position - 1);
     }
 
+    public int getBuildingLimit() {
+        return (int) Math.floor(getLevel() * 1.25 + 3);
+    }
+
     public Date getCreated() {
         return document.getCreated();
     }
