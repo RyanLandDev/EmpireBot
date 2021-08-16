@@ -18,7 +18,7 @@ public class PurgeCooldownsCommand extends Command {
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("purgecooldowns")
-                .description("Purges all locally active command cooldowns.")
+                .description("Purges all command cooldowns active in StorageType.MEMORY.")
                 .category(Category.DEVELOPER)
                 .flags(Flag.NO_DISABLE)
                 .permission(Permission.DEVELOPER);

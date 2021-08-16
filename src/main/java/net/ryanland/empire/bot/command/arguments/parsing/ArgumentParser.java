@@ -9,9 +9,7 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class ArgumentParser {
 
@@ -29,7 +27,7 @@ public class ArgumentParser {
     }
 
     public boolean parseArguments() {
-        Queue<OptionMapping> queue = new LinkedList<>(args);
+        Deque<OptionMapping> queue = new ArrayDeque<>(args);
         ParsedArgumentMap parsedArgs = new ParsedArgumentMap();
 
         Command command = event.getCommand();

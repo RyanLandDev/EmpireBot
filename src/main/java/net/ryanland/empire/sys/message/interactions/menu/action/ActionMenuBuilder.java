@@ -25,6 +25,10 @@ public class ActionMenuBuilder implements InteractionMenuBuilder<ActionMenu> {
         return this;
     }
 
+    public ActionMenuBuilder addButtons(List<ActionButton> buttons) {
+        return addButtons(buttons.toArray(new ActionButton[0]));
+    }
+
     public ActionMenuBuilder addButton(ActionButton button) {
         actionButtons.add(button);
         return this;
