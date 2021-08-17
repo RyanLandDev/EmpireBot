@@ -3,6 +3,7 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
@@ -43,9 +44,9 @@ public abstract class ResourceBuilding extends Building {
                         .addElement("Holding", "👜", String.format(
                                         "%s / %s", getHolding().format(), getCapacity().formatAmount()),
                                 "Collect holding resources.")
-                        .addElement("Capacity", ":bucket:", String.format(
-                                        "%s %s *%s*", getCapacity().format(), ARROW_RIGHT, getCapacity(stage + 1).formatAmount()),
-                                "The maximum amount of resources this building can hold.")
+                        .addElement(BuildingInfoElement.upgradable("Capacity", ":bucket:",
+                                getEffectiveCurrency().getEmoji(), getCapacity(), getCapacity(stage + 1),
+                                "The maximum amount of resources this building can hold."))
                 );
     }
 }

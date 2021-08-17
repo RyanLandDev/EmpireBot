@@ -3,6 +3,7 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import org.jetbrains.annotations.NotNull;
@@ -45,9 +46,10 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     @Override
     public BuildingInfoBuilder getBuildingInfoBuilder() {
         return super.getBuildingInfoBuilder().replaceSegment(1, segment -> segment
-                .insertElement(0, "Gold per minute", "🏭", String.format(
-                        "%s %s *%s*", getUnitPerMin().format(), ARROW_RIGHT, getUnitPerMin(stage + 1).formatAmount()),
-                        "The resources this building makes per minute.")
+                .insertElement(0, BuildingInfoElement.upgradable(
+                        "Gold per minute", "🏭", getEffectiveCurrency().getEmoji(),
+                        getUnitPerMin(), getUnitPerMin(stage + 1),
+                        "The resources this building makes per minute."))
         );
     }
 
