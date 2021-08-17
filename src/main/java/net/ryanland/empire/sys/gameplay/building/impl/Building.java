@@ -149,9 +149,9 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
     public ActionMenuBuilder getActionMenuBuilder() {
         // TODO make the buttons work
         return new ActionMenuBuilder().addButton(
-                Button.secondary("repair", "Repair" + (isHealthMaxed() ? " (Maxed)" : ""))
+                Button.secondary("repair", "Repair" + (canRepair() ? "" : " (Maxed)"))
                         .withEmoji(Emoji.fromMarkdown(REPAIR))
-                        .withDisabled(isHealthMaxed()),
+                        .withDisabled(!canRepair()),
                 event -> {}
         ).addButton(
                 Button.secondary("upgrade", "Upgrade" + (canUpgrade() ? "" : " (Not Enough)"))
@@ -183,6 +183,10 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
     public Price<Integer> getUpgradePrice() {
         return new Price<>(getMainCurrency(),
                 (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
+    }
+
+    public boolean canRepair() {
+        return !isHealthMaxed();
     }
 
     public boolean canUpgrade() {
