@@ -29,10 +29,10 @@ public class BalanceAddCommand extends SubCommand {
                 new EnumArgument<Balance>()
                         .setEnum(Balance.class)
                         .description("Balance to modify.")
-                        .id("value"),
+                        .id("balance"),
                 new IntegerArgument()
                         .description("Value to add.")
-                        .id("balance"),
+                        .id("value"),
                 new UserArgument()
                         .description("User to modify.")
                         .id("user")
