@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.gameplay.building.info;
 
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
+import net.ryanland.empire.sys.gameplay.currency.Price;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ public class BuildingInfoSegmentBuilder extends BuildingInfoBuilder {
     public BuildingInfoSegmentBuilder addElement(String title, String emoji, String value, String description) {
         elements.add(new BuildingInfoElement(title, emoji, value, description));
         return this;
+    }
+
+    public BuildingInfoSegmentBuilder addElement(String title, String emoji, Price<?> value, String description) {
+        return addElement(title, emoji, value.format(), description);
     }
 
     public BuildingInfoSegmentBuilder insertElement(int index, String title, String emoji, String value, String description) {

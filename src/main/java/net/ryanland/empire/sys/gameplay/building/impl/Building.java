@@ -9,6 +9,7 @@ import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMin
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfo;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
@@ -130,13 +131,14 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
                             "Move this building to another layer using `/move %s <new layer>`.", getLayer()))
                     .addElement("Stage", "🧱", getStage(), String.format(
                             "Upgrade this building to __Stage %s__ for %s.", getStage() + 1, getUpgradePrice().format()))
-                    .addElement("Health", "❤", getHealth(),
+                    .addElement(BuildingInfoElement.capacitable("Health", "❤",
+                            getHealth(), getMaxHealth(),
                             isHealthMaxed() ? "The building's health may go down when under attack." : String.format(
-                                    "Repair this building for %s or %s.",
-                                    getRepairPrice().format(true), getCrystalRepairPrice().format(true)
-                            )))
+                                            "Repair this building for %s or %s.",
+                                            getRepairPrice().format(true), getCrystalRepairPrice().format(true))))
+                )
                 .addSegment(new BuildingInfoSegmentBuilder()
-                    .addElement("Sell Price", "💵", getSellPrice().format(),
+                    .addElement("Sell Price", "💵", getSellPrice(),
                             "Sell this building (irreversible).\n\u200b")
                 );
     }

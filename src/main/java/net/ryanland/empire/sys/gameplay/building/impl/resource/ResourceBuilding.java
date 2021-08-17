@@ -41,11 +41,11 @@ public abstract class ResourceBuilding extends Building {
     public BuildingInfoBuilder getBuildingInfoBuilder() {
         return super.getBuildingInfoBuilder()
                 .insertSegment(1, new BuildingInfoSegmentBuilder()
-                        .addElement("Holding", "👜", String.format(
-                                        "%s / %s", getHolding().format(), getCapacity().formatAmount()),
-                                "Collect holding resources.")
+                        .addElement(BuildingInfoElement.capacitable("Holding", "👜",
+                                getHolding().currency(), getHolding(), getCapacity(),
+                                "Collect holding resources."))
                         .addElement(BuildingInfoElement.upgradable("Capacity", ":bucket:",
-                                getEffectiveCurrency().getEmoji(), getCapacity(), getCapacity(stage + 1),
+                                getEffectiveCurrency(), getCapacity(), getCapacity(stage + 1),
                                 "The maximum amount of resources this building can hold."))
                 );
     }
