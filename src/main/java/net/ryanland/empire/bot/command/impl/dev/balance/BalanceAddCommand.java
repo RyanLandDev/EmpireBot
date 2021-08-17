@@ -29,10 +29,10 @@ public class BalanceAddCommand extends SubCommand {
                 new EnumArgument<Balance>()
                         .setEnum(Balance.class)
                         .description("Balance to modify.")
-                        .id("value"),
+                        .id("balance"),
                 new IntegerArgument()
                         .description("Value to add.")
-                        .id("balance"),
+                        .id("value"),
                 new UserArgument()
                         .description("User to modify.")
                         .id("user")
@@ -53,8 +53,8 @@ public class BalanceAddCommand extends SubCommand {
         document.update();
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
-                .setDescription(String.format("Successfully set %s to %s's %s balance.",
-                        value, balance, user.getAsMention()))
+                .setDescription(String.format("Successfully added %s to %s's %s balance.",
+                        value, user.getAsMention(), balance))
                 .addLogo()
         );
     }

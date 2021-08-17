@@ -40,7 +40,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private int wave = getWave();
     @SuppressWarnings("all")
     private List<List> buildings = getBuildings();
-    private Date created;
+    private Date created = getCreated();
 
     @Override
     public void updated(List<Bson> updates) {

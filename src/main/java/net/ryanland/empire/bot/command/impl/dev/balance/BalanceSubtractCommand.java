@@ -5,6 +5,7 @@ import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.*;
 import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Balance;
 import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.number.IntegerArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.info.CommandInfo;
@@ -25,10 +26,11 @@ public class BalanceSubtractCommand extends SubCommand {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new StringArgument()
+                new EnumArgument<Balance>()
+                        .setEnum(Balance.class)
                         .description("Balance to modify.")
                         .id("balance"),
-                new EnumArgument<Balance>()
+                new IntegerArgument()
                         .description("Value to subtract.")
                         .id("value"),
                 new UserArgument()
@@ -41,16 +43,18 @@ public class BalanceSubtractCommand extends SubCommand {
     @Override
     public void run(CommandEvent event) throws CommandException {
         User user = event.getArgument("user");
-        UserDocument document = DocumentCache.get(user, UserDocument.class);
-        String balance = event.getArgument("balance");
+        UserDocument document = event.getUserDocument(user);
+
+        Balance balance = event.getArgument("balance");
         int value = event.getArgument("value");
 
-        document.put(balance, document.getInteger(balance) - value);
+        int currentValue = balance.getGetter().apply(document);
+        balance.getSetter().apply(document, currentValue - value);
         document.update();
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
                 .setDescription(String.format("Successfully subtracted %s from %s' %s balance.",
-                        value, balance, user.getAsMention()))
+                        value, user.getAsMention(),  balance))
                 .addLogo()
         );
     }
