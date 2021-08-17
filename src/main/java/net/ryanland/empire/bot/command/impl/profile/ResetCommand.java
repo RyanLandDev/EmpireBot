@@ -26,7 +26,7 @@ public class ResetCommand extends Command {
     public void run(CommandEvent event) {
 
         // TODO
-        DocumentCache.delete(event.getUserDocument().getId(), UserDocument.class);
+        DocumentCache.delete(event.getUser().getId(), UserDocument.class);
         event.performReply("Reset").setEphemeral(true).queue();
     }
 }

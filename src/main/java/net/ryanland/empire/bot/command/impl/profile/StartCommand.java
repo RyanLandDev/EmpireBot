@@ -32,23 +32,23 @@ public class StartCommand extends Command {
         UserDocument document = DocumentCache.get(event.getUser(), UserDocument.class, true);
 
         if (document != null) {
-            event.performReply(
+            event.reply(
                     new PresetBuilder(PresetType.ERROR, "You already have a profile.")
                     .addLogo()
-            ).queue();
+            );
 
         } else {
             event.getUserDocument()
                     .setCreated(new Date())
                     .update();
 
-            event.performReply(
+            event.reply(
                     new PresetBuilder(
                             PresetType.SUCCESS,
                             "Your profile has been created! Good luck!\n*It is recommended to use the /tutorial.*",
                             "Profile created")
                     .addLogo()
-            ).queue();
+            );
         }
     }
 }

@@ -13,11 +13,11 @@ public class RequiresProfileCheck extends CommandCheck {
     @Override
     public boolean check(CommandEvent event) {
         return event.getCommand().requiresProfile() &&
-                hasProfile(event.getUser());
+                !hasProfile(event.getUser());
     }
 
     public static boolean hasProfile(User user) {
-        return DocumentCache.get(user, UserDocument.class, true) == null;
+        return DocumentCache.get(user, UserDocument.class, true) != null;
     }
 
     @Override

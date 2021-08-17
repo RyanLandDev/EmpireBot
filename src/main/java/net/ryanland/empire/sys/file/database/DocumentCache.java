@@ -106,6 +106,7 @@ public class DocumentCache {
         Document document = getCollection(type).find(Filters.eq("id", id)).first();
         if (document == null) return null;
 
+        cache(document, type);
         return castDocument(document, type);
     }
 
@@ -113,6 +114,7 @@ public class DocumentCache {
         Document document = new Document("id", id);
         getCollection(type).insertOne(document);
 
+        cache(document, type);
         return castDocument(document, type);
     }
 
