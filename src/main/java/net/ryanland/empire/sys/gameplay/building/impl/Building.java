@@ -113,7 +113,7 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
     }
 
     public BuildingInfoBuilder getBuildingInfoBuilder() {
-        return new BuildingInfoBuilder()
+        return new BuildingInfoBuilder().setBuilding(this)
                 .addSegment(new BuildingInfoSegmentBuilder()
                     .addElement("Layer", "🏘", getLayer(), String.format(
                             "Move this building to another layer using `/move %s <new layer>`.", getLayer()))
