@@ -13,8 +13,7 @@ public class BuildingInfo extends ArrayList<BuildingInfoSegment> implements Emoj
     }
 
     public PresetBuilder build() {
-        PresetBuilder embed = new PresetBuilder()
-                .addLogo();
+        PresetBuilder embed = new PresetBuilder();
 
         for (BuildingInfoSegment segment : this) {
             embed.addField(HORIZONTAL_LINE, segment.build());

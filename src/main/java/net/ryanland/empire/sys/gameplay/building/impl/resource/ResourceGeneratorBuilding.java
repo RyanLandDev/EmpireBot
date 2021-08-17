@@ -2,6 +2,8 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource;
 
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 
 import java.util.Arrays;
@@ -35,8 +37,20 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     @Override
-    public BuildingType getBuildingType() {
+    public BuildingType getType() {
         return BuildingType.RESOURCE_GENERATOR;
+    }
+
+    @Override
+    public BuildingInfoBuilder getBuildingInfoBuilder() {
+        return super.getBuildingInfoBuilder().insertSegment(1,
+                new BuildingInfoSegmentBuilder()
+                        .addElement("Gold per minute", "🏭", String.format(
+                                "%s %s *%s*", getUnitPerMin().format(), ARROW_RIGHT, getUnitPerMin(stage + 1).formatAmount()),
+                                "The resources this building makes per minute.")
+                        .addElement("Holding", "👜", "todo",//TODO
+                                "Collect holding resources.")
+        );
     }
 
     public Date getLastCollect() {
@@ -44,5 +58,15 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     public abstract Price<Double> getUnitPerMin();
+
+    public final Price<Double> getUnitPerMin(int stage) {
+        int originalStage = this.stage;
+        this.stage = stage;
+
+        Price<Double> result = getUnitPerMin();
+        this.stage = originalStage;
+
+        return result;
+    }
 
 }

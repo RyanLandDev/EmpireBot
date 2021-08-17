@@ -16,9 +16,9 @@ public class BuildingInfoSegment extends ArrayList<BuildingInfoElement> {
     }
 
     public String build() {
-        return stream()
+        return "\u200b\n" + stream()
             .map(BuildingInfoElement::build)
-            .collect(Collectors.joining("\n\n"));
+            .collect(Collectors.joining("\n"));
     }
 
 }

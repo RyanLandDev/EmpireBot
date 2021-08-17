@@ -12,6 +12,7 @@ import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +21,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class Building implements Serializable, Serializer<List<?>, Building> {
+public abstract class Building implements Serializable, Serializer<List<?>, Building>, Emojis {
 
     public static final int BUILDING_START_STAGE = 1;
     public static final int BASE_MAX_HEALTH = 100;
@@ -99,16 +100,34 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
         return BASE_MAX_HEALTH;
     }
 
+    public boolean isHealthMaxed() {
+        return getHealth() >= getMaxHealth();
+    }
+
     public boolean isUsable() {
         return health >= USABLE_HEALTH;
     }
 
-    public BuildingInfo getBuildingInfo() {
+    public final BuildingInfo getBuildingInfo() {
+        return getBuildingInfoBuilder().build();
+    }
+
+    public BuildingInfoBuilder getBuildingInfoBuilder() {
         return new BuildingInfoBuilder()
                 .addSegment(new BuildingInfoSegmentBuilder()
-                    .addElement("Layer", "🏘", getLayer(),
-                            String.format("Move this building to another layer using `/move %s <new layer>`.", getLayer())))
-                .build();
+                    .addElement("Layer", "🏘", getLayer(), String.format(
+                            "Move this building to another layer using `/move %s <new layer>`.", getLayer()))
+                    .addElement("Stage", "🧱", getStage(), String.format(
+                            "Upgrade this building to __Stage %s__ for %s.", getStage() + 1, getUpgradePrice().format()))
+                    .addElement("Health", "❤", getHealth(),
+                            isHealthMaxed() ? "The building's health may go down when under attack." : String.format(
+                                    "Repair this building for %s or %s.",
+                                    getRepairPrice().format(true), getCrystalRepairPrice().format(true)
+                            )))
+                .addSegment(new BuildingInfoSegmentBuilder()
+                    .addElement("Sell Price", "💵", getSellPrice().format(),
+                            "Sell this building (irreversible).\n\u200b")
+                );
     }
 
     public List<ActionButton> getActionButtons() {
@@ -133,7 +152,7 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
 
     public Price<Integer> getUpgradePrice() {
         return new Price<>(getMainCurrency(),
-                (int) Math.floor(0.15 * stage * getPrice().amount()));
+                (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
     }
 
     public Currency getMainCurrency() {
@@ -150,7 +169,7 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
 
     public abstract Price<Integer> getPrice();
 
-    public abstract BuildingType getBuildingType();
+    public abstract BuildingType getType();
 
     @SuppressWarnings("unchecked")
     public <R extends Building> R cast() {

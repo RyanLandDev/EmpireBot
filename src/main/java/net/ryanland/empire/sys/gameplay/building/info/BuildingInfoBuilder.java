@@ -19,6 +19,16 @@ public class BuildingInfoBuilder {
         return this;
     }
 
+    public BuildingInfoBuilder insertSegment(int index, BuildingInfoSegment segment) {
+        segments.add(index, segment);
+        return this;
+    }
+
+    public BuildingInfoBuilder insertSegments(int index, BuildingInfoSegment... segments) {
+        this.segments.addAll(index, Arrays.asList(segments));
+        return this;
+    }
+
     public BuildingInfoBuilder addSegment(BuildingInfoSegmentBuilder segment) {
         segments.add(segment.build());
         return this;
@@ -28,6 +38,19 @@ public class BuildingInfoBuilder {
         this.segments.addAll(Arrays.stream(segments)
             .map(BuildingInfoSegmentBuilder::build)
             .collect(Collectors.toList()));
+        return this;
+    }
+
+    public BuildingInfoBuilder insertSegment(int index, BuildingInfoSegmentBuilder segment) {
+        segments.add(index, segment.build());
+        return this;
+    }
+
+    public BuildingInfoBuilder insertSegments(int index, BuildingInfoSegmentBuilder... segments) {
+        this.segments.addAll(index,
+            Arrays.stream(segments)
+                .map(BuildingInfoSegmentBuilder::build)
+                .collect(Collectors.toList()));
         return this;
     }
 

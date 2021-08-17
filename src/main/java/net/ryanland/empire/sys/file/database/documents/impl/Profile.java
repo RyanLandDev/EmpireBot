@@ -135,7 +135,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     public Price<Integer> getCapacity(Currency currency) {
         List<ResourceBuilding> buildings = getBuildings().stream()
                 .filter(building -> building.isUsable() &&
-                        building.getBuildingType() == BuildingType.RESOURCE_STORAGE &&
+                        building.getType() == BuildingType.RESOURCE_STORAGE &&
                         ((ResourceBuilding) building).getEffectiveCurrency() == currency)
                 .map(building -> (ResourceBuilding) building)
                 .collect(Collectors.toList());

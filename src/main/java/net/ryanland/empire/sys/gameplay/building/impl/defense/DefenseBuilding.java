@@ -6,7 +6,7 @@ import net.ryanland.empire.sys.gameplay.building.impl.Building;
 public abstract class DefenseBuilding extends Building {
 
     @Override
-    public BuildingType getBuildingType() {
+    public BuildingType getType() {
         return BuildingType.DEFENSE;
     }
 

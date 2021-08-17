@@ -1,8 +1,5 @@
 package net.ryanland.empire.bot.command.impl.building;
 
-import net.dv8tion.jda.api.entities.Emoji;
-import net.dv8tion.jda.api.interactions.components.Button;
-import net.dv8tion.jda.api.interactions.components.ButtonStyle;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.BuildingArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
@@ -11,10 +8,7 @@ import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
-
-import java.util.ArrayList;
 
 public class BuildingCommand extends Command {
 
@@ -41,7 +35,9 @@ public class BuildingCommand extends Command {
         Building building = event.getArgument("building");
 
         event.reply(new ActionMenuBuilder()
-                .setEmbed(building.getBuildingInfo().build())
+                .setEmbed(building.getBuildingInfo().build()
+                    .setTitle(building.getName() + " (" + building.getType().getFullName() + ")")
+                    .setDescription(building.getEmoji()))
                 .addButtons(building.getActionButtons())
         );
     }

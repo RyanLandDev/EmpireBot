@@ -31,7 +31,7 @@ public class BuildingsSerializer implements Serializer<List<List>, List<Building
     @Override
     public List<Building> deserialize(List<List> toDeserialize) {
         return toDeserialize.stream()
-                .map(e -> Building.of((Integer) e.get(0)).deserialize(e).setLayer(toDeserialize.indexOf(e)))
+                .map(e -> Building.of((Integer) e.get(0)).deserialize(e).setLayer(toDeserialize.indexOf(e) + 1))
                 .collect(Collectors.toList());
     }
 }

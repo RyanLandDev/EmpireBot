@@ -10,7 +10,7 @@ public abstract class ResourceBuilding extends Building {
     public abstract Price<Integer> getCapacity();
 
     @Override
-    public BuildingType getBuildingType() {
+    public BuildingType getType() {
         return BuildingType.RESOURCE;
     }
 
