@@ -7,7 +7,6 @@ import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 
@@ -35,11 +34,10 @@ public class BuildingCommand extends Command {
     public void run(CommandEvent event) throws CommandException {
         Building building = event.getArgument("building");
 
-        event.reply(new ActionMenuBuilder()
+        event.reply(building.getActionMenuBuilder()
                 .setEmbed(building.getBuildingInfo().build()
                     .setTitle(building.getName() + " (" + building.getType().getFullName() + ")")
                     .setDescription(building.getEmoji()))
-                .addButtons(building.getActionButtons())
         );
     }
 

@@ -1,5 +1,7 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
+import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
@@ -15,6 +17,7 @@ import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
+import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -143,9 +146,23 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
                 );
     }
 
-    public List<ActionButton> getActionButtons() {
-        return new ArrayList<>();
-        //TODO
+    public ActionMenuBuilder getActionMenuBuilder() {
+        // TODO make the buttons work
+        return new ActionMenuBuilder().addButton(
+                Button.secondary("repair", "Repair" + (isHealthMaxed() ? " (Maxed)" : ""))
+                        .withEmoji(Emoji.fromMarkdown(REPAIR))
+                        .withDisabled(isHealthMaxed()),
+                event -> {}
+        ).addButton(
+                Button.secondary("upgrade", "Upgrade" + (canUpgrade() ? "" : " (Not Enough)"))
+                        .withEmoji(Emoji.fromMarkdown(UPGRADE))
+                        .withDisabled(!canUpgrade()),
+                event -> {}
+        ).addButton(
+                Button.secondary("sell", "Sell")
+                        .withEmoji(Emoji.fromMarkdown(SELL)),
+                event -> {}
+        );
     }
 
     public Price<Integer> getSellPrice() {
@@ -166,6 +183,10 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
     public Price<Integer> getUpgradePrice() {
         return new Price<>(getMainCurrency(),
                 (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
+    }
+
+    public boolean canUpgrade() {
+        return getMainCurrency().get(profile).amount() >= getUpgradePrice().amount();
     }
 
     public Currency getMainCurrency() {

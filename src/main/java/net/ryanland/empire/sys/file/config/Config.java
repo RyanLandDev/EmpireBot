@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.file.config;
 
 import com.google.gson.JsonObject;
+import org.jetbrains.annotations.NotNull;
 
 public class Config {
 
@@ -10,27 +11,27 @@ public class Config {
     private final String clientId;
     private final String databaseURI;
 
-    public Config(JsonObject rawConfig) {
+    public Config(@NotNull JsonObject rawConfig) {
         this.rawConfig = rawConfig;
 
-        this.token = rawConfig.get("token").getAsString();
-        this.clientId = rawConfig.get("client_id").getAsString();
-        this.databaseURI = rawConfig.get("database_uri").getAsString();
+        token = rawConfig.get("token").getAsString();
+        clientId = rawConfig.get("client_id").getAsString();
+        databaseURI = rawConfig.get("database_uri").getAsString();
     }
 
     public JsonObject getRawConfig() {
-        return this.rawConfig;
+        return rawConfig;
     }
 
     public String getToken() {
-        return this.token;
+        return token;
     }
 
     public String getClientId() {
-        return this.clientId;
+        return clientId;
     }
 
     public String getDatabaseURI() {
-        return this.databaseURI;
+        return databaseURI;
     }
 }

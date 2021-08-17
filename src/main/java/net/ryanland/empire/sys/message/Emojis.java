@@ -14,6 +14,10 @@ public interface Emojis {
     String CRYSTALS = "<:crystals:876889710008627201>";
     String XP = "⚜";
 
+    String REPAIR = "💌";
+    String UPGRADE = "⏫";
+    String SELL = "💰";
+
     String ONE = "<:number_one:836612644369989642>";
     String TWO = "<:number_two:836615195526299709>";
     String THREE = "<:number_three:836615195672969267>";

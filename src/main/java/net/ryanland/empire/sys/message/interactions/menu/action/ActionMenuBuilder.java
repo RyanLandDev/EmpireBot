@@ -34,8 +34,17 @@ public class ActionMenuBuilder implements InteractionMenuBuilder<ActionMenu> {
         return this;
     }
 
+    public ActionMenuBuilder insertButton(int index, ActionButton button) {
+        actionButtons.add(index, button);
+        return this;
+    }
+
     public ActionMenuBuilder addButton(Button button, Consumer<ButtonClickEvent> onClick) {
         return addButton(new ActionButton(button, onClick));
+    }
+
+    public ActionMenuBuilder insertButton(int index, Button button, Consumer<ButtonClickEvent> onClick) {
+        return insertButton(index, new ActionButton(button, onClick));
     }
 
     @Override
