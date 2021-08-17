@@ -54,7 +54,7 @@ public class BalanceSubtractCommand extends SubCommand {
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
                 .setDescription(String.format("Successfully subtracted %s from %s' %s balance.",
-                        value, balance, user.getAsMention()))
+                        value, user.getAsMention(),  balance))
                 .addLogo()
         );
     }

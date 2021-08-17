@@ -54,7 +54,7 @@ public class BalanceAddCommand extends SubCommand {
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
                 .setDescription(String.format("Successfully set %s to %s's %s balance.",
-                        value, balance, user.getAsMention()))
+                        value, user.getAsMention(), balance))
                 .addLogo()
         );
     }
