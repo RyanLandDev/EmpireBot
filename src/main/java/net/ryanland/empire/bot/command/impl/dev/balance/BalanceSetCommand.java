@@ -45,8 +45,6 @@ public class BalanceSetCommand extends SubCommand {
         User user = event.getArgument("user");
         UserDocument document = event.getUserDocument(user);
 
-        System.out.println(user);
-
         Balance balance = event.getArgument("balance");
         int value = event.getArgument("value");
 
@@ -54,8 +52,8 @@ public class BalanceSetCommand extends SubCommand {
         document.update();
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
-                .setDescription(String.format("Successfully set %s to %s's %s balance.",
-                        value, user.getAsMention(), balance))
+                .setDescription(String.format("Successfully set %s's %s balance to %s.",
+                        user.getAsMention(), balance, value))
                 .addLogo()
         );
     }
