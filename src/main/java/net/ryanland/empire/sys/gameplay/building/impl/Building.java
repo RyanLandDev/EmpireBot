@@ -1,10 +1,10 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
+import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuilding;
-import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfo;
@@ -14,7 +14,7 @@ import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.*;
@@ -55,10 +55,12 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
 
     protected int stage;
     protected int health;
+
     protected int layer;
+    protected Profile profile;
 
     @Override
-    public Building deserialize(List<?> data) {
+    public Building deserialize(@NotNull List<?> data) {
         stage = (int) data.get(1);
         health = (int) data.get(2);
         return this;
@@ -75,8 +77,13 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
     }
 
     @Override
-    public List<?> serialize(Building building) {
+    public List<?> serialize(@NotNull Building building) {
         return Arrays.asList(building.getId(), building.getStage(), building.getHealth());
+    }
+
+    public final Building setProfile(Profile profile) {
+        this.profile = profile;
+        return this;
     }
 
     public final Building setLayer(int layer) {
@@ -94,6 +101,10 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
 
     public int getLayer() {
         return layer;
+    }
+
+    public Profile getProfile() {
+        return profile;
     }
 
     public int getMaxHealth() {

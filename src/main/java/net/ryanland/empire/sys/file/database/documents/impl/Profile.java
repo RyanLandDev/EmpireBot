@@ -109,7 +109,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public List<Building> getBuildings() {
-        return BuildingsSerializer.getInstance().deserialize(document.getBuildings());
+        return BuildingsSerializer.getInstance().deserialize(document.getBuildings(), this);
     }
 
     public Building getBuilding(int position) {

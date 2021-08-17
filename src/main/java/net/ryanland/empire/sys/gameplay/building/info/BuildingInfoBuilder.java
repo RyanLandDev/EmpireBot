@@ -5,6 +5,7 @@ import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BuildingInfoBuilder {
@@ -63,6 +64,16 @@ public class BuildingInfoBuilder {
             Arrays.stream(segments)
                 .map(BuildingInfoSegmentBuilder::buildSegment)
                 .collect(Collectors.toList()));
+        return this;
+    }
+
+    public BuildingInfoSegmentBuilder getSegment(int index) {
+        return new BuildingInfoSegmentBuilder().addElements(segments.get(index));
+    }
+
+    public BuildingInfoBuilder replaceSegment(int index, Function<BuildingInfoSegmentBuilder, BuildingInfoSegmentBuilder> newSegment) {
+        segments.add(index, newSegment.apply(getSegment(index)).buildSegment());
+        segments.remove(index + 1);
         return this;
     }
 

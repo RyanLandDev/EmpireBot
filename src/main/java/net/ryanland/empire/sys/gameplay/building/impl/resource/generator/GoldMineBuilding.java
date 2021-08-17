@@ -2,6 +2,8 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource.generator;
 
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 
@@ -37,8 +39,8 @@ public class GoldMineBuilding extends ResourceGeneratorBuilding {
     }
 
     @Override
-    public Price<Double> getUnitPerMin() {
-        return new Price<>(Currency.GOLD, (stage - 1) * 2.75d + 24);
+    public Price<Integer> getUnitPerMin() {
+        return new Price<>(Currency.GOLD, (int) Math.floor((stage - 1) * 2.75d + 24));
     }
 
     @Override

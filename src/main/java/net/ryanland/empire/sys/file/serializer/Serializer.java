@@ -1,5 +1,7 @@
 package net.ryanland.empire.sys.file.serializer;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Interface for serializer classes.
  *
@@ -8,7 +10,7 @@ package net.ryanland.empire.sys.file.serializer;
  */
 public interface Serializer<S, D> {
 
-    S serialize(D toSerialize);
+    S serialize(@NotNull D toSerialize);
 
-    D deserialize(S toDeserialize);
+    D deserialize(@NotNull S toDeserialize);
 }

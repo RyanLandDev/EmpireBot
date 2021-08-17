@@ -7,6 +7,7 @@ import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 

@@ -40,6 +40,7 @@ public class StartCommand extends Command {
         } else {
             event.getUserDocument()
                     .setCreated(new Date())
+                    .setBuildingsRaw(UserDocument.DEFAULT_BUILDINGS)
                     .update();
 
             event.reply(

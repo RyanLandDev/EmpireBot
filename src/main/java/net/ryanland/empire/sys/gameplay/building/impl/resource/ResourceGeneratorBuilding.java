@@ -5,6 +5,7 @@ import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -15,7 +16,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     protected Date lastCollect;
 
     @Override
-    public Building deserialize(List<?> data) {
+    public Building deserialize(@NotNull List<?> data) {
         stage = (int) data.get(1);
         health = (int) data.get(2);
         lastCollect = (Date) data.get(3);
@@ -31,7 +32,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     @Override
-    public List<?> serialize(Building building) {
+    public List<?> serialize(@NotNull Building building) {
         return Arrays.asList(building.getId(), building.getStage(), building.getHealth(),
                 (Object) ((ResourceGeneratorBuilding) building).getLastCollect());
     }
@@ -43,27 +44,51 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
     @Override
     public BuildingInfoBuilder getBuildingInfoBuilder() {
-        return super.getBuildingInfoBuilder().insertSegment(1,
-                new BuildingInfoSegmentBuilder()
-                        .addElement("Gold per minute", "🏭", String.format(
-                                "%s %s *%s*", getUnitPerMin().format(), ARROW_RIGHT, getUnitPerMin(stage + 1).formatAmount()),
-                                "The resources this building makes per minute.")
-                        .addElement("Holding", "👜", "todo",//TODO
-                                "Collect holding resources.")
+        return super.getBuildingInfoBuilder().replaceSegment(1, segment -> segment
+                .insertElement(0, "Gold per minute", "🏭", String.format(
+                        "%s %s *%s*", getUnitPerMin().format(), ARROW_RIGHT, getUnitPerMin(stage + 1).formatAmount()),
+                        "The resources this building makes per minute.")
         );
+    }
+
+    @Override
+    public Price<Integer> getHolding() {
+        if (!isUsable()) {
+            return new Price<>(getEffectiveCurrency(), 0);
+        }
+
+        double unitPerMs = getUnitPerMs().amount();
+        long msDiff = new Date().getTime() - lastCollect.getTime();
+        int holding = (int) Math.floor(unitPerMs * msDiff);
+
+        return new Price<>(getEffectiveCurrency(), Math.min(holding, getCapacityInt()));
     }
 
     public Date getLastCollect() {
         return lastCollect;
     }
 
-    public abstract Price<Double> getUnitPerMin();
+    public abstract Price<Integer> getUnitPerMin();
 
-    public final Price<Double> getUnitPerMin(int stage) {
+    public final Price<Integer> getUnitPerMin(int stage) {
         int originalStage = this.stage;
         this.stage = stage;
 
-        Price<Double> result = getUnitPerMin();
+        Price<Integer> result = getUnitPerMin();
+        this.stage = originalStage;
+
+        return result;
+    }
+
+    public Price<Double> getUnitPerMs() {
+        return new Price<>(getEffectiveCurrency(), (double) getUnitPerMin().amount() / 60000);
+    }
+
+    public final Price<Double> getUnitPerMs(int stage) {
+        int originalStage = this.stage;
+        this.stage = stage;
+
+        Price<Double> result = getUnitPerMs();
         this.stage = originalStage;
 
         return result;

@@ -29,6 +29,14 @@ public enum Currency implements Emojis {
         return defaultCapacity;
     }
 
+    public Integer getInt(Profile profile) {
+        return get(profile).amount();
+    }
+
+    public Price<Integer> get(Profile profile) {
+        return getGetter().apply(profile);
+    }
+
     public Function<Profile, Price<Integer>> getGetter() {
         return getter;
     }
