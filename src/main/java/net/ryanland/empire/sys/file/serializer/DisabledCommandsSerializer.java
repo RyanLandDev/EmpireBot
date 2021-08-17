@@ -1,8 +1,7 @@
-package net.ryanland.empire.sys.file.serializer.global;
+package net.ryanland.empire.sys.file.serializer;
 
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.sys.file.serializer.Serializer;
 
 import java.util.List;
 import java.util.stream.Collectors;

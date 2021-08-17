@@ -4,7 +4,7 @@ import com.mongodb.client.model.Filters;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.BaseDocument;
 import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
-import net.ryanland.empire.sys.file.serializer.user.BuildingsSerializer;
+import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
