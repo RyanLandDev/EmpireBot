@@ -6,7 +6,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static net.ryanland.empire.sys.util.NumberUtil.format;
 
@@ -22,10 +21,6 @@ public record InfoValue(Type type, @NotNull String emoji, String currentValue, @
 
     public InfoValue(Type type, @NotNull String emoji, Number currentValue, @Nullable Number nextValue) {
         this(type, emoji, format(currentValue), format(nextValue));
-    }
-
-    public InfoValue(Type type, String title, String value) {
-        this(type, "", value, null, title);
     }
 
     public String buildRegular() {
