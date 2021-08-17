@@ -41,7 +41,7 @@ public class BuildingCommand extends Command {
         Building building = event.getArgument("building");
 
         event.reply(new ActionMenuBuilder()
-                .setEmbed(new PresetBuilder("lol"))
+                .setEmbed(building.getBuildingInfo().build())
                 .addButtons(building.getActionButtons())
         );
     }

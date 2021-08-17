@@ -8,6 +8,8 @@ import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGenerator
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfo;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
@@ -52,6 +54,7 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
 
     protected int stage;
     protected int health;
+    protected int layer;
 
     @Override
     public Building deserialize(List<?> data) {
@@ -75,12 +78,21 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
         return Arrays.asList(building.getId(), building.getStage(), building.getHealth());
     }
 
+    public final Building setLayer(int layer) {
+        this.layer = layer;
+        return this;
+    }
+
     public int getStage() {
         return stage;
     }
 
     public int getHealth() {
         return health;
+    }
+
+    public int getLayer() {
+        return layer;
     }
 
     public int getMaxHealth() {
@@ -92,7 +104,11 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
     }
 
     public BuildingInfo getBuildingInfo() {
-        return null;//TODO
+        return new BuildingInfoBuilder()
+                .addSegment(new BuildingInfoSegmentBuilder()
+                    .addElement("Layer", "🏘", getLayer(),
+                            String.format("Move this building to another layer using `/move %s <new layer>`.", getLayer())))
+                .build();
     }
 
     public List<ActionButton> getActionButtons() {

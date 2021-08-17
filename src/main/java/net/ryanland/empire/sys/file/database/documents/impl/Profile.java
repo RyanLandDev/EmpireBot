@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.sys.file.Partition;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
-import net.ryanland.empire.sys.file.serializer.user.BuildingsSerializer;
+import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
