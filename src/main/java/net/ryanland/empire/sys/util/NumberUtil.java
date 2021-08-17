@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.util;
 
 import net.ryanland.empire.sys.message.Emojis;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -14,19 +15,24 @@ public class NumberUtil {
      * @return The formatted number string.
      */
     public static String format(Number number) {
+        if (number == null) {
+            return null;
+        }
+
         return NumberFormat.getInstance(Locale.US).format(number);
     }
 
-    public static String progressBar(int size, float current, float max) {
+    public static @NotNull String progressBar(int size, float current, float max) {
         float progress = current / max;
         int filledBlocks = (int) Math.floor(progress * size);
         int unfilledBlocks = size - filledBlocks;
 
-        return
+        return "[" +
                 Emojis.FILLED_BLOCK.repeat(
                         clamp(filledBlocks, size)) +
                 Emojis.UNFILLED_BLOCK.repeat(
-                        clamp(unfilledBlocks, size));
+                        clamp(unfilledBlocks, size))
+                + "]";
     }
 
     public static int clamp(int value, int max) {

@@ -3,12 +3,9 @@ package net.ryanland.empire.sys.gameplay.building.info;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
+import net.ryanland.empire.sys.message.builders.InfoValue;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
-
-import static net.ryanland.empire.sys.util.NumberUtil.format;
 
 public record BuildingInfoElement(String title, String emoji, String value, String description) implements Emojis {
 
@@ -20,7 +17,10 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
     public static @NotNull BuildingInfoElement upgradable(String title, String emoji,
                                                           String valueEmoji, Number currentValue, Number nextValue,
                                                           String description) {
-        return new BuildingInfoElement(title, emoji, getUpgradableValue(valueEmoji, currentValue, nextValue), description);
+        return new BuildingInfoElement(title, emoji,
+                new InfoValue(InfoValue.Type.UPGRADABLE, valueEmoji, currentValue, nextValue).buildUpgradable(),
+                description
+        );
     }
 
     @Contract("_, _, _, _, _, _ -> new")
@@ -51,19 +51,15 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
         return upgradable(title, emoji, currentPrice.amount(), nextPrice.amount(), description);
     }
 
-    private static String getUpgradableValue(@NotNull String valueEmoji,
-                                             Number currentValue, Number nextValue) {
-        return String.format("%s%s", valueEmoji.isEmpty() ? "" : valueEmoji + " ",
-                Objects.equals(currentValue, nextValue) ? format(currentValue) :
-                        String.format("%s %s *%s*", format(currentValue), ARROW_RIGHT, format(nextValue))
-        );
-    }
-
     @Contract("_, _, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
                                                            String valueEmoji, Number currentValue, Number maxValue,
                                                            String description) {
-        return new BuildingInfoElement(title, emoji, getCapacitableValue(valueEmoji, currentValue, maxValue), description);
+        return new BuildingInfoElement(
+                title, emoji,
+                new InfoValue(InfoValue.Type.CAPACITABLE, valueEmoji, currentValue, maxValue).buildCapacitable(),
+                description
+        );
     }
 
     @Contract("_, _, _, _, _, _ -> new")
@@ -74,9 +70,9 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
     }
 
     @Contract("_, _, _, _, _, _ -> new")
-    public static BuildingInfoElement capacitable(String title, String emoji,
-                                                  @NotNull Currency currency, Price<?> currentPrice, Price<?> maxPrice,
-                                                  String description) {
+    public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
+                                                           @NotNull Currency currency, Price<?> currentPrice, Price<?> maxPrice,
+                                                           String description) {
         return capacitable(title, emoji, currency.getEmoji(), currentPrice, maxPrice, description);
     }
 
@@ -84,20 +80,17 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
     public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
                                                            Number currentValue, Number maxValue,
                                                            String description) {
-        return new BuildingInfoElement(title, emoji, getCapacitableValue("", currentValue, maxValue), description);
+        return capacitable(title, emoji, "", currentValue, maxValue, description);
     }
 
     @Contract("_, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
                                                            @NotNull Price<?> currentPrice, @NotNull Price<?> maxPrice,
                                                            String description) {
-        return new BuildingInfoElement(title, emoji, getCapacitableValue("", currentPrice.amount(), maxPrice.amount()), description);
+        return capacitable(title, emoji, currentPrice.amount(), maxPrice.amount(), description);
     }
 
-    private static String getCapacitableValue(String valueEmoji,
-                                              Number currentValue, Number maxValue) {
-        return String.format("%s%s / %s", valueEmoji.isEmpty() ? "" : valueEmoji + " ", format(currentValue), format(maxValue));
-    }
+
 
     public String build() {
         return String.format(

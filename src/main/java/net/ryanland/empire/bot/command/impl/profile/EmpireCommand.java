@@ -10,7 +10,12 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.message.Emojis;
+import net.ryanland.empire.sys.message.builders.InfoValue;
+import net.ryanland.empire.sys.message.builders.InfoValueCollection;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmpireCommand extends Command {
     @Override
@@ -37,22 +42,24 @@ public class EmpireCommand extends Command {
         Profile profile = event.getArgument("user");
         User user = profile.getUser();
 
+        InfoValueCollection infoValues = new InfoValueCollection()
+                .addRegular("Level", profile.getLevel())
+                .addCapacitable("Level XP", XP, profile.getXp(), profile.getRequiredXp())
+                .addRegular("Level progress", profile.getXpProgressBar() + "\n")
+                .addRegular("Created", profile.getFormattedCreated())
+                .addCapacitable("Gold", GOLD,
+                        profile.getGold().formatAmount(), profile.getFormattedCapacity(Currency.GOLD, true))
+                .addCapacitable("Crystals", CRYSTALS,
+                        profile.getCrystals().formatAmount(), profile.getFormattedCapacity(Currency.CRYSTALS, true))
+                ;
+
         PresetBuilder embed = new PresetBuilder(
                 String.format("An overview of %s empire.\n\u200b", event.getPossessiveAdjective(user)),
                 String.format("%s Empire", event.getCapitalizedPossessiveAdjective(user)))
 
                 .setThumbnail(user.getAvatarUrl())
-                .addField("__**Statistics**__", "\u200b" +
-                        "\n**Level:** " + profile.getLevel() + String.format(
-                        "\n**Level XP:** %s / %s", profile.getFormattedXp(true),
-                            profile.getFormattedRequiredXp()) + String.format(
-                        "\n**Level progress:** [%s]\n", profile.getXpProgressBar()) +
-                        "\n**Created:** " + profile.getFormattedCreated() + String.format(
-                        "\n**Gold:** %s / %s", profile.getFormattedGold(true),
-                            profile.getFormattedCapacity(Currency.GOLD, true)) + String.format(
-                        "\n**Crystals:** %s / %s", profile.getFormattedCrystals(true),
-                            profile.getFormattedCapacity(Currency.CRYSTALS, true)) +
-                        "\n\u200b"
+                .addField("__**Statistics**__",
+                        "\u200b\n" + infoValues.build() + "\n\u200b"
                 )
                 .addField("__**Empire Layout**__", "\u200b" +
                         (event.isSelf(user) ? "\n:fast_forward: Get more info about a building with `/building <layer>`." : "") +

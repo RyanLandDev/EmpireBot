@@ -8,8 +8,9 @@ import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.StorageType;
+import net.ryanland.empire.sys.message.Emojis;
 
-public abstract class Command {
+public abstract class Command implements Emojis {
 
     public abstract CommandInfo getInfo();
 

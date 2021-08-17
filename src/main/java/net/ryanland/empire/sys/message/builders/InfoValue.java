@@ -1,0 +1,72 @@
+package net.ryanland.empire.sys.message.builders;
+
+import net.ryanland.empire.sys.message.Emojis;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import static net.ryanland.empire.sys.util.NumberUtil.format;
+
+public record InfoValue(Type type, @NotNull String emoji, String currentValue, @Nullable String nextValue, String title) implements Emojis {
+
+    public InfoValue(Type type, @NotNull String emoji, Number currentValue, @Nullable Number nextValue, String title) {
+        this(type, emoji, format(currentValue), format(nextValue), title);
+    }
+
+    public InfoValue(Type type, @NotNull String emoji, String currentValue, @Nullable String nextValue) {
+        this(type, emoji, currentValue, nextValue, "");
+    }
+
+    public InfoValue(Type type, @NotNull String emoji, Number currentValue, @Nullable Number nextValue) {
+        this(type, emoji, format(currentValue), format(nextValue));
+    }
+
+    public InfoValue(Type type, String title, String value) {
+        this(type, "", value, null, title);
+    }
+
+    public String buildRegular() {
+        return String.format("%s%s%s",
+                title.isEmpty() ? "" : "**" + title + ":** ",
+                emoji.isEmpty() ? "" : emoji + " ",
+                currentValue
+        );
+    }
+
+    public String buildUpgradable() {
+        return String.format("%s%s%s",
+                title.isEmpty() ? "" : "**" + title + ":** ",
+                emoji.isEmpty() ? "" : emoji + " ",
+                Objects.equals(currentValue, nextValue) ? currentValue :
+                        String.format("%s %s *%s*", currentValue, ARROW_RIGHT, nextValue)
+        );
+    }
+
+    public String buildCapacitable() {
+        return String.format("%s%s%s / %s",
+                title.isEmpty() ? "" : "**" + title + ":** ",
+                emoji.isEmpty() ? "" : emoji + " ",
+                currentValue, nextValue);
+    }
+
+    public enum Type {
+
+        REGULAR(InfoValue::buildRegular),
+        UPGRADABLE(InfoValue::buildUpgradable),
+        CAPACITABLE(InfoValue::buildCapacitable)
+        ;
+
+        private final Function<InfoValue, String> builder;
+
+        Type(Function<InfoValue, String> builder) {
+            this.builder = builder;
+        }
+
+        public Function<InfoValue, String> getBuilder() {
+            return builder;
+        }
+    }
+}
