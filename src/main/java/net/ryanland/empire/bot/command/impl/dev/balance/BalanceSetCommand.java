@@ -5,6 +5,7 @@ import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.*;
 import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Balance;
 import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.number.IntegerArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.info.CommandInfo;
@@ -25,10 +26,11 @@ public class BalanceSetCommand extends SubCommand {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new StringArgument()
+                new EnumArgument<Balance>()
+                        .setEnum(Balance.class)
                         .description("Balance to modify.")
                         .id("balance"),
-                new EnumArgument<Balance>()
+                new IntegerArgument()
                         .description("Value to set.")
                         .id("value"),
                 new UserArgument()
@@ -41,16 +43,17 @@ public class BalanceSetCommand extends SubCommand {
     @Override
     public void run(CommandEvent event) throws CommandException {
         User user = event.getArgument("user");
-        UserDocument document = DocumentCache.get(event.getArgument("user"), UserDocument.class);
-        String balance = event.getArgument("balance");
+        UserDocument document = event.getUserDocument(user);
+
+        Balance balance = event.getArgument("balance");
         int value = event.getArgument("value");
 
-        document.put(balance, value);
+        balance.getSetter().apply(document, value);
         document.update();
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
-                .setDescription(String.format("Successfully set %s to %s's %s balance.",
-                        value, balance, user.getAsMention()))
+                .setDescription(String.format("Successfully set %s's %s balance to %s.",
+                        user.getAsMention(), balance, value))
                 .addLogo()
         );
     }
