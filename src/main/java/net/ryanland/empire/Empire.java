@@ -44,6 +44,11 @@ public class Empire {
 
     public static final boolean useTestGuild = true;
 
+    // Constant links
+    public static final String BOT_INVITE_LINK = "https://discord.com/oauth2/authorize?client_id=832988155355070555&permissions=8&scope=bot";
+    public static final String SERVER_INVITE_LINK = "https://discord.gg/D7SARkP7pA";
+    public static final String GITHUB_LINK = "https://github.com/RyanLandDev/EmpireBot";
+
     private static JDA jda;
     private static Config config;
 
@@ -66,6 +71,7 @@ public class Empire {
                 new HelpCommand(),
                 new PingCommand(),
                 new UserCommand(),
+                new StatsCommand(),
 
                 // Developer
                 new MimicCommand(),
@@ -111,7 +117,7 @@ public class Empire {
                     new GuildTraffic()
                 );
 
-        // Build bot
+        // Build-a-bot
         jda = builder.build();
         jda.awaitReady();
         CommandHandler.upsertAll();
