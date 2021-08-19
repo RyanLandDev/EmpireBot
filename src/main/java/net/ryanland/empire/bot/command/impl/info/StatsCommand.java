@@ -12,7 +12,6 @@ import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import net.ryanland.empire.sys.util.StringUtil;
 
@@ -67,35 +66,24 @@ public class StatsCommand extends Command {
                 .addRegular("🤝 Guild Count", "", String.format("`%s` Guilds",
                         event.getJDA().getGuilds().size()))
                 .addRegular("💻 Current Shard", "",
-                        "`N/A`")
+                        "`N/A`");
 
-                .addRegular(StringUtil.genTrimProofSpaces(50))
+        event.performReply(new PresetBuilder()
+                .setTitle("Statistics")
+                .addLogo()
+                .setDescription("Here's some information about the bot.  \n\u200b")
 
-                .addRegular("✉ Bot Invite", "",
-                        String.format("[Link](%s)", BOT_INVITE_LINK))
-                .addRegular("ℹ Support Server", "",
-                        String.format("[Link](%s)", SERVER_INVITE_LINK))
-                .addRegular("👨‍💻 GitHub Repository", "",
-                        String.format("[Link](%s)", GITHUB_LINK));
-
-        ActionMenuBuilder actionMenuBuilder = new ActionMenuBuilder();
-
-        event.reply(new ActionMenuBuilder()
-                .setEmbed(new PresetBuilder()
-                        .setTitle("Statistics")
-                        .addLogo()
-                        .setDescription("Here's some information about the bot.  \n\u200b")
-
-                        .addField("__**Statistics**__",
-                                "\u200b\n" + infoValues.build() + "\n\u200b",
-                                true
-                        ).addField("__**Credits**__\u200b\n",
-                                String.join("\n", devListBuilder),
-                                true
-                        ))
-                .addButtons(
-
+                .addField("__**Statistics**__",
+                        "\u200b\n" + infoValues.build() + "\n\u200b",
+                        true
+                ).addField("__**Credits**__\n\u200b\n\n",
+                        String.join("\n", devListBuilder),
+                        true
                 )
-        );
+        ).addActionRow(
+                Button.link(SERVER_INVITE_LINK,"⛑ Support Server"),
+                Button.link(BOT_INVITE_LINK, "📧 Bot Invite"),
+                Button.link(GITHUB_LINK, "👨‍💻 GitHub Repository")
+        ).queue();
     }
 }
