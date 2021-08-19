@@ -77,8 +77,8 @@ public class StatsCommand extends Command {
                         true
                 )
         ).addActionRow(
-                Button.link(Empire.SERVER_INVITE_LINK,"Support Server").withEmoji(Emoji.fromMarkdown("⛑")),
                 Button.link(Empire.BOT_INVITE_LINK, "Bot Invite").withEmoji(Emoji.fromMarkdown("📧")),
+                Button.link(Empire.SERVER_INVITE_LINK,"Support Server").withEmoji(Emoji.fromMarkdown("⛑")),
                 Button.link(Empire.GITHUB_LINK, "GitHub Repository").withEmoji(Emoji.fromMarkdown("👨‍💻"))
         ).queue();
     }
