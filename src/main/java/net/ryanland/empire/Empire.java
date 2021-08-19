@@ -16,7 +16,7 @@ import net.ryanland.empire.bot.command.impl.profile.ResetCommand;
 import net.ryanland.empire.bot.command.impl.profile.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.profile.StartCommand;
 import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
-import net.ryanland.empire.sys.tutorials.Tutorial;
+import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Tutorial;
 import net.ryanland.empire.sys.tutorials.TutorialHandler;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.info.*;
