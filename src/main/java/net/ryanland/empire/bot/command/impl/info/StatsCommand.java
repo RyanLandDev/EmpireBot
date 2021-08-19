@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.impl.info;
 
 import groovyjarjarantlr.StringUtils;
+import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
@@ -76,9 +77,9 @@ public class StatsCommand extends Command {
                         true
                 )
         ).addActionRow(
-                Button.link(Empire.SERVER_INVITE_LINK,"⛑ Support Server"),
-                Button.link(Empire.BOT_INVITE_LINK, "📧 Bot Invite"),
-                Button.link(Empire.GITHUB_LINK, "👨‍💻 GitHub Repository")
+                Button.link(Empire.SERVER_INVITE_LINK,"Support Server").withEmoji(Emoji.fromMarkdown("⛑")),
+                Button.link(Empire.BOT_INVITE_LINK, "Bot Invite").withEmoji(Emoji.fromMarkdown("📧")),
+                Button.link(Empire.GITHUB_LINK, "GitHub Repository").withEmoji(Emoji.fromMarkdown("👨‍💻"))
         ).queue();
     }
 }
