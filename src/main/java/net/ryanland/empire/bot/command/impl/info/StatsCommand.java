@@ -2,6 +2,7 @@ package net.ryanland.empire.bot.command.impl.info;
 
 import groovyjarjarantlr.StringUtils;
 import net.dv8tion.jda.api.interactions.components.Button;
+import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -12,18 +13,12 @@ import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
-import net.ryanland.empire.sys.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class StatsCommand extends Command {
-
-    private final String BOT_INVITE_LINK = "https://discord.com/oauth2/authorize?client_id=832988155355070555&permissions=8&scope=bot";
-    private final String SERVER_INVITE_LINK = "https://discord.gg/D7SARkP7pA";
-    private final String GITHUB_LINK = "https://github.com/RyanLandDev/EmpireBot";
 
     @Override
     public CommandInfo getInfo() {
@@ -81,9 +76,9 @@ public class StatsCommand extends Command {
                         true
                 )
         ).addActionRow(
-                Button.link(SERVER_INVITE_LINK,"⛑ Support Server"),
-                Button.link(BOT_INVITE_LINK, "📧 Bot Invite"),
-                Button.link(GITHUB_LINK, "👨‍💻 GitHub Repository")
+                Button.link(Empire.SERVER_INVITE_LINK,"⛑ Support Server"),
+                Button.link(Empire.BOT_INVITE_LINK, "📧 Bot Invite"),
+                Button.link(Empire.GITHUB_LINK, "👨‍💻 GitHub Repository")
         ).queue();
     }
 }
