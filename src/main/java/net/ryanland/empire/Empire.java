@@ -66,6 +66,7 @@ public class Empire {
                 new HelpCommand(),
                 new PingCommand(),
                 new UserCommand(),
+                new StatsCommand(),
 
                 // Developer
                 new MimicCommand(),
