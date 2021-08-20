@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.util;
+package net.ryanland.empire.util;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

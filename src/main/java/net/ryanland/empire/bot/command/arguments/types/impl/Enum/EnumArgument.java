@@ -40,5 +40,7 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
     protected interface InputEnum {
 
         String getName();
+
+        boolean getHidden();
     }
 }

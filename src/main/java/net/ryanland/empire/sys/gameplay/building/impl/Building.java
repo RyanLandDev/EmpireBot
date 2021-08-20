@@ -1,7 +1,9 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
@@ -16,6 +18,9 @@ import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.PresetType;
+import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +30,8 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class Building implements Serializable, Serializer<List<?>, Building>, Emojis {
+public abstract class Building
+        implements Serializable, Serializer<List<?>, Building>, Emojis {
 
     public static final int BUILDING_START_STAGE = 1;
     public static final int BASE_MAX_HEALTH = 100;
@@ -146,23 +152,149 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
                 );
     }
 
-    public ActionMenuBuilder getActionMenuBuilder() {
-        // TODO make the buttons work
-        return new ActionMenuBuilder().addButton(
-                Button.secondary("repair", "Repair" + (canRepair() ? "" : " (Maxed)"))
-                        .withEmoji(Emoji.fromMarkdown(REPAIR))
-                        .withDisabled(!canRepair()),
-                event -> {}
-        ).addButton(
+    public boolean exists() {
+        try {
+            return getProfile().getBuilding(layer).equals(this);
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
+    }
+
+    public ActionMenuBuilder getActionMenuBuilder() throws CommandException {
+        ActionMenuBuilder builder = new ActionMenuBuilder();
+
+        if (canRepairAny()) {
+            builder.addButton(
+                    Button.success("repairMain", String.format("Repair (%s)",
+                                    canRepair() ? getRepairPrice().currency().getName() : "Not Enough"))
+                            .withEmoji(Emoji.fromMarkdown(getMainCurrency().getEmoji()))
+                            .withDisabled(!canRepair()),
+
+                    (event, aBuilding) -> {
+                        Building building = (Building) aBuilding;
+                        building.repair();
+
+                        refreshActionMenuButtons(event);
+                        event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                                "Repaired your %s for %s.", building.getFormattedName(), building.getRepairPrice().format()
+                        )).build()).setEphemeral(true).queue();
+
+                    }, this
+            ).addButton(
+                    Button.success("repairCrystal", String.format("Repair (%s)",
+                                    canCrystalRepair() ? getCrystalRepairPrice().currency().getName() : "Not Enough"))
+                            .withEmoji(Emoji.fromMarkdown(getCrystalRepairPrice().currency().getEmoji()))
+                            .withDisabled(!canCrystalRepair()),
+
+                    (event, aBuilding) -> {
+                        Building building = (Building) aBuilding;
+                        building.crystalRepair();
+
+                        refreshActionMenuButtons(event);
+                        event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                                "Repaired your %s for %s.", building.getFormattedName(), building.getCrystalRepairPrice().format()
+                        )).build()).setEphemeral(true).queue();
+
+                    }, this
+            );
+        } else {
+            builder.addButton(
+                    Button.secondary("repair", "Repair (Maxed)")
+                            .withEmoji(Emoji.fromMarkdown(REPAIR))
+                            .asDisabled(),
+                    event -> {}
+            );
+        }
+
+        builder.addButton(
                 Button.secondary("upgrade", "Upgrade" + (canUpgrade() ? "" : " (Not Enough)"))
                         .withEmoji(Emoji.fromMarkdown(UPGRADE))
                         .withDisabled(!canUpgrade()),
-                event -> {}
+
+                (event, aBuilding) -> {
+                    Building building = (Building) aBuilding;
+                    building.upgrade();
+
+                    refreshActionMenuButtons(event);
+                    event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                            "Upgraded your %s for %s.", building.getFormattedName(), building.getUpgradePrice().format()
+                    )).build()).setEphemeral(true).queue();
+
+                }, this
         ).addButton(
                 Button.secondary("sell", "Sell")
                         .withEmoji(Emoji.fromMarkdown(SELL)),
-                event -> {}
+
+                (event, aBuilding) -> {
+                    Building building = (Building) aBuilding;
+                    building.sell();
+
+                    refreshActionMenuButtons(event);
+                    event.deferReply(true).addEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                            "Sold your %s for %s.", building.getFormattedName(), building.getSellPrice().format()
+                    )).build()).queue();
+
+                }, this
         );
+
+        return builder;
+    }
+
+    public void refreshActionMenuButtons(ButtonClickEvent event) throws CommandException {
+        if (exists()) {
+            event.getMessage().editMessageComponents(
+                    InteractionUtil.of(getActionMenuBuilder().getButtons().stream()
+                            .map(ActionButton::button)
+                            .collect(Collectors.toList())
+                    )).queue();
+        } else {
+            event.getMessage().editMessageComponents(
+                    Collections.emptyList()
+            ).queue();
+        }
+    }
+
+    public void repair() throws CommandException {
+        if (!canRepair()) {
+            throw new CommandException("You cannot repair this building.");
+        }
+
+        getRepairPrice().buy(profile);
+        health = getMaxHealth();
+    }
+
+    public void crystalRepair() throws CommandException {
+        if (!canCrystalRepair()) {
+            throw new CommandException("You cannot repair this building.");
+        }
+
+        getCrystalRepairPrice().buy(profile);
+        health = getMaxHealth();
+        profile.getDocument().update();
+    }
+
+    public void upgrade() throws CommandException {
+        if (!canUpgrade()) {
+            throw new CommandException("You cannot upgrade this building.");
+        }
+
+        getUpgradePrice().buy(profile);
+        stage += 1;
+        profile.getDocument().update();
+    }
+
+    public void sell() throws CommandException {
+        if (!canSell()) {
+            throw new CommandException("You cannot sell this building.");
+        }
+
+        getSellPrice().give(profile);
+
+        List<Building> newBuildings = profile.getBuildings();
+        newBuildings.remove(layer - 1);
+        profile.getDocument().setBuildings(newBuildings);
+
+        profile.getDocument().update();
     }
 
     public Price<Integer> getSellPrice() {
@@ -185,16 +317,36 @@ public abstract class Building implements Serializable, Serializer<List<?>, Buil
                 (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
     }
 
+    public boolean canSell() {
+        return exists();
+    }
+
     public boolean canRepair() {
-        return !isHealthMaxed();
+        return !isHealthMaxed() && profile.canAfford(getRepairPrice()) && exists();
+    }
+
+    public boolean canCrystalRepair() {
+        return !isHealthMaxed() && profile.canAfford(getCrystalRepairPrice()) && exists();
+    }
+
+    public boolean canRepairAny() {
+        return canRepair() || canCrystalRepair();
     }
 
     public boolean canUpgrade() {
-        return getMainCurrency().get(profile).amount() >= getUpgradePrice().amount();
+        return getMainCurrency().get(profile).amount() >= getUpgradePrice().amount() && exists();
     }
 
     public Currency getMainCurrency() {
         return getPrice().currency();
+    }
+
+    /**
+     * Gets the formatted name of this building.
+     * @return A string in the form of "[emoji] **[name]**".
+     */
+    public String getFormattedName() {
+        return String.format("%s **%s**", getEmoji(), getName());
     }
 
     public abstract int getId();

@@ -15,16 +15,32 @@ public enum Balance implements EnumArgument.InputEnum {
     private final String name;
     private final Function<UserDocument, Integer> getter;
     private final BiFunction<UserDocument, Integer, UserDocument> setter;
+    private final boolean hidden;
 
-    Balance(String name, Function<UserDocument, Integer> getter, BiFunction<UserDocument, Integer, UserDocument> setter) {
+    Balance(String name,
+            Function<UserDocument, Integer> getter,
+            BiFunction<UserDocument, Integer, UserDocument> setter,
+            boolean hidden) {
         this.name = name;
         this.getter = getter;
         this.setter = setter;
+        this.hidden = hidden;
+    }
+
+    Balance(String name,
+            Function<UserDocument, Integer> getter,
+            BiFunction<UserDocument, Integer, UserDocument> setter) {
+        this(name, getter, setter, false);
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean getHidden() {
+        return hidden;
     }
 
     public Function<UserDocument, Integer> getGetter() {

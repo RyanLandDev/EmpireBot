@@ -2,28 +2,33 @@ package net.ryanland.empire.sys.message.interactions;
 
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
-import net.ryanland.empire.sys.util.ExecutorUtil;
+import net.ryanland.empire.util.ExecutorUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ButtonHandler {
 
-    private static final HashMap<Long, ButtonListener> BUTTON_LISTENERS = new HashMap<>();
+    private static final HashMap<Long, Function<ButtonClickEvent, ButtonListener>> BUTTON_LISTENERS = new HashMap<>();
 
-    public static void addListener(InteractionHook hook, Long userId, Consumer<ButtonClickEvent> consumer) {
-        BUTTON_LISTENERS.put(hook.retrieveOriginal().complete().getIdLong(), new ButtonListener(userId, consumer));
+    public static void addListener(InteractionHook hook,
+                                   Function<ButtonClickEvent, ButtonListener> buttonListener) {
+        Long hookId = hook.retrieveOriginal().complete().getIdLong();
+
+        BUTTON_LISTENERS.put(hookId, buttonListener);
+
         ExecutorUtil.schedule(
                 () -> hook.editOriginal("").setActionRows(Collections.emptyList()).queue(),
                 2, TimeUnit.MINUTES);
     }
 
-    public static void handleEvent(ButtonClickEvent event) {
-        ButtonListener listener = BUTTON_LISTENERS.get(event.getMessageIdLong());
+    public static void handleEvent(ButtonClickEvent event) throws CommandException {
+        ButtonListener listener = BUTTON_LISTENERS.get(event.getMessageIdLong()).apply(event);
 
         if (listener != null) {
             if (event.getUser().getIdLong() != listener.userId()) {
@@ -35,11 +40,13 @@ public class ButtonHandler {
                 return;
             }
 
-            listener.consumer().accept(event);
+            ButtonClickContainer clickContainer = listener.container().apply(event);
+            clickContainer.onClick()
+                    .consume(event, clickContainer.value().apply(event));
         }
     }
 
-    private record ButtonListener(long userId, Consumer<ButtonClickEvent> consumer) {
+    public record ButtonListener(long userId, Function<ButtonClickEvent, ButtonClickContainer> container) {
 
     }
 

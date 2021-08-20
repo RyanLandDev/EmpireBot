@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.interactions.ButtonClickContainer;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
@@ -28,6 +29,10 @@ public class ActionMenu implements InteractionMenu {
         this.embed = embed;
     }
 
+    public ActionButton[] getActionButtons() {
+        return actionButtons;
+    }
+
     @Override
     public void send(CommandEvent commandEvent) {
 
@@ -36,8 +41,8 @@ public class ActionMenu implements InteractionMenu {
                 .map(ActionButton::button)
                 .collect(Collectors.toList());
 
-        // Create consumer map
-        HashMap<String, Consumer<ButtonClickEvent>> buttonConsumers = new HashMap<>();
+        // Create container map
+        HashMap<String, ButtonClickContainer> buttonConsumers = new HashMap<>();
         Arrays.asList(actionButtons)
                 .forEach(button -> buttonConsumers.put(
                         button.button().getId(), button.onClick()
@@ -46,10 +51,11 @@ public class ActionMenu implements InteractionMenu {
         // Add button listener
         ButtonHandler.addListener(commandEvent.performReply(embed)
                 .addActionRows(InteractionUtil.of(buttons))
-                .complete(), commandEvent.getUser().getIdLong(),
-                buttonEvent -> {
-                    buttonEvent.deferEdit().queue();
-                    buttonConsumers.get(buttonEvent.getComponentId()).accept(buttonEvent);
-                });
+                .complete(),
+                buttonEvent -> new ButtonHandler.ButtonListener(
+                        commandEvent.getUser().getIdLong(),
+                        clickEvent -> buttonConsumers.get(clickEvent.getComponentId())
+                ));
+
     }
 }

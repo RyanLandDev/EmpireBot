@@ -11,8 +11,9 @@ import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
-import net.ryanland.empire.sys.util.NumberUtil;
-import net.ryanland.empire.sys.util.StringUtil;
+import net.ryanland.empire.util.NumberUtil;
+import net.ryanland.empire.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -102,6 +103,10 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     public String getXpProgressBar() {
         return NumberUtil.progressBar(10, getXp(), getRequiredXp());
+    }
+
+    public boolean canAfford(@NotNull Price<Integer> price) {
+        return price.currency().get(this).amount() >= price.amount();
     }
 
     public Integer getWave() {

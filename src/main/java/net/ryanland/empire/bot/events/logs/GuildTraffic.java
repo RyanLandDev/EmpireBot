@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.sys.message.builders.PresetType;
-import net.ryanland.empire.sys.util.NumberUtil;
+import net.ryanland.empire.util.NumberUtil;
 import net.ryanland.empire.sys.message.webhooks.WebhookHandler;
 
 import java.time.Instant;

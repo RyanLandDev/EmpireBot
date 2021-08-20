@@ -1,6 +1,9 @@
 package net.ryanland.empire.sys.gameplay.currency;
 
-import net.ryanland.empire.sys.util.NumberUtil;
+import net.ryanland.empire.bot.command.executor.exceptions.CannotAffordException;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.util.NumberUtil;
 import org.jetbrains.annotations.NotNull;
 
 public record Price<T extends Number>(Currency currency, T amount) {
@@ -15,6 +18,19 @@ public record Price<T extends Number>(Currency currency, T amount) {
 
     public @NotNull String formatAmount() {
         return NumberUtil.format(amount);
+    }
+
+    public void give(Profile profile) throws CommandException {
+        currency.update(profile, currency.get(profile).amount() + amount.intValue());
+    }
+
+    @SuppressWarnings("unchecked")
+    public void buy(Profile profile) throws CommandException {
+        if (!profile.canAfford((Price<Integer>) this)) {
+            throw new CannotAffordException("You cannot afford this.");
+        }
+
+        currency.update(profile, currency.get(profile).amount() - amount.intValue());
     }
 
 }

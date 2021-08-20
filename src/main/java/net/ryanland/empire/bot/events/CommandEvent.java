@@ -17,7 +17,7 @@ import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
-import net.ryanland.empire.sys.util.StringUtil;
+import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;

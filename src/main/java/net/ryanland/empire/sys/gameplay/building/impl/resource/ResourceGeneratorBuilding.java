@@ -2,6 +2,7 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource;
 
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.components.Button;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
@@ -58,14 +59,14 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     @Override
-    public ActionMenuBuilder getActionMenuBuilder() {
+    public ActionMenuBuilder getActionMenuBuilder() throws CommandException {
         return super.getActionMenuBuilder()
                 .insertButton(2,
                         Button.secondary("collect", "Collect" +
                                         (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
                                 .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
                                 .withDisabled(!canCollect()),
-                        event -> {} //TODO
+                        event -> {} //TODO make it work
                 );
     }
 

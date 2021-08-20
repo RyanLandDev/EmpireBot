@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.util;
+package net.ryanland.empire.util;
 
 import net.ryanland.empire.sys.message.Emojis;
 import org.jetbrains.annotations.NotNull;
