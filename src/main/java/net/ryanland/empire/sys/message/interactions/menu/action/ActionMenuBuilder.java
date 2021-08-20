@@ -26,6 +26,10 @@ public class ActionMenuBuilder implements InteractionMenuBuilder<ActionMenu> {
         return actionButtons;
     }
 
+    public PresetBuilder getEmbed() {
+        return embed;
+    }
+
     public ActionMenuBuilder addButtons(ActionButton... buttons) {
         this.actionButtons.addAll(Arrays.asList(buttons));
         return this;

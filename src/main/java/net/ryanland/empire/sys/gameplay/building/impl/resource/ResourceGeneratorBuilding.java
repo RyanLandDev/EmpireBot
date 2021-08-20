@@ -52,7 +52,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     public BuildingInfoBuilder getBuildingInfoBuilder() {
         return super.getBuildingInfoBuilder().replaceSegment(1, segment -> segment
                 .insertElement(0, BuildingInfoElement.upgradable(
-                        "Gold per minute", "🏭", getEffectiveCurrency().getEmoji(),
+                        getEffectiveCurrency().getName() + " per minute", "🏭", getEffectiveCurrency().getEmoji(),
                         getUnitPerMin(), getUnitPerMin(stage + 1),
                         "The resources this building makes per minute."))
         );

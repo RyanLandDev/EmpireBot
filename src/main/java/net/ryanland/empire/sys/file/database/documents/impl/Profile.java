@@ -121,6 +121,32 @@ public class Profile implements SnowflakeDocument, Emojis {
         return getBuildings().get(position - 1);
     }
 
+    /**
+     * Sets a building at a specific layer.
+     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     * @param building The building to set. This building's {@code layer} field will be used.
+     */
+    @SuppressWarnings("all")
+    public void setBuilding(Building building) {
+        List<List> newBuildings = new ArrayList<>(document.getBuildings());
+
+        newBuildings.remove(building.getLayer() - 1);
+        newBuildings.add(building.getLayer() - 1, building.serialize());
+
+        getDocument().setBuildingsRaw(newBuildings);
+    }
+
+    /**
+     * Removes a building at a specific layer.
+     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     * @param layer The layer the building is at to remove.
+     */
+    public void removeBuilding(int layer) {
+        List<Building> newBuildings = getBuildings();
+        newBuildings.remove(layer - 1);
+        getDocument().setBuildings(newBuildings);
+    }
+
     public int getBuildingLimit() {
         return (int) Math.floor(getLevel() * 1.25 + 3);
     }

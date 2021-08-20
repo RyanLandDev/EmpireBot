@@ -28,6 +28,10 @@ public class ButtonHandler {
     }
 
     public static void handleEvent(ButtonClickEvent event) throws CommandException {
+        if (!BUTTON_LISTENERS.containsKey(event.getMessageIdLong())) {
+            return;
+        }
+
         ButtonListener listener = BUTTON_LISTENERS.get(event.getMessageIdLong()).apply(event);
 
         if (listener != null) {
