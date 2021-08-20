@@ -34,7 +34,7 @@ public enum Balance implements EnumArgument.InputEnum {
     }
 
     @Override
-    public String getName() {
+    public String getTitle() {
         return name;
     }
 

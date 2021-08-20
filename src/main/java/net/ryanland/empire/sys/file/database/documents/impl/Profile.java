@@ -159,6 +159,10 @@ public class Profile implements SnowflakeDocument, Emojis {
         return StringUtil.format(getCreated());
     }
 
+    public String getTimestampCreated() {
+        return StringUtil.getDiscordTimestamp(getCreated());
+    }
+
     private String formattedNumberWithEmoji(Number number, String emoji, boolean includeEmoji) {
         return (includeEmoji ? emoji + " " : "") + NumberUtil.format(number);
     }

@@ -10,12 +10,8 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.message.Emojis;
-import net.ryanland.empire.sys.message.builders.InfoValue;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EmpireCommand extends Command {
     @Override
@@ -46,7 +42,7 @@ public class EmpireCommand extends Command {
                 .addRegular("Level", profile.getLevel())
                 .addCapacitable("Level XP", XP, profile.getXp(), profile.getRequiredXp())
                 .addRegular("Level progress", profile.getXpProgressBar() + "\n")
-                .addRegular("Created", profile.getFormattedCreated())
+                .addRegular("Created", profile.getTimestampCreated())
                 .addCapacitable("Gold", GOLD,
                         profile.getGold().formatAmount(), profile.getFormattedCapacity(Currency.GOLD, true))
                 .addCapacitable("Crystals", CRYSTALS,

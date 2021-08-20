@@ -174,11 +174,13 @@ public abstract class Building
 
                     (event, aBuilding) -> {
                         Building building = (Building) aBuilding;
+                        Price<Integer> repairPrice = building.getRepairPrice();
+
                         building.repair();
 
                         refreshMenu(event);
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", building.getFormattedName(), building.getRepairPrice().format()
+                                "Repaired your %s for %s.", building.getFormattedName(), repairPrice.format()
                         )).build()).setEphemeral(true).queue();
 
                     }, this
@@ -190,11 +192,13 @@ public abstract class Building
 
                     (event, aBuilding) -> {
                         Building building = (Building) aBuilding;
+                        Price<Integer> crystalRepairPrice = building.getCrystalRepairPrice();
+
                         building.crystalRepair();
 
                         refreshMenu(event);
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", building.getFormattedName(), building.getCrystalRepairPrice().format()
+                                "Repaired your %s for %s.", building.getFormattedName(), crystalRepairPrice.format()
                         )).build()).setEphemeral(true).queue();
 
                     }, this
@@ -251,7 +255,6 @@ public abstract class Building
                 .setEmbed(getBuildingInfo().build()
                         .setTitle(String.format("%s %s (%s)", getEmoji(), getName(), getType().getFullName()))
                 );
-        // TODO test repair buttons
     }
 
     @SuppressWarnings("all")

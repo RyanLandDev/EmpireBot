@@ -6,7 +6,6 @@ import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArg
 import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
 import net.ryanland.empire.bot.events.CommandEvent;
 
-import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
 
@@ -21,7 +20,7 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
     @Override
     public E parsed(OptionMapping argument, CommandEvent event) throws ArgumentException {
         for (E e : associatedEnum) {
-            if (argument.getAsString().equals(e.getName())) {
+            if (argument.getAsString().equals(e.getTitle())) {
                 return e;
             }
         }
@@ -32,14 +31,14 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
         return "`" +
                 associatedEnum.stream()
                     .filter(e -> !e.isHidden())
-                    .map(InputEnum::getName)
+                    .map(InputEnum::getTitle)
                     .collect(Collectors.joining("` `"))
                 + "`";
     }
 
     protected interface InputEnum {
 
-        String getName();
+        String getTitle();
 
         boolean isHidden();
     }
