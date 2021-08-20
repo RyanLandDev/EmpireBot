@@ -65,7 +65,8 @@ public class ActionMenuBuilder implements InteractionMenuBuilder<ActionMenu> {
         return insertButton(index, new ActionButton(button, onClick));
     }
 
-    public <T> ActionMenuBuilder insertButton(int index, Button button, CommandBiConsumer<ButtonClickEvent, Object> onClick, T value) {
+    public <T> ActionMenuBuilder insertButton(int index, Button button,
+                                              CommandBiConsumer<ButtonClickEvent, Object> onClick, T value) {
         return insertButton(index, button, new ButtonClickContainer(onClick, event -> value));
     }
 

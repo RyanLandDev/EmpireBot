@@ -2,9 +2,7 @@ package net.ryanland.empire.sys.message.interactions;
 
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.ryanland.empire.bot.command.executor.functional_interface.CommandBiConsumer;
-import net.ryanland.empire.bot.events.CommandEvent;
 
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 

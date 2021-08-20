@@ -8,6 +8,8 @@ import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import org.jetbrains.annotations.NotNull;
 
@@ -66,7 +68,18 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                                         (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
                                 .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
                                 .withDisabled(!canCollect()),
-                        event -> {} //TODO make it work
+                        (event, aBuilding) -> {
+                            ResourceGeneratorBuilding building = (ResourceGeneratorBuilding) aBuilding;
+                            Price<Integer> holding = building.getHolding();
+
+                            building.collect();
+
+                            refreshMenu(event);
+                            event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                                    "Collected %s from %s.", holding.format(), building.getFormattedName()
+                            )).build()).setEphemeral(true).queue();
+
+                        }, this
                 );
     }
 
@@ -107,6 +120,17 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
     public boolean canCollect() {
         return getCollectState() == CollectState.AVAILABLE;
+    }
+
+    public void collect() throws CommandException {
+        if (!canCollect()) {
+            throw new CommandException("You cannot collect from this building.");
+        }
+
+        getHolding().give(profile);
+        lastCollect = new Date();
+        profile.setBuilding(this);
+        profile.getDocument().update();
     }
 
     @Override
