@@ -1,15 +1,14 @@
 package net.ryanland.empire.bot.command.impl.info;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.impl.TutorialArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.sys.tutorials.Tutorial;
+import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Tutorial;
 import net.ryanland.empire.sys.tutorials.TutorialMaker;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.builders.PresetType;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -26,7 +25,7 @@ public class TutorialCommand extends Command {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new TutorialArgument()
+                new EnumArgument<Tutorial>().setEnum(Tutorial.class)
                         .id("tutorial")
                         .description("The name of the tutorial.")
                         .optional()
@@ -35,28 +34,20 @@ public class TutorialCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
+        Tutorial tutorial = event.getArgument("tutorial");
 
-        try {
-            Tutorial tutorial = event.getArgument("tutorial");
-
-            if (tutorial == null) {
-                event.performReply(new PresetBuilder(
-                        PresetType.ERROR, "Tutorial not found.", "Not found"
-                )).queue();
-            } else {
-                supplyTutorialHelp(event, tutorial);
-            }
-
-        } catch (IndexOutOfBoundsException e) {
+        if (tutorial == null) {
             event.reply(new PresetBuilder(
                     "Tutorials give you a brief overview of some of the mechanics of the bot.\n",
                     "Tutorials")
                     .addField("Tutorials",
                             "`" +
                                     Arrays.stream(Tutorial.values())
-                                    .map(Tutorial::getExecutor)
-                                    .collect(Collectors.joining("` `")) + "`",
+                                            .map(Tutorial::getTitle)
+                                            .collect(Collectors.joining("` `")) + "`",
                             true));
+        } else {
+            supplyTutorialHelp(event, tutorial);
         }
     }
 
