@@ -1,5 +1,7 @@
 package net.ryanland.empire.sys.tutorials;
 
+import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Tutorial;
+
 import java.util.HashMap;
 
 public class TutorialHandler {
@@ -8,12 +10,12 @@ public class TutorialHandler {
 
     static {
         for (Tutorial tutorial : Tutorial.values()) {
-            if (tutorial.getExecutor() == null || tutorial.getName() == null || tutorial.getDescription() == null || tutorial.getFields() == null ) {
+            if (tutorial.getTitle() == null || tutorial.getEmbedTitle() == null || tutorial.getDescription() == null || tutorial.getFields() == null ) {
                 throw new IllegalStateException(tutorial.getClass().getName() +
                         "- Tutorials must have at least an executor, name, description, and body.");
             }
 
-            EXECUTORS.put(tutorial.getExecutor(), tutorial);
+            EXECUTORS.put(tutorial.getTitle(), tutorial);
         }
     }
 

@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.tutorials;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Tutorial;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
@@ -14,7 +15,7 @@ public class TutorialMaker {
         MessageEmbed.Field[] fields = tutorial.getFields();
 
         builder
-                .setTitle(tutorial.getName())
+                .setTitle(tutorial.getEmbedTitle())
                 .setDescription("*"+tutorial.getDescription()+"*")
                 .addLogo()
                 .setThumbnail((tutorial.hasThumbnail()) ? (tutorial.getThumbnail()) : DEFAULT_THUMBNAIL);
