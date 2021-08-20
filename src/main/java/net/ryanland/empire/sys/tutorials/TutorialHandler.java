@@ -8,8 +8,8 @@ public class TutorialHandler {
 
     private static final HashMap<String, Tutorial> EXECUTORS = new HashMap<>();
 
-    public static void register(Tutorial... tutorials) {
-        for (Tutorial tutorial : tutorials) {
+    static {
+        for (Tutorial tutorial : Tutorial.values()) {
             if (tutorial.getTitle() == null || tutorial.getEmbedTitle() == null || tutorial.getDescription() == null || tutorial.getFields() == null ) {
                 throw new IllegalStateException(tutorial.getClass().getName() +
                         "- Tutorials must have at least an executor, name, description, and body.");
