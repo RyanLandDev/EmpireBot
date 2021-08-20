@@ -12,11 +12,10 @@ import java.util.stream.Collectors;
 
 public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends SingleArgument<E> {
 
-    private EnumSet<E> associatedEnum;
+    private final EnumSet<E> associatedEnum;
 
-    public EnumArgument<E> setEnum(Class<E> anEnum) {
+    public EnumArgument(Class<E> anEnum) {
         associatedEnum = EnumSet.allOf(anEnum);
-        return this;
     }
 
     @Override
@@ -32,6 +31,7 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
     private String getFormattedOptions() {
         return "`" +
                 associatedEnum.stream()
+                    .filter(e -> !e.isHidden())
                     .map(InputEnum::getName)
                     .collect(Collectors.joining("` `"))
                 + "`";
@@ -41,6 +41,6 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
 
         String getName();
 
-        boolean getHidden();
+        boolean isHidden();
     }
 }

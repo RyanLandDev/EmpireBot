@@ -249,9 +249,9 @@ public abstract class Building
         }
         return getActionMenuBuilder()
                 .setEmbed(getBuildingInfo().build()
-                        .setTitle(getName() + " (" + getType().getFullName() + ")")
-                        .setDescription(getEmoji())
+                        .setTitle(String.format("%s %s (%s)", getEmoji(), getName(), getType().getFullName()))
                 );
+        // TODO test repair buttons
     }
 
     @SuppressWarnings("all")
