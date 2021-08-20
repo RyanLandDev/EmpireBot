@@ -28,7 +28,6 @@ public class TutorialCommand extends Command {
         return new ArgumentSet().addArguments(
                 new TutorialArgument()
                         .id("tutorial")
-                        .name("tutorial")
                         .description("The name of the tutorial.")
                         .optional()
         );

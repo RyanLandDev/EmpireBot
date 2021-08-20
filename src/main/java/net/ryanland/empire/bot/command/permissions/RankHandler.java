@@ -14,17 +14,21 @@ public class RankHandler {
 
     private static final HashMap<Long, Permission> USER_RANKS = new HashMap<>();
 
-    public static void loadRanks() throws IOException {
-        JsonObject json = LocalFiles.RANKS.parseJson();
+    static {
+        try {
+            JsonObject json = LocalFiles.RANKS.parseJson();
 
-        for (String key : json.keySet()) {
-            Permission permission = PermissionHandler.getPermission(key);
-            if (permission == null) throw new NoSuchElementException();
+            for (String key : json.keySet()) {
+                Permission permission = PermissionHandler.getPermission(key);
+                if (permission == null) throw new NoSuchElementException();
 
-            JsonArray array = json.getAsJsonArray(key);
-            for (JsonElement element : array) {
-                USER_RANKS.put(element.getAsLong(), permission);
+                JsonArray array = json.getAsJsonArray(key);
+                for (JsonElement element : array) {
+                    USER_RANKS.put(element.getAsLong(), permission);
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
