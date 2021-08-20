@@ -36,8 +36,6 @@ public class TutorialCommand extends Command {
     public void run(CommandEvent event) {
         Tutorial tutorial = event.getArgument("tutorial");
 
-        System.out.println(tutorial);
-
         if (tutorial == null) {
             event.reply(new PresetBuilder(
                     "Tutorials give you a brief overview of some of the mechanics of the bot.\n",
