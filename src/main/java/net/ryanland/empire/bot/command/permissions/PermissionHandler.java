@@ -9,7 +9,7 @@ public class PermissionHandler {
     public static final HashMap<String, Permission> PERMISSIONS = new HashMap<>();
     private static final WeakHashMap<Member, Permission> MEMBER_PERMISSIONS = new WeakHashMap<>();
 
-    public static void loadPermissions() {
+    static {
         for (Permission permission : Permission.values()) {
             PermissionHandler.PERMISSIONS.put(permission.getId(), permission);
         }

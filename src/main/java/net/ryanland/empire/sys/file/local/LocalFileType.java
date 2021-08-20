@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.file.local;
 
 public enum LocalFileType {
+
     UNKNOWN("unk"),
 
     TEXT("txt"),
@@ -15,13 +16,11 @@ public enum LocalFileType {
     }
 
     LocalFileType(String extension, String defaultContent) {
-        this.extension = extension;
-        this.defaultContent = defaultContent.getBytes();
+        this(extension, defaultContent.getBytes());
     }
 
     LocalFileType(String extension) {
-        this.extension = extension;
-        this.defaultContent = null;
+        this(extension, (byte[]) null);
     }
 
     public String getExtension() {
@@ -31,4 +30,5 @@ public enum LocalFileType {
     public byte[] getDefaultContent() {
         return defaultContent;
     }
+
 }

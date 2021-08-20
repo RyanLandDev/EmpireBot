@@ -1,7 +1,5 @@
 package net.ryanland.empire.sys.gameplay.building;
 
-import net.ryanland.empire.sys.util.StringUtil;
-
 public enum BuildingType {
 
     RESOURCE("Resource"),

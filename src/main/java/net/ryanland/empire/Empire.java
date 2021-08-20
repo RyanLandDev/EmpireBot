@@ -58,12 +58,7 @@ public class Empire {
         initialize(config);
     }
 
-    private static void initialize(Config config) throws IOException, LoginException, InterruptedException, InvalidSupportGuildException {
-        // Initialize
-        MongoDB.initialize();
-        PermissionHandler.loadPermissions();
-        WebhookHandler.loadWebhooks();
-        RankHandler.loadRanks();
+    private static void initialize(Config config) throws LoginException, InterruptedException, InvalidSupportGuildException {
 
         // Register commands
         CommandHandler.register(
@@ -93,11 +88,6 @@ public class Empire {
 
                 // Building
                 new BuildingCommand()
-        );
-
-        // Register Tutorials
-        TutorialHandler.register(
-            Tutorial.CONTRIBUTE
         );
 
         // Build bot

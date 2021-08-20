@@ -1,8 +1,6 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Test;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -24,19 +22,21 @@ public class TestCommand extends Command {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new EnumArgument<Test>()
-                    .setEnum(Test.class)
-                    .id("test")
-                    .description("my description")
+
         );
+    }
+
+    /**
+     * Put testing code here.
+     * @param event The associated {@link CommandEvent}.
+     */
+    private void performTest(CommandEvent event) {
+
     }
 
     @Override
     public void run(CommandEvent event) {
-        Test test = event.getArgument("test");
-
-        event.getChannel().sendMessage("name: " + test.getTitle() + "\nextra thing: " + test.getExtraThing()).queue();
-
+        performTest(event);
         event.reply(new PresetBuilder(PresetType.SUCCESS, "", "Test finished."));
     }
 }

@@ -11,6 +11,7 @@ public class MessageEvent extends ListenerAdapter {
 
     };
 
+    /*
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         for (MessageAcceptor acceptor : acceptors) {
             if (acceptor.check(event.getMessage())) {
@@ -18,5 +19,6 @@ public class MessageEvent extends ListenerAdapter {
             }
         }
     }
+     */
 
 }

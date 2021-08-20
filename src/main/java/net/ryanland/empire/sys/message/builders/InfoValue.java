@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.function.Function;
 
-import static net.ryanland.empire.sys.util.NumberUtil.format;
+import static net.ryanland.empire.util.NumberUtil.format;
 
 public record InfoValue(Type type, @NotNull String emoji, String currentValue, @Nullable String nextValue, String title) implements Emojis {
 

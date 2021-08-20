@@ -2,7 +2,7 @@ package net.ryanland.empire.sys.message.acceptors;
 
 import net.dv8tion.jda.api.entities.Message;
 
-public interface MessageAcceptor {
+public abstract class MessageAcceptor {
 
-    boolean check(Message message);
+    public abstract boolean check(Message message);
 }

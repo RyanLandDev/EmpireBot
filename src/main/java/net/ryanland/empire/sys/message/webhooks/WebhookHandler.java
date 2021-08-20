@@ -9,9 +9,13 @@ public class WebhookHandler {
 
     private static Webhook WEBHOOKS;
 
-    public static void loadWebhooks() throws IOException {
-        JsonObject rawJson = LocalFiles.WEBHOOKS.parseJson();
-        WEBHOOKS = new Webhook(rawJson);
+    static {
+        try {
+            JsonObject rawJson = LocalFiles.WEBHOOKS.parseJson();
+            WEBHOOKS = new Webhook(rawJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Webhook getWebhooks() {

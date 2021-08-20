@@ -2,13 +2,15 @@ package net.ryanland.empire.sys.message.interactions.menu.action;
 
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
+import net.ryanland.empire.bot.command.executor.functional_interface.CommandBiConsumer;
+import net.ryanland.empire.bot.command.executor.functional_interface.CommandConsumer;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.interactions.ButtonClickContainer;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class ActionMenuBuilder implements InteractionMenuBuilder<ActionMenu> {
 
@@ -18,6 +20,10 @@ public class ActionMenuBuilder implements InteractionMenuBuilder<ActionMenu> {
     public ActionMenuBuilder setEmbed(PresetBuilder embed) {
         this.embed = embed;
         return this;
+    }
+
+    public List<ActionButton> getButtons() {
+        return actionButtons;
     }
 
     public ActionMenuBuilder addButtons(ActionButton... buttons) {
@@ -34,12 +40,38 @@ public class ActionMenuBuilder implements InteractionMenuBuilder<ActionMenu> {
         return this;
     }
 
-    public ActionMenuBuilder addButton(Button button, Consumer<ButtonClickEvent> onClick) {
+    public ActionMenuBuilder insertButton(int index, ActionButton button) {
+        actionButtons.add(index, button);
+        return this;
+    }
+
+    public ActionMenuBuilder addButton(Button button, ButtonClickContainer onClick) {
         return addButton(new ActionButton(button, onClick));
+    }
+
+    public <T> ActionMenuBuilder addButton(Button button, CommandBiConsumer<ButtonClickEvent, Object> onClick, T value) {
+        return addButton(button, new ButtonClickContainer(onClick, event -> value));
+    }
+
+    public ActionMenuBuilder addButton(Button button, CommandConsumer<ButtonClickEvent> onClick) {
+        return addButton(button, new ButtonClickContainer(onClick));
+    }
+
+    public ActionMenuBuilder insertButton(int index, Button button, ButtonClickContainer onClick) {
+        return insertButton(index, new ActionButton(button, onClick));
+    }
+
+    public <T> ActionMenuBuilder insertButton(int index, Button button, CommandBiConsumer<ButtonClickEvent, Object> onClick, T value) {
+        return insertButton(index, button, new ButtonClickContainer(onClick, event -> value));
+    }
+
+    public ActionMenuBuilder insertButton(int index, Button button, CommandConsumer<ButtonClickEvent> onClick) {
+        return insertButton(index, button, new ButtonClickContainer(onClick));
     }
 
     @Override
     public ActionMenu build() {
         return new ActionMenu(actionButtons, embed);
     }
+
 }

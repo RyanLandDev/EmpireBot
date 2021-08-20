@@ -120,6 +120,7 @@ public class DocumentCache {
 
     public static <T extends BaseDocument & SnowflakeDocument> void delete(String id, Class<T> type) {
         getCollection(type).deleteOne(Filters.eq("id", id));
+        removeFromCache(id, type);
     }
 
     @SuppressWarnings("unchecked")
@@ -141,6 +142,11 @@ public class DocumentCache {
 
     public static <T extends BaseDocument> void cache(Document document, Class<T> type) {
         castDocument(document, type).cache();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends BaseDocument & SnowflakeDocument> void removeFromCache(String id, Class<T> type) {
+        ((WeakHashMap<String, T>) getCache(type)).remove(id);
     }
 
     /**

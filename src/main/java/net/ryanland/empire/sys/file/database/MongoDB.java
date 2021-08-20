@@ -9,7 +9,7 @@ public class MongoDB {
     public static MongoClient MONGO_CLIENT;
     public static MongoDatabase DATABASE;
 
-    public static void initialize() {
+    static {
         DATABASE_SECRET = Empire.getConfig().getDatabaseURI();
         MONGO_CLIENT = MongoClients.create(DATABASE_SECRET);
         DATABASE = MONGO_CLIENT.getDatabase("EmpireBot");

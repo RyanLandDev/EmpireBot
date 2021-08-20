@@ -1,16 +1,21 @@
 package net.ryanland.empire.sys.gameplay.building.impl.resource;
 
+import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.interactions.components.Button;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
-import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
@@ -51,6 +56,57 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                         getUnitPerMin(), getUnitPerMin(stage + 1),
                         "The resources this building makes per minute."))
         );
+    }
+
+    @Override
+    public ActionMenuBuilder getActionMenuBuilder() throws CommandException {
+        return super.getActionMenuBuilder()
+                .insertButton(2,
+                        Button.secondary("collect", "Collect" +
+                                        (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
+                                .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
+                                .withDisabled(!canCollect()),
+                        event -> {} //TODO make it work
+                );
+    }
+
+    public enum CollectState {
+
+        BROKEN("Broken", Building::isUsable),
+        EMPTY("Empty", building -> ((ResourceGeneratorBuilding) building).getHolding().amount() > 0),
+        AVAILABLE("Available", building -> false),
+
+        UNKNOWN("Unknown", building -> false)
+        ;
+
+        private final String name;
+        private final Predicate<Building> check;
+
+        CollectState(String name, Predicate<Building> check) {
+            this.name = name;
+            this.check = check;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Predicate<Building> getCheck() {
+            return check;
+        }
+    }
+
+    public CollectState getCollectState() {
+        for (CollectState state : CollectState.values()) {
+            if (!state.getCheck().test(this)) {
+                return state;
+            }
+        }
+        return CollectState.UNKNOWN;
+    }
+
+    public boolean canCollect() {
+        return getCollectState() == CollectState.AVAILABLE;
     }
 
     @Override

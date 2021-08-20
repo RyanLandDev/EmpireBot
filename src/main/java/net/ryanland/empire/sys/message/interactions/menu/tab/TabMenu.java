@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.message.interactions.ButtonClickContainer;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
@@ -58,11 +59,12 @@ public class TabMenu implements InteractionMenu {
                 .addActionRows(InteractionUtil.of(buttons)).complete();
 
         // Add a listener for when a button is clicked
-        ButtonHandler.addListener(hook, commandEvent.getUser().getIdLong(), event -> {
-            event.deferEdit().queue();
-            hook.editOriginalEmbeds(pageMap.get(event.getComponentId()).getEmbed().build())
-                    .queue();
-        });
+        ButtonHandler.addListener(hook,
+                buttonEvent -> new ButtonHandler.ButtonListener(
+                        commandEvent.getUser().getIdLong(),
+                        clickEvent -> new ButtonClickContainer(
+                                event -> hook.editOriginalEmbeds(pageMap.get(event.getComponentId())
+                                        .getEmbed().build()).queue())));
     }
 
 }

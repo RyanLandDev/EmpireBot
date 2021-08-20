@@ -27,7 +27,6 @@ public class TutorialCommand extends Command {
         return new ArgumentSet().addArguments(
                 new EnumArgument<Tutorial>().setEnum(Tutorial.class)
                         .id("tutorial")
-                        .name("tutorial")
                         .description("The name of the tutorial.")
                         .optional()
         );

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
 public class LocalFile extends File {
+
     public LocalFile(@NotNull String pathname) {
         super(pathname);
     }
