@@ -48,6 +48,11 @@ public class MoveCommand extends Command {
         Building building = event.getArgument("building");
         Integer newLayer = (Integer) event.getArgument("layer") - 1;
 
+        // Check if the building is at max health
+        if (!building.isHealthMaxed()) {
+            throw new CommandException("Buildings can only be moved at max health. Repair your building using `/building`.");
+        }
+
         // Check if the position is valid
         if (newLayer < 0 || newLayer > profile.getBuildings().size()) {
             throw new CommandException(String.format("`%s` is an invalid position.", newLayer + 1));

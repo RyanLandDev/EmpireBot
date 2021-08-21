@@ -228,8 +228,10 @@ public abstract class Building
 
                 }, this
         ).addButton(
-                Button.secondary("sell", "Sell")
-                        .withEmoji(Emoji.fromMarkdown(SELL)),
+                Button.secondary("sell", "Sell" + (canSell() ? "" : " (Broken)"))
+                        //TODO make SellState enum implementing BuildingActionState for this
+                        .withEmoji(Emoji.fromMarkdown(SELL))
+                        .withDisabled(!canSell()),
 
                 (event, aBuilding) -> {
                     Building building = (Building) aBuilding;
@@ -332,7 +334,7 @@ public abstract class Building
     }
 
     public boolean canSell() {
-        return exists();
+        return isHealthMaxed() && getOccurrences() - 1 > getMinimumAllowed() && exists();
     }
 
     public boolean canRepair() {
@@ -356,11 +358,28 @@ public abstract class Building
     }
 
     /**
+     * Returns the amount of buildings of this type the profile has.
+     * If {@link Building#exists} is true this will always be at least {@code 1}.
+     */
+    public int getOccurrences() {
+        return (int) profile.getBuildings().stream()
+                .filter(building -> building.getType() == getType())
+                .count();
+    }
+
+    /**
      * Gets the formatted name of this building.
      * @return A string in the form of "[emoji] **[name]**".
      */
     public String getFormattedName() {
         return String.format("%s **%s**", getEmoji(), getName());
+    }
+
+    /**
+     * Returns the amount of buildings of this type every player must have.
+     */
+    public int getMinimumAllowed() {
+        return 0;
     }
 
     public abstract int getId();

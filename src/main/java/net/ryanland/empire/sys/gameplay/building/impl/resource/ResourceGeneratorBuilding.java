@@ -3,6 +3,7 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource;
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
@@ -83,7 +84,12 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                 );
     }
 
-    public enum CollectState {
+    @Override
+    public int getMinimumAllowed() {
+        return 1;
+    }
+
+    public enum CollectState implements BuildingActionState {
 
         BROKEN("Broken", Building::isUsable),
         EMPTY("Empty", building -> ((ResourceGeneratorBuilding) building).getHolding().amount() > 0),
@@ -100,10 +106,12 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
             this.check = check;
         }
 
+        @Override
         public String getName() {
             return name;
         }
 
+        @Override
         public Predicate<Building> getCheck() {
             return check;
         }
@@ -115,6 +123,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                 return state;
             }
         }
+
         return CollectState.UNKNOWN;
     }
 
