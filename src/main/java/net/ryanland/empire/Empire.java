@@ -77,7 +77,6 @@ public class Empire {
                 new DisableCommand(),
                 new EnableCommand(),
                 new StopCommand(),
-                new CreditsCommand(),
                 new GuildInfoCommand(),
                 new TutorialCommand(),
                 new BalanceCommand(),
