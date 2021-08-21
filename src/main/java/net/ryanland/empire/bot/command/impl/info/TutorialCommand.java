@@ -28,7 +28,6 @@ public class TutorialCommand extends Command {
                 new EnumArgument<>(Tutorial.class)
                         .id("tutorial")
                         .description("The name of the tutorial.")
-                        .optional()
         );
     }
 
@@ -36,22 +35,7 @@ public class TutorialCommand extends Command {
     public void run(CommandEvent event) {
         Tutorial tutorial = event.getArgument("tutorial");
 
-        if (tutorial == null) {
-            event.reply(new PresetBuilder(
-                    "Tutorials give you a brief overview of some of the mechanics of the bot.\n",
-                    "Tutorials")
-                    .addField("Tutorials",
-                            "`" +
-                                    Arrays.stream(Tutorial.values())
-                                            .map(Tutorial::getTitle)
-                                            .collect(Collectors.joining("` `")) + "`",
-                            true));
-        } else {
-            supplyTutorialHelp(event, tutorial);
-        }
-    }
-
-    private void supplyTutorialHelp(CommandEvent event, Tutorial tutorial) {
         event.reply(TutorialMaker.tutorialEmbed(event, tutorial));
     }
+
 }

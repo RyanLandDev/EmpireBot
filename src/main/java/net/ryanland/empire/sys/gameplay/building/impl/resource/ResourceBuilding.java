@@ -43,7 +43,7 @@ public abstract class ResourceBuilding extends Building {
                 .insertSegment(1, new BuildingInfoSegmentBuilder()
                         .addElement(BuildingInfoElement.capacitable("Holding", "👜",
                                 getHolding().currency(), getHolding(), getCapacity(),
-                                "Collect holding resources."))
+                                "Collect holding resources.", true))
                         .addElement(BuildingInfoElement.upgradable("Capacity", ":bucket:",
                                 getEffectiveCurrency(), getCapacity(), getCapacity(stage + 1),
                                 "The maximum amount of resources this building can hold."))

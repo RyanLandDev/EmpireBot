@@ -149,7 +149,8 @@ public abstract class Building
                             getHealth(), getMaxHealth(),
                             isHealthMaxed() ? "The building's health may go down when under attack." : String.format(
                                             "Repair this building for %s or %s.",
-                                            getRepairPrice().format(true), getCrystalRepairPrice().format(true))))
+                                            getRepairPrice().format(true), getCrystalRepairPrice().format(true)),
+                                    false))
                 )
                 .addSegment(new BuildingInfoSegmentBuilder()
                     .addElement("Sell Price", "💵", getSellPrice(),

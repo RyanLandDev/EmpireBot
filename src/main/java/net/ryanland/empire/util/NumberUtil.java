@@ -35,6 +35,10 @@ public class NumberUtil {
                 + "]";
     }
 
+    public static Integer of(String formattedNumber) {
+        return Integer.parseInt(formattedNumber.replaceAll(",", ""));
+    }
+
     public static int clamp(int value, int max) {
         return clamp(value, 0, max);
     }

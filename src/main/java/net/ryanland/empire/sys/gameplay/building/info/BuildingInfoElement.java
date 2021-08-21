@@ -51,43 +51,38 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
         return upgradable(title, emoji, currentPrice.amount(), nextPrice.amount(), description);
     }
 
-    @Contract("_, _, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
                                                            String valueEmoji, Number currentValue, Number maxValue,
-                                                           String description) {
+                                                           String description, boolean includeFull) {
         return new BuildingInfoElement(
                 title, emoji,
-                new InfoValue(InfoValue.Type.CAPACITABLE, valueEmoji, currentValue, maxValue).buildCapacitable(),
+                new InfoValue(InfoValue.Type.CAPACITABLE, valueEmoji, currentValue, maxValue).buildCapacitable(includeFull),
                 description
         );
     }
 
-    @Contract("_, _, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
                                                            String valueEmoji, @NotNull Price<?> currentPrice, @NotNull Price<?> maxPrice,
-                                                           String description) {
-        return capacitable(title, emoji, valueEmoji, currentPrice.amount(), maxPrice.amount(), description);
+                                                           String description, boolean includeFull) {
+        return capacitable(title, emoji, valueEmoji, currentPrice.amount(), maxPrice.amount(), description, includeFull);
     }
 
-    @Contract("_, _, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
                                                            @NotNull Currency currency, Price<?> currentPrice, Price<?> maxPrice,
-                                                           String description) {
-        return capacitable(title, emoji, currency.getEmoji(), currentPrice, maxPrice, description);
+                                                           String description, boolean includeFull) {
+        return capacitable(title, emoji, currency.getEmoji(), currentPrice, maxPrice, description, includeFull);
     }
 
-    @Contract("_, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
                                                            Number currentValue, Number maxValue,
-                                                           String description) {
-        return capacitable(title, emoji, "", currentValue, maxValue, description);
+                                                           String description, boolean includeFull) {
+        return capacitable(title, emoji, "", currentValue, maxValue, description, includeFull);
     }
 
-    @Contract("_, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement capacitable(String title, String emoji,
                                                            @NotNull Price<?> currentPrice, @NotNull Price<?> maxPrice,
-                                                           String description) {
-        return capacitable(title, emoji, currentPrice.amount(), maxPrice.amount(), description);
+                                                           String description, boolean includeFull) {
+        return capacitable(title, emoji, currentPrice.amount(), maxPrice.amount(), description, includeFull);
     }
 
 

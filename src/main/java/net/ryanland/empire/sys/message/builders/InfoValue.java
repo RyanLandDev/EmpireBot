@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.message.builders;
 
 import net.ryanland.empire.sys.message.Emojis;
+import net.ryanland.empire.util.NumberUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,18 +41,20 @@ public record InfoValue(Type type, @NotNull String emoji, String currentValue, @
         );
     }
 
-    public String buildCapacitable() {
-        return String.format("%s%s%s / %s",
+    public String buildCapacitable(boolean includeFull) {
+        return String.format("%s%s%s / %s%s",
                 title.isEmpty() ? "" : "**" + title + ":** ",
                 emoji.isEmpty() ? "" : emoji + " ",
-                currentValue, nextValue);
+                currentValue, nextValue,
+                includeFull && NumberUtil.of(currentValue) >= NumberUtil.of(nextValue) ? " **FULL**" : ""
+                );
     }
 
     public enum Type {
 
         REGULAR(InfoValue::buildRegular),
         UPGRADABLE(InfoValue::buildUpgradable),
-        CAPACITABLE(InfoValue::buildCapacitable)
+        CAPACITABLE(v -> v.buildCapacitable(false))
         ;
 
         private final Function<InfoValue, String> builder;

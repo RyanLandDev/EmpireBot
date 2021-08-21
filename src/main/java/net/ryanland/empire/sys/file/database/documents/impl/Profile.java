@@ -109,6 +109,15 @@ public class Profile implements SnowflakeDocument, Emojis {
         return price.currency().get(this).amount() >= price.amount();
     }
 
+    /**
+     * Checks if the profile has enough capacity to receive this {@link Price}
+     * @param price The price to check.
+     * @return True or false, depending on the check.
+     */
+    public boolean roomFor(Price<Integer> price) {
+        return false; //TODO
+    }
+
     public Integer getWave() {
         return document.getWave();
     }
