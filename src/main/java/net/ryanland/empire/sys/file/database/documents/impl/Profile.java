@@ -8,6 +8,7 @@ import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceStorageBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
@@ -115,7 +116,7 @@ public class Profile implements SnowflakeDocument, Emojis {
      * @return True or false, depending on the check.
      */
     public boolean roomFor(Price<Integer> price) {
-        return false; //TODO
+        return getCapacity(price.currency()).amount() >= price.currency().get(this).amount() + price.amount();
     }
 
     public Integer getWave() {
@@ -177,20 +178,13 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public Price<Integer> getCapacity(Currency currency) {
-        List<ResourceBuilding> buildings = getBuildings().stream()
+        return new Price<>(currency, getBuildings().stream()
                 .filter(building -> building.isUsable() &&
                         building.getType() == BuildingType.RESOURCE_STORAGE &&
                         ((ResourceBuilding) building).getEffectiveCurrency() == currency)
-                .map(building -> (ResourceBuilding) building)
-                .collect(Collectors.toList());
-
-        int capacity = currency.getDefaultCapacity();
-
-        for (ResourceBuilding building : buildings) {
-            capacity += building.getCapacity().amount();
-        }
-
-        return new Price<>(currency, capacity);
+                .map(building -> ((ResourceBuilding) building).getCapacity().amount())
+                .reduce(0, Integer::sum)
+                + currency.getDefaultCapacity());
     }
 
     public int getCapacityInt(Currency currency) {

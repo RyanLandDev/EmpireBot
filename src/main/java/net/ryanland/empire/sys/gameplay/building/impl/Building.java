@@ -339,7 +339,7 @@ public abstract class Building
     public enum SellState implements BuildingActionState {
 
         NOT_MAXED("Broken", Building::isHealthMaxed),
-        MINIMUM_OCCURRENCES("Minimum Reached", building -> building.getOccurrences() - 1 > building.getMinimumAllowed()),
+        MINIMUM_OCCURRENCES("Minimum Reached", building -> building.getOccurrences() - 1 >= building.getMinimumAllowed()),
         NOT_EXISTING("Not Existing", Building::exists),
 
         AVAILABLE("Available", building -> false)
