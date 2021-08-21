@@ -1,6 +1,8 @@
 package net.ryanland.empire.bot.command.arguments.types.impl.Enum;
 
+import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.arguments.types.SingleArgument;
@@ -15,6 +17,14 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
 
     public EnumArgument(Class<E> anEnum) {
         associatedEnum = EnumSet.allOf(anEnum);
+    }
+
+    @Override
+    public Command.Choice[] getChoices() {
+        return associatedEnum.stream()
+                .filter(e -> !e.isHidden())
+                .map(e -> new Command.Choice(e.getTitle(), e.getTitle()))
+                .toArray(Command.Choice[]::new);
     }
 
     @Override

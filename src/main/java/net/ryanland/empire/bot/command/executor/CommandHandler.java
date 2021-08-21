@@ -3,6 +3,7 @@ package net.ryanland.empire.bot.command.executor;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 import net.ryanland.empire.Empire;
@@ -50,15 +51,16 @@ public class CommandHandler {
             if (cmdInfo.getSubCommands() == null && cmdInfo.getSubCommandGroups() == null) {
 
                 for (Argument<?> arg : command.getArguments()) {
-                    slashCmdData.addOption(arg.getType(), arg.getName(), arg.getDescription(), !arg.isOptional());
+                    slashCmdData.addOptions(arg.getOptionData());
                 }
+
             } else if (cmdInfo.getSubCommandGroups() == null) {
 
                 for (SubCommand subCmd : cmdInfo.getSubCommands()) {
                     SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());
 
                     for (Argument<?> arg : subCmd.getArguments()) {
-                        subCmdData.addOption(arg.getType(), arg.getName(), arg.getDescription(), !arg.isOptional());
+                        subCmdData.addOptions(arg.getOptionData());
                     }
                     slashCmdData.addSubcommands(subCmdData);
                 }
@@ -70,7 +72,7 @@ public class CommandHandler {
                         SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());
 
                         for (Argument<?> arg : subCmd.getArguments()) {
-                            subCmdData.addOption(arg.getType(), arg.getName(), arg.getDescription(), !arg.isOptional());
+                            subCmdData.addOptions(arg.getOptionData());
                         }
                         subCmdGroupData.addSubcommands(subCmdData);
                     }

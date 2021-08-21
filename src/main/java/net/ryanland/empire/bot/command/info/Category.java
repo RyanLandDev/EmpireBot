@@ -6,7 +6,7 @@ public enum Category {
     DEVELOPER("Developer", "Utility commands for bot developers only.", "💻"),
 
     PROFILE("Profile","Commands that concern the user profile.","🏰"),
-    BUILDING("Building", "Commands affecting your Empire buildings.", "🏠")
+    ITEMS("Items", "Commands regarding items in your empire.", "🏠")
     ;
 
     private final String name;

@@ -4,20 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0165dffa-fc06-4115-a22e-1b49ff6e8858" name="Default Changelist" comment="MoveCommand + made /empire created use the discord timestamp thingy">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/EmpireBot.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries-with-intellij-classes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/BuildingActionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/BuildingActionState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/Building.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/ResourceGeneratorBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/ResourceGeneratorBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/generator/GoldMineBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/generator/GoldMineBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/storage/BankBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/storage/BankBuilding.java" afterDir="false" />
+    <list default="true" id="0165dffa-fc06-4115-a22e-1b49ff6e8858" name="Default Changelist" comment="wowy">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/types/impl/Enum/StoreCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/items/StoreCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/Empire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/Empire.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/Argument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/Argument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/types/impl/Enum/EnumArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/types/impl/Enum/EnumArgument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/executor/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/executor/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/building/BuildingCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/items/BuildingCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/building/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/items/MoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/info/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/info/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/message/interactions/ButtonClickContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/message/interactions/ButtonClickContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/message/interactions/menu/tab/TabMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/message/interactions/menu/tab/TabMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,8 +46,8 @@
         <option value="AnnotationType" />
         <option value="Record" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -139,14 +138,7 @@
       <workItem from="1629507654702" duration="140000" />
       <workItem from="1629507808730" duration="114000" />
       <workItem from="1629507936646" duration="96000" />
-      <workItem from="1629508045555" duration="532000" />
-    </task>
-    <task id="LOCAL-00045" summary="Renamed help dir, lots of work on Building, added buildings to UserDocument, added Serializer, SubCommandHolder has been reformed, transformed some interfaces to abstract classes where necessary">
-      <created>1629031524381</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1629031524381</updated>
+      <workItem from="1629508045555" duration="3345000" />
     </task>
     <task id="LOCAL-00046" summary="Move things">
       <created>1629032499085</created>
@@ -484,7 +476,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629504305044</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="wowy">
+      <created>1629508867056</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1629508867056</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -504,7 +503,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fix eval" />
     <MESSAGE value="Remove Aliases" />
     <MESSAGE value="thin" />
     <MESSAGE value="start work on /building + made ArgumentParser use an ArrayDeque" />
@@ -529,7 +527,8 @@
     <MESSAGE value="MoveCommand + made /empire created use the discord timestamp thingy" />
     <MESSAGE value="wowee switch to intellij ultimaet" />
     <MESSAGE value="ewiw" />
-    <option name="LAST_COMMIT_MESSAGE" value="ewiw" />
+    <MESSAGE value="wowy" />
+    <option name="LAST_COMMIT_MESSAGE" value="wowy" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/EmpireBot$Run.ic" NAME="Run Coverage Results" MODIFIED="1629233782827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

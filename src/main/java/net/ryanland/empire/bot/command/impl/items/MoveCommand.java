@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.building;
+package net.ryanland.empire.bot.command.impl.items;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.BuildingArgument;
@@ -12,7 +12,6 @@ import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
-import net.ryanland.empire.util.StringUtil;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class MoveCommand extends Command {
         return new CommandInfo()
                 .name("move")
                 .description("Moves a building.")
-                .category(Category.BUILDING)
+                .category(Category.ITEMS)
                 .requiresProfile();
     }
 

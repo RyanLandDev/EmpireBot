@@ -1,10 +1,14 @@
 package net.ryanland.empire.bot.command.arguments;
 
+import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.events.CommandEvent;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 import java.util.function.Function;
 
@@ -15,6 +19,7 @@ public abstract class Argument<T> {
     private String description;
     private boolean optional = false;
     private Function<CommandEvent, T> optionalFunction = event -> null;
+
     protected OptionType type = OptionType.STRING;
 
     public String getName() {
@@ -65,6 +70,22 @@ public abstract class Argument<T> {
 
     public OptionType getType() {
         return type;
+    }
+
+    /**
+     * Override this method to add argument options
+     */
+    public Command.Choice[] getChoices() {
+        return new Command.Choice[0];
+    }
+
+    public OptionData getOptionData() {
+        OptionData data = new OptionData(getType(), getName(), getDescription(), !isOptional());
+
+        if (getChoices().length > 0) {
+            data.addChoices(getChoices());
+        }
+        return data;
     }
 
     public abstract T parse(Queue<OptionMapping> arguments, CommandEvent event) throws ArgumentException;

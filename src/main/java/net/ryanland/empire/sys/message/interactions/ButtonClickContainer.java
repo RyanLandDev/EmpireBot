@@ -10,7 +10,7 @@ public record ButtonClickContainer(
         CommandBiConsumer<ButtonClickEvent, Object> onClick, Function<ButtonClickEvent, Object> value) {
 
     public ButtonClickContainer(Consumer<ButtonClickEvent> onClick) {
-        this((event, obj) -> onClick.accept(event), null);
+        this((event, obj) -> onClick.accept(event), event -> null);
     }
 
     @SuppressWarnings("unchecked")

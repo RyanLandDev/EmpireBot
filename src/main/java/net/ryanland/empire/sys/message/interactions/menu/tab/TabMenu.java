@@ -63,8 +63,11 @@ public class TabMenu implements InteractionMenu {
                 buttonEvent -> new ButtonHandler.ButtonListener(
                         commandEvent.getUser().getIdLong(),
                         clickEvent -> new ButtonClickContainer(
-                                event -> hook.editOriginalEmbeds(pageMap.get(event.getComponentId())
-                                        .getEmbed().build()).queue())));
+                                event -> {
+                                    event.deferEdit().queue();
+                                    hook.editOriginalEmbeds(pageMap.get(event.getComponentId())
+                                            .getEmbed().build()).queue();
+                                })));
     }
 
 }

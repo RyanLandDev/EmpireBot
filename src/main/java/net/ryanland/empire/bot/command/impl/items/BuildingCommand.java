@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.building;
+package net.ryanland.empire.bot.command.impl.items;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.BuildingArgument;
@@ -16,7 +16,7 @@ public class BuildingCommand extends Command {
         return new CommandInfo()
                 .name("building")
                 .description("Gets information about a specific building in your Empire.")
-                .category(Category.BUILDING)
+                .category(Category.ITEMS)
                 .requiresProfile();
     }
 
