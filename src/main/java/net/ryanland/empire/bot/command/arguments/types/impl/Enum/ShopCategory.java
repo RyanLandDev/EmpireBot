@@ -2,19 +2,22 @@ package net.ryanland.empire.bot.command.arguments.types.impl.Enum;
 
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
+import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.tab.TabMenuBuilder;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public enum ShopCategory implements EnumArgument.InputEnum {
+public enum ShopCategory implements EnumArgument.InputEnum, Emojis {
 
     BUILDINGS("buildings", "🏘"){
         @Override
         public TabMenuBuilder getTabMenuBuilder(CommandEvent event) {
             TabMenuBuilder builder = new TabMenuBuilder()
-                    .addPage("lol", new PresetBuilder("xd"), "😂", true);//TODO make good
+                    .addPage(SHOP + " Shop",
+                            new PresetBuilder("Use the buttons below to navigate through the shop.\n\u200b"),
+                            true); //TODO insertPage method and make this the default for all
 
             for (BuildingType type :
                     Arrays.stream(BuildingType.values())
