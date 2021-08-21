@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0165dffa-fc06-4115-a22e-1b49ff6e8858" name="Default Changelist" comment="wowy">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/types/impl/Enum/StoreCategory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/items/StoreCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/Empire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/Empire.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/Argument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/Argument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/types/impl/Enum/EnumArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/arguments/types/impl/Enum/EnumArgument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/executor/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/executor/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/building/BuildingCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/items/BuildingCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/building/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/impl/items/MoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/info/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/bot/command/info/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/message/interactions/ButtonClickContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/message/interactions/ButtonClickContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/message/interactions/menu/tab/TabMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/message/interactions/menu/tab/TabMenu.java" afterDir="false" />
-    </list>
+    <list default="true" id="0165dffa-fc06-4115-a22e-1b49ff6e8858" name="Default Changelist" comment="command choices and button fixes and start store command and rename category" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -138,14 +125,7 @@
       <workItem from="1629507654702" duration="140000" />
       <workItem from="1629507808730" duration="114000" />
       <workItem from="1629507936646" duration="96000" />
-      <workItem from="1629508045555" duration="3345000" />
-    </task>
-    <task id="LOCAL-00046" summary="Move things">
-      <created>1629032499085</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1629032499085</updated>
+      <workItem from="1629508045555" duration="3663000" />
     </task>
     <task id="LOCAL-00047" summary="erobus :(">
       <created>1629032999551</created>
@@ -483,7 +463,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629508867056</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="command choices and button fixes and start store command and rename category">
+      <created>1629511734823</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1629511734823</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -503,8 +490,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Remove Aliases" />
-    <MESSAGE value="thin" />
     <MESSAGE value="start work on /building + made ArgumentParser use an ArrayDeque" />
     <MESSAGE value="make Building implement Serializer + Balance command work + remove troll tutorials + start BuildingInfo" />
     <MESSAGE value="BuildingInfo finished + BuildingCommand work + fix ProfileArgument + RequiresProfileCheck" />
@@ -528,7 +513,9 @@
     <MESSAGE value="wowee switch to intellij ultimaet" />
     <MESSAGE value="ewiw" />
     <MESSAGE value="wowy" />
-    <option name="LAST_COMMIT_MESSAGE" value="wowy" />
+    <MESSAGE value="command choices and button fixes and start store command" />
+    <MESSAGE value="command choices and button fixes and start store command and rename category" />
+    <option name="LAST_COMMIT_MESSAGE" value="command choices and button fixes and start store command and rename category" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/EmpireBot$Run.ic" NAME="Run Coverage Results" MODIFIED="1629233782827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
