@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
@@ -93,9 +92,9 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
         BROKEN("Broken", Building::isUsable),
         EMPTY("Empty", building -> ((ResourceGeneratorBuilding) building).getHolding().amount() > 0),
-        AVAILABLE("Available", building -> false),
+        NOT_EXISTING("Not Existing", Building::exists),
 
-        UNKNOWN("Unknown", building -> false)
+        AVAILABLE("Available", building -> false)
         ;
 
         private final String name;
@@ -118,13 +117,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     public CollectState getCollectState() {
-        for (CollectState state : CollectState.values()) {
-            if (!state.getCheck().test(this)) {
-                return state;
-            }
-        }
-
-        return CollectState.UNKNOWN;
+        return BuildingActionState.get(this, CollectState.class);
     }
 
     public boolean canCollect() {

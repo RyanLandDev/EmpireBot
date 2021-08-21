@@ -6,9 +6,11 @@ import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.Serializer;
+import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfo;
@@ -30,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class Building
@@ -228,8 +231,7 @@ public abstract class Building
 
                 }, this
         ).addButton(
-                Button.secondary("sell", "Sell" + (canSell() ? "" : " (Broken)"))
-                        //TODO make SellState enum implementing BuildingActionState for this
+                Button.secondary("sell", "Sell" + (canSell() ? "" : String.format(" (%s)", getSellState().getName())))
                         .withEmoji(Emoji.fromMarkdown(SELL))
                         .withDisabled(!canSell()),
 
@@ -333,8 +335,40 @@ public abstract class Building
                 (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
     }
 
+    public enum SellState implements BuildingActionState {
+
+        NOT_MAXED("Broken", Building::isHealthMaxed),
+        MINIMUM_OCCURRENCES("Minimum Reached", building -> building.getOccurrences() - 1 > building.getMinimumAllowed()),
+        NOT_EXISTING("Not Existing", Building::exists),
+
+        AVAILABLE("Available", building -> false)
+        ;
+
+        private final String name;
+        private final Predicate<Building> check;
+
+        SellState(String name, Predicate<Building> check) {
+            this.name = name;
+            this.check = check;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public Predicate<Building> getCheck() {
+            return check;
+        }
+    }
+
+    public SellState getSellState() {
+        return BuildingActionState.get(this, SellState.class);
+    }
+
     public boolean canSell() {
-        return isHealthMaxed() && getOccurrences() - 1 > getMinimumAllowed() && exists();
+        return getSellState() == SellState.AVAILABLE;
     }
 
     public boolean canRepair() {
