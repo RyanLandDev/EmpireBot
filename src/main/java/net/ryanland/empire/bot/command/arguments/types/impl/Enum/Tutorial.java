@@ -25,8 +25,14 @@ public enum Tutorial implements EnumArgument.InputEnum {
         this.thumbnail = thumbnail;
     }
 
+    @Override
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public boolean isHidden() {
+        return false;
     }
 
     public String getEmbedTitle() {

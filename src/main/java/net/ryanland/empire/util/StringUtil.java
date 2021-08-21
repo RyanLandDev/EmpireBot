@@ -1,6 +1,7 @@
 package net.ryanland.empire.util;
 
 import net.ryanland.empire.sys.message.Emojis;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
@@ -20,8 +21,18 @@ public class StringUtil implements Emojis {
         return STANDARD_DATE_FORMAT.format(date);
     }
 
-    public static String genTrimProofSpaces(int amount) {
+    @Contract(pure = true)
+    public static @NotNull String genTrimProofSpaces(int amount) {
         return (" \u200b").repeat(amount);
+    }
+
+    public static String getDiscordTimestamp(Date date) {
+        return getDiscordTimestamp(date.getTime() / 1000);
+    }
+
+    @Contract(pure = true)
+    public static @NotNull String getDiscordTimestamp(Long time) {
+        return "<t:" + time + ">";
     }
 
     @NotNull

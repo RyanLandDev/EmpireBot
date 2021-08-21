@@ -6,9 +6,11 @@ import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.Serializer;
+import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfo;
@@ -21,13 +23,16 @@ import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
+import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
+import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenu;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class Building
@@ -172,11 +177,13 @@ public abstract class Building
 
                     (event, aBuilding) -> {
                         Building building = (Building) aBuilding;
+                        Price<Integer> repairPrice = building.getRepairPrice();
+
                         building.repair();
 
-                        refreshActionMenuButtons(event);
+                        refreshMenu(event);
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", building.getFormattedName(), building.getRepairPrice().format()
+                                "Repaired your %s for %s.", building.getFormattedName(), repairPrice.format()
                         )).build()).setEphemeral(true).queue();
 
                     }, this
@@ -188,11 +195,13 @@ public abstract class Building
 
                     (event, aBuilding) -> {
                         Building building = (Building) aBuilding;
+                        Price<Integer> crystalRepairPrice = building.getCrystalRepairPrice();
+
                         building.crystalRepair();
 
-                        refreshActionMenuButtons(event);
+                        refreshMenu(event);
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", building.getFormattedName(), building.getCrystalRepairPrice().format()
+                                "Repaired your %s for %s.", building.getFormattedName(), crystalRepairPrice.format()
                         )).build()).setEphemeral(true).queue();
 
                     }, this
@@ -215,21 +224,22 @@ public abstract class Building
                     Building building = (Building) aBuilding;
                     building.upgrade();
 
-                    refreshActionMenuButtons(event);
+                    refreshMenu(event);
                     event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
                             "Upgraded your %s for %s.", building.getFormattedName(), building.getUpgradePrice().format()
                     )).build()).setEphemeral(true).queue();
 
                 }, this
         ).addButton(
-                Button.secondary("sell", "Sell")
-                        .withEmoji(Emoji.fromMarkdown(SELL)),
+                Button.secondary("sell", "Sell" + (canSell() ? "" : String.format(" (%s)", getSellState().getName())))
+                        .withEmoji(Emoji.fromMarkdown(SELL))
+                        .withDisabled(!canSell()),
 
                 (event, aBuilding) -> {
                     Building building = (Building) aBuilding;
                     building.sell();
 
-                    refreshActionMenuButtons(event);
+                    refreshMenu(event);
                     event.deferReply(true).addEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
                             "Sold your %s for %s.", building.getFormattedName(), building.getSellPrice().format()
                     )).build()).queue();
@@ -240,18 +250,25 @@ public abstract class Building
         return builder;
     }
 
-    public void refreshActionMenuButtons(ButtonClickEvent event) throws CommandException {
-        if (exists()) {
-            event.getMessage().editMessageComponents(
-                    InteractionUtil.of(getActionMenuBuilder().getButtons().stream()
-                            .map(ActionButton::button)
-                            .collect(Collectors.toList())
-                    )).queue();
-        } else {
-            event.getMessage().editMessageComponents(
-                    Collections.emptyList()
-            ).queue();
+    public InteractionMenuBuilder<ActionMenu> getMenuBuilder() throws CommandException {
+        if (!exists()) {
+            return new ActionMenuBuilder()
+                    .setEmbed(new PresetBuilder("This building does not exist anymore."));
         }
+        return getActionMenuBuilder()
+                .setEmbed(getBuildingInfo().build()
+                        .setTitle(String.format("%s %s (%s)", getEmoji(), getName(), getType().getFullName()))
+                );
+    }
+
+    @SuppressWarnings("all")
+    public void refreshMenu(ButtonClickEvent event) throws CommandException {
+        event.getMessage().editMessageEmbeds(((ActionMenuBuilder) getMenuBuilder()).getEmbed().build()).setActionRows(
+                exists() ? InteractionUtil.of(getActionMenuBuilder().getButtons().stream()
+                        .map(ActionButton::button)
+                        .collect(Collectors.toList()))
+                        : Collections.emptyList()
+                ).queue();
     }
 
     public void repair() throws CommandException {
@@ -261,6 +278,8 @@ public abstract class Building
 
         getRepairPrice().buy(profile);
         health = getMaxHealth();
+        profile.setBuilding(this);
+        profile.getDocument().update();
     }
 
     public void crystalRepair() throws CommandException {
@@ -270,6 +289,7 @@ public abstract class Building
 
         getCrystalRepairPrice().buy(profile);
         health = getMaxHealth();
+        profile.setBuilding(this);
         profile.getDocument().update();
     }
 
@@ -280,6 +300,7 @@ public abstract class Building
 
         getUpgradePrice().buy(profile);
         stage += 1;
+        profile.setBuilding(this);
         profile.getDocument().update();
     }
 
@@ -289,13 +310,10 @@ public abstract class Building
         }
 
         getSellPrice().give(profile);
-
-        List<Building> newBuildings = profile.getBuildings();
-        newBuildings.remove(layer - 1);
-        profile.getDocument().setBuildings(newBuildings);
-
+        profile.removeBuilding(layer);
         profile.getDocument().update();
     }
+
 
     public Price<Integer> getSellPrice() {
         return new Price<>(getMainCurrency(),
@@ -317,8 +335,40 @@ public abstract class Building
                 (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
     }
 
+    public enum SellState implements BuildingActionState {
+
+        NOT_MAXED("Broken", Building::isHealthMaxed),
+        MINIMUM_OCCURRENCES("Minimum Reached", building -> building.getOccurrences() - 1 > building.getMinimumAllowed()),
+        NOT_EXISTING("Not Existing", Building::exists),
+
+        AVAILABLE("Available", building -> false)
+        ;
+
+        private final String name;
+        private final Predicate<Building> check;
+
+        SellState(String name, Predicate<Building> check) {
+            this.name = name;
+            this.check = check;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public Predicate<Building> getCheck() {
+            return check;
+        }
+    }
+
+    public SellState getSellState() {
+        return BuildingActionState.get(this, SellState.class);
+    }
+
     public boolean canSell() {
-        return exists();
+        return getSellState() == SellState.AVAILABLE;
     }
 
     public boolean canRepair() {
@@ -342,11 +392,28 @@ public abstract class Building
     }
 
     /**
+     * Returns the amount of buildings of this type the profile has.
+     * If {@link Building#exists} is true this will always be at least {@code 1}.
+     */
+    public int getOccurrences() {
+        return (int) profile.getBuildings().stream()
+                .filter(building -> building.getType() == getType())
+                .count();
+    }
+
+    /**
      * Gets the formatted name of this building.
      * @return A string in the form of "[emoji] **[name]**".
      */
     public String getFormattedName() {
         return String.format("%s **%s**", getEmoji(), getName());
+    }
+
+    /**
+     * Returns the amount of buildings of this type every player must have.
+     */
+    public int getMinimumAllowed() {
+        return 0;
     }
 
     public abstract int getId();

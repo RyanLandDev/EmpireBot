@@ -3,18 +3,20 @@ package net.ryanland.empire.sys.gameplay.building.impl.resource;
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
@@ -52,7 +54,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     public BuildingInfoBuilder getBuildingInfoBuilder() {
         return super.getBuildingInfoBuilder().replaceSegment(1, segment -> segment
                 .insertElement(0, BuildingInfoElement.upgradable(
-                        "Gold per minute", "🏭", getEffectiveCurrency().getEmoji(),
+                        getEffectiveCurrency().getName() + " per minute", "🏭", getEffectiveCurrency().getEmoji(),
                         getUnitPerMin(), getUnitPerMin(stage + 1),
                         "The resources this building makes per minute."))
         );
@@ -66,17 +68,33 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                                         (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
                                 .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
                                 .withDisabled(!canCollect()),
-                        event -> {} //TODO make it work
+                        (event, aBuilding) -> {
+                            ResourceGeneratorBuilding building = (ResourceGeneratorBuilding) aBuilding;
+                            Price<Integer> holding = building.getHolding();
+
+                            building.collect();
+
+                            refreshMenu(event);
+                            event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                                    "Collected %s from %s.", holding.format(), building.getFormattedName()
+                            )).build()).setEphemeral(true).queue();
+
+                        }, this
                 );
     }
 
-    public enum CollectState {
+    @Override
+    public int getMinimumAllowed() {
+        return 1;
+    }
+
+    public enum CollectState implements BuildingActionState {
 
         BROKEN("Broken", Building::isUsable),
         EMPTY("Empty", building -> ((ResourceGeneratorBuilding) building).getHolding().amount() > 0),
-        AVAILABLE("Available", building -> false),
+        NOT_EXISTING("Not Existing", Building::exists),
 
-        UNKNOWN("Unknown", building -> false)
+        AVAILABLE("Available", building -> false)
         ;
 
         private final String name;
@@ -87,26 +105,34 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
             this.check = check;
         }
 
+        @Override
         public String getName() {
             return name;
         }
 
+        @Override
         public Predicate<Building> getCheck() {
             return check;
         }
     }
 
     public CollectState getCollectState() {
-        for (CollectState state : CollectState.values()) {
-            if (!state.getCheck().test(this)) {
-                return state;
-            }
-        }
-        return CollectState.UNKNOWN;
+        return BuildingActionState.get(this, CollectState.class);
     }
 
     public boolean canCollect() {
         return getCollectState() == CollectState.AVAILABLE;
+    }
+
+    public void collect() throws CommandException {
+        if (!canCollect()) {
+            throw new CommandException("You cannot collect from this building.");
+        }
+
+        getHolding().give(profile);
+        lastCollect = new Date();
+        profile.setBuilding(this);
+        profile.getDocument().update();
     }
 
     @Override

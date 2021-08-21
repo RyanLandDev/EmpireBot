@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0165dffa-fc06-4115-a22e-1b49ff6e8858" name="Default Changelist" comment="MoveCommand + made /empire created use the discord timestamp thingy">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/EmpireBot.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries-with-intellij-classes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/BuildingActionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/BuildingActionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/ResourceGeneratorBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/ResourceGeneratorBuilding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/generator/GoldMineBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/generator/GoldMineBuilding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/storage/BankBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ryanland/empire/sys/gameplay/building/impl/resource/storage/BankBuilding.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="AnnotationType" />
+        <option value="Record" />
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1vUPHSuy8YhtsADNrUBSW6sUyBi" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/net/ryanland/empire" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Ryan\IdeaProjects\EmpireBot\src\main\java\net\ryanland\empire\bot\command\executor\finalizers" />
+      <recent name="C:\Users\Ryan\IdeaProjects\EmpireBot\src\main\java\net\ryanland\empire\sys\webhooks" />
+      <recent name="C:\Users\Ryan\IdeaProjects\EmpireBot" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="net.ryanland.empire.sys.gameplay.building" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.ryanland.empire.bot.command.arguments.types.impl.Enum" />
+      <recent name="net.ryanland.empire.sys.database.documents" />
+      <recent name="net.ryanland.empire.sys.database" />
+      <recent name="net.ryanland.empire.bot.command.arguments.types.impl" />
+      <recent name="net.ryanland.empire.bot.events" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Run" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="16" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="net.ryanland.empire.Empire" />
+      <module name="EmpireBot.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0165dffa-fc06-4115-a22e-1b49ff6e8858" name="Default Changelist" comment="" />
+      <created>1626613605844</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1626613605844</updated>
+      <workItem from="1629503226442" duration="29000" />
+      <workItem from="1629503264539" duration="587000" />
+      <workItem from="1629503886469" duration="63000" />
+      <workItem from="1629507654702" duration="140000" />
+      <workItem from="1629507808730" duration="114000" />
+      <workItem from="1629507936646" duration="96000" />
+      <workItem from="1629508045555" duration="532000" />
+    </task>
+    <task id="LOCAL-00045" summary="Renamed help dir, lots of work on Building, added buildings to UserDocument, added Serializer, SubCommandHolder has been reformed, transformed some interfaces to abstract classes where necessary">
+      <created>1629031524381</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1629031524381</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Move things">
+      <created>1629032499085</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1629032499085</updated>
+    </task>
+    <task id="LOCAL-00047" summary="erobus :(">
+      <created>1629032999551</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1629032999551</updated>
+    </task>
+    <task id="LOCAL-00048" summary="fix StartCommand">
+      <created>1629033938478</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1629033938478</updated>
+    </task>
+    <task id="LOCAL-00049" summary="not null &lt;3">
+      <created>1629033966524</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1629033966524</updated>
+    </task>
+    <task id="LOCAL-00050" summary="CommandEvent reply refactors - Converted tutorial thing to use stream">
+      <created>1629068183006</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1629068183007</updated>
+    </task>
+    <task id="LOCAL-00051" summary="lastCollect and Building serializers refactors , BuildingCommand beginnings">
+      <created>1629071746214</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1629071746214</updated>
+    </task>
+    <task id="LOCAL-00052" summary="default buildings">
+      <created>1629072234214</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1629072234214</updated>
+    </task>
+    <task id="LOCAL-00053" summary="building serializer changes + removed a sout + buildingcommand progress">
+      <created>1629074333405</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1629074333405</updated>
+    </task>
+    <task id="LOCAL-00054" summary="commandevent reply fixes">
+      <created>1629074357569</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1629074357569</updated>
+    </task>
+    <task id="LOCAL-00055" summary="fix building argument">
+      <created>1629074877057</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1629074877057</updated>
+    </task>
+    <task id="LOCAL-00056" summary="tabmenu changes">
+      <created>1629075342657</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1629075342657</updated>
+    </task>
+    <task id="LOCAL-00057" summary="create ExecutorUtil + add timeout to TabMenu + many other button related fixes">
+      <created>1629111241077</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1629111241078</updated>
+    </task>
+    <task id="LOCAL-00058" summary="past cleanup: make record ButtonListener private again">
+      <created>1629111546676</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1629111546676</updated>
+    </task>
+    <task id="LOCAL-00059" summary="cool interactionmenu things (cool) + added ActionMenu">
+      <created>1629117344786</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1629117344786</updated>
+    </task>
+    <task id="LOCAL-00060" summary="some (unfinished) argument cleaning">
+      <created>1629118550211</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1629118550211</updated>
+    </task>
+    <task id="LOCAL-00061" summary="More argument cleaning + added Optional fallback function">
+      <created>1629120632368</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1629120632368</updated>
+    </task>
+    <task id="LOCAL-00062" summary="BIG PUSH - Argument Cleaning + Profile Argument + Partition + @Range + Emojis + StringUtil + ResourceBuilding#getEffectiveCurrency + Profile + Currency data + Building Argument fix + things">
+      <created>1629137691813</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1629137691813</updated>
+    </task>
+    <task id="LOCAL-00063" summary="deprecate aliases">
+      <created>1629138092554</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1629138092554</updated>
+    </task>
+    <task id="LOCAL-00064" summary="stuffies">
+      <created>1629138390794</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1629138390794</updated>
+    </task>
+    <task id="LOCAL-00065" summary="cleany cloony">
+      <created>1629138548817</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1629138548817</updated>
+    </task>
+    <task id="LOCAL-00066" summary="add EnumArgument">
+      <created>1629154261256</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1629154261256</updated>
+    </task>
+    <task id="LOCAL-00067" summary="movy">
+      <created>1629154371584</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1629154371584</updated>
+    </task>
+    <task id="LOCAL-00068" summary="fix eval">
+      <created>1629154444968</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1629154444968</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Remove Aliases">
+      <created>1629154950023</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1629154950023</updated>
+    </task>
+    <task id="LOCAL-00070" summary="thin">
+      <created>1629155144675</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1629155144675</updated>
+    </task>
+    <task id="LOCAL-00071" summary="start work on /building + made ArgumentParser use an ArrayDeque">
+      <created>1629155872479</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1629155872479</updated>
+    </task>
+    <task id="LOCAL-00072" summary="make Building implement Serializer + Balance command work + remove troll tutorials + start BuildingInfo">
+      <created>1629157889200</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1629157889200</updated>
+    </task>
+    <task id="LOCAL-00073" summary="BuildingInfo finished + BuildingCommand work + fix ProfileArgument + RequiresProfileCheck">
+      <created>1629160140361</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1629160140361</updated>
+    </task>
+    <task id="LOCAL-00074" summary="building command work">
+      <created>1629164162005</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1629164162005</updated>
+    </task>
+    <task id="LOCAL-00075" summary="building info changes">
+      <created>1629164649764</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1629164649764</updated>
+    </task>
+    <task id="LOCAL-00076" summary="empire command fix">
+      <created>1629166021064</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1629166021064</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Lots of work on BuildingInfo + Serializer now has @NotNull + /start building fix + Currency getter + Building now has a profile field">
+      <created>1629205727774</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1629205727774</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Add BuildingInfoElement#upgradable">
+      <created>1629209046373</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1629209046373</updated>
+    </task>
+    <task id="LOCAL-00079" summary="BuildingInfoElement#capacitable and other wrappers">
+      <created>1629210844767</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1629210844767</updated>
+    </task>
+    <task id="LOCAL-00080" summary="InfoValue">
+      <created>1629215856849</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1629215856849</updated>
+    </task>
+    <task id="LOCAL-00081" summary="boop">
+      <created>1629217533574</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1629217533574</updated>
+    </task>
+    <task id="LOCAL-00082" summary="a">
+      <created>1629233777374</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1629233777374</updated>
+    </task>
+    <task id="LOCAL-00083" summary="ae">
+      <created>1629233874857</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1629233874857</updated>
+    </task>
+    <task id="LOCAL-00084" summary="ae">
+      <created>1629233972960</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1629233972960</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Update dependencies">
+      <created>1629242370043</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1629242370043</updated>
+    </task>
+    <task id="LOCAL-00086" summary="a lot of things AAAAAAAAA">
+      <created>1629457857287</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1629457857287</updated>
+    </task>
+    <task id="LOCAL-00087" summary="moved some things to static blocks">
+      <created>1629458393380</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1629458393380</updated>
+    </task>
+    <task id="LOCAL-00088" summary="building command is now cooler">
+      <created>1629471306194</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1629471306194</updated>
+    </task>
+    <task id="LOCAL-00089" summary="make the collect button work">
+      <created>1629472075616</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1629472075616</updated>
+    </task>
+    <task id="LOCAL-00090" summary="EnumArgument change">
+      <created>1629473385291</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1629473385291</updated>
+    </task>
+    <task id="LOCAL-00091" summary="MoveCommand + made /empire created use the discord timestamp thingy">
+      <created>1629475836913</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1629475836913</updated>
+    </task>
+    <task id="LOCAL-00092" summary="wowee switch to intellij ultimaet">
+      <created>1629504224972</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1629504224973</updated>
+    </task>
+    <task id="LOCAL-00093" summary="ewiw">
+      <created>1629504305044</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1629504305044</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="fix eval" />
+    <MESSAGE value="Remove Aliases" />
+    <MESSAGE value="thin" />
+    <MESSAGE value="start work on /building + made ArgumentParser use an ArrayDeque" />
+    <MESSAGE value="make Building implement Serializer + Balance command work + remove troll tutorials + start BuildingInfo" />
+    <MESSAGE value="BuildingInfo finished + BuildingCommand work + fix ProfileArgument + RequiresProfileCheck" />
+    <MESSAGE value="building command work" />
+    <MESSAGE value="building info changes" />
+    <MESSAGE value="empire command fix" />
+    <MESSAGE value="Lots of work on BuildingInfo + Serializer now has @NotNull + /start building fix + Currency getter + Building now has a profile field" />
+    <MESSAGE value="Add BuildingInfoElement#upgradable" />
+    <MESSAGE value="BuildingInfoElement#capacitable and other wrappers" />
+    <MESSAGE value="InfoValue" />
+    <MESSAGE value="boop" />
+    <MESSAGE value="a" />
+    <MESSAGE value="ae" />
+    <MESSAGE value="Update dependencies" />
+    <MESSAGE value="a lot of things AAAAAAAAA" />
+    <MESSAGE value="moved some things to static blocks" />
+    <MESSAGE value="building command is now cooler" />
+    <MESSAGE value="make the collect button work" />
+    <MESSAGE value="EnumArgument change" />
+    <MESSAGE value="MoveCommand + made /empire created use the discord timestamp thingy" />
+    <MESSAGE value="wowee switch to intellij ultimaet" />
+    <MESSAGE value="ewiw" />
+    <option name="LAST_COMMIT_MESSAGE" value="ewiw" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/EmpireBot$Run.ic" NAME="Run Coverage Results" MODIFIED="1629233782827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

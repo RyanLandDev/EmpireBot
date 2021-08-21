@@ -25,7 +25,7 @@ public class TutorialCommand extends Command {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new EnumArgument<Tutorial>().setEnum(Tutorial.class)
+                new EnumArgument<>(Tutorial.class)
                         .id("tutorial")
                         .description("The name of the tutorial.")
                         .optional()

@@ -25,7 +25,7 @@ public class BankBuilding extends ResourceStorageBuilding {
 
     @Override
     public String getEmoji() {
-        return "🏦";
+        return "<:thebank:878440777452236830>";
     }
 
     @Override

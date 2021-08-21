@@ -38,7 +38,8 @@ public enum Balance implements EnumArgument.InputEnum {
         return name;
     }
 
-    public boolean getHidden() {
+    @Override
+    public boolean isHidden() {
         return hidden;
     }
 

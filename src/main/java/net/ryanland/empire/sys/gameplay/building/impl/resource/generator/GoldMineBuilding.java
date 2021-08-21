@@ -30,7 +30,7 @@ public class GoldMineBuilding extends ResourceGeneratorBuilding {
 
     @Override
     public String getEmoji() {
-        return "⛏";
+        return "<:goldmine:878439489398267965>";
     }
 
     @Override

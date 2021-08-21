@@ -26,8 +26,7 @@ public class BalanceSetCommand extends SubCommand {
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new EnumArgument<Balance>()
-                        .setEnum(Balance.class)
+                new EnumArgument<>(Balance.class)
                         .description("Balance to modify.")
                         .id("balance"),
                 new IntegerArgument()
