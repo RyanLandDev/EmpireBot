@@ -4,13 +4,16 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.components.ButtonStyle;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.ButtonClickContainer;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TabMenu implements InteractionMenu {
 
@@ -28,8 +31,11 @@ public class TabMenu implements InteractionMenu {
     public void send(CommandEvent commandEvent) {
         // Set all embed titles to match the category name
         for (TabMenuPage page : pages) {
-            EmbedBuilder embed = page.getEmbed();
-            embed.setTitle(page.getName());
+            PresetBuilder embed = page.getEmbed();
+
+            if (embed.getTitle() == null) {
+                embed.setTitle(page.getName());
+            }
         }
 
         // Init vars
@@ -46,7 +52,7 @@ public class TabMenu implements InteractionMenu {
             // Create the Button
             Button button = Button.secondary(page.getName(), page.getName());
             if (page.getEmoji() != null) {
-                button = button.withEmoji(Emoji.fromUnicode(page.getEmoji()));
+                button = button.withEmoji(Emoji.fromMarkdown(page.getEmoji()));
             }
 
             // Put the page and buttons in their respective data structures
@@ -56,7 +62,8 @@ public class TabMenu implements InteractionMenu {
 
         // Send the message and set the action rows
         InteractionHook hook = commandEvent.performReply(pages[0].getEmbed().build())
-                .addActionRows(InteractionUtil.of(buttons)).complete();
+                .addActionRows(InteractionUtil.of(buttons))
+                .complete();
 
         // Add a listener for when a button is clicked
         ButtonHandler.addListener(hook,
@@ -65,8 +72,17 @@ public class TabMenu implements InteractionMenu {
                         clickEvent -> new ButtonClickContainer(
                                 event -> {
                                     event.deferEdit().queue();
+
                                     hook.editOriginalEmbeds(pageMap.get(event.getComponentId())
-                                            .getEmbed().build()).queue();
+                                            .getEmbed().build())
+                                            .setActionRows(
+                                                    InteractionUtil.of(buttons.stream()
+                                                    .map(button -> button.equals(event.getButton()) ?
+                                                            button.withStyle(ButtonStyle.SUCCESS).asDisabled() :
+                                                            button.withStyle(ButtonStyle.SECONDARY).asEnabled())
+                                                    .collect(Collectors.toList())
+                                                    ))
+                                            .queue();
                                 })));
     }
 

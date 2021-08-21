@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.file.database.documents.impl;
 
 import net.dv8tion.jda.api.entities.User;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.file.Partition;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
@@ -143,6 +144,23 @@ public class Profile implements SnowflakeDocument, Emojis {
         newBuildings.remove(building.getLayer() - 1);
         newBuildings.add(building.getLayer() - 1, building.serialize());
 
+        getDocument().setBuildingsRaw(newBuildings);
+    }
+
+    /**
+     * Adds a building to the profile's empire.
+     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     * @param building The building to add.
+     */
+    @SuppressWarnings("all")
+    public void addBuilding(Building building) throws CommandException {
+        List<List> newBuildings = new ArrayList<>(document.getBuildings());
+
+        if (newBuildings.size() + 1 > getBuildingLimit()) {
+            throw new CommandException("You have hit the **Building Limit**!\nLevel up to increase this limit.");
+        }
+
+        newBuildings.add(building.defaults().serialize());
         getDocument().setBuildingsRaw(newBuildings);
     }
 

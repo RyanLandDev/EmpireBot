@@ -25,18 +25,15 @@ public abstract class ResourceStorageBuilding extends ResourceBuilding {
 
         int toStore = getEffectiveCurrency().getInt(getProfile());
 
-        int i = 0;
         for (ResourceStorageBuilding building : buildings) {
-            i++;
 
             int capacity = building.getCapacityInt();
             toStore = toStore - capacity;
 
-            if (layer == i) {
+            if (layer == building.getLayer()) {
                 if (toStore < 0) {
                     return new Price<>(getEffectiveCurrency(), toStore + capacity);
-                }
-                else {
+                } else {
                     return new Price<>(getEffectiveCurrency(), capacity);
                 }
             }

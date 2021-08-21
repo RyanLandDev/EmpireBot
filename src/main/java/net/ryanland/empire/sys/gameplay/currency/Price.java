@@ -25,6 +25,7 @@ public record Price<T extends Number>(Currency currency, T amount) {
         if (!profile.roomFor((Price<Integer>) this)) {
             throw new CommandException("You do not have enough capacity.");
         }
+        // TODO collect part of it.
 
         currency.update(profile, currency.get(profile).amount() + amount.intValue());
     }
@@ -32,7 +33,7 @@ public record Price<T extends Number>(Currency currency, T amount) {
     @SuppressWarnings("unchecked")
     public void buy(Profile profile) throws CommandException {
         if (!profile.canAfford((Price<Integer>) this)) {
-            throw new CannotAffordException("You cannot afford this.");
+            throw new CannotAffordException("You cannot afford this."); //TODO add "u need x more homie"
         }
 
         currency.update(profile, currency.get(profile).amount() - amount.intValue());

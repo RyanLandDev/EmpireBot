@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.message.interactions.menu.tab;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 
 import java.util.ArrayList;
@@ -16,19 +17,19 @@ public class TabMenuBuilder implements InteractionMenuBuilder<TabMenu> {
         return this;
     }
 
-    public TabMenuBuilder addPage(String name, EmbedBuilder embed, String emoji, boolean hidden) {
+    public TabMenuBuilder addPage(String name, PresetBuilder embed, String emoji, boolean hidden) {
         return addPage(new TabMenuPage(name, embed, emoji, hidden));
     }
 
-    public TabMenuBuilder addPage(String name, EmbedBuilder embed, boolean hidden) {
+    public TabMenuBuilder addPage(String name, PresetBuilder embed, boolean hidden) {
         return addPage(name, embed, null, hidden);
     }
 
-    public TabMenuBuilder addPage(String name, EmbedBuilder embed, String emoji) {
+    public TabMenuBuilder addPage(String name, PresetBuilder embed, String emoji) {
         return addPage(name, embed, emoji, false);
     }
 
-    public TabMenuBuilder addPage(String name, EmbedBuilder embed) {
+    public TabMenuBuilder addPage(String name, PresetBuilder embed) {
         return addPage(name, embed, null);
     }
 

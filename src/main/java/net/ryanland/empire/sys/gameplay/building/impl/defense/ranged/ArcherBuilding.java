@@ -23,7 +23,7 @@ public class ArcherBuilding extends DefenseRangedBuilding {
 
     @Override
     public String getEmoji() {
-        return "🏹";
+        return "<:defense_ranged:878654639774523403>";
     }
 
     @Override

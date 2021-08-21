@@ -1,7 +1,8 @@
 package net.ryanland.empire.sys.message.builders;
 
 public enum PresetType {
-    DEFAULT(0x2f3136),
+    //DEFAULT(0x2f3136), //(Seamless color)
+    DEFAULT(0xffa500),
     NOTIFICATION(0x5dadec),
     ERROR(0xdd2e44, "Error", true),
     WARNING(0xffcc4d, "Warning"),

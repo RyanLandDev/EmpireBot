@@ -1,6 +1,7 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
@@ -10,7 +11,6 @@ import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuilding;
-import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfo;
@@ -44,7 +44,7 @@ public abstract class Building
     public static final int LAYOUT_DISPLAY_PER_ROW = 7;
 
     @SuppressWarnings("all")
-    private static final Building[] BUILDINGS = new Building[]{
+    public static final Building[] BUILDINGS = new Building[]{
 
             // Defense Ranged
             new ArcherBuilding(),
@@ -272,6 +272,13 @@ public abstract class Building
                 ).queue();
     }
 
+    public MessageEmbed.Field getEmbedField() {
+        return new MessageEmbed.Field("\u200b",
+                String.format("%s\n%s\n**Price:** %s\n\u200b",
+                        getFormattedName(true), getDescription(), getPrice().format()),
+                        true);
+    }
+
     public void repair() throws CommandException {
         if (!canRepair()) {
             throw new CommandException("You cannot repair this building.");
@@ -407,7 +414,11 @@ public abstract class Building
      * @return A string in the form of "[emoji] **[name]**".
      */
     public String getFormattedName() {
-        return String.format("%s **%s**", getEmoji(), getName());
+        return getFormattedName(false);
+    }
+
+    public String getFormattedName(boolean underlined) {
+        return String.format("%s %3$s**%s**%3$s", getEmoji(), getName(), underlined ? "__" : "");
     }
 
     /**
@@ -440,6 +451,20 @@ public abstract class Building
 
     public static Building of(String name) {
         return NAME_BUILDINGS.get(name);
+    }
+
+    public static Building find(String name) throws CommandException {
+        try {
+            return Arrays.stream(BUILDINGS)
+                    .filter(building -> building.getName()
+                            .replaceAll("[ _-]", "")
+                            .equalsIgnoreCase(name
+                                    .replaceAll("[ _-]", "")))
+                    .collect(Collectors.toList())
+                    .get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException("A building with the name `" + name + "` was not found.");
+        }
     }
 
 }

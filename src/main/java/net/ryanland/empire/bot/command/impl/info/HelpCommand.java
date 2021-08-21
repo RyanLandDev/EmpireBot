@@ -58,7 +58,7 @@ public class HelpCommand extends Command {
                         "You can get help for a specific command using "+HelpMaker.formattedUsageCode(event)
                                 + ".\n\nBot made by "+ Empire.RYANLAND)
                 .addLogo();
-        menu.addPage("Home", homePage.builder(), true);
+        menu.addPage("Home", homePage, true);
 
         // Iterate over all command categories
         for (Category category : Category.getCategories()) {
@@ -77,7 +77,7 @@ public class HelpCommand extends Command {
             // Add this category to the menu
             menu.addPage(category.getName(), new PresetBuilder(category.getDescription() +
                     "\n\n" + HelpMaker.formattedQuickCommandList(commands))
-                .addLogo().builder(), category.getEmoji());
+                .addLogo(), category.getEmoji());
         }
 
         // Build and send the menu

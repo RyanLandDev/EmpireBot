@@ -10,13 +10,13 @@ public interface Emojis {
 
     String PUTIN_WALK = "<a:putin_walk:856509699020554240>";
 
-    String GOLD = "<:gold:876889710352551967>";
-    String CRYSTALS = "<:crystals:876889710008627201>";
-    String XP = "⚜";
+    String GOLD = "<:gold:878671734016987137>";
+    String CRYSTALS = "<:crystals:878671478185410570>";
+    String XP = "<:xp:878670362148237332>";
 
-    String REPAIR = "💌";
-    String UPGRADE = "⏫";
-    String SELL = "💰";
+    String REPAIR = "<:repair:878673517481181185>";
+    String UPGRADE = "<:upgrade:878673810436534312>";
+    String SELL = "<:sell:878674089542307892>";
 
     String ONE = "<:number_one:836612644369989642>";
     String TWO = "<:number_two:836615195526299709>";

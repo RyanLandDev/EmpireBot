@@ -23,7 +23,7 @@ public class WallBuilding extends DefenseThornedBuilding {
 
     @Override
     public String getEmoji() {
-        return "🧱";
+        return "<:wall:878673336530518057>";
     }
 
     @Override

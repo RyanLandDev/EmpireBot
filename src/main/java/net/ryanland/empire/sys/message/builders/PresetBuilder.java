@@ -6,6 +6,7 @@ import net.ryanland.empire.Empire;
 
 import java.time.Instant;
 import java.time.temporal.TemporalAccessor;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -191,7 +192,16 @@ public class PresetBuilder {
     }
 
     public PresetBuilder addField(String name, String value, boolean inline) {
-        this.fields.add(new MessageEmbed.Field(name, value, inline));
+        return addField(new MessageEmbed.Field(name, value, inline));
+    }
+
+    public PresetBuilder addField(MessageEmbed.Field field) {
+        fields.add(field);
+        return this;
+    }
+
+    public PresetBuilder addFields(MessageEmbed.Field... fields) {
+        this.fields.addAll(Arrays.asList(fields));
         return this;
     }
 

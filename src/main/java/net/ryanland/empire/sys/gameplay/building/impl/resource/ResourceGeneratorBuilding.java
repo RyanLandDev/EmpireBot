@@ -92,6 +92,8 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
         BROKEN("Broken", Building::isUsable),
         EMPTY("Empty", building -> ((ResourceGeneratorBuilding) building).getHolding().amount() > 0),
+        CAPACITY_FULL("Capacity Full", building -> building.getProfile()
+                .roomFor(((ResourceGeneratorBuilding) building).getHolding())),
         NOT_EXISTING("Not Existing", Building::exists),
 
         AVAILABLE("Available", building -> false)
