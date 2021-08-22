@@ -14,6 +14,7 @@ import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class StatsCommand extends Command {
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("stats")
-                .description("Returns a bunch of stats about the bot.")
+                .description("Returns a bunch of statistics about the bot.")
                 .category(Category.INFORMATION);
     }
 
@@ -57,29 +58,31 @@ public class StatsCommand extends Command {
         }
 
         InfoValueCollection infoValues = new InfoValueCollection()
-                .addRegular("🏓 Ping","", String.format("`%s` ms.",
+                .addRegular("🏓 Ping","", String.format("`%s` ms",
                         event.getJDA().getRestPing().complete()))
-                .addRegular("🤝 Guild Count", "", String.format("`%s` Guilds",
+                .addRegular("🤝 Guild Count", "", String.format("`%s` servers",
                         event.getJDA().getGuilds().size()))
-                .addRegular("💻 Current Shard", "",
+                .addRegular("💻 Current Shard",
                         "`N/A`");
 
-        event.performReply(new PresetBuilder()
-                .setTitle("Statistics")
-                .addLogo()
-                .setDescription("Here's some information about the bot.  \n\u200b")
-
-                .addField("__**Statistics**__",
-                        "\u200b\n" + infoValues.build() + "\n\u200b",
-                        true
-                ).addField("__**Credits**__\n\u200b\n\n",
-                        String.join("\n", devListBuilder),
-                        true
-                )
-        ).addActionRow(
-                Button.link(Empire.BOT_INVITE_LINK, "Bot Invite").withEmoji(Emoji.fromMarkdown("📧")),
-                Button.link(Empire.SERVER_INVITE_LINK,"Support Server").withEmoji(Emoji.fromMarkdown("⛑")),
-                Button.link(Empire.GITHUB_LINK, "GitHub Repository").withEmoji(Emoji.fromMarkdown("👨‍💻"))
-        ).queue();
+        event.reply(new ActionMenuBuilder()
+                .setEmbed(new PresetBuilder()
+                        .setTitle("Statistics")
+                        .addLogo()
+                        .setDescription("Here's some information about the bot.  \n\u200b")
+                        .addField("__**Statistics**__",
+                                "\u200b\n" + infoValues.build() + "\n\u200b",
+                                true
+                        ).addField("__**Credits**__\n\u200b\n\n",
+                                String.join("\n", devListBuilder),
+                                true
+                        ))
+                .addButton(Button.link(Empire.BOT_INVITE_LINK, "Bot Invite")
+                        .withEmoji(Emoji.fromMarkdown("📧")))
+                .addButton(Button.link(Empire.SERVER_INVITE_LINK,"Support Server")
+                        .withEmoji(Emoji.fromMarkdown("⛑")))
+                .addButton(Button.link(Empire.GITHUB_LINK, "GitHub Repository")
+                        .withEmoji(Emoji.fromMarkdown("👨‍💻"))
+                ));
     }
 }
