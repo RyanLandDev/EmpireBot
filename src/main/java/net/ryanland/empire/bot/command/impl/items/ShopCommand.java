@@ -8,6 +8,7 @@ import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 public class ShopCommand extends Command {
 
@@ -34,6 +35,10 @@ public class ShopCommand extends Command {
     public void run(CommandEvent event) throws CommandException {
         ShopCategory category = event.getArgument("category");
 
-        event.reply(category.getTabMenuBuilder(event));
+        event.reply(category.getTabMenuBuilder(event)
+                .insertPage(0, SHOP + " Shop",
+                new PresetBuilder("Use the buttons below to navigate through the shop.\n\u200b"),
+                true)
+        );
     }
 }

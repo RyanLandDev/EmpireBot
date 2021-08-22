@@ -7,6 +7,8 @@ import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
+import net.ryanland.empire.sys.message.interactions.menu.confirm.ConfirmMenu;
+import net.ryanland.empire.sys.message.interactions.menu.tab.TabMenu;
 
 public class ResetCommand extends Command {
 
@@ -20,13 +22,16 @@ public class ResetCommand extends Command {
     }
 
     @Override
-    public ArgumentSet getArguments() { return new ArgumentSet(); }
+    public ArgumentSet getArguments() {
+        return new ArgumentSet();
+    }
 
     @Override
     public void run(CommandEvent event) {
-
-        // TODO
-        DocumentCache.delete(event.getUser().getId(), UserDocument.class);
-        event.performReply("Reset").setEphemeral(true).queue();
+        event.reply(new ConfirmMenu(
+                "**Are you sure?**\n\nThis will reset __EVERYTHING__ and __CANNOT__ be undone.",
+                () -> DocumentCache.delete(event.getUser().getId(), UserDocument.class),
+                "Profile reset."
+        ));
     }
 }

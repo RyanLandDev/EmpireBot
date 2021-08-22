@@ -14,10 +14,7 @@ public enum ShopCategory implements EnumArgument.InputEnum, Emojis {
     BUILDINGS("buildings", "🏘"){
         @Override
         public TabMenuBuilder getTabMenuBuilder(CommandEvent event) {
-            TabMenuBuilder builder = new TabMenuBuilder()
-                    .addPage(SHOP + " Shop",
-                            new PresetBuilder("Use the buttons below to navigate through the shop.\n\u200b"),
-                            true); //TODO insertPage method and make this the default for all
+            TabMenuBuilder builder = new TabMenuBuilder();
 
             for (BuildingType type :
                     Arrays.stream(BuildingType.values())
