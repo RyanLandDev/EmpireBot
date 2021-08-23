@@ -11,10 +11,10 @@ import net.ryanland.empire.sys.file.serializer.CooldownsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
-import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceStorageBuilding;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
+import net.ryanland.empire.util.DateUtil;
 import net.ryanland.empire.util.NumberUtil;
 import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Profile implements SnowflakeDocument, Emojis {
 
@@ -190,11 +189,11 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public String getFormattedCreated() {
-        return StringUtil.format(getCreated());
+        return DateUtil.format(getCreated());
     }
 
     public String getTimestampCreated() {
-        return StringUtil.getDiscordTimestamp(getCreated());
+        return DateUtil.getDiscordTimestamp(getCreated());
     }
 
     private String formattedNumberWithEmoji(Number number, String emoji, boolean includeEmoji) {

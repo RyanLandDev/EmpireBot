@@ -1,6 +1,5 @@
 package net.ryanland.empire.sys.message.interactions.menu.tab;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 

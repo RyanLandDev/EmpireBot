@@ -2,16 +2,12 @@ package net.ryanland.empire.bot.command.impl.info;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Tutorial;
+import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Tutorial;
-import net.ryanland.empire.sys.tutorials.TutorialMaker;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import net.ryanland.empire.sys.tutorials.TutorialMaker;
 
 public class TutorialCommand extends Command {
     @Override

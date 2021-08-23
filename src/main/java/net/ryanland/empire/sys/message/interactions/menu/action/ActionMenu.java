@@ -1,6 +1,5 @@
 package net.ryanland.empire.sys.message.interactions.menu.action;
 
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
@@ -12,7 +11,6 @@ import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class ActionMenu implements InteractionMenu {

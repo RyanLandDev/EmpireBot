@@ -1,6 +1,8 @@
 package net.ryanland.empire.sys.file.database;
 
-import com.mongodb.client.*;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
 import net.ryanland.empire.Empire;
 
 public class MongoDB {

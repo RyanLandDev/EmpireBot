@@ -1,7 +1,6 @@
 package net.ryanland.empire.sys.gameplay.building.impl.resource;
 
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
-import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 
 import java.util.List;

@@ -11,7 +11,9 @@ import net.ryanland.empire.sys.message.interactions.ButtonHandler;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class TabMenu implements InteractionMenu {

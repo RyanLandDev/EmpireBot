@@ -27,11 +27,13 @@ public class CommandExecutor {
 
     public void execute(CommandEvent event, List<OptionMapping> args) {
         Command command = event.getCommand();
+
         if (event.getSubCommandGroup() != null) {
             command = command.getInfo().getSubCommandGroupMap().get(event.getSubCommandGroup()).getSubCommand(event.getSubCommandName());
         } else if (event.getSubCommandName() != null) {
             command = command.getInfo().getSubCommandMap().get(event.getSubCommandName());
         }
+
         event.setCommand(command);
 
         try {

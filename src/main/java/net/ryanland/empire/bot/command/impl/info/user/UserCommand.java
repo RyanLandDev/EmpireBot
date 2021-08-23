@@ -1,9 +1,9 @@
 package net.ryanland.empire.bot.command.impl.info.user;
 
+import net.ryanland.empire.bot.command.impl.SubCommandHolder;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.info.SubCommandGroup;
-import net.ryanland.empire.bot.command.impl.SubCommandHolder;
 
 public class UserCommand extends SubCommandHolder {
 

@@ -5,6 +5,7 @@ import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.sys.file.StorageType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +21,8 @@ public class CommandInfo {
     private StorageType cooldownStorageType = StorageType.MEMORY;
     private boolean requiresProfile = false;
 
-    private List<SubCommand> subCommands;
-    private List<SubCommandGroup> subCommandGroups;
+    private List<SubCommand> subCommands = new ArrayList<>();
+    private List<SubCommandGroup> subCommandGroups = new ArrayList<>();
     private HashMap<String, SubCommand> subCommandMap;
     private HashMap<String, SubCommandGroup> subCommandGroupMap;
 

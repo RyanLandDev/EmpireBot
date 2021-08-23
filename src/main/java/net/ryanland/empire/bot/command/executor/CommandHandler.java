@@ -3,15 +3,15 @@ package net.ryanland.empire.bot.command.executor;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
-import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.impl.SubCommand;
+import net.ryanland.empire.bot.command.impl.SubCommandHolder;
+import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.info.SubCommandGroup;
 import net.ryanland.empire.bot.events.CommandEvent;
 
@@ -34,6 +34,12 @@ public class CommandHandler {
 
             COMMANDS.add(command);
             COMMAND_MAP.put(command.getName(), command);
+
+            if (command instanceof SubCommandHolder) {
+                for (SubCommand subcommand : command.getSubCommands()) {
+                    COMMAND_MAP.put(subcommand.getName(), subcommand);
+                }
+            }
         }
     }
 
@@ -48,13 +54,13 @@ public class CommandHandler {
             CommandInfo cmdInfo = command.getInfo();
             CommandData slashCmdData = new CommandData(cmdInfo.getName(), cmdInfo.getDescription());
 
-            if (cmdInfo.getSubCommands() == null && cmdInfo.getSubCommandGroups() == null) {
+            if (cmdInfo.getSubCommands().isEmpty() && cmdInfo.getSubCommandGroups().isEmpty()) {
 
                 for (Argument<?> arg : command.getArguments()) {
                     slashCmdData.addOptions(arg.getOptionData());
                 }
 
-            } else if (cmdInfo.getSubCommandGroups() == null) {
+            } else if (cmdInfo.getSubCommandGroups().isEmpty()) {
 
                 for (SubCommand subCmd : cmdInfo.getSubCommands()) {
                     SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());

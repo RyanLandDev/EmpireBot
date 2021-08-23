@@ -33,7 +33,15 @@ public class CooldownHandler {
     public static boolean isCooldownActive(CommandEvent event) {
         cleanCooldowns(event);
         return getActiveCooldowns(event).stream()
-                .anyMatch(cooldown -> cooldown.command().equals(event.getCommand()));
+                .anyMatch(cooldown -> cooldown.command().getName().equals(event.getCommand().getName()));
+    }
+
+    public static Cooldown getActiveCooldown(CommandEvent event) {
+        if (!isCooldownActive(event)) return null;
+        return getActiveCooldowns(event).stream()
+                .filter(cooldown -> cooldown.command().getName().equals(event.getCommand().getName()))
+                .collect(Collectors.toList())
+                .get(0);
     }
 
     public static void newCooldown(CommandEvent event) {

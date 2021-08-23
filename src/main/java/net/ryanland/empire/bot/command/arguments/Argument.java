@@ -7,8 +7,6 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.events.CommandEvent;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Queue;
 import java.util.function.Function;
 

@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.executor.cooldown.Cooldown;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package net.ryanland.empire.sys.gameplay.building;
 
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
-import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceGeneratorBuilding;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;

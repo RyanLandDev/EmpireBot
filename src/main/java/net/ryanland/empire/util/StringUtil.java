@@ -10,29 +10,13 @@ import java.util.Locale;
 
 public class StringUtil implements Emojis {
 
-    public static final SimpleDateFormat STANDARD_DATE_FORMAT =
-            new SimpleDateFormat("EEEE dd/MM/yyyy 'at' HH:mm 'UTC'", Locale.US);
-
     public static String capitalize(String input) {
         return input.substring(0, 1).toUpperCase() + input.substring(1);
-    }
-
-    public static String format(Date date) {
-        return STANDARD_DATE_FORMAT.format(date);
     }
 
     @Contract(pure = true)
     public static @NotNull String genTrimProofSpaces(int amount) {
         return (" \u200b").repeat(amount);
-    }
-
-    public static String getDiscordTimestamp(Date date) {
-        return getDiscordTimestamp(date.getTime() / 1000);
-    }
-
-    @Contract(pure = true)
-    public static @NotNull String getDiscordTimestamp(Long time) {
-        return "<t:" + time + ">";
     }
 
     @NotNull

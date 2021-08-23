@@ -2,14 +2,16 @@ package net.ryanland.empire.bot.command.impl;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.StorageType;
 import net.ryanland.empire.sys.message.Emojis;
+
+import java.util.List;
 
 public abstract class Command implements Emojis {
 
@@ -55,6 +57,10 @@ public abstract class Command implements Emojis {
 
     public final boolean requiresProfile() {
         return getInfo().isProfileRequired();
+    }
+
+    public final List<SubCommand> getSubCommands() {
+        return getInfo().getSubCommands();
     }
 
     public final boolean isDisabled() {
