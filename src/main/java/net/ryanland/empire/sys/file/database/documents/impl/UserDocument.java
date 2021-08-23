@@ -1,10 +1,12 @@
 package net.ryanland.empire.sys.file.database.documents.impl;
 
 import com.mongodb.client.model.Filters;
+import net.ryanland.empire.bot.command.executor.cooldown.Cooldown;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.BaseDocument;
 import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
 import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
+import net.ryanland.empire.sys.file.serializer.CooldownsSerializer;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
@@ -12,9 +14,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class UserDocument extends BaseDocument implements SnowflakeDocument {
 
@@ -28,6 +28,8 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
             Building.of(GoldMineBuilding.ID).defaults().serialize(),
             Building.of(BankBuilding.ID).defaults().serialize()
     );
+    @SuppressWarnings("all")
+    public static final List<List> DEFAULT_COOLDOWNS = Collections.emptyList();
 
     public UserDocument(Document document) {
         super(document);
@@ -41,6 +43,8 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     @SuppressWarnings("all")
     private List<List> buildings = getBuildings();
     private Date created = getCreated();
+    @SuppressWarnings("all")
+    private List<List> cooldowns = getCooldowns();
 
     @Override
     public void updated(List<Bson> updates) {
@@ -51,6 +55,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         checkUpdate(updates, wave, getWave(), "wv");
         checkUpdate(updates, buildings, getBuildings(), "blds");
         checkUpdate(updates, created, getCreated(), "cr");
+        checkUpdate(updates, cooldowns, getCooldowns(), "cd");
 
         performUpdate(DocumentCache.USER_COLLECTION, Filters.eq("id", getId()), updates);
     }
@@ -100,6 +105,16 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return this;
     }
 
+    @SuppressWarnings("all")
+    public UserDocument setCooldownsRaw(List<List> cooldowns) {
+        this.cooldowns = cooldowns;
+        return this;
+    }
+
+    public UserDocument setCooldowns(List<Cooldown> cooldowns) {
+        return setCooldownsRaw(CooldownsSerializer.getInstance().serialize(cooldowns));
+    }
+
     @Override
     public String getId() {
         return getString("id");
@@ -132,6 +147,11 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
 
     public Date getCreated() {
         return getDate("cr");
+    }
+
+    @SuppressWarnings("all")
+    public List<List> getCooldowns() {
+        return getList("cd", List.class, DEFAULT_COOLDOWNS);
     }
 
 }

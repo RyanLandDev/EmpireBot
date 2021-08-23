@@ -50,6 +50,12 @@ public class CommandInfo {
         return this;
     }
 
+    /**
+     * The cooldown set for this command.
+     * @param cooldown Cooldown in seconds.
+     * @return The {@link CommandInfo} for chaining.
+     * @see #cooldownStorage(StorageType)
+     */
     public CommandInfo cooldown(int cooldown) {
         this.cooldown = cooldown;
         return this;

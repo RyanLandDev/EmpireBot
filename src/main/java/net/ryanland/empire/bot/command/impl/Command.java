@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.impl;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
 import net.ryanland.empire.bot.command.info.Category;
@@ -20,7 +21,7 @@ public abstract class Command implements Emojis {
         return getInfo().getName();
     }
 
-    public final String getUppercasedName() {
+    public final String getUppercaseName() {
         return getName().substring(0, 1).toUpperCase() + getName().substring(1);
     }
 
@@ -34,6 +35,10 @@ public abstract class Command implements Emojis {
 
     public final Permission getPermission() {
         return getInfo().getPermission();
+    }
+
+    public final boolean hasCooldown() {
+        return getCooldown() != 0;
     }
 
     public final int getCooldown() {
@@ -54,6 +59,10 @@ public abstract class Command implements Emojis {
 
     public final boolean isDisabled() {
         return DisabledCommandHandler.getInstance().isDisabled(this);
+    }
+
+    public static Command of(String alias) {
+        return CommandHandler.getCommand(alias);
     }
 
     // ---------------------------------------------------------

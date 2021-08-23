@@ -1,11 +1,13 @@
 package net.ryanland.empire.sys.file.database.documents.impl;
 
 import net.dv8tion.jda.api.entities.User;
+import net.ryanland.empire.bot.command.executor.cooldown.Cooldown;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.file.Partition;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
 import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
+import net.ryanland.empire.sys.file.serializer.CooldownsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
@@ -122,6 +124,10 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     public Integer getWave() {
         return document.getWave();
+    }
+
+    public List<Cooldown> getCooldowns() {
+        return CooldownsSerializer.getInstance().deserialize(document.getCooldowns());
     }
 
     public List<Building> getBuildings() {

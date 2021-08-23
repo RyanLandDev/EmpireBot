@@ -123,6 +123,14 @@ public class DocumentCache {
         removeFromCache(id, type);
     }
 
+    public static <T extends BaseDocument & SnowflakeDocument, C extends ISnowflake> void update(C client, Class<T> type) {
+        update(client.getId(), type);
+    }
+
+    public static <T extends BaseDocument & SnowflakeDocument> void update(String id, Class<T> type) {
+        get(id, type, false).update();
+    }
+
     @SuppressWarnings("unchecked")
     public static <T extends BaseDocument> T castDocument(Document document, Class<T> type) {
         if (document == null) return null;

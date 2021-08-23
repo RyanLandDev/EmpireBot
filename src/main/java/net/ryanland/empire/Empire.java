@@ -10,11 +10,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
-import net.ryanland.empire.bot.command.impl.items.BuildingCommand;
-import net.ryanland.empire.bot.command.impl.items.BuyCommand;
-import net.ryanland.empire.bot.command.impl.items.MoveCommand;
-import net.ryanland.empire.bot.command.impl.items.ShopCommand;
+import net.ryanland.empire.bot.command.impl.items.*;
 import net.ryanland.empire.bot.command.impl.dev.balance.BalanceCommand;
+import net.ryanland.empire.bot.command.impl.items.claim.ClaimCommand;
 import net.ryanland.empire.bot.command.impl.profile.ResetCommand;
 import net.ryanland.empire.bot.command.impl.profile.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.profile.StartCommand;
@@ -68,7 +66,6 @@ public class Empire {
                 // Developer
                 new MimicCommand(),
                 new EvalCommand(),
-                new PurgeCooldownsCommand(),
                 new TestCommand(),
                 new DisableCommand(),
                 new EnableCommand(),
@@ -86,7 +83,8 @@ public class Empire {
                 new BuildingCommand(),
                 new MoveCommand(),
                 new ShopCommand(),
-                new BuyCommand()
+                new BuyCommand(),
+                new ClaimCommand()
         );
 
         // Build bot
