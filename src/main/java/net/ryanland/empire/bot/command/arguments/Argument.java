@@ -106,26 +106,17 @@ public abstract class Argument<T> {
         // Parse base argument
         Object parsed = null;
         try {
-            parsed = parseArg(queueCopy, event);
-        } catch (ArgumentException ignored) {
+            parsed = parseArg(arguments, event);
+        } catch (ArgumentException e) {
+            if (fallbacks.isEmpty()) throw e;
         }
-
-        // Create another queue clone
-        Deque<OptionMapping> queueCopyTwo = new ArrayDeque<>(arguments);
 
         // Run fallbacks
         if (parsed == null) {
             for (ArgumentBiFunction<Deque<OptionMapping>, CommandEvent, T> fallback : fallbacks) {
-                parsed = fallback.run(queueCopyTwo, event);
+                parsed = fallback.run(new ArrayDeque<>(queueCopy), event);
                 if (parsed != null) return parsed;
             }
-        }
-
-        // Update queue
-        if (queueCopy.size() > queueCopyTwo.size()) {
-            arguments = queueCopyTwo;
-        } else {
-            arguments = queueCopy;
         }
 
         // Return result

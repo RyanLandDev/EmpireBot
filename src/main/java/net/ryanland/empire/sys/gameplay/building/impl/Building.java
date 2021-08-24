@@ -1,10 +1,12 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.empire.bot.command.executor.functional_interface.CommandRunnable;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
@@ -28,6 +30,7 @@ import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenu;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -183,9 +186,9 @@ public abstract class Building
                         Building building = (Building) aBuilding;
                         Price<Integer> repairPrice = building.getRepairPrice();
 
-                        building.repair();
-
+                        executeButtonAction(event, this::repair);
                         refreshMenu(event);
+
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
                                 "Repaired your %s for %s.", building.getFormattedName(), repairPrice.format()
                         )).build()).setEphemeral(true).queue();
@@ -201,9 +204,9 @@ public abstract class Building
                         Building building = (Building) aBuilding;
                         Price<Integer> crystalRepairPrice = building.getCrystalRepairPrice();
 
-                        building.crystalRepair();
-
+                        executeButtonAction(event, this::crystalRepair);
                         refreshMenu(event);
+
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
                                 "Repaired your %s for %s.", building.getFormattedName(), crystalRepairPrice.format()
                         )).build()).setEphemeral(true).queue();
@@ -226,11 +229,13 @@ public abstract class Building
 
                 (event, aBuilding) -> {
                     Building building = (Building) aBuilding;
-                    building.upgrade();
+                    Price<Integer> upgradePrice = building.getUpgradePrice();
 
+                    executeButtonAction(event, this::upgrade);
                     refreshMenu(event);
+
                     event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                            "Upgraded your %s for %s.", building.getFormattedName(), building.getUpgradePrice().format()
+                            "Upgraded your %s for %s.", building.getFormattedName(), upgradePrice.format()
                     )).build()).setEphemeral(true).queue();
 
                 }, this
@@ -241,9 +246,10 @@ public abstract class Building
 
                 (event, aBuilding) -> {
                     Building building = (Building) aBuilding;
-                    building.sell();
 
+                    executeButtonAction(event, this::sell);
                     refreshMenu(event);
+
                     event.deferReply(true).addEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
                             "Sold your %s for %s.", building.getFormattedName(), building.getSellPrice().format()
                     )).build()).queue();
@@ -267,7 +273,11 @@ public abstract class Building
 
     @SuppressWarnings("all")
     public void refreshMenu(ButtonClickEvent event) throws CommandException {
-        event.getMessage().editMessageEmbeds(((ActionMenuBuilder) getMenuBuilder()).getEmbed().build()).setActionRows(
+        refreshMenu(event.getMessage());
+    }
+
+    public void refreshMenu(Message menuMessage) throws CommandException {
+        menuMessage.editMessageEmbeds(((ActionMenuBuilder) getMenuBuilder()).getEmbed().build()).setActionRows(
                 exists() ? InteractionUtil.of(getActionMenuBuilder().getButtons().stream()
                         .map(ActionButton::button)
                         .collect(Collectors.toList()))
@@ -280,6 +290,15 @@ public abstract class Building
                 String.format("%s\n%s\n**Price:** %s\n\u200b",
                         getFormattedName(true), getDescription(), getPrice().format()),
                         true);
+    }
+
+    public void executeButtonAction(ButtonClickEvent event, CommandRunnable action) throws CommandException {
+        try {
+            action.execute();
+        } catch (CommandException e) {
+            refreshMenu(event);
+            throw e;
+        }
     }
 
     public void repair() throws CommandException {
