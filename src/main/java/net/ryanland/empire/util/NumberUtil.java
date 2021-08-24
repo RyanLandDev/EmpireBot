@@ -55,15 +55,4 @@ public class NumberUtil {
         return number > min && number < max;
     }
 
-    public static int randomInt(int min, int max) {
-        return new Random().nextInt((max + 1) - min) + min;
-    }
-
-    public static float randomFloat(float min, float max) {
-        min = min * 100000;
-        max = max * 100000;
-        float result = new Random().nextInt((int) (max - min)) + min;
-        return result / 100000;
-    }
-
 }

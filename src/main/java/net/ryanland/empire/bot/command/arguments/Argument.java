@@ -5,9 +5,11 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.empire.bot.command.arguments.parsing.functional_interface.ArgumentBiFunction;
 import net.ryanland.empire.bot.events.CommandEvent;
 
-import java.util.Queue;
+import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public abstract class Argument<T> {
@@ -17,6 +19,7 @@ public abstract class Argument<T> {
     private String description;
     private boolean optional = false;
     private Function<CommandEvent, T> optionalFunction = event -> null;
+    private List<ArgumentBiFunction<Deque<OptionMapping>, CommandEvent, T>> fallbacks = new ArrayList<>();
 
     protected OptionType type = OptionType.STRING;
 
@@ -62,6 +65,16 @@ public abstract class Argument<T> {
         return this;
     }
 
+    public Argument<T> fallbacks(ArgumentBiFunction<Deque<OptionMapping>, CommandEvent, T>... fallbacks) {
+        this.fallbacks = Arrays.asList(fallbacks);
+        return this;
+    }
+
+    public Argument<T> fallback(ArgumentBiFunction<Deque<OptionMapping>, CommandEvent, T> fallback) {
+        fallbacks.add(fallback);
+        return this;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -86,5 +99,38 @@ public abstract class Argument<T> {
         return data;
     }
 
-    public abstract T parse(Queue<OptionMapping> arguments, CommandEvent event) throws ArgumentException;
+    public final Object parse(Deque<OptionMapping> arguments, CommandEvent event) throws ArgumentException {
+        // Create clone of queue to support queue operations from multiple functions
+        Deque<OptionMapping> queueCopy = new ArrayDeque<>(arguments);
+
+        // Parse base argument
+        Object parsed = null;
+        try {
+            parsed = parseArg(queueCopy, event);
+        } catch (ArgumentException ignored) {
+        }
+
+        // Create another queue clone
+        Deque<OptionMapping> queueCopyTwo = new ArrayDeque<>(arguments);
+
+        // Run fallbacks
+        if (parsed == null) {
+            for (ArgumentBiFunction<Deque<OptionMapping>, CommandEvent, T> fallback : fallbacks) {
+                parsed = fallback.run(queueCopyTwo, event);
+                if (parsed != null) return parsed;
+            }
+        }
+
+        // Update queue
+        if (queueCopy.size() > queueCopyTwo.size()) {
+            arguments = queueCopyTwo;
+        } else {
+            arguments = queueCopy;
+        }
+
+        // Return result
+        return parsed;
+    }
+
+    public abstract T parseArg(Deque<OptionMapping> arguments, CommandEvent event) throws ArgumentException;
 }

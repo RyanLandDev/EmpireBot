@@ -5,13 +5,14 @@ import net.ryanland.empire.bot.command.arguments.Argument;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.events.CommandEvent;
 
+import java.util.Deque;
 import java.util.Queue;
 
 public abstract class SingleArgument<T> extends Argument<T> {
 
     @Override
-    public T parse(Queue<OptionMapping> arguments, CommandEvent event) throws ArgumentException {
-        return parsed(arguments.remove(), event);
+    public T parseArg(Deque<OptionMapping> arguments, CommandEvent event) throws ArgumentException {
+        return parsed(arguments.pop(), event);
     }
 
     public abstract T parsed(OptionMapping argument, CommandEvent event) throws ArgumentException;

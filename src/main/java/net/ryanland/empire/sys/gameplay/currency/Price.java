@@ -30,10 +30,18 @@ public record Price<T extends Number>(Currency currency, T amount) {
         currency.update(profile, currency.get(profile).amount() + amount.intValue());
     }
 
+    public Price<Integer> difference(Price<Integer> otherPrice) {
+        return new Price<>(currency, (int) amount - otherPrice.amount());
+    }
+
     @SuppressWarnings("unchecked")
     public void buy(Profile profile) throws CommandException {
-        if (!profile.canAfford((Price<Integer>) this)) {
-            throw new CannotAffordException("You cannot afford this."); //TODO add "u need x more homie"
+        Price<Integer> price = (Price<Integer>) this;
+
+        if (!profile.canAfford(price)) {
+            throw new CannotAffordException(
+                    "You cannot afford this. You need " + price.difference(currency.get(profile)).format() +
+                            " more.");
         }
 
         currency.update(profile, currency.get(profile).amount() - amount.intValue());

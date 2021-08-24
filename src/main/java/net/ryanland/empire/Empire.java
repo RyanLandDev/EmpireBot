@@ -12,6 +12,7 @@ import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.dev.balance.BalanceCommand;
+import net.ryanland.empire.bot.command.impl.games.GambleCommand;
 import net.ryanland.empire.bot.command.impl.info.*;
 import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
 import net.ryanland.empire.bot.command.impl.items.BuildingCommand;
@@ -87,7 +88,10 @@ public class Empire {
                 new MoveCommand(),
                 new ShopCommand(),
                 new BuyCommand(),
-                new ClaimCommand()
+                new ClaimCommand(),
+
+                // Games
+                new GambleCommand()
         );
 
         // Build bot

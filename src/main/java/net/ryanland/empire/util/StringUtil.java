@@ -37,9 +37,8 @@ public class StringUtil implements Emojis {
             case 13 -> { return THIRTEEN; }
             case 14 -> { return FOURTEEN; }
             case 15 -> { return FIFTEEN; }
+            default -> { return PUTIN_WALK; }
         }
-
-        return PUTIN_WALK;
     }
 
 }
