@@ -1,5 +1,6 @@
 package net.ryanland.empire.sys.message.interactions.menu.action;
 
+import net.dv8tion.jda.api.interactions.Interaction;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
@@ -32,7 +33,7 @@ public class ActionMenu implements InteractionMenu {
     }
 
     @Override
-    public void send(CommandEvent commandEvent) {
+    public void send(Interaction interaction) {
 
         // Stream map of actual buttons
         List<Button> buttons = Arrays.stream(actionButtons)
@@ -47,11 +48,11 @@ public class ActionMenu implements InteractionMenu {
                 ));
 
         // Add button listener
-        ButtonHandler.addListener(commandEvent.performReply(embed)
+        ButtonHandler.addListener(interaction.replyEmbeds(embed.build())
                 .addActionRows(InteractionUtil.of(buttons))
                 .complete(),
                 buttonEvent -> new ButtonHandler.ButtonListener(
-                        commandEvent.getUser().getIdLong(),
+                        interaction.getUser().getIdLong(),
                         clickEvent -> buttonConsumers.get(clickEvent.getComponentId())
                 ));
 

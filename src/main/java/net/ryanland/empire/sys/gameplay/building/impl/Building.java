@@ -4,6 +4,8 @@ import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateEvent;
+import net.dv8tion.jda.api.interactions.Interaction;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.executor.functional_interface.CommandRunnable;
@@ -29,6 +31,7 @@ import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenu;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.confirm.ConfirmMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -182,36 +185,32 @@ public abstract class Building
                             .withEmoji(Emoji.fromMarkdown(getMainCurrency().getEmoji()))
                             .withDisabled(!canRepair()),
 
-                    (event, aBuilding) -> {
-                        Building building = (Building) aBuilding;
-                        Price<Integer> repairPrice = building.getRepairPrice();
+                    event -> {
+                        Price<Integer> repairPrice = getRepairPrice();
 
                         executeButtonAction(event, this::repair);
                         refreshMenu(event);
 
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", building.getFormattedName(), repairPrice.format()
+                                "Repaired your %s for %s.", getFormattedName(), repairPrice.format()
                         )).build()).setEphemeral(true).queue();
-
-                    }, this
+                    }
             ).addButton(
                     Button.success("repairCrystal", String.format("Repair (%s)",
                                     canCrystalRepair() ? getCrystalRepairPrice().currency().getName() : "Not Enough"))
                             .withEmoji(Emoji.fromMarkdown(getCrystalRepairPrice().currency().getEmoji()))
                             .withDisabled(!canCrystalRepair()),
 
-                    (event, aBuilding) -> {
-                        Building building = (Building) aBuilding;
-                        Price<Integer> crystalRepairPrice = building.getCrystalRepairPrice();
+                    event -> {
+                        Price<Integer> crystalRepairPrice = getCrystalRepairPrice();
 
                         executeButtonAction(event, this::crystalRepair);
                         refreshMenu(event);
 
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", building.getFormattedName(), crystalRepairPrice.format()
+                                "Repaired your %s for %s.", getFormattedName(), crystalRepairPrice.format()
                         )).build()).setEphemeral(true).queue();
-
-                    }, this
+                    }
             );
         } else {
             builder.addButton(
@@ -227,34 +226,22 @@ public abstract class Building
                         .withEmoji(Emoji.fromMarkdown(UPGRADE))
                         .withDisabled(!canUpgrade()),
 
-                (event, aBuilding) -> {
-                    Building building = (Building) aBuilding;
-                    Price<Integer> upgradePrice = building.getUpgradePrice();
+                event -> {
+                    Price<Integer> upgradePrice = getUpgradePrice();
 
                     executeButtonAction(event, this::upgrade);
                     refreshMenu(event);
 
                     event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                            "Upgraded your %s for %s.", building.getFormattedName(), upgradePrice.format()
+                            "Upgraded your %s for %s.", getFormattedName(), upgradePrice.format()
                     )).build()).setEphemeral(true).queue();
-
-                }, this
+                }
         ).addButton(
                 Button.secondary("sell", "Sell" + (canSell() ? "" : String.format(" (%s)", getSellState().getName())))
                         .withEmoji(Emoji.fromMarkdown(SELL))
                         .withDisabled(!canSell()),
 
-                (event, aBuilding) -> {
-                    Building building = (Building) aBuilding;
-
-                    executeButtonAction(event, this::sell);
-                    refreshMenu(event);
-
-                    event.deferReply(true).addEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                            "Sold your %s for %s.", building.getFormattedName(), building.getSellPrice().format()
-                    )).build()).queue();
-
-                }, this
+                event -> executeButtonAction(event, () -> sell(event))
         );
 
         return builder;
@@ -334,14 +321,23 @@ public abstract class Building
         profile.getDocument().update();
     }
 
-    public void sell() throws CommandException {
+    @SuppressWarnings("all")
+    public void sell(GenericComponentInteractionCreateEvent event) throws CommandException {
         if (!canSell()) {
             throw new CommandException("You cannot sell this building.");
         }
 
-        getSellPrice().give(profile);
-        profile.removeBuilding(layer);
-        profile.getDocument().update();
+        new ConfirmMenu("Are you sure you want to sell this building?", () -> {
+            getSellPrice().give(profile);
+
+            profile.removeBuilding(layer);
+            profile.getDocument().update();
+
+            refreshMenu(event.getMessage());
+
+        }, String.format(
+                "Sold your %s for %s.", getFormattedName(), getSellPrice().format()
+        )).send(event);
     }
 
 

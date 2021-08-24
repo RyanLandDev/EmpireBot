@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
@@ -26,7 +27,7 @@ public class ResetCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) {
+    public void run(CommandEvent event) throws CommandException {
         event.reply(new ConfirmMenu(
                 "**Are you sure?**\n\nThis will reset __EVERYTHING__ and __CANNOT__ be undone.",
                 () -> DocumentCache.delete(event.getUser().getId(), UserDocument.class),

@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
 import net.ryanland.empire.bot.command.arguments.parsing.ParsedArgumentMap;
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.impl.GlobalDocument;
@@ -143,11 +144,11 @@ public class CommandEvent {
         sendReply(embed, ephemeral).queue();
     }
 
-    public void reply(InteractionMenu menu) {
-        menu.send(this);
+    public void reply(InteractionMenu menu) throws CommandException {
+        menu.send(getInteraction());
     }
 
-    public void reply(InteractionMenuBuilder<?> menuBuilder) {
+    public void reply(InteractionMenuBuilder<?> menuBuilder) throws CommandException {
         reply(menuBuilder.build());
     }
 

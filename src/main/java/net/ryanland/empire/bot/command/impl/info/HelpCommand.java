@@ -81,7 +81,7 @@ public class HelpCommand extends Command {
         }
 
         // Build and send the menu
-        menu.build().send(event);
+        menu.build().send(event.getInteraction());
     }
 
     private void supplyCommandHelp(CommandEvent event, Command command) {
