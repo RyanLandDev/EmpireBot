@@ -414,7 +414,7 @@ public abstract class Building
     public enum UpgradeState implements BuildingActionState {
 
         NOT_MAXED("Broken", Building::isHealthMaxed),
-        STAGE_LIMIT("Stage Limit", building -> building.getStage() + 1 > building.getProfile().getBuildingStageLimit()),
+        STAGE_LIMIT("Stage Limit", building -> building.getStage() + 1 <= building.getProfile().getBuildingStageLimit()),
         NOT_ENOUGH("Not Enough", building -> building.getMainCurrency().get(building.getProfile()).amount() >= building.getUpgradePrice().amount()),
         NOT_EXISTING("Not Existing", Building::exists),
 
