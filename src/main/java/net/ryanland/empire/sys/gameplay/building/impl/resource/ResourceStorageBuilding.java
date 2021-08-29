@@ -22,11 +22,11 @@ public abstract class ResourceStorageBuilding extends ResourceBuilding {
                 .map(b -> (ResourceStorageBuilding) b)
                 .collect(Collectors.toList());
 
-        int toStore = getEffectiveCurrency().getInt(getProfile());
+        int toStore = getEffectiveCurrency().get(getProfile()).amount();
 
         for (ResourceStorageBuilding building : buildings) {
 
-            int capacity = building.getCapacityInt();
+            int capacity = building.getCapacity().amount();
             toStore = toStore - capacity;
 
             if (layer == building.getLayer()) {
