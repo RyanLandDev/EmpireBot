@@ -10,22 +10,26 @@ import java.util.function.Function;
 
 public enum Currency implements Emojis {
 
-    GOLD("Gold", Emojis.GOLD, 5000, Profile::getGold, UserDocument::setGold),
-    CRYSTALS("Crystals", Emojis.CRYSTALS, 500, Profile::getCrystals, UserDocument::setCrystals)
+    GOLD("Gold", Emojis.GOLD, 5000, 0.1f,
+            Profile::getGold, UserDocument::setGold),
+    CRYSTALS("Crystals", Emojis.CRYSTALS, 500, 2.3f,
+            Profile::getCrystals, UserDocument::setCrystals)
     ;
 
     private final String name;
     private final String emoji;
     private final int defaultCapacity;
+    private final float collectXpMultiplier;
 
     private final Function<Profile, Price<Integer>> getter;
     private final BiConsumer<UserDocument, Integer> setter;
 
-    Currency(String name, String emoji, int defaultCapacity,
+    Currency(String name, String emoji, int defaultCapacity, float collectXpMultiplier,
              Function<Profile, Price<Integer>> getter, BiConsumer<UserDocument, Integer> setter) {
         this.name = name;
         this.emoji = emoji;
         this.defaultCapacity = defaultCapacity;
+        this.collectXpMultiplier = collectXpMultiplier;
 
         this.getter = getter;
         this.setter = setter;
@@ -43,8 +47,8 @@ public enum Currency implements Emojis {
         return defaultCapacity;
     }
 
-    public Integer getInt(Profile profile) {
-        return get(profile).amount();
+    public float getCollectXpMultiplier() {
+        return collectXpMultiplier;
     }
 
     public Price<Integer> get(Profile profile) {
@@ -75,10 +79,6 @@ public enum Currency implements Emojis {
 
     public Price<Integer> getAmount(Profile profile) {
         return getGetter().apply(profile);
-    }
-
-    public Integer getAmountInt(Profile profile) {
-        return getAmount(profile).amount();
     }
 
 }

@@ -15,6 +15,7 @@ public class RandomUtil {
         return result / 100000;
     }
 
+    @SafeVarargs
     public static <T> T pickRandom(T... options) {
         return options[randomInt(0, options.length)];
     }

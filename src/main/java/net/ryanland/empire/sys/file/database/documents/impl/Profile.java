@@ -1,6 +1,9 @@
 package net.ryanland.empire.sys.file.database.documents.impl;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.Interaction;
 import net.ryanland.empire.bot.command.executor.cooldown.Cooldown;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.file.Partition;
@@ -11,15 +14,21 @@ import net.ryanland.empire.sys.file.serializer.CooldownsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
+import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
+import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.util.DateUtil;
 import net.ryanland.empire.util.NumberUtil;
 import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -52,12 +61,8 @@ public class Profile implements SnowflakeDocument, Emojis {
         return document.getLevel();
     }
 
-    public Integer getCrystalsInt() {
-        return document.getCrystals();
-    }
-
     public Price<Integer> getCrystals() {
-        return new Price<>(Currency.CRYSTALS, getCrystalsInt());
+        return new Price<>(Currency.CRYSTALS, document.getCrystals());
     }
 
     public String getFormattedCrystals() {
@@ -65,15 +70,11 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public String getFormattedCrystals(boolean includeEmoji) {
-        return formattedNumberWithEmoji(getCrystalsInt(), CRYSTALS, includeEmoji);
-    }
-
-    public Integer getGoldInt() {
-        return document.getGold();
+        return formattedNumberWithEmoji(getCrystals().amount(), CRYSTALS, includeEmoji);
     }
 
     public Price<Integer> getGold() {
-        return new Price<>(Currency.GOLD, getGoldInt());
+        return new Price<>(Currency.GOLD, document.getGold());
     }
 
     public String getFormattedGold() {
@@ -81,7 +82,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public String getFormattedGold(boolean includeEmoji) {
-        return formattedNumberWithEmoji(getGoldInt(), GOLD, includeEmoji);
+        return formattedNumberWithEmoji(getGold().amount(), GOLD, includeEmoji);
     }
 
     public Integer getXp() {
@@ -106,6 +107,45 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     public String getXpProgressBar() {
         return NumberUtil.progressBar(10, getXp(), getRequiredXp());
+    }
+
+    /**
+     * Increases the profile's xp by the provided value and accounts for level ups.
+     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     * @param xp The amount of XP to give to the profile.
+     */
+    public void giveXp(int xp, Interaction interaction, MessageEmbed... embeds) {
+        int newXp = getXp() + xp;
+
+        // Level up
+        if (newXp >= getRequiredXp()) {
+            newXp -= getRequiredXp();
+
+            int newLevel = getLevel() + 1;
+            document.setLevel(newLevel);
+
+            interaction.replyEmbeds(new PresetBuilder(PresetType.NOTIFICATION,
+                    String.format("""
+                            You have leveled up to **Level %s**!
+
+                            :homes: **Building limit:** *%s* %s %s
+                            %s The maximum amount of buildings you can have.
+                            :bricks: **Building stage limit:** *%s* %3$s %s
+                            %5$s The maximum stage a building can be.
+
+                            %3$s Received %s""",
+                            newLevel, getBuildingLimit(), ARROW_RIGHT, getBuildingLimit(newLevel), AIR,
+                            getBuildingStageLimit(), getBuildingStageLimit(newLevel),
+                            "todo xd"),
+                    XP + " Level Up!")
+                    .build(), embeds).setEphemeral(true).queue();
+            //TODO add Mythical box as reward
+        } else {
+            interaction.replyEmbeds(Arrays.asList(embeds)).setEphemeral(true).queue();
+        }
+
+        // Update xp
+        document.setXp(newXp);
     }
 
     public boolean canAfford(@NotNull Price<Integer> price) {
@@ -181,7 +221,19 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public int getBuildingLimit() {
-        return (int) Math.floor(getLevel() * 1.25 + 3);
+        return getBuildingLimit(getLevel());
+    }
+
+    public static int getBuildingLimit(int level) {
+        return (int) Math.floor(level * 1.25 + 3);
+    }
+
+    public int getBuildingStageLimit() {
+        return getBuildingStageLimit(getLevel());
+    }
+
+    public static int getBuildingStageLimit(int level) {
+        return level;
     }
 
     public Date getCreated() {
@@ -210,10 +262,6 @@ public class Profile implements SnowflakeDocument, Emojis {
                 + currency.getDefaultCapacity());
     }
 
-    public int getCapacityInt(Currency currency) {
-        return getCapacity(currency).amount();
-    }
-
     public boolean capacityIsFull(Currency currency) {
         return capacityIsFull(currency, getCapacity(currency));
     }
@@ -223,7 +271,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public boolean capacityIsFull(Currency currency, int capacity) {
-        return capacity < currency.getAmountInt(this);
+        return capacity < currency.getAmount(this).amount();
     }
 
     /**
@@ -242,7 +290,7 @@ public class Profile implements SnowflakeDocument, Emojis {
      * @return The formatted capacity string.
      */
     public String getFormattedCapacity(Currency currency, boolean includeFull) {
-        int capacity = getCapacityInt(currency);
+        int capacity = getCapacity(currency).amount();
         return NumberUtil.format(capacity) + (includeFull && capacityIsFull(currency, capacity) ? " **FULL**" : "");
     }
 

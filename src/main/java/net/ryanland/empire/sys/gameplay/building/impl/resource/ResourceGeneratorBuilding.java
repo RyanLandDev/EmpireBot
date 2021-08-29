@@ -1,6 +1,8 @@
 package net.ryanland.empire.sys.gameplay.building.impl.resource;
 
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.interactions.Interaction;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
@@ -8,10 +10,14 @@ import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
+import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
+import net.ryanland.empire.util.DateUtil;
+import net.ryanland.empire.util.NumberUtil;
+import net.ryanland.empire.util.RandomUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -56,7 +62,12 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                 .insertElement(0, BuildingInfoElement.upgradable(
                         getEffectiveCurrency().getName() + " per minute", "🏭", getEffectiveCurrency().getEmoji(),
                         getUnitPerMin(), getUnitPerMin(stage + 1),
-                        "The resources this building makes per minute."))
+                        "The resources this building makes per minute.\n" + AIR +
+                                " Time left to fill up: " +
+                                DateUtil.formatRelative(new Date(Math.max(0,
+                                        (long) (getCapacity().amount() / getUnitPerMs().amount()) -
+                                                (new Date().getTime() - lastCollect.getTime()))))
+                ))
         );
     }
 
@@ -68,18 +79,18 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                                         (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
                                 .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
                                 .withDisabled(!canCollect()),
-                        (event, aBuilding) -> {
-                            ResourceGeneratorBuilding building = (ResourceGeneratorBuilding) aBuilding;
-                            Price<Integer> holding = building.getHolding();
+                        event -> {
+                            Price<Integer> holding = getHolding();
+                            int xp = getCollectXp();
 
-                            building.collect();
+                            executeButtonAction(event, () -> collect(xp, event, new PresetBuilder(PresetType.SUCCESS, String.format(
+                                    "Collected %s from %s.",
+                                    holding.format() + (xp > 0 ? String.format(" and %s %s", XP, NumberUtil.format(xp)) : ""),
+                                    getFormattedName()
+                            )).build()));
 
                             refreshMenu(event);
-                            event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                    "Collected %s from %s.", holding.format(), building.getFormattedName()
-                            )).build()).setEphemeral(true).queue();
-
-                        }, this
+                        }
                 );
     }
 
@@ -126,15 +137,23 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
         return getCollectState() == CollectState.AVAILABLE;
     }
 
-    public void collect() throws CommandException {
+    public void collect(int xp, Interaction interaction, MessageEmbed... embeds) throws CommandException {
         if (!canCollect()) {
             throw new CommandException("You cannot collect from this building.");
         }
 
         getHolding().give(profile);
+        profile.giveXp(xp, interaction, embeds);
+
         lastCollect = new Date();
         profile.setBuilding(this);
         profile.getDocument().update();
+    }
+
+    public int getCollectXp() {
+        return (int) Math.floor(
+                (getHolding().amount() * getEffectiveCurrency().getCollectXpMultiplier())
+                        * RandomUtil.randomFloat(0.75f, 1.75f));
     }
 
     @Override
@@ -147,7 +166,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
         long msDiff = new Date().getTime() - lastCollect.getTime();
         int holding = (int) Math.floor(unitPerMs * msDiff);
 
-        return new Price<>(getEffectiveCurrency(), Math.min(holding, getCapacityInt()));
+        return new Price<>(getEffectiveCurrency(), Math.min(holding, getCapacity().amount()));
     }
 
     public Date getLastCollect() {

@@ -18,6 +18,7 @@ import net.ryanland.empire.bot.events.CommandEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class CommandHandler {
 
@@ -43,6 +44,17 @@ public class CommandHandler {
         }
     }
 
+    private static final BiConsumer<SubCommand, CommandData> UPSERT_CONSUMER = (command, data) -> {
+
+        SubcommandData subCmdData = new SubcommandData(command.getName(), command.getDescription());
+
+        for (Argument<?> arg : command.getArguments()) {
+            subCmdData.addOptions(arg.getOptionData());
+        }
+        data.addSubcommands(subCmdData);
+
+    };
+
     public static void upsertAll() throws InvalidSupportGuildException {
 
         Guild testGuild = Empire.getJda().getGuildById(Empire.SUPPORT_GUILD);
@@ -63,24 +75,14 @@ public class CommandHandler {
             } else if (cmdInfo.getSubCommandGroups().isEmpty()) {
 
                 for (SubCommand subCmd : cmdInfo.getSubCommands()) {
-                    SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());
-
-                    for (Argument<?> arg : subCmd.getArguments()) {
-                        subCmdData.addOptions(arg.getOptionData());
-                    }
-                    slashCmdData.addSubcommands(subCmdData);
+                    UPSERT_CONSUMER.accept(subCmd, slashCmdData);
                 }
             } else {
                 for (SubCommandGroup group : cmdInfo.getSubCommandGroups()) {
                     SubcommandGroupData subCmdGroupData = new SubcommandGroupData(group.getName(), group.getDescription());
 
                     for (SubCommand subCmd : group.getSubCommands()) {
-                        SubcommandData subCmdData = new SubcommandData(subCmd.getName(), subCmd.getDescription());
-
-                        for (Argument<?> arg : subCmd.getArguments()) {
-                            subCmdData.addOptions(arg.getOptionData());
-                        }
-                        subCmdGroupData.addSubcommands(subCmdData);
+                        UPSERT_CONSUMER.accept(subCmd, slashCmdData);
                     }
                     slashCmdData.addSubcommandGroups(subCmdGroupData);
                 }

@@ -222,7 +222,7 @@ public abstract class Building
         }
 
         builder.addButton(
-                Button.secondary("upgrade", "Upgrade" + (canUpgrade() ? "" : " (Not Enough)"))
+                Button.secondary("upgrade", "Upgrade" + (canUpgrade() ? "" : " (%s)".formatted(getUpgradeState().getName())))
                         .withEmoji(Emoji.fromMarkdown(UPGRADE))
                         .withDisabled(!canUpgrade()),
 
@@ -237,7 +237,7 @@ public abstract class Building
                     )).build()).setEphemeral(true).queue();
                 }
         ).addButton(
-                Button.secondary("sell", "Sell" + (canSell() ? "" : String.format(" (%s)", getSellState().getName())))
+                Button.secondary("sell", "Sell" + (canSell() ? "" : " (%s)".formatted(getSellState().getName())))
                         .withEmoji(Emoji.fromMarkdown(SELL))
                         .withDisabled(!canSell()),
 
@@ -317,6 +317,8 @@ public abstract class Building
 
         getUpgradePrice().buy(profile);
         stage += 1;
+        health = getMaxHealth();
+
         profile.setBuilding(this);
         profile.getDocument().update();
     }
@@ -409,8 +411,41 @@ public abstract class Building
         return canRepair() || canCrystalRepair();
     }
 
+    public enum UpgradeState implements BuildingActionState {
+
+        NOT_MAXED("Broken", Building::isHealthMaxed),
+        STAGE_LIMIT("Stage Limit", building -> building.getStage() + 1 > building.getProfile().getBuildingStageLimit()),
+        NOT_ENOUGH("Not Enough", building -> building.getMainCurrency().get(building.getProfile()).amount() >= building.getUpgradePrice().amount()),
+        NOT_EXISTING("Not Existing", Building::exists),
+
+        AVAILABLE("Available", building -> false)
+        ;
+
+        private final String name;
+        private final Predicate<Building> check;
+
+        UpgradeState(String name, Predicate<Building> check) {
+            this.name = name;
+            this.check = check;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public Predicate<Building> getCheck() {
+            return check;
+        }
+    }
+
+    public UpgradeState getUpgradeState() {
+        return BuildingActionState.get(this, UpgradeState.class);
+    }
+
     public boolean canUpgrade() {
-        return getMainCurrency().get(profile).amount() >= getUpgradePrice().amount() && exists();
+        return getUpgradeState() == UpgradeState.AVAILABLE;
     }
 
     public Currency getMainCurrency() {

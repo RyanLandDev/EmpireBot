@@ -7,6 +7,7 @@ import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+import net.ryanland.empire.util.DateUtil;
 
 public abstract class ResourceBuilding extends Building {
 
@@ -20,10 +21,6 @@ public abstract class ResourceBuilding extends Building {
         this.stage = originalStage;
 
         return result;
-    }
-
-    public Integer getCapacityInt() {
-        return getCapacity().amount();
     }
 
     public abstract Price<Integer> getHolding();
