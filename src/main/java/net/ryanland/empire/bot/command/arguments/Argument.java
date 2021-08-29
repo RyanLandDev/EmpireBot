@@ -9,7 +9,6 @@ import net.ryanland.empire.bot.command.arguments.parsing.functional_interface.Ar
 import net.ryanland.empire.bot.events.CommandEvent;
 
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public abstract class Argument<T> {
@@ -65,7 +64,8 @@ public abstract class Argument<T> {
         return this;
     }
 
-    public Argument<T> fallbacks(ArgumentBiFunction<Deque<OptionMapping>, CommandEvent, T>... fallbacks) {
+    @SafeVarargs
+    public final Argument<T> fallbacks(ArgumentBiFunction<Deque<OptionMapping>, CommandEvent, T>... fallbacks) {
         this.fallbacks = Arrays.asList(fallbacks);
         return this;
     }

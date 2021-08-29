@@ -31,8 +31,8 @@ public class DateUtil {
                     String.valueOf(Integer.parseInt(matcher.group()) - 1));
         }
 
-        // This regex will remove all spaces and leading 0s
-        return formatted.replaceAll("^((^| )0[^\\d ]+)*| ", "");
+        // This regex will remove all spaces and leading 0s, except the last leading 0
+        return formatted.replaceAll("^((^| )0[^\\d ](?!$)+)*| ", "");
     }
 
     public static String getDiscordTimestamp(Date date) {
