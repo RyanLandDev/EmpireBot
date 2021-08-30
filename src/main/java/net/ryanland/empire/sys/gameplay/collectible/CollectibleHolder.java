@@ -1,0 +1,44 @@
+package net.ryanland.empire.sys.gameplay.collectible;
+
+import net.ryanland.empire.sys.gameplay.box.impl.HourlyBox;
+import net.ryanland.empire.sys.gameplay.collectible.item.crystals.PileOfCrystalsItem;
+import net.ryanland.empire.sys.gameplay.collectible.item.crystals.PocketOfCrystalsItem;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class CollectibleHolder {
+
+    @SuppressWarnings("all")
+    private static final Collectible[] COLLECTIBLES = new Collectible[]{
+
+            // Box
+            new HourlyBox(),
+
+            // Item
+            new PocketOfCrystalsItem(),
+            new PileOfCrystalsItem()
+
+    };
+
+    private static final HashMap<String, Collectible> NAME_COLLECTIBLES = new HashMap<>(
+            Arrays.stream(COLLECTIBLES)
+                    .collect(Collectors.toMap(Collectible::getName, Function.identity()))
+    );
+
+    private static final HashMap<Integer, Collectible> ID_COLLECTIBLES = new HashMap<>(
+            Arrays.stream(COLLECTIBLES)
+                    .collect(Collectors.toMap(Collectible::getId, Function.identity()))
+    );
+
+    public static Collectible get(String name) {
+        return NAME_COLLECTIBLES.get(name);
+    }
+
+    public static Collectible get(int id) {
+        return ID_COLLECTIBLES.get(id);
+    }
+
+}

@@ -15,11 +15,9 @@ import net.ryanland.empire.bot.command.impl.dev.balance.BalanceCommand;
 import net.ryanland.empire.bot.command.impl.games.GambleCommand;
 import net.ryanland.empire.bot.command.impl.info.*;
 import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
-import net.ryanland.empire.bot.command.impl.items.BuildingCommand;
-import net.ryanland.empire.bot.command.impl.items.BuyCommand;
-import net.ryanland.empire.bot.command.impl.items.MoveCommand;
-import net.ryanland.empire.bot.command.impl.items.ShopCommand;
+import net.ryanland.empire.bot.command.impl.items.*;
 import net.ryanland.empire.bot.command.impl.items.claim.ClaimCommand;
+import net.ryanland.empire.bot.command.impl.profile.CooldownsCommand;
 import net.ryanland.empire.bot.command.impl.profile.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.profile.ResetCommand;
 import net.ryanland.empire.bot.command.impl.profile.StartCommand;
@@ -82,6 +80,7 @@ public class Empire {
                 new StartCommand(),
                 new EmpireCommand(),
                 new ResetCommand(),
+                new CooldownsCommand(),
 
                 // Items
                 new BuildingCommand(),
@@ -89,6 +88,7 @@ public class Empire {
                 new ShopCommand(),
                 new BuyCommand(),
                 new ClaimCommand(),
+                new InventoryCommand(),
 
                 // Games
                 new GambleCommand()

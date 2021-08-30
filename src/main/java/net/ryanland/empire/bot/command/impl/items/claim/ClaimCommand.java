@@ -13,7 +13,8 @@ public class ClaimCommand extends SubCommandHolder {
                 .description("Claim packages.")
                 .category(Category.ITEMS)
                 .subCommands(
-                        new ClaimHourlyCommand()
+                        new ClaimHourlyCommand(),
+                        new ClaimDailyCommand()
                 )
                 .requiresProfile();
     }

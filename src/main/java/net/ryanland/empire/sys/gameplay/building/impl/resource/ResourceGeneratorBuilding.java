@@ -169,6 +169,16 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
         return new Price<>(getEffectiveCurrency(), Math.min(holding, getCapacity().amount()));
     }
 
+    @Override
+    public void repair() throws CommandException {
+        if (!canRepair()) {
+            throw new CommandException("You cannot repair this building.");
+        }
+
+        if (!isUsable()) lastCollect = new Date();
+        super.repair();
+    }
+
     public Date getLastCollect() {
         return lastCollect;
     }

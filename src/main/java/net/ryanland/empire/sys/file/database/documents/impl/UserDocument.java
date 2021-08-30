@@ -33,6 +33,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     );
     @SuppressWarnings("all")
     public static final List<List> DEFAULT_COOLDOWNS = Collections.emptyList();
+    public static final List<Integer> DEFAULT_INVENTORY = Collections.emptyList();
 
     public UserDocument(Document document) {
         super(document);
@@ -48,6 +49,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private Date created = getCreated();
     @SuppressWarnings("all")
     private List<List> cooldowns = getCooldowns();
+    private List<Integer> inventory = getInventory();
 
     @Override
     public void updated(List<Bson> updates) {
@@ -59,6 +61,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         checkUpdate(updates, buildings, getBuildings(), "blds");
         checkUpdate(updates, created, getCreated(), "cr");
         checkUpdate(updates, cooldowns, getCooldowns(), "cd");
+        checkUpdate(updates, inventory, getInventory(), "inv");
 
         performUpdate(DocumentCache.USER_COLLECTION, Filters.eq("id", getId()), updates);
     }
@@ -118,6 +121,11 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return setCooldownsRaw(CooldownsSerializer.getInstance().serialize(cooldowns));
     }
 
+    public UserDocument setInventory(List<Integer> inventory) {
+        this.inventory = inventory;
+        return this;
+    }
+
     @Override
     public String getId() {
         return getString("id");
@@ -155,6 +163,10 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     @SuppressWarnings("all")
     public List<List> getCooldowns() {
         return getList("cd", List.class, DEFAULT_COOLDOWNS);
+    }
+
+    public List<Integer> getInventory() {
+        return getList("inv", Integer.class, DEFAULT_INVENTORY);
     }
 
 }
