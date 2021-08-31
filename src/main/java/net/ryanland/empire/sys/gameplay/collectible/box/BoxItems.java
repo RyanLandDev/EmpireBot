@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.gameplay.box;
+package net.ryanland.empire.sys.gameplay.collectible.box;
 
 import net.ryanland.empire.sys.gameplay.collectible.Collectible;
 import net.ryanland.empire.util.NumberUtil;
@@ -22,6 +22,10 @@ public class BoxItems {
         return add(new BoxItem(probabilityUntil, collectible));
     }
 
+    /**
+     * Randomly picks a {@link Collectible} in the list based on the probabilities.
+     * @return The randomly picked {@link Collectible}
+     */
     public Collectible pick() {
         int index = RandomUtil.randomInt(1, maxProbability);
 

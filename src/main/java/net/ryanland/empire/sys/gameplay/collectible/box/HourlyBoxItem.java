@@ -1,10 +1,8 @@
-package net.ryanland.empire.sys.gameplay.box.impl;
+package net.ryanland.empire.sys.gameplay.collectible.box;
 
-import net.ryanland.empire.sys.gameplay.box.Box;
-import net.ryanland.empire.sys.gameplay.box.BoxItems;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 
-public class HourlyBox extends Box {
+public class HourlyBoxItem extends Box {
 
     @Override
     public String getName() {

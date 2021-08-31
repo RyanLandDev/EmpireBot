@@ -36,20 +36,9 @@ public interface Collectible {
     int getId();
 
     /*
-        If the item should be stored in an inventory, or be consumed instantly
+        Code executed when the Collectible is received
      */
-    boolean isStored();
-
-    /*
-        Default implementation of giving a profile the Collectible
-     */
-    default void give(Profile profile) {
-        List<Collectible> inventory = new ArrayList<>(profile.getInventory());
-        inventory.add(this);
-
-        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
-        profile.getDocument().update();
-    }
+    void receive(Profile profile);
 
 }
 

@@ -2,12 +2,13 @@ package net.ryanland.empire.sys.file.serializer;
 
 import net.ryanland.empire.sys.gameplay.collectible.Collectible;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
+import net.ryanland.empire.sys.gameplay.collectible.Item;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InventorySerializer implements Serializer<List<Integer>, List<Collectible>> {
+public class InventorySerializer implements Serializer<List<Integer>, List<Item>> {
 
     private static final InventorySerializer instance = new InventorySerializer();
 
@@ -16,16 +17,16 @@ public class InventorySerializer implements Serializer<List<Integer>, List<Colle
     }
 
     @Override
-    public List<Integer> serialize(@NotNull List<Collectible> toSerialize) {
+    public List<Integer> serialize(@NotNull List<Item> toSerialize) {
         return toSerialize.stream()
-                .map(Collectible::getId)
+                .map(Item::getId)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Collectible> deserialize(@NotNull List<Integer> toDeserialize) {
+    public List<Item> deserialize(@NotNull List<Integer> toDeserialize) {
         return toDeserialize.stream()
-                .map(CollectibleHolder::get)
+                .map(CollectibleHolder::getItem)
                 .collect(Collectors.toList());
     }
 }

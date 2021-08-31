@@ -1,7 +1,6 @@
 package net.ryanland.empire.bot.command.impl.items.claim;
 
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.gameplay.box.Box;
 import net.ryanland.empire.sys.gameplay.collectible.Collectible;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 
@@ -20,7 +19,7 @@ public record ClaimCommandInfo(String name, String receiveMessage, String failMe
                                                Predicate<CommandEvent> check) {
         Collectible collectible = CollectibleHolder.get(name);
         return new ClaimCommandInfo(name, "Received " + collectible.format(), failMessage, check,
-                event -> collectible.give(event.getProfile()));
+                event -> collectible.receive(event.getProfile()));
     }
 
     public static ClaimCommandInfo collectible(String name,

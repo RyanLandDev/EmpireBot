@@ -1,7 +1,8 @@
 package net.ryanland.empire.sys.gameplay.collectible.potion;
 
 import net.ryanland.empire.sys.gameplay.collectible.Collectible;
+import net.ryanland.empire.sys.gameplay.collectible.Item;
 
-public abstract class Potion implements Collectible {
+public abstract class Potion implements Item {
 
 }

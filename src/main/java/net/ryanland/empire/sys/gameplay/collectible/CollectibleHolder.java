@@ -1,8 +1,8 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
-import net.ryanland.empire.sys.gameplay.box.impl.HourlyBox;
-import net.ryanland.empire.sys.gameplay.collectible.item.crystals.PileOfCrystalsItem;
-import net.ryanland.empire.sys.gameplay.collectible.item.crystals.PocketOfCrystalsItem;
+import net.ryanland.empire.sys.gameplay.collectible.box.HourlyBoxItem;
+import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsItem;
+import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsItem;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class CollectibleHolder {
     private static final Collectible[] COLLECTIBLES = new Collectible[]{
 
             // Box
-            new HourlyBox(),
+            new HourlyBoxItem(),
 
             // Item
             new PocketOfCrystalsItem(),
@@ -33,12 +33,32 @@ public class CollectibleHolder {
                     .collect(Collectors.toMap(Collectible::getId, Function.identity()))
     );
 
+    private static final HashMap<String, Item> NAME_ITEMS = new HashMap<>(
+            Arrays.stream(COLLECTIBLES)
+                    .filter(c -> c instanceof Item)
+                    .collect(Collectors.toMap(Collectible::getName, c -> (Item) c))
+    );
+
+    private static final HashMap<Integer, Item> ID_ITEMS = new HashMap<>(
+            Arrays.stream(COLLECTIBLES)
+                    .filter(c -> c instanceof Item)
+                    .collect(Collectors.toMap(Collectible::getId, c -> (Item) c))
+    );
+
     public static Collectible get(String name) {
         return NAME_COLLECTIBLES.get(name);
     }
 
     public static Collectible get(int id) {
         return ID_COLLECTIBLES.get(id);
+    }
+
+    public static Item getItem(String name) {
+        return NAME_ITEMS.get(name);
+    }
+
+    public static Item getItem(int id) {
+        return ID_ITEMS.get(id);
     }
 
 }

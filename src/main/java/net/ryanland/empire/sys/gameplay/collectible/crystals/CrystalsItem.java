@@ -1,11 +1,16 @@
-package net.ryanland.empire.sys.gameplay.collectible.item.crystals;
+package net.ryanland.empire.sys.gameplay.collectible.crystals;
 
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
-import net.ryanland.empire.sys.gameplay.collectible.item.Item;
+import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.util.RandomUtil;
 
-public abstract class CrystalsItem extends Item {
+public abstract class CrystalsItem implements Item {
+
+    @Override
+    public String getHeadName() {
+        return null;
+    }
 
     @Override
     public String getEmoji() {
@@ -13,7 +18,7 @@ public abstract class CrystalsItem extends Item {
     }
 
     @Override
-    public void give(Profile profile) {
+    public void use(Profile profile) {
         profile.getDocument().setCrystals(profile.getCrystals().amount() + RandomUtil.randomInt(getMinimum(), getMaximum()));
         profile.getDocument().update();
     }

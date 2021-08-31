@@ -1,7 +1,6 @@
 package net.ryanland.empire.sys.file.database.documents.impl;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.Interaction;
 import net.ryanland.empire.bot.command.executor.cooldown.Cooldown;
@@ -12,14 +11,10 @@ import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
 import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
 import net.ryanland.empire.sys.file.serializer.CooldownsSerializer;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
-import net.ryanland.empire.sys.gameplay.box.Box;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
-import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
-import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
-import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
-import net.ryanland.empire.sys.gameplay.collectible.Collectible;
+import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
@@ -172,7 +167,7 @@ public class Profile implements SnowflakeDocument, Emojis {
         return CooldownsSerializer.getInstance().deserialize(document.getCooldowns());
     }
 
-    public List<Collectible> getInventory() {
+    public List<Item> getInventory() {
         return InventorySerializer.getInstance().deserialize(document.getInventory());
     }
 

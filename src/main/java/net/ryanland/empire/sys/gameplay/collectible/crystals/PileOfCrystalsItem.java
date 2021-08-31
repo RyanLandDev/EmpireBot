@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.gameplay.collectible.item.crystals;
+package net.ryanland.empire.sys.gameplay.collectible.crystals;
 
 public class PileOfCrystalsItem extends CrystalsItem {
 
