@@ -11,7 +11,8 @@ public class ClaimDailyCommand extends AbstractClaimSubCommand {
                 .name("daily")
                 .description("Claim your Daily package.")
                 .cooldown(86400)
-                .cooldownStorage(StorageType.EXTERNAL);
+                .cooldownStorage(StorageType.EXTERNAL)
+                .requiresProfile();
     }
 
     @Override

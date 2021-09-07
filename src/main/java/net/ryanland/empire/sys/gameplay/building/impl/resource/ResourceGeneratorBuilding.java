@@ -65,7 +65,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                                 " Time left to fill up: " +
                                 DateUtil.formatRelative(new Date(Math.max(0,
                                         (long) (getCapacity().amount() / getUnitPerMs().amount()) -
-                                                (new Date().getTime() - lastCollect.getTime()))))
+                                                (System.currentTimeMillis() - lastCollect.getTime()))))
                 ))
         );
     }
@@ -162,7 +162,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
         }
 
         double unitPerMs = getUnitPerMs().amount();
-        long msDiff = new Date().getTime() - lastCollect.getTime();
+        long msDiff = System.currentTimeMillis() - lastCollect.getTime();
         int holding = (int) Math.floor(unitPerMs * msDiff);
 
         return new Price<>(getEffectiveCurrency(), Math.min(holding, getCapacity().amount()));

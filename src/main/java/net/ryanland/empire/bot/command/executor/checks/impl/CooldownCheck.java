@@ -22,7 +22,7 @@ public class CooldownCheck extends CommandCheck {
                 PresetType.ERROR,
                 "This command is currently on cooldown.\nTime left: " +
                         DateUtil.formatRelative(new Date(
-                                CooldownHandler.getActiveCooldown(event).expires().getTime() - new Date().getTime())),
+                                CooldownHandler.getActiveCooldown(event).expires().getTime() - System.currentTimeMillis())),
                 "On Cooldown"
         );
     }

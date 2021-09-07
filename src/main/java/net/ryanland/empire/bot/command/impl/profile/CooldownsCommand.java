@@ -61,7 +61,8 @@ public class CooldownsCommand extends Command {
                            int firstSpaces, int secondSpaces,
                            Cooldown cooldown) {
         return "%s%s - `/%s`%s - %s\n".formatted(title, genTrimProofSpaces(firstSpaces), command, genTrimProofSpaces(secondSpaces),
-                cooldown == null ? "**Ready**" : DateUtil.formatRelative(new Date(cooldown.expires().getTime() - new Date().getTime())));
+                cooldown == null ? "**Ready**" :
+                        DateUtil.formatRelative(new Date(cooldown.expires().getTime() - System.currentTimeMillis())));
     }
 
 }

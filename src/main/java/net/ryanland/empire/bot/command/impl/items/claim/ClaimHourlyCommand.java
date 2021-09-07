@@ -11,7 +11,8 @@ public class ClaimHourlyCommand extends AbstractClaimSubCommand {
                 .name("hourly")
                 .description("Claim your Hourly package.")
                 .cooldown(3600)
-                .cooldownStorage(StorageType.EXTERNAL);
+                .cooldownStorage(StorageType.EXTERNAL)
+                .requiresProfile();
     }
 
     @Override

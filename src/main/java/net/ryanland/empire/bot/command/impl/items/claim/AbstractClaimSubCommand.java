@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.impl.items.claim;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.executor.cooldown.CooldownHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.events.CommandEvent;
@@ -20,15 +21,18 @@ public abstract class AbstractClaimSubCommand extends SubCommand {
     public final void run(CommandEvent event) throws CommandException {
         ClaimCommandInfo info = getClaimInfo();
 
-        if (info.check().test(event)) {
-            info.claim().accept(event);
-            event.reply(new PresetBuilder(PresetType.SUCCESS,
-                    String.format("You have claimed your %s.\n%s %s", info.name(), ARROW_RIGHT, info.receiveMessage())
-            ));
-        } else {
-            event.reply(new PresetBuilder(PresetType.ERROR,
-                    String.format("You cannot claim your %s.\n%s", info.name(), info.failMessage())
-            ));
+        try {
+            if (info.check().check(event)) {
+                info.claim().accept(event);
+                event.reply(new PresetBuilder(PresetType.SUCCESS,
+                        String.format("You have claimed your %s.\n%s %s", info.name(), ARROW_RIGHT, info.receiveMessage())
+                ));
+            } else {
+                throw new CommandException("You cannot claim your %s.\n%s".formatted(info.name(), info.failMessage()));
+            }
+        } catch (CommandException e) {
+            CooldownHandler.removeCooldown(event);
+            throw e;
         }
     }
 }

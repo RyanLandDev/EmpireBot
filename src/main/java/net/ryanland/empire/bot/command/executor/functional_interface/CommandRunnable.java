@@ -10,7 +10,7 @@ public interface CommandRunnable extends Runnable {
     @Override
     default void run() {
         throw new IllegalStateException("Use CommandRunnable#execute instead");
-    };
+    }
 
     void execute() throws CommandException;
 }

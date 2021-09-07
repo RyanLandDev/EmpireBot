@@ -34,8 +34,9 @@ public class ExternalCooldownManager implements CooldownManager {
         List<Cooldown> cooldowns = new ArrayList<>(get(user));
         cooldowns.add(cooldown);
 
-        DocumentCache.get(user, UserDocument.class).setCooldowns(cooldowns);
-        DocumentCache.update(user, UserDocument.class);
+        DocumentCache.get(user, UserDocument.class)
+                .setCooldowns(cooldowns)
+                .update();
         return cooldown;
     }
 

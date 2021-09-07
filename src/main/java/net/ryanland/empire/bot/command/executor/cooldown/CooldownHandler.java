@@ -47,7 +47,7 @@ public class CooldownHandler {
     public static void newCooldown(CommandEvent event) {
         cleanCooldowns(event);
         getCooldownManager(event).put(event.getUser(), new Cooldown(event.getCommand(),
-                new Date(new Date().getTime() + event.getCommand().getCooldownInMs())));
+                new Date(System.currentTimeMillis() + event.getCommand().getCooldownInMs())));
     }
 
     public static List<Cooldown> getActiveCooldowns(CommandEvent event) {
@@ -59,6 +59,21 @@ public class CooldownHandler {
         List<Cooldown> activeCooldowns = getActiveCooldowns(event);
         List<Cooldown> cooldowns = activeCooldowns.stream()
                 .filter(cooldown -> date.before(cooldown.expires()))
+                .collect(Collectors.toList());
+
+        if (!activeCooldowns.equals(cooldowns)) {
+            if (cooldowns.isEmpty()) {
+                purgeCooldowns(event);
+            } else {
+                getCooldownManager(event).put(event.getUser(), cooldowns);
+            }
+        }
+    }
+
+    public static void removeCooldown(CommandEvent event) {
+        List<Cooldown> activeCooldowns = getActiveCooldowns(event);
+        List<Cooldown> cooldowns = activeCooldowns.stream()
+                .filter(cooldown -> !cooldown.command().getName().equals(event.getCommand().getName()))
                 .collect(Collectors.toList());
 
         if (!activeCooldowns.equals(cooldowns)) {

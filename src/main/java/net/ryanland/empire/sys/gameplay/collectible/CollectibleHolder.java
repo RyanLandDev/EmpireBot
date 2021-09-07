@@ -3,12 +3,12 @@ package net.ryanland.empire.sys.gameplay.collectible;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.gameplay.collectible.box.DailyBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.box.HourlyBoxItem;
+import net.ryanland.empire.sys.gameplay.collectible.box.MemberBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsReceivable;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -20,6 +20,7 @@ public class CollectibleHolder {
             // Box
             new HourlyBoxItem(),
             new DailyBoxItem(),
+            new MemberBoxItem(),
 
             // Item
             new PocketOfCrystalsReceivable(),
