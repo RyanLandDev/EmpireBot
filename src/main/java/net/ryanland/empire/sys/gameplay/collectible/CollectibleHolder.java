@@ -1,8 +1,8 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
 import net.ryanland.empire.sys.gameplay.collectible.box.HourlyBoxItem;
-import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsItem;
-import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsItem;
+import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsReceivable;
+import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsReceivable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,8 +18,8 @@ public class CollectibleHolder {
             new HourlyBoxItem(),
 
             // Item
-            new PocketOfCrystalsItem(),
-            new PileOfCrystalsItem()
+            new PocketOfCrystalsReceivable(),
+            new PileOfCrystalsReceivable()
 
     };
 

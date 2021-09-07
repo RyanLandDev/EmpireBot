@@ -18,6 +18,7 @@ public class HourlyBoxItem extends Box {
     public BoxItems getItems() {
         return new BoxItems()
                 .add(20, CollectibleHolder.get("Pocket of Crystals"));
+        //TODO add 80% chance for one of all 1.5x 5min potions
     }
 
 }

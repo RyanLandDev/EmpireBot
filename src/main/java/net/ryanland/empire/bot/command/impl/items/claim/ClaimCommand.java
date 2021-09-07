@@ -14,7 +14,8 @@ public class ClaimCommand extends SubCommandHolder {
                 .category(Category.ITEMS)
                 .subCommands(
                         new ClaimHourlyCommand(),
-                        new ClaimDailyCommand()
+                        new ClaimDailyCommand(),
+                        new ClaimMemberCommand()
                 )
                 .requiresProfile();
     }

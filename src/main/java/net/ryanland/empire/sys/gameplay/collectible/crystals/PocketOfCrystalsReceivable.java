@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.gameplay.collectible.crystals;
 
-public class PocketOfCrystalsItem extends CrystalsItem {
+public class PocketOfCrystalsReceivable extends CrystalsReceivable {
 
     @Override
     public String getName() {

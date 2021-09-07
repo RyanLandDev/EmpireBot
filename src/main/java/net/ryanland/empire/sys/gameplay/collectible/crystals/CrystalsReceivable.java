@@ -1,11 +1,11 @@
 package net.ryanland.empire.sys.gameplay.collectible.crystals;
 
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
-import net.ryanland.empire.sys.gameplay.collectible.Item;
+import net.ryanland.empire.sys.gameplay.collectible.Receivable;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.util.RandomUtil;
 
-public abstract class CrystalsItem implements Item {
+public abstract class CrystalsReceivable implements Receivable {
 
     @Override
     public String getHeadName() {
@@ -18,7 +18,7 @@ public abstract class CrystalsItem implements Item {
     }
 
     @Override
-    public void use(Profile profile) {
+    public void receive(Profile profile) {
         profile.getDocument().setCrystals(profile.getCrystals().amount() + RandomUtil.randomInt(getMinimum(), getMaximum()));
         profile.getDocument().update();
     }
