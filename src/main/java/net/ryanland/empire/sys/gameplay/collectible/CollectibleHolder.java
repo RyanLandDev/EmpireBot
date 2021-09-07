@@ -1,11 +1,14 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
+import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.empire.sys.gameplay.collectible.box.DailyBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.box.HourlyBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsReceivable;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,7 @@ public class CollectibleHolder {
 
             // Box
             new HourlyBoxItem(),
+            new DailyBoxItem(),
 
             // Item
             new PocketOfCrystalsReceivable(),
@@ -33,16 +37,19 @@ public class CollectibleHolder {
                     .collect(Collectors.toMap(Collectible::getId, Function.identity()))
     );
 
+    private static final Item[] ITEMS = Arrays.stream(COLLECTIBLES)
+            .filter(c -> c instanceof Item)
+            .map(c -> (Item) c)
+            .toArray(Item[]::new);
+
     private static final HashMap<String, Item> NAME_ITEMS = new HashMap<>(
-            Arrays.stream(COLLECTIBLES)
-                    .filter(c -> c instanceof Item)
-                    .collect(Collectors.toMap(Collectible::getName, c -> (Item) c))
+            Arrays.stream(ITEMS)
+                    .collect(Collectors.toMap(Item::getName, Function.identity()))
     );
 
     private static final HashMap<Integer, Item> ID_ITEMS = new HashMap<>(
-            Arrays.stream(COLLECTIBLES)
-                    .filter(c -> c instanceof Item)
-                    .collect(Collectors.toMap(Collectible::getId, c -> (Item) c))
+            Arrays.stream(ITEMS)
+                    .collect(Collectors.toMap(Item::getId, Function.identity()))
     );
 
     public static Collectible get(String name) {
@@ -59,6 +66,20 @@ public class CollectibleHolder {
 
     public static Item getItem(int id) {
         return ID_ITEMS.get(id);
+    }
+
+    public static Item findItem(String name) throws CommandException {
+        try {
+            return Arrays.stream(ITEMS)
+                    .filter(item -> item.getName()
+                            .replaceAll("[ _-]", "")
+                            .equalsIgnoreCase(name
+                                    .replaceAll("[ _-]", "")))
+                    .collect(Collectors.toList())
+                    .get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException("An item with the name `" + name + "` was not found.");
+        }
     }
 
 }

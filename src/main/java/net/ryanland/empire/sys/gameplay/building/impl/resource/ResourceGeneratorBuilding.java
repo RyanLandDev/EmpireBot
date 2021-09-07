@@ -10,7 +10,6 @@ import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
-import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
@@ -86,7 +85,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                             executeButtonAction(event, () -> collect(xp, event, new PresetBuilder(PresetType.SUCCESS, String.format(
                                     "Collected %s from %s.",
                                     holding.format() + (xp > 0 ? String.format(" and %s %s", XP, NumberUtil.format(xp)) : ""),
-                                    getFormattedName()
+                                    format()
                             )).build()));
 
                             refreshMenu(event);

@@ -65,7 +65,7 @@ public class MoveCommand extends Command {
 
         // Send success message
         event.reply(new PresetBuilder(PresetType.SUCCESS, String.format(
-                "Moved your %s from layer `%s` to `%s`.", building.getFormattedName(), building.getLayer(), newLayer + 1
+                "Moved your %s from layer `%s` to `%s`.", building.format(), building.getLayer(), newLayer + 1
         )));
     }
 }

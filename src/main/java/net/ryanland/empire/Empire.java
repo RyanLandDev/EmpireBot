@@ -89,6 +89,7 @@ public class Empire {
                 new BuyCommand(),
                 new ClaimCommand(),
                 new InventoryCommand(),
+                new UseCommand(),
 
                 // Games
                 new GambleCommand()

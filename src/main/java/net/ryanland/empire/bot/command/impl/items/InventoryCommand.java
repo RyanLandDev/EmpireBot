@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.command.impl.items;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
@@ -9,7 +8,6 @@ import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
-import net.ryanland.empire.sys.gameplay.collectible.Collectible;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.gameplay.collectible.box.Box;
@@ -45,7 +43,8 @@ public class InventoryCommand extends Command {
         // Add inventory items here
         embed.addFields(new InventoryFactory(
                 new InventoryCategory("📦", "Boxes",
-                        InventoryItem.box("Hourly")
+                        InventoryItem.box("Hourly"),
+                        InventoryItem.box("Daily")
                 )
         ).build(event.getProfile()));
 

@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateEvent;
-import net.dv8tion.jda.api.interactions.Interaction;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.executor.functional_interface.CommandRunnable;
@@ -24,6 +23,7 @@ import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
+import net.ryanland.empire.sys.message.Formattable;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
@@ -33,7 +33,6 @@ import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenu;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.confirm.ConfirmMenu;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -45,7 +44,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class Building
-        implements Serializable, Serializer<List<?>, Building>, Emojis {
+        implements Serializable, Serializer<List<?>, Building>, Formattable, Emojis {
 
     public static final int BUILDING_START_STAGE = 1;
     public static final int BASE_MAX_HEALTH = 100;
@@ -192,7 +191,7 @@ public abstract class Building
                         refreshMenu(event);
 
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", getFormattedName(), repairPrice.format()
+                                "Repaired your %s for %s.", format(), repairPrice.format()
                         )).build()).setEphemeral(true).queue();
                     }
             ).addButton(
@@ -208,7 +207,7 @@ public abstract class Building
                         refreshMenu(event);
 
                         event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", getFormattedName(), crystalRepairPrice.format()
+                                "Repaired your %s for %s.", format(), crystalRepairPrice.format()
                         )).build()).setEphemeral(true).queue();
                     }
             );
@@ -233,7 +232,7 @@ public abstract class Building
                     refreshMenu(event);
 
                     event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                            "Upgraded your %s for %s.", getFormattedName(), upgradePrice.format()
+                            "Upgraded your %s for %s.", format(), upgradePrice.format()
                     )).build()).setEphemeral(true).queue();
                 }
         ).addButton(
@@ -275,7 +274,7 @@ public abstract class Building
     public MessageEmbed.Field getEmbedField() {
         return new MessageEmbed.Field("\u200b",
                 String.format("%s\n%s\n**Price:** %s\n\u200b",
-                        getFormattedName(true), getDescription(), getPrice().format()),
+                        format(true), getDescription(), getPrice().format()),
                         true);
     }
 
@@ -338,7 +337,7 @@ public abstract class Building
             refreshMenu(event.getMessage());
 
         }, String.format(
-                "Sold your %s for %s.", getFormattedName(), getSellPrice().format()
+                "Sold your %s for %s.", format(), getSellPrice().format()
         )).send(event);
     }
 
@@ -466,11 +465,12 @@ public abstract class Building
      * Gets the formatted name of this building.
      * @return A string in the form of "[emoji] **[name]**".
      */
-    public String getFormattedName() {
-        return getFormattedName(false);
+    @Override
+    public String format() {
+        return format(false);
     }
 
-    public String getFormattedName(boolean underlined) {
+    public String format(boolean underlined) {
         return String.format("%s %3$s**%s**%3$s", getEmoji(), getName(), underlined ? "__" : "");
     }
 

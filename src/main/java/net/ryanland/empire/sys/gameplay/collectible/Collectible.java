@@ -1,44 +1,48 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
+import net.ryanland.empire.sys.file.database.MongoDB;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
+import net.ryanland.empire.sys.message.Formattable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface Collectible {
+public interface Collectible extends Formattable {
 
-    /*
-        Name of the Collectible
+    /**
+     * Name of the {@link Collectible}
      */
     String getName();
 
-    /*
-        Head name of the Collectible
+    /**
+     * Head name of the {@link Collectible}
      */
     String getHeadName();
 
-    /*
-        Associated emoji of the Collectible
+    /**
+     * Associated emoji of the {@link Collectible}
      */
     String getEmoji();
 
-    /*
-        Format the Collectible using its name and emoji
+    /**
+     * Format the {@link Collectible} using {@link #getName} and {@link #getEmoji}
      */
+    @Override
     default String format() {
         return getEmoji() + " **" + getName() + (getHeadName() == null || getHeadName().isEmpty() ? "" : " " + getHeadName()) + "**";
     }
 
-    /*
-        The ID to use when storing this Collectible in the database
+    /**
+     * The ID to use when storing this {@link Collectible} in the {@link MongoDB}
      */
     int getId();
 
-    /*
-        Code executed when the Collectible is received
+    /**
+     * Code executed when the {@link Collectible} is received
+     * @return Formatted received {@link String}
      */
-    void receive(Profile profile);
+    String receive(Profile profile);
 
 }
 

@@ -44,7 +44,7 @@ public class BuyCommand extends Command {
 
         event.reply(new PresetBuilder(PresetType.SUCCESS, String.format(
                 "You purchased the %s for %s.\nView your information about your building using `/building %s`.",
-                building.getFormattedName(), building.getPrice().format(), profile.getBuildings().size()
+                building.format(), building.getPrice().format(), profile.getBuildings().size()
         )));
     }
 }
