@@ -17,7 +17,7 @@ public class CooldownHandler {
             return MemoryCooldownManager.getInstance();
         }
         if (storage == StorageType.LOCAL) {
-            throw new RuntimeException();//TODO
+            throw new RuntimeException("Unimplemented as there is no use for it currently.");
         }
         if (storage == StorageType.EXTERNAL) {
             return ExternalCooldownManager.getInstance();

@@ -41,31 +41,28 @@ public class InventoryCommand extends Command {
                 "Inventory");
 
         // Add inventory items here
-        embed.addFields(new InventoryFactory(
+        embed.addFields(build(event.getProfile(),
                 new InventoryCategory("📦", "Boxes",
                         InventoryItem.box("Hourly"),
                         InventoryItem.box("Daily")
                 )
-        ).build(event.getProfile()));
+        ));
 
         event.reply(embed);
     }
 
-    private record InventoryFactory(InventoryCategory... categories) {
+    private static MessageEmbed.Field[] build(Profile profile, InventoryCategory... categories) {
+        MessageEmbed.Field[] fields = Arrays.stream(categories)
+                .map(category -> category.build(profile))
+                .filter(Objects::nonNull)
+                .toArray(MessageEmbed.Field[]::new);
 
-        MessageEmbed.Field[] build(Profile profile) {
-            MessageEmbed.Field[] fields = Arrays.stream(categories)
-                    .map(category -> category.build(profile))
-                    .filter(Objects::nonNull)
-                    .toArray(MessageEmbed.Field[]::new);
-
-            if (fields.length == 0) {
-                return new MessageEmbed.Field[]{
-                        new MessageEmbed.Field("*Empty*", "", true)
-                };
-            } else {
-                return fields;
-            }
+        if (fields.length == 0) {
+            return new MessageEmbed.Field[]{
+                    new MessageEmbed.Field("*Empty*", "", true)
+            };
+        } else {
+            return fields;
         }
     }
 
