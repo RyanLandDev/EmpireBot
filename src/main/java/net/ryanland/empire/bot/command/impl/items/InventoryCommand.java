@@ -11,6 +11,7 @@ import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.gameplay.collectible.box.Box;
+import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.Arrays;
@@ -43,8 +44,10 @@ public class InventoryCommand extends Command {
         // Add inventory items here
         embed.addFields(build(event.getProfile(),
                 new InventoryCategory("📦", "Boxes",
-                        InventoryItem.box("Hourly"),
-                        InventoryItem.box("Daily")
+                        InventoryItem.box(Boxes.HOURLY),
+                        InventoryItem.box(Boxes.DAILY),
+                        InventoryItem.box(Boxes.MEMBER),
+                        InventoryItem.box(Boxes.MYTHICAL)
                 )
         ));
 
@@ -86,6 +89,10 @@ public class InventoryCommand extends Command {
     }
 
     private record InventoryItem(String itemName, Function<Profile, Integer> quantityGetter) {
+
+        static InventoryItem box(Boxes box) {
+            return box(box.getName());
+        }
 
         static InventoryItem box(String name) {
             return new InventoryItem(name,

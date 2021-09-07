@@ -57,7 +57,7 @@ public class CooldownsCommand extends Command {
         );
     }
 
-    private String genLine(String title, String command,
+    private static String genLine(String title, String command,
                            int firstSpaces, int secondSpaces,
                            Cooldown cooldown) {
         return "%s%s - `/%s`%s - %s\n".formatted(title, genTrimProofSpaces(firstSpaces), command, genTrimProofSpaces(secondSpaces),

@@ -1,17 +1,15 @@
-package net.ryanland.empire.sys.gameplay.collectible.box;
+package net.ryanland.empire.sys.gameplay.collectible.box.impl;
 
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
+import net.ryanland.empire.sys.gameplay.collectible.box.Box;
+import net.ryanland.empire.sys.gameplay.collectible.box.BoxItems;
+import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
 
 public class DailyBoxItem extends Box {
 
     @Override
-    public String getName() {
-        return "Daily";
-    }
-
-    @Override
-    public int getId() {
-        return 2;
+    public Boxes getEnum() {
+        return Boxes.DAILY;
     }
 
     @Override

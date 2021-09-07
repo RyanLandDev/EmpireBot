@@ -15,6 +15,7 @@ import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
+import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
@@ -134,10 +135,9 @@ public class Profile implements SnowflakeDocument, Emojis {
                             %3$s Received %s""",
                             newLevel, getBuildingLimit(), ARROW_RIGHT, getBuildingLimit(newLevel), AIR,
                             getBuildingStageLimit(), getBuildingStageLimit(newLevel),
-                            "todo xd"),
+                            Boxes.MYTHICAL.give(new Profile(interaction.getUser()))),
                     XP + " Level Up!")
                     .build(), embeds).setEphemeral(true).queue();
-            //TODO add Mythical box as reward
         } else {
             interaction.replyEmbeds(Arrays.asList(embeds)).setEphemeral(true).queue();
         }

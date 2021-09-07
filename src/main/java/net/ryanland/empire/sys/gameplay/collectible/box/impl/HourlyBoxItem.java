@@ -1,17 +1,15 @@
-package net.ryanland.empire.sys.gameplay.collectible.box;
+package net.ryanland.empire.sys.gameplay.collectible.box.impl;
 
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
+import net.ryanland.empire.sys.gameplay.collectible.box.Box;
+import net.ryanland.empire.sys.gameplay.collectible.box.BoxItems;
+import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
 
 public class HourlyBoxItem extends Box {
 
     @Override
-    public String getName() {
-        return "Hourly";
-    }
-
-    @Override
-    public int getId() {
-        return 1;
+    public Boxes getEnum() {
+        return Boxes.HOURLY;
     }
 
     @Override

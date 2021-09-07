@@ -14,6 +14,18 @@ public abstract class Box implements Item {
 
     public abstract BoxItems getItems();
 
+    public abstract Boxes getEnum();
+
+    @Override
+    public final String getName() {
+        return getEnum().getName();
+    }
+
+    @Override
+    public final int getId() {
+        return getEnum().getId();
+    }
+
     @Override
     public String getHeadName() {
         return "Box";

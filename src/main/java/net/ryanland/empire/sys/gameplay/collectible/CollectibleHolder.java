@@ -1,9 +1,10 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.sys.gameplay.collectible.box.DailyBoxItem;
-import net.ryanland.empire.sys.gameplay.collectible.box.HourlyBoxItem;
-import net.ryanland.empire.sys.gameplay.collectible.box.MemberBoxItem;
+import net.ryanland.empire.sys.gameplay.collectible.box.impl.DailyBoxItem;
+import net.ryanland.empire.sys.gameplay.collectible.box.impl.HourlyBoxItem;
+import net.ryanland.empire.sys.gameplay.collectible.box.impl.MemberBoxItem;
+import net.ryanland.empire.sys.gameplay.collectible.box.impl.MythicalBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsReceivable;
 
@@ -21,6 +22,7 @@ public class CollectibleHolder {
             new HourlyBoxItem(),
             new DailyBoxItem(),
             new MemberBoxItem(),
+            new MythicalBoxItem(),
 
             // Item
             new PocketOfCrystalsReceivable(),
