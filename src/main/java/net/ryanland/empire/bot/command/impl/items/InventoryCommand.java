@@ -1,5 +1,6 @@
 package net.ryanland.empire.bot.command.impl.items;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
@@ -54,23 +55,37 @@ public class InventoryCommand extends Command {
     private record InventoryFactory(InventoryCategory... categories) {
 
         MessageEmbed.Field[] build(Profile profile) {
-            return Arrays.stream(categories)
+            MessageEmbed.Field[] fields = Arrays.stream(categories)
                     .map(category -> category.build(profile))
-                    .filter(field -> !Objects.equals(field.getValue(), "\n\u200b"))
+                    .filter(Objects::nonNull)
                     .toArray(MessageEmbed.Field[]::new);
+
+            if (fields.length == 0) {
+                return new MessageEmbed.Field[]{
+                        new MessageEmbed.Field("*Empty*", "", true)
+                };
+            } else {
+                return fields;
+            }
         }
     }
 
     private record InventoryCategory(String emoji, String name, InventoryItem... items) {
 
         MessageEmbed.Field build(Profile profile) {
-            return new MessageEmbed.Field(emoji + " " + name,
-                    Arrays.stream(items)
-                            .filter(item -> item.quantityGetter.apply(profile) > 0)
-                            .map(item -> item.build(profile))
-                            .collect(Collectors.joining("\n")
-                            ) + "\n\u200b",
-                    true);
+            String value = Arrays.stream(items)
+                    .filter(item -> item.quantityGetter.apply(profile) > 0)
+                    .map(item -> item.build(profile))
+                    .collect(Collectors.joining("\n")
+                    );
+
+            if (value.isEmpty()) {
+                return null;
+            } else {
+                return new MessageEmbed.Field(emoji + " " + name,
+                        value + "\n\u200b",
+                        true);
+            }
         }
     }
 
