@@ -14,10 +14,10 @@ public class StopCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("stop")
-                .description("Stops the bot.")
-                .category(Category.DEVELOPER)
-                .permission(Permission.DEVELOPER);
+            .name("stop")
+            .description("Stops the bot.")
+            .category(Category.DEVELOPER)
+            .permission(Permission.DEVELOPER);
     }
 
     @Override

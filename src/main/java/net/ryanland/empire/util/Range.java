@@ -11,5 +11,6 @@ import java.lang.annotation.*;
 public @interface Range {
 
     int min();
+
     int max();
 }

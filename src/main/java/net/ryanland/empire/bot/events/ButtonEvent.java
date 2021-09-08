@@ -16,7 +16,7 @@ public class ButtonEvent extends ListenerAdapter {
 
         } catch (CommandException e) {
             event.deferReply().addEmbeds(
-                    new PresetBuilder(PresetType.ERROR, e.getMessage()).build()
+                new PresetBuilder(PresetType.ERROR, e.getMessage()).build()
             ).setEphemeral(true).queue();
         }
     }

@@ -9,14 +9,14 @@ public class ClaimCommand extends SubCommandHolder {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("claim")
-                .description("Claim packages.")
-                .category(Category.ITEMS)
-                .subCommands(
-                        new ClaimHourlyCommand(),
-                        new ClaimDailyCommand(),
-                        new ClaimMemberCommand()
-                )
-                .requiresProfile();
+            .name("claim")
+            .description("Claim packages.")
+            .category(Category.ITEMS)
+            .subCommands(
+                new ClaimHourlyCommand(),
+                new ClaimDailyCommand(),
+                new ClaimMemberCommand()
+            )
+            .requiresProfile();
     }
 }

@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *         >> Database Building Structure <<
- *             0 - ID
- *             1 - Stage
- *             2 - Health
- *             3 - (RESOURCE_GENERATOR ONLY) lastCollect
+ * >> Database Building Structure <<
+ * 0 - ID
+ * 1 - Stage
+ * 2 - Health
+ * 3 - (RESOURCE_GENERATOR ONLY) lastCollect
  */
 @SuppressWarnings("all")
 public class BuildingsSerializer implements Serializer<List<List>, List<Building>> {
@@ -27,8 +27,8 @@ public class BuildingsSerializer implements Serializer<List<List>, List<Building
     @Override
     public List<List> serialize(@NotNull List<Building> toSerialize) {
         return toSerialize.stream()
-                .map(Building::serialize)
-                .collect(Collectors.toList());
+            .map(Building::serialize)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -38,11 +38,11 @@ public class BuildingsSerializer implements Serializer<List<List>, List<Building
 
     public List<Building> deserialize(@NotNull List<List> toDeserialize, @Nullable Profile profile) {
         return toDeserialize.stream()
-                .map(e -> Building.of((Integer) e.get(0))
-                        .deserialize(e)
-                        .setLayer(toDeserialize.indexOf(e) + 1)
-                        .setProfile(profile)
-                )
-                .collect(Collectors.toList());
+            .map(e -> Building.of((Integer) e.get(0))
+                .deserialize(e)
+                .setLayer(toDeserialize.indexOf(e) + 1)
+                .setProfile(profile)
+            )
+            .collect(Collectors.toList());
     }
 }

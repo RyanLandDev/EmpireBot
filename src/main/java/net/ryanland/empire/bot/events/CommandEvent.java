@@ -65,7 +65,7 @@ public class CommandEvent {
 
     private ReplyAction sendReply(MessageEmbed embed, boolean ephemeral) {
         return event.replyEmbeds(embed)
-                .setEphemeral(ephemeral);
+            .setEphemeral(ephemeral);
     }
 
     private ReplyAction sendReply(MessageEmbed embed) {

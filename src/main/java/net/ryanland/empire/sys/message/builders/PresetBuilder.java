@@ -162,6 +162,7 @@ public class PresetBuilder {
 
     /**
      * Sets the embed thumbnail to the bot's profile picture.
+     *
      * @return {@code this}
      */
     public PresetBuilder addLogo() {
@@ -207,14 +208,14 @@ public class PresetBuilder {
 
     public EmbedBuilder builder() {
         EmbedBuilder builder = new EmbedBuilder()
-                .setTitle(title)
-                .setAuthor(authorName, authorUrl, authorIconUrl)
-                .setDescription(description)
-                .setColor(color)
-                .setThumbnail(thumbnail)
-                .setImage(image)
-                .setFooter(footer, footerIconUrl)
-                .setTimestamp(timestamp);
+            .setTitle(title)
+            .setAuthor(authorName, authorUrl, authorIconUrl)
+            .setDescription(description)
+            .setColor(color)
+            .setThumbnail(thumbnail)
+            .setImage(image)
+            .setFooter(footer, footerIconUrl)
+            .setTimestamp(timestamp);
 
         for (MessageEmbed.Field field : fields) {
             builder.addField(field);

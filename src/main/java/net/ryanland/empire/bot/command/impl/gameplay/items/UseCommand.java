@@ -15,17 +15,17 @@ public class UseCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("use")
-                .description("Use an item from your /inventory.")
-                .category(Category.ITEMS);
+            .name("use")
+            .description("Use an item from your /inventory.")
+            .category(Category.ITEMS);
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new StringArgument()
-                        .id("item")
-                        .description("The name of the item to use.")
+            new StringArgument()
+                .id("item")
+                .description("The name of the item to use.")
         );
     }
 

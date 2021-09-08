@@ -18,41 +18,41 @@ public class CollectibleHolder {
     @SuppressWarnings("all")
     private static final Collectible[] COLLECTIBLES = new Collectible[]{
 
-            // Box
-            new HourlyBoxItem(),
-            new DailyBoxItem(),
-            new MemberBoxItem(),
-            new MythicalBoxItem(),
+        // Box
+        new HourlyBoxItem(),
+        new DailyBoxItem(),
+        new MemberBoxItem(),
+        new MythicalBoxItem(),
 
-            // Item
-            new PocketOfCrystalsReceivable(),
-            new PileOfCrystalsReceivable()
+        // Item
+        new PocketOfCrystalsReceivable(),
+        new PileOfCrystalsReceivable()
 
     };
 
     private static final HashMap<String, Collectible> NAME_COLLECTIBLES = new HashMap<>(
-            Arrays.stream(COLLECTIBLES)
-                    .collect(Collectors.toMap(Collectible::getName, Function.identity()))
+        Arrays.stream(COLLECTIBLES)
+            .collect(Collectors.toMap(Collectible::getName, Function.identity()))
     );
 
     private static final HashMap<Integer, Collectible> ID_COLLECTIBLES = new HashMap<>(
-            Arrays.stream(COLLECTIBLES)
-                    .collect(Collectors.toMap(Collectible::getId, Function.identity()))
+        Arrays.stream(COLLECTIBLES)
+            .collect(Collectors.toMap(Collectible::getId, Function.identity()))
     );
 
     private static final Item[] ITEMS = Arrays.stream(COLLECTIBLES)
-            .filter(c -> c instanceof Item)
-            .map(c -> (Item) c)
-            .toArray(Item[]::new);
+        .filter(c -> c instanceof Item)
+        .map(c -> (Item) c)
+        .toArray(Item[]::new);
 
     private static final HashMap<String, Item> NAME_ITEMS = new HashMap<>(
-            Arrays.stream(ITEMS)
-                    .collect(Collectors.toMap(Item::getName, Function.identity()))
+        Arrays.stream(ITEMS)
+            .collect(Collectors.toMap(Item::getName, Function.identity()))
     );
 
     private static final HashMap<Integer, Item> ID_ITEMS = new HashMap<>(
-            Arrays.stream(ITEMS)
-                    .collect(Collectors.toMap(Item::getId, Function.identity()))
+        Arrays.stream(ITEMS)
+            .collect(Collectors.toMap(Item::getId, Function.identity()))
     );
 
     public static Collectible get(String name) {
@@ -74,12 +74,12 @@ public class CollectibleHolder {
     public static Item findItem(String name) throws CommandException {
         try {
             return Arrays.stream(ITEMS)
-                    .filter(item -> item.getName()
-                            .replaceAll("[ _-]", "")
-                            .equalsIgnoreCase(name
-                                    .replaceAll("[ _-]", "")))
-                    .collect(Collectors.toList())
-                    .get(0);
+                .filter(item -> item.getName()
+                    .replaceAll("[ _-]", "")
+                    .equalsIgnoreCase(name
+                        .replaceAll("[ _-]", "")))
+                .collect(Collectors.toList())
+                .get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new CommandException("An item with the name `" + name + "` was not found.");
         }

@@ -23,8 +23,8 @@ public class ButtonHandler {
         BUTTON_LISTENERS.put(hookId, buttonListener);
 
         ExecutorUtil.schedule(
-                () -> hook.editOriginal("").setActionRows(Collections.emptyList()).queue(),
-                2, TimeUnit.MINUTES);
+            () -> hook.editOriginal("").setActionRows(Collections.emptyList()).queue(),
+            2, TimeUnit.MINUTES);
     }
 
     public static void handleEvent(ButtonClickEvent event) throws CommandException {
@@ -38,7 +38,7 @@ public class ButtonHandler {
             if (event.getUser().getIdLong() != listener.userId()) {
 
                 event.deferReply(true).addEmbeds(
-                        new PresetBuilder(PresetType.ERROR, "You can't use this button.").build()
+                    new PresetBuilder(PresetType.ERROR, "You can't use this button.").build()
                 ).queue();
 
                 return;
@@ -46,7 +46,7 @@ public class ButtonHandler {
 
             ButtonClickContainer clickContainer = listener.container().apply(event);
             clickContainer.onClick()
-                    .consume(event, clickContainer.value().apply(event));
+                .consume(event, clickContainer.value().apply(event));
         }
     }
 

@@ -14,18 +14,18 @@ public class BuildingCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("building")
-                .description("Gets information about a specific building in your Empire.")
-                .category(Category.ITEMS)
-                .requiresProfile();
+            .name("building")
+            .description("Gets information about a specific building in your Empire.")
+            .category(Category.ITEMS)
+            .requiresProfile();
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new BuildingArgument()
-                    .id("building")
-                    .description("The position of the building to retrieve information from.")
+            new BuildingArgument()
+                .id("building")
+                .description("The position of the building to retrieve information from.")
         );
     }
 

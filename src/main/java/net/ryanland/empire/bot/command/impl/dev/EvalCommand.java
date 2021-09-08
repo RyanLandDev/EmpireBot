@@ -22,30 +22,30 @@ public class EvalCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("eval")
-                .description("Evaluate Java code.")
-                .category(Category.DEVELOPER)
-                .permission(Permission.DEVELOPER)
-                .flags(Flag.NO_DISABLE);
+            .name("eval")
+            .description("Evaluate Java code.")
+            .category(Category.DEVELOPER)
+            .permission(Permission.DEVELOPER)
+            .flags(Flag.NO_DISABLE);
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new StringArgument()
-                    .id("code")
-                    .description("Code to execute")
+            new StringArgument()
+                .id("code")
+                .description("Code to execute")
         );
     }
 
     private static final List<String> IMPORTS = List.of(
-            "net.dv8tion.jda.core",
-            "net.dv8tion.jda.core.managers",
-            "net.dv8tion.jda.core.entities",
-            "net.dv8tion.jda.core.entities.impl",
-            "net.dv8tion.jda.core.utils",
+        "net.dv8tion.jda.core",
+        "net.dv8tion.jda.core.managers",
+        "net.dv8tion.jda.core.entities",
+        "net.dv8tion.jda.core.entities.impl",
+        "net.dv8tion.jda.core.utils",
 
-            "net.ryanland.empire.Empire"
+        "net.ryanland.empire.Empire"
     );
 
     @Override
@@ -56,8 +56,8 @@ public class EvalCommand extends Command {
             .addField("Code", String.format("```js\n%s```", code), true);
 
         code = IMPORTS.stream()
-                .map(s -> String.format("import %s.*;", s))
-                .collect(Collectors.joining(" ")) + " " + code;
+            .map(s -> String.format("import %s.*;", s))
+            .collect(Collectors.joining(" ")) + " " + code;
 
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("groovy");
         engine.put("jda", event.getJDA());
@@ -67,7 +67,7 @@ public class EvalCommand extends Command {
             Object object = engine.eval(code); // Returns an object of the eval
 
             builder.setTitle("Eval Result")
-                    .addField("Object Returned:", String.format("```js\n%s```", object), false);
+                .addField("Object Returned:", String.format("```js\n%s```", object), false);
             event.performReply(builder).queue();
 
         } catch (Throwable e) {
@@ -78,7 +78,7 @@ public class EvalCommand extends Command {
             builder.setTitle("Eval failed!");
             event.performReply(builder).queue();
             event.getChannel().sendMessage(String.format("```%s```",
-                    sStackTrace.length() >= 1500 ? sStackTrace.substring(0, 1500) : sStackTrace
+                sStackTrace.length() >= 1500 ? sStackTrace.substring(0, 1500) : sStackTrace
             )).queue();
         }
     }

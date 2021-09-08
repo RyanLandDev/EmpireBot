@@ -17,9 +17,9 @@ public class StartCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("start")
-                .description("Start your Empire adventure.")
-                .category(Category.PROFILE);
+            .name("start")
+            .description("Start your Empire adventure.")
+            .category(Category.PROFILE);
     }
 
     @Override
@@ -33,21 +33,21 @@ public class StartCommand extends Command {
 
         if (document != null) {
             event.reply(
-                    new PresetBuilder(PresetType.ERROR, "You already have a profile.")
+                new PresetBuilder(PresetType.ERROR, "You already have a profile.")
                     .addLogo()
             );
 
         } else {
             event.getUserDocument()
-                    .setCreated(new Date())
-                    .setBuildingsRaw(UserDocument.DEFAULT_BUILDINGS)
-                    .update();
+                .setCreated(new Date())
+                .setBuildingsRaw(UserDocument.DEFAULT_BUILDINGS)
+                .update();
 
             event.reply(
-                    new PresetBuilder(
-                            PresetType.SUCCESS,
-                            "Your profile has been created! Good luck!\n*It is recommended to use the /tutorial.*",
-                            "Profile created")
+                new PresetBuilder(
+                    PresetType.SUCCESS,
+                    "Your profile has been created! Good luck!\n*It is recommended to use the /tutorial.*",
+                    "Profile created")
                     .addLogo()
             );
         }

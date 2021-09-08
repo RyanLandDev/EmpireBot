@@ -15,7 +15,7 @@ public class DisabledCheck extends CommandCheck {
     @Override
     public PresetBuilder buildMessage(CommandEvent event) {
         return new PresetBuilder(
-                PresetType.ERROR, "This command is currently disabled.", "Disabled"
+            PresetType.ERROR, "This command is currently disabled.", "Disabled"
         );
     }
 }

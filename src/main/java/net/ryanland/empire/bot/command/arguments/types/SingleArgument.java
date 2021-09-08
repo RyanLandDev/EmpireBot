@@ -6,7 +6,6 @@ import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentExce
 import net.ryanland.empire.bot.events.CommandEvent;
 
 import java.util.Deque;
-import java.util.Queue;
 
 public abstract class SingleArgument<T> extends Argument<T> {
 

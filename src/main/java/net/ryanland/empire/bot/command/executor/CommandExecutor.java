@@ -56,11 +56,11 @@ public class CommandExecutor {
                 } catch (Exception e) {
                     if (!(e instanceof CommandException)) e.printStackTrace();
                     event.performReply(
-                            new PresetBuilder(PresetType.ERROR,
-                                    e instanceof CommandException ?
-                                            e.getMessage() :
-                                            "Unknown error, please report it to a developer."
-                            )).queue();
+                        new PresetBuilder(PresetType.ERROR,
+                            e instanceof CommandException ?
+                                e.getMessage() :
+                                "Unknown error, please report it to a developer."
+                        )).queue();
                 }
             }
 

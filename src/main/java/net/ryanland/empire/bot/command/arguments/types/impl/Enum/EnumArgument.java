@@ -21,9 +21,9 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
     @Override
     public Command.Choice[] getChoices() {
         return associatedEnum.stream()
-                .filter(e -> !e.isHidden())
-                .map(e -> new Command.Choice(e.getTitle(), e.getTitle()))
-                .toArray(Command.Choice[]::new);
+            .filter(e -> !e.isHidden())
+            .map(e -> new Command.Choice(e.getTitle(), e.getTitle()))
+            .toArray(Command.Choice[]::new);
     }
 
     @Override
@@ -38,11 +38,11 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
 
     private String getFormattedOptions() {
         return "`" +
-                associatedEnum.stream()
-                    .filter(e -> !e.isHidden())
-                    .map(InputEnum::getTitle)
-                    .collect(Collectors.joining("` `"))
-                + "`";
+            associatedEnum.stream()
+                .filter(e -> !e.isHidden())
+                .map(InputEnum::getTitle)
+                .collect(Collectors.joining("` `"))
+            + "`";
     }
 
     protected interface InputEnum {

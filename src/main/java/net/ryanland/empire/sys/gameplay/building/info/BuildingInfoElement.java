@@ -18,8 +18,8 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
                                                           String valueEmoji, Number currentValue, Number nextValue,
                                                           String description) {
         return new BuildingInfoElement(title, emoji,
-                new InfoValue(InfoValue.Type.UPGRADABLE, valueEmoji, currentValue, nextValue).buildUpgradable(),
-                description
+            new InfoValue(InfoValue.Type.UPGRADABLE, valueEmoji, currentValue, nextValue).buildUpgradable(),
+            description
         );
     }
 
@@ -55,9 +55,9 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
                                                            String valueEmoji, Number currentValue, Number maxValue,
                                                            String description, boolean includeFull) {
         return new BuildingInfoElement(
-                title, emoji,
-                new InfoValue(InfoValue.Type.CAPACITABLE, valueEmoji, currentValue, maxValue).buildCapacitable(includeFull),
-                description
+            title, emoji,
+            new InfoValue(InfoValue.Type.CAPACITABLE, valueEmoji, currentValue, maxValue).buildCapacitable(includeFull),
+            description
         );
     }
 
@@ -86,11 +86,10 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
     }
 
 
-
     public String build() {
         return String.format(
-                "%s **%s:** %s\n%s %s",
-                emoji, title, value, AIR, description
+            "%s **%s:** %s\n%s %s",
+            emoji, title, value, AIR, description
         );
     }
 }

@@ -8,7 +8,8 @@ import java.util.function.Consumer;
 public interface CommandConsumer<T> extends Consumer<T> {
 
     @Override
-    default void accept(T t) {}
+    default void accept(T t) {
+    }
 
     void consume(T t) throws CommandException;
 }

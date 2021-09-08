@@ -6,9 +6,6 @@ import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentExce
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.arguments.types.NumberArgument;
 import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.util.Range;
-
-import java.lang.annotation.Annotation;
 
 public class IntegerArgument extends NumberArgument<Integer> {
 

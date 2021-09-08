@@ -12,12 +12,12 @@ public abstract class Troop implements Formattable {
 
     @SuppressWarnings("all")
     private final static Troop[] TROOPS = new Troop[]{
-            new RecruitTroop()
+        new RecruitTroop()
     };
 
     private final static Map<String, Troop> NAME_TROOPS = new HashMap<>(
-            Arrays.stream(TROOPS)
-                    .collect(Collectors.toMap(Troop::getName, Function.identity()))
+        Arrays.stream(TROOPS)
+            .collect(Collectors.toMap(Troop::getName, Function.identity()))
     );
 
     public static Troop of(String name) {
@@ -43,6 +43,10 @@ public abstract class Troop implements Formattable {
 
     public int getStage() {
         return stage;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public abstract String getName();

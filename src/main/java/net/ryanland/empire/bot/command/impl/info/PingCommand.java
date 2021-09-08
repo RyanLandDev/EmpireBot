@@ -12,9 +12,9 @@ public class PingCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("ping")
-                .description("Gets the current bot ping.")
-                .category(Category.INFORMATION);
+            .name("ping")
+            .description("Gets the current bot ping.")
+            .category(Category.INFORMATION);
     }
 
     @Override
@@ -25,9 +25,9 @@ public class PingCommand extends Command {
     @Override
     public void run(CommandEvent event) {
         event.performReply(
-                new PresetBuilder(
-                        "Ping: " + event.getJDA().getRestPing().complete() + "ms."
-                )
+            new PresetBuilder(
+                "Ping: " + event.getJDA().getRestPing().complete() + "ms."
+            )
         ).queue();
     }
 }

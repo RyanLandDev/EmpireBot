@@ -16,7 +16,7 @@ public class CommandArgument extends SingleArgument<Command> {
 
         if (command == null) {
             throw new MalformedArgumentException(
-                    "This command was not found."
+                "This command was not found."
             );
         } else {
             return command;

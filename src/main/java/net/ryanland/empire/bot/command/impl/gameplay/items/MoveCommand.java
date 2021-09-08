@@ -20,23 +20,23 @@ public class MoveCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("move")
-                .description("Moves a building.")
-                .category(Category.ITEMS)
-                .requiresProfile();
+            .name("move")
+            .description("Moves a building.")
+            .category(Category.ITEMS)
+            .requiresProfile();
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet()
-                .addArguments(
-                        new BuildingArgument()
-                                .id("building")
-                                .description("The position of the building to move."),
-                        new IntegerArgument()
-                                .id("layer")
-                                .description("Layer to move the building to.")
-                );
+            .addArguments(
+                new BuildingArgument()
+                    .id("building")
+                    .description("The position of the building to move."),
+                new IntegerArgument()
+                    .id("layer")
+                    .description("Layer to move the building to.")
+            );
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MoveCommand extends Command {
 
         // Send success message
         event.reply(new PresetBuilder(PresetType.SUCCESS, String.format(
-                "Moved your %s from layer `%s` to `%s`.", building.format(), building.getLayer(), newLayer + 1
+            "Moved your %s from layer `%s` to `%s`.", building.format(), building.getLayer(), newLayer + 1
         )));
     }
 }

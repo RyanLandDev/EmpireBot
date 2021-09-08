@@ -6,7 +6,6 @@ import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArg
 import net.ryanland.empire.bot.events.CommandEvent;
 
 import java.util.Deque;
-import java.util.Queue;
 
 public abstract class NumberArgument<T> extends SingleArgument<T> {
 

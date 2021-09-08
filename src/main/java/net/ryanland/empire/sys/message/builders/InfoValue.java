@@ -10,7 +10,8 @@ import java.util.function.Function;
 
 import static net.ryanland.empire.util.NumberUtil.format;
 
-public record InfoValue(Type type, @NotNull String emoji, String currentValue, @Nullable String nextValue, String title) implements Emojis {
+public record InfoValue(Type type, @NotNull String emoji, String currentValue, @Nullable String nextValue,
+                        String title) implements Emojis {
 
     public InfoValue(Type type, @NotNull String emoji, Number currentValue, @Nullable Number nextValue, String title) {
         this(type, emoji, format(currentValue), format(nextValue), title);
@@ -26,36 +27,35 @@ public record InfoValue(Type type, @NotNull String emoji, String currentValue, @
 
     public String buildRegular() {
         return String.format("%s%s%s",
-                title.isEmpty() ? "" : "**" + title + ":** ",
-                emoji.isEmpty() ? "" : emoji + " ",
-                currentValue
+            title.isEmpty() ? "" : "**" + title + ":** ",
+            emoji.isEmpty() ? "" : emoji + " ",
+            currentValue
         );
     }
 
     public String buildUpgradable() {
         return String.format("%s%s%s",
-                title.isEmpty() ? "" : "**" + title + ":** ",
-                emoji.isEmpty() ? "" : emoji + " ",
-                Objects.equals(currentValue, nextValue) ? currentValue :
-                        String.format("%s %s *%s*", currentValue, ARROW_RIGHT, nextValue)
+            title.isEmpty() ? "" : "**" + title + ":** ",
+            emoji.isEmpty() ? "" : emoji + " ",
+            Objects.equals(currentValue, nextValue) ? currentValue :
+                String.format("%s %s *%s*", currentValue, ARROW_RIGHT, nextValue)
         );
     }
 
     public String buildCapacitable(boolean includeFull) {
         return String.format("%s%s%s / %s%s",
-                title.isEmpty() ? "" : "**" + title + ":** ",
-                emoji.isEmpty() ? "" : emoji + " ",
-                currentValue, nextValue,
-                includeFull && NumberUtil.of(currentValue) >= NumberUtil.of(nextValue) ? " **FULL**" : ""
-                );
+            title.isEmpty() ? "" : "**" + title + ":** ",
+            emoji.isEmpty() ? "" : emoji + " ",
+            currentValue, nextValue,
+            includeFull && NumberUtil.of(currentValue) >= NumberUtil.of(nextValue) ? " **FULL**" : ""
+        );
     }
 
     public enum Type {
 
         REGULAR(InfoValue::buildRegular),
         UPGRADABLE(InfoValue::buildUpgradable),
-        CAPACITABLE(v -> v.buildCapacitable(false))
-        ;
+        CAPACITABLE(v -> v.buildCapacitable(false));
 
         private final Function<InfoValue, String> builder;
 

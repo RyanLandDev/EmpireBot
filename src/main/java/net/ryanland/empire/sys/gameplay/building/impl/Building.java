@@ -44,7 +44,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class Building
-        implements Serializable, Serializer<List<?>, Building>, Formattable, Emojis {
+    implements Serializable, Serializer<List<?>, Building>, Formattable, Emojis {
 
     public static final int BUILDING_START_STAGE = 1;
     public static final int BASE_MAX_HEALTH = 100;
@@ -54,26 +54,26 @@ public abstract class Building
     @SuppressWarnings("all")
     public static final Building[] BUILDINGS = new Building[]{
 
-            // Defense Ranged
-            new ArcherBuilding(),
-            // Defense Thorned
-            new WallBuilding(),
+        // Defense Ranged
+        new ArcherBuilding(),
+        // Defense Thorned
+        new WallBuilding(),
 
-            // Resource Generator
-            new GoldMineBuilding(),
-            // Resource Storage
-            new BankBuilding()
+        // Resource Generator
+        new GoldMineBuilding(),
+        // Resource Storage
+        new BankBuilding()
 
     };
 
     private static final HashMap<String, Building> NAME_BUILDINGS = new HashMap<>(
-            Arrays.stream(BUILDINGS)
-                    .collect(Collectors.toMap(Building::getName, Function.identity()))
+        Arrays.stream(BUILDINGS)
+            .collect(Collectors.toMap(Building::getName, Function.identity()))
     );
 
     private static final HashMap<Integer, Building> ID_BUILDINGS = new HashMap<>(
-            Arrays.stream(BUILDINGS)
-                    .collect(Collectors.toMap(Building::getId, Function.identity()))
+        Arrays.stream(BUILDINGS)
+            .collect(Collectors.toMap(Building::getId, Function.identity()))
     );
 
     protected int stage;
@@ -148,22 +148,22 @@ public abstract class Building
 
     public BuildingInfoBuilder getBuildingInfoBuilder() {
         return new BuildingInfoBuilder().setBuilding(this)
-                .addSegment(new BuildingInfoSegmentBuilder()
-                    .addElement("Layer", "🏘", getLayer(), String.format(
-                            "Move this building to another layer using `/move %s <new layer>`.", getLayer()))
-                    .addElement("Stage", "🧱", getStage(), String.format(
-                            "Upgrade this building to __Stage %s__ for %s.", getStage() + 1, getUpgradePrice().format()))
-                    .addElement(BuildingInfoElement.capacitable("Health", "❤",
-                            getHealth(), getMaxHealth(),
-                            isHealthMaxed() ? "The building's health may go down when under attack." : String.format(
-                                            "Repair this building for %s or %s.",
-                                            getRepairPrice().format(true), getCrystalRepairPrice().format(true)),
-                                    false))
-                )
-                .addSegment(new BuildingInfoSegmentBuilder()
-                    .addElement("Sell Price", "💵", getSellPrice(),
-                            "Sell this building (irreversible).\n\u200b")
-                );
+            .addSegment(new BuildingInfoSegmentBuilder()
+                .addElement("Layer", "🏘", getLayer(), String.format(
+                    "Move this building to another layer using `/move %s <new layer>`.", getLayer()))
+                .addElement("Stage", "🧱", getStage(), String.format(
+                    "Upgrade this building to __Stage %s__ for %s.", getStage() + 1, getUpgradePrice().format()))
+                .addElement(BuildingInfoElement.capacitable("Health", "❤",
+                    getHealth(), getMaxHealth(),
+                    isHealthMaxed() ? "The building's health may go down when under attack." : String.format(
+                        "Repair this building for %s or %s.",
+                        getRepairPrice().format(true), getCrystalRepairPrice().format(true)),
+                    false))
+            )
+            .addSegment(new BuildingInfoSegmentBuilder()
+                .addElement("Sell Price", "💵", getSellPrice(),
+                    "Sell this building (irreversible).\n\u200b")
+            );
     }
 
     public boolean exists() {
@@ -179,68 +179,69 @@ public abstract class Building
 
         if (canRepairAny()) {
             builder.addButton(
-                    Button.success("repairMain", String.format("Repair (%s)",
-                                    canRepair() ? getRepairPrice().currency().getName() : "Not Enough"))
-                            .withEmoji(Emoji.fromMarkdown(getMainCurrency().getEmoji()))
-                            .withDisabled(!canRepair()),
+                Button.success("repairMain", String.format("Repair (%s)",
+                        canRepair() ? getRepairPrice().currency().getName() : "Not Enough"))
+                    .withEmoji(Emoji.fromMarkdown(getMainCurrency().getEmoji()))
+                    .withDisabled(!canRepair()),
 
-                    event -> {
-                        Price<Integer> repairPrice = getRepairPrice();
+                event -> {
+                    Price<Integer> repairPrice = getRepairPrice();
 
-                        executeButtonAction(event, this::repair);
-                        refreshMenu(event);
+                    executeButtonAction(event, this::repair);
+                    refreshMenu(event);
 
-                        event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", format(), repairPrice.format()
-                        )).build()).setEphemeral(true).queue();
-                    }
+                    event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                        "Repaired your %s for %s.", format(), repairPrice.format()
+                    )).build()).setEphemeral(true).queue();
+                }
             ).addButton(
-                    Button.success("repairCrystal", String.format("Repair (%s)",
-                                    canCrystalRepair() ? getCrystalRepairPrice().currency().getName() : "Not Enough"))
-                            .withEmoji(Emoji.fromMarkdown(getCrystalRepairPrice().currency().getEmoji()))
-                            .withDisabled(!canCrystalRepair()),
+                Button.success("repairCrystal", String.format("Repair (%s)",
+                        canCrystalRepair() ? getCrystalRepairPrice().currency().getName() : "Not Enough"))
+                    .withEmoji(Emoji.fromMarkdown(getCrystalRepairPrice().currency().getEmoji()))
+                    .withDisabled(!canCrystalRepair()),
 
-                    event -> {
-                        Price<Integer> crystalRepairPrice = getCrystalRepairPrice();
+                event -> {
+                    Price<Integer> crystalRepairPrice = getCrystalRepairPrice();
 
-                        executeButtonAction(event, this::crystalRepair);
-                        refreshMenu(event);
+                    executeButtonAction(event, this::crystalRepair);
+                    refreshMenu(event);
 
-                        event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                                "Repaired your %s for %s.", format(), crystalRepairPrice.format()
-                        )).build()).setEphemeral(true).queue();
-                    }
+                    event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                        "Repaired your %s for %s.", format(), crystalRepairPrice.format()
+                    )).build()).setEphemeral(true).queue();
+                }
             );
         } else {
             builder.addButton(
-                    Button.secondary("repair", "Repair (Maxed)")
-                            .withEmoji(Emoji.fromMarkdown(REPAIR))
-                            .asDisabled(),
-                    event -> {}
+                Button.secondary("repair", "Repair (Maxed)")
+                    .withEmoji(Emoji.fromMarkdown(REPAIR))
+                    .asDisabled(),
+                event -> {
+                }
             );
         }
 
         builder.addButton(
-                Button.secondary("upgrade", "Upgrade" + (canUpgrade() ? "" : " (%s)".formatted(getUpgradeState().getName())))
-                        .withEmoji(Emoji.fromMarkdown(UPGRADE))
-                        .withDisabled(!canUpgrade()),
+            Button.secondary("upgrade", "Upgrade" + (canUpgrade() ? "" : " (%s)".formatted(getUpgradeState().getName())))
+                .withEmoji(Emoji.fromMarkdown(UPGRADE))
+                .withDisabled(!canUpgrade()),
 
-                event -> {
-                    Price<Integer> upgradePrice = getUpgradePrice();
+            event -> {
+                Price<Integer> upgradePrice = getUpgradePrice();
 
-                    executeButtonAction(event, this::upgrade);
-                    refreshMenu(event);
+                executeButtonAction(event, this::upgrade);
+                refreshMenu(event);
 
-                    event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
-                            "Upgraded your %s for %s.", format(), upgradePrice.format()
-                    )).build()).setEphemeral(true).queue();
-                }
+                event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                    "Upgraded your %s for %s.", format(), upgradePrice.format()
+                )).build()).setEphemeral(true).queue();
+            }
         ).addButton(
-                Button.secondary("sell", "Sell" + (canSell() ? "" : " (%s)".formatted(getSellState().getName())))
-                        .withEmoji(Emoji.fromMarkdown(SELL))
-                        .withDisabled(!canSell()),
+            Button.secondary("sell", "Sell" + (canSell() ? "" : " (%s)".formatted(getSellState().getName())))
+                .withEmoji(Emoji.fromMarkdown(SELL))
+                .withDisabled(!canSell()),
 
-                event -> executeButtonAction(event, () -> sell(event))
+            event -> executeButtonAction(event, () -> sell(event))
         );
 
         return builder;
@@ -249,12 +250,12 @@ public abstract class Building
     public InteractionMenuBuilder<ActionMenu> getMenuBuilder() throws CommandException {
         if (!exists()) {
             return new ActionMenuBuilder()
-                    .setEmbed(new PresetBuilder("This building does not exist anymore."));
+                .setEmbed(new PresetBuilder("This building does not exist anymore."));
         }
         return getActionMenuBuilder()
-                .setEmbed(getBuildingInfo().build()
-                        .setTitle(String.format("%s %s (%s)", getEmoji(), getName(), getType().getFullName()))
-                );
+            .setEmbed(getBuildingInfo().build()
+                .setTitle(String.format("%s %s (%s)", getEmoji(), getName(), getType().getFullName()))
+            );
     }
 
     @SuppressWarnings("all")
@@ -264,18 +265,18 @@ public abstract class Building
 
     public void refreshMenu(Message menuMessage) throws CommandException {
         menuMessage.editMessageEmbeds(((ActionMenuBuilder) getMenuBuilder()).getEmbed().build()).setActionRows(
-                exists() ? InteractionUtil.of(getActionMenuBuilder().getButtons().stream()
-                        .map(ActionButton::button)
-                        .collect(Collectors.toList()))
-                        : Collections.emptyList()
-                ).queue();
+            exists() ? InteractionUtil.of(getActionMenuBuilder().getButtons().stream()
+                .map(ActionButton::button)
+                .collect(Collectors.toList()))
+                : Collections.emptyList()
+        ).queue();
     }
 
     public MessageEmbed.Field getEmbedField() {
         return new MessageEmbed.Field("\u200b",
-                String.format("%s\n%s\n**Price:** %s\n\u200b",
-                        format(true), getDescription(), getPrice().format()),
-                        true);
+            String.format("%s\n%s\n**Price:** %s\n\u200b",
+                format(true), getDescription(), getPrice().format()),
+            true);
     }
 
     public void executeButtonAction(ButtonClickEvent event, CommandRunnable action) throws CommandException {
@@ -337,29 +338,29 @@ public abstract class Building
             refreshMenu(event.getMessage());
 
         }, String.format(
-                "Sold your %s for %s.", format(), getSellPrice().format()
+            "Sold your %s for %s.", format(), getSellPrice().format()
         )).send(event);
     }
 
 
     public Price<Integer> getSellPrice() {
         return new Price<>(getMainCurrency(),
-                (int) Math.floor(0.65f * stage * getPrice().amount()));
+            (int) Math.floor(0.65f * stage * getPrice().amount()));
     }
 
     public Price<Integer> getRepairPrice() {
         return new Price<>(getMainCurrency(),
-                (int) Math.floor(((double) getMaxHealth() - health) / 100 * getSellPrice().amount() * 0.10f));
+            (int) Math.floor(((double) getMaxHealth() - health) / 100 * getSellPrice().amount() * 0.10f));
     }
 
     public Price<Integer> getCrystalRepairPrice() {
         return new Price<>(Currency.CRYSTALS,
-                (int) Math.max(Math.floor(getRepairPrice().amount() * 0.03), 1));
+            (int) Math.max(Math.floor(getRepairPrice().amount() * 0.03), 1));
     }
 
     public Price<Integer> getUpgradePrice() {
         return new Price<>(getMainCurrency(),
-                (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
+            (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
     }
 
     public enum SellState implements BuildingActionState {
@@ -368,8 +369,7 @@ public abstract class Building
         MINIMUM_OCCURRENCES("Minimum Reached", building -> building.getOccurrences() - 1 >= building.getMinimumAllowed()),
         NOT_EXISTING("Not Existing", Building::exists),
 
-        AVAILABLE("Available", building -> false)
-        ;
+        AVAILABLE("Available", building -> false);
 
         private final String name;
         private final Predicate<Building> check;
@@ -417,8 +417,7 @@ public abstract class Building
         NOT_ENOUGH("Not Enough", building -> building.getMainCurrency().get(building.getProfile()).amount() >= building.getUpgradePrice().amount()),
         NOT_EXISTING("Not Existing", Building::exists),
 
-        AVAILABLE("Available", building -> false)
-        ;
+        AVAILABLE("Available", building -> false);
 
         private final String name;
         private final Predicate<Building> check;
@@ -457,12 +456,13 @@ public abstract class Building
      */
     public int getOccurrences() {
         return (int) profile.getBuildings().stream()
-                .filter(building -> building.getType() == getType())
-                .count();
+            .filter(building -> building.getType() == getType())
+            .count();
     }
 
     /**
      * Gets the formatted name of this building.
+     *
      * @return A string in the form of "[emoji] **[name]**".
      */
     @Override
@@ -509,12 +509,12 @@ public abstract class Building
     public static Building find(String name) throws CommandException {
         try {
             return Arrays.stream(BUILDINGS)
-                    .filter(building -> building.getName()
-                            .replaceAll("[ _-]", "")
-                            .equalsIgnoreCase(name
-                                    .replaceAll("[ _-]", "")))
-                    .collect(Collectors.toList())
-                    .get(0);
+                .filter(building -> building.getName()
+                    .replaceAll("[ _-]", "")
+                    .equalsIgnoreCase(name
+                        .replaceAll("[ _-]", "")))
+                .collect(Collectors.toList())
+                .get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new CommandException("A building with the name `" + name + "` was not found.");
         }

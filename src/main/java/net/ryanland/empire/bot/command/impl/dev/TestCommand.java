@@ -13,6 +13,7 @@ public class TestCommand extends Command {
 
     /**
      * Put testing code here.
+     *
      * @param event The associated {@link CommandEvent}.
      */
     private void performTest(CommandEvent event) {
@@ -22,10 +23,10 @@ public class TestCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("test")
-                .description("Developer command used for testing stuff.")
-                .permission(Permission.DEVELOPER)
-                .category(Category.DEVELOPER);
+            .name("test")
+            .description("Developer command used for testing stuff.")
+            .permission(Permission.DEVELOPER)
+            .category(Category.DEVELOPER);
     }
 
     @Override

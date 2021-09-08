@@ -15,18 +15,18 @@ public class MimicCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("mimic")
-                .description("Lets the bot send a custom message.")
-                .permission(Permission.DEVELOPER)
-                .category(Category.DEVELOPER);
+            .name("mimic")
+            .description("Lets the bot send a custom message.")
+            .permission(Permission.DEVELOPER)
+            .category(Category.DEVELOPER);
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new StringArgument()
-                    .id("message")
-                    .description("Message to send")
+            new StringArgument()
+                .id("message")
+                .description("Message to send")
         );
     }
 

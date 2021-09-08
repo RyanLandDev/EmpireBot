@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.interactions.Interaction;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.api.interactions.components.ButtonStyle;
-import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.ButtonClickContainer;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
@@ -64,28 +63,28 @@ public class TabMenu implements InteractionMenu {
 
         // Send the message and set the action rows
         InteractionHook hook = interaction.replyEmbeds(pages[0].getEmbed().build())
-                .addActionRows(InteractionUtil.of(buttons))
-                .complete();
+            .addActionRows(InteractionUtil.of(buttons))
+            .complete();
 
         // Add a listener for when a button is clicked
         ButtonHandler.addListener(hook,
-                buttonEvent -> new ButtonHandler.ButtonListener(
-                        interaction.getUser().getIdLong(),
-                        clickEvent -> new ButtonClickContainer(
-                                event -> {
-                                    event.deferEdit().queue();
+            buttonEvent -> new ButtonHandler.ButtonListener(
+                interaction.getUser().getIdLong(),
+                clickEvent -> new ButtonClickContainer(
+                    event -> {
+                        event.deferEdit().queue();
 
-                                    hook.editOriginalEmbeds(pageMap.get(event.getComponentId())
-                                            .getEmbed().build())
-                                            .setActionRows(
-                                                    InteractionUtil.of(buttons.stream()
-                                                    .map(button -> button.equals(event.getButton()) ?
-                                                            button.withStyle(ButtonStyle.SUCCESS).asDisabled() :
-                                                            button.withStyle(ButtonStyle.SECONDARY).asEnabled())
-                                                    .collect(Collectors.toList())
-                                                    ))
-                                            .queue();
-                                })));
+                        hook.editOriginalEmbeds(pageMap.get(event.getComponentId())
+                                .getEmbed().build())
+                            .setActionRows(
+                                InteractionUtil.of(buttons.stream()
+                                    .map(button -> button.equals(event.getButton()) ?
+                                        button.withStyle(ButtonStyle.SUCCESS).asDisabled() :
+                                        button.withStyle(ButtonStyle.SECONDARY).asEnabled())
+                                    .collect(Collectors.toList())
+                                ))
+                            .queue();
+                    })));
     }
 
 }

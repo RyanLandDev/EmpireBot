@@ -24,6 +24,7 @@ public class BoxItems {
 
     /**
      * Randomly picks a {@link Collectible} in the list based on the probabilities.
+     *
      * @return The randomly picked {@link Collectible}
      */
     public Collectible pick() {

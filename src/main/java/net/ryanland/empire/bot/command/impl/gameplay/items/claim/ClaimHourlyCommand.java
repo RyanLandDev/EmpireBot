@@ -8,17 +8,17 @@ public class ClaimHourlyCommand extends AbstractClaimSubCommand {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("hourly")
-                .description("Claim your Hourly package.")
-                .cooldown(3600)
-                .cooldownStorage(StorageType.EXTERNAL)
-                .requiresProfile();
+            .name("hourly")
+            .description("Claim your Hourly package.")
+            .cooldown(3600)
+            .cooldownStorage(StorageType.EXTERNAL)
+            .requiresProfile();
     }
 
     @Override
     public ClaimCommandInfo getClaimInfo() {
         return ClaimCommandInfo.collectible(
-                "Hourly", event -> true
+            "Hourly", event -> true
         );
     }
 }

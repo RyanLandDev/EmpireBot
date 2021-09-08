@@ -2,11 +2,7 @@ package net.ryanland.empire.sys.gameplay.collectible;
 
 import net.ryanland.empire.sys.file.database.MongoDB;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
-import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.message.Formattable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public interface Collectible extends Formattable {
 
@@ -40,6 +36,7 @@ public interface Collectible extends Formattable {
 
     /**
      * Code executed when the {@link Collectible} is received
+     *
      * @return Formatted received {@link String}
      */
     String receive(Profile profile);

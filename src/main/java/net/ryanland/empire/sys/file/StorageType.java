@@ -6,17 +6,17 @@ package net.ryanland.empire.sys.file;
 public enum StorageType {
 
     /**
-        The {@code Memory} (RAM) type is stored in variables
+     * The {@code Memory} (RAM) type is stored in variables
      */
     MEMORY,
 
     /**
-        The {@code Local} type is stored in local files
+     * The {@code Local} type is stored in local files
      */
     LOCAL,
 
     /**
-        The {@code External} type is stored in an external database
+     * The {@code External} type is stored in an external database
      */
     EXTERNAL
 }

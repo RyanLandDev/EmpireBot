@@ -20,6 +20,6 @@ public class ArgumentException extends CommandException {
 
     public String getMessage(CommandEvent event, Argument<?> argument) {
         return HelpMaker.formattedUsage(event, argument)
-                + "\n\n" + message;
+            + "\n\n" + message;
     }
 }

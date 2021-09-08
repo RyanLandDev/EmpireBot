@@ -17,20 +17,20 @@ public class BuyCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("buy")
-                .description("Purchase an item from the /store.")
-                .category(Category.ITEMS)
-                .requiresProfile();
+            .name("buy")
+            .description("Purchase an item from the /store.")
+            .category(Category.ITEMS)
+            .requiresProfile();
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet()
-                .addArguments(
-                        new StringArgument()
-                                .id("building")
-                                .description("The name of the building to purchase.")
-                );
+            .addArguments(
+                new StringArgument()
+                    .id("building")
+                    .description("The name of the building to purchase.")
+            );
     }
 
     @Override
@@ -43,8 +43,8 @@ public class BuyCommand extends Command {
         profile.getDocument().update();
 
         event.reply(new PresetBuilder(PresetType.SUCCESS, String.format(
-                "You purchased the %s for %s.\nView your information about your building using `/building %s`.",
-                building.format(), building.getPrice().format(), profile.getBuildings().size()
+            "You purchased the %s for %s.\nView your information about your building using `/building %s`.",
+            building.format(), building.getPrice().format(), profile.getBuildings().size()
         )));
     }
 }

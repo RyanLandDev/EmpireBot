@@ -24,9 +24,9 @@ public class StatsCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("stats")
-                .description("Returns a bunch of statistics about the bot.")
-                .category(Category.INFORMATION);
+            .name("stats")
+            .description("Returns a bunch of statistics about the bot.")
+            .category(Category.INFORMATION);
     }
 
     @Override
@@ -50,38 +50,38 @@ public class StatsCommand extends Command {
                 devListBuilder.add(String.format("• <@%s>", id));
             } else {
                 // Automatically creates a new category when a new permission level is reached.
-                devListBuilder.add(String.format("\n**%s**",value.getName()));
+                devListBuilder.add(String.format("\n**%s**", value.getName()));
                 devListBuilder.add(String.format("• <@%s>", id));
                 oldValue = value;
             }
         }
 
         InfoValueCollection infoValues = new InfoValueCollection()
-                .addRegular("🏓 Ping","", String.format("`%s` ms",
-                        event.getJDA().getRestPing().complete()))
-                .addRegular("🤝 Guild Count", "", String.format("`%s` servers",
-                        event.getJDA().getGuilds().size()))
-                .addRegular("💻 Current Shard",
-                        "`N/A`");
+            .addRegular("🏓 Ping", "", String.format("`%s` ms",
+                event.getJDA().getRestPing().complete()))
+            .addRegular("🤝 Guild Count", "", String.format("`%s` servers",
+                event.getJDA().getGuilds().size()))
+            .addRegular("💻 Current Shard",
+                "`N/A`");
 
         event.reply(new ActionMenuBuilder()
-                .setEmbed(new PresetBuilder()
-                        .setTitle("Statistics")
-                        .addLogo()
-                        .setDescription("Here's some information about the bot.  \n\u200b")
-                        .addField("__**Statistics**__",
-                                "\u200b\n" + infoValues.build() + "\n\u200b",
-                                true
-                        ).addField("__**Credits**__\n\u200b\n\n",
-                                String.join("\n", devListBuilder),
-                                true
-                        ))
-                .addButton(Button.link(Empire.BOT_INVITE_LINK, "Bot Invite")
-                        .withEmoji(Emoji.fromMarkdown("📧")))
-                .addButton(Button.link(Empire.SERVER_INVITE_LINK,"Support Server")
-                        .withEmoji(Emoji.fromMarkdown("⛑")))
-                .addButton(Button.link(Empire.GITHUB_LINK, "GitHub Repository")
-                        .withEmoji(Emoji.fromMarkdown("👨‍💻"))
-                ));
+            .setEmbed(new PresetBuilder()
+                .setTitle("Statistics")
+                .addLogo()
+                .setDescription("Here's some information about the bot.  \n\u200b")
+                .addField("__**Statistics**__",
+                    "\u200b\n" + infoValues.build() + "\n\u200b",
+                    true
+                ).addField("__**Credits**__\n\u200b\n\n",
+                    String.join("\n", devListBuilder),
+                    true
+                ))
+            .addButton(Button.link(Empire.BOT_INVITE_LINK, "Bot Invite")
+                .withEmoji(Emoji.fromMarkdown("📧")))
+            .addButton(Button.link(Empire.SERVER_INVITE_LINK, "Support Server")
+                .withEmoji(Emoji.fromMarkdown("⛑")))
+            .addButton(Button.link(Empire.GITHUB_LINK, "GitHub Repository")
+                .withEmoji(Emoji.fromMarkdown("👨‍💻"))
+            ));
     }
 }

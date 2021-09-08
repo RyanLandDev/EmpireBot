@@ -53,6 +53,7 @@ public class CommandInfo {
 
     /**
      * The cooldown set for this command.
+     *
      * @param cooldown Cooldown in seconds.
      * @return The {@link CommandInfo} for chaining.
      * @see #cooldownStorage(StorageType)

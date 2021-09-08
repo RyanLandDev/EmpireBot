@@ -19,25 +19,25 @@ public class BalanceSetCommand extends SubCommand {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("set")
-                .description("Sets the provided balance to the provided value.")
-                .permission(Permission.DEVELOPER)
-                ;
+            .name("set")
+            .description("Sets the provided balance to the provided value.")
+            .permission(Permission.DEVELOPER)
+            ;
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new EnumArgument<>(Balance.class)
-                        .description("Balance to modify.")
-                        .id("balance"),
-                new IntegerArgument()
-                        .description("Value to set.")
-                        .id("value"),
-                new UserArgument()
-                        .description("User to modify.")
-                        .id("user")
-                        .optional(CommandEvent::getUser)
+            new EnumArgument<>(Balance.class)
+                .description("Balance to modify.")
+                .id("balance"),
+            new IntegerArgument()
+                .description("Value to set.")
+                .id("value"),
+            new UserArgument()
+                .description("User to modify.")
+                .id("user")
+                .optional(CommandEvent::getUser)
         );
     }
 
@@ -53,9 +53,9 @@ public class BalanceSetCommand extends SubCommand {
         document.update();
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
-                .setDescription(String.format("Successfully set %s's %s balance to %s.",
-                        user.getAsMention(), balance, value))
-                .addLogo()
+            .setDescription(String.format("Successfully set %s's %s balance to %s.",
+                user.getAsMention(), balance, value))
+            .addLogo()
         );
     }
 }

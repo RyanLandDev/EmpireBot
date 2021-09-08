@@ -15,10 +15,10 @@ public class TutorialMaker {
         MessageEmbed.Field[] fields = tutorial.getFields();
 
         builder
-                .setTitle(tutorial.getEmbedTitle())
-                .setDescription("*"+tutorial.getDescription()+"*")
-                .addLogo()
-                .setThumbnail((tutorial.hasThumbnail()) ? (tutorial.getThumbnail()) : DEFAULT_THUMBNAIL);
+            .setTitle(tutorial.getEmbedTitle())
+            .setDescription("*" + tutorial.getDescription() + "*")
+            .addLogo()
+            .setThumbnail((tutorial.hasThumbnail()) ? (tutorial.getThumbnail()) : DEFAULT_THUMBNAIL);
 
         for (MessageEmbed.Field field : fields) {
             builder.addField(field.getName(), field.getValue(), field.isInline());

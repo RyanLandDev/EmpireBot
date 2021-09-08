@@ -26,14 +26,14 @@ public class CooldownsSerializer implements Serializer<List<List>, List<Cooldown
     @Override
     public List<List> serialize(@NotNull List<Cooldown> toSerialize) {
         return toSerialize.stream()
-                .map(cooldown -> Arrays.asList(cooldown.command().getName(), cooldown.expires()))
-                .collect(Collectors.toList());
+            .map(cooldown -> Arrays.asList(cooldown.command().getName(), cooldown.expires()))
+            .collect(Collectors.toList());
     }
 
     @Override
     public List<Cooldown> deserialize(@NotNull List<List> toDeserialize) {
         return toDeserialize.stream()
-                .map(list -> new Cooldown(Command.of((String) list.get(0)), (Date) list.get(1)))
-                .collect(Collectors.toList());
+            .map(list -> new Cooldown(Command.of((String) list.get(0)), (Date) list.get(1)))
+            .collect(Collectors.toList());
     }
 }

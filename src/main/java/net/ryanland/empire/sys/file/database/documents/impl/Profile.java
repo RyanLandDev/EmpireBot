@@ -111,6 +111,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     /**
      * Increases the profile's xp by the provided value and accounts for level ups.
      * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     *
      * @param xp The amount of XP to give to the profile.
      */
     public void giveXp(int xp, Interaction interaction, MessageEmbed... embeds) {
@@ -124,20 +125,20 @@ public class Profile implements SnowflakeDocument, Emojis {
             document.setLevel(newLevel);
 
             interaction.replyEmbeds(new PresetBuilder(PresetType.NOTIFICATION,
-                    String.format("""
-                            You have leveled up to **Level %s**!
+                String.format("""
+                        You have leveled up to **Level %s**!
 
-                            :homes: **Building limit:** *%s* %s %s
-                            %s The maximum amount of buildings you can have.
-                            :bricks: **Building stage limit:** *%s* %3$s %s
-                            %5$s The maximum stage a building can be.
+                        :homes: **Building limit:** *%s* %s %s
+                        %s The maximum amount of buildings you can have.
+                        :bricks: **Building stage limit:** *%s* %3$s %s
+                        %5$s The maximum stage a building can be.
 
-                            %3$s Received %s""",
-                            newLevel, getBuildingLimit(), ARROW_RIGHT, getBuildingLimit(newLevel), AIR,
-                            getBuildingStageLimit(), getBuildingStageLimit(newLevel),
-                            Boxes.MYTHICAL.give(new Profile(interaction.getUser()))),
-                    XP + " Level Up!")
-                    .build(), embeds).setEphemeral(true).queue();
+                        %3$s Received %s""",
+                    newLevel, getBuildingLimit(), ARROW_RIGHT, getBuildingLimit(newLevel), AIR,
+                    getBuildingStageLimit(), getBuildingStageLimit(newLevel),
+                    Boxes.MYTHICAL.give(new Profile(interaction.getUser()))),
+                XP + " Level Up!")
+                .build(), embeds).setEphemeral(true).queue();
         } else {
             interaction.replyEmbeds(Arrays.asList(embeds)).setEphemeral(true).queue();
         }
@@ -152,6 +153,7 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     /**
      * Checks if the profile has enough capacity to receive this {@link Price}
+     *
      * @param price The price to check.
      * @return True or false, depending on the check.
      */
@@ -182,6 +184,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     /**
      * Sets a building at a specific layer.
      * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     *
      * @param building The building to set. This building's {@code layer} field will be used.
      */
     @SuppressWarnings("all")
@@ -197,6 +200,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     /**
      * Adds a building to the profile's empire.
      * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     *
      * @param building The building to add.
      */
     @SuppressWarnings("all")
@@ -214,6 +218,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     /**
      * Removes a building at a specific layer.
      * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     *
      * @param layer The layer the building is at to remove.
      */
     public void removeBuilding(int layer) {
@@ -256,12 +261,12 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     public Price<Integer> getCapacity(Currency currency) {
         return new Price<>(currency, getBuildings().stream()
-                .filter(building -> building.isUsable() &&
-                        building.getType() == BuildingType.RESOURCE_STORAGE &&
-                        ((ResourceBuilding) building).getEffectiveCurrency() == currency)
-                .map(building -> ((ResourceBuilding) building).getCapacity().amount())
-                .reduce(0, Integer::sum)
-                + currency.getDefaultCapacity());
+            .filter(building -> building.isUsable() &&
+                building.getType() == BuildingType.RESOURCE_STORAGE &&
+                ((ResourceBuilding) building).getEffectiveCurrency() == currency)
+            .map(building -> ((ResourceBuilding) building).getCapacity().amount())
+            .reduce(0, Integer::sum)
+            + currency.getDefaultCapacity());
     }
 
     public boolean capacityIsFull(Currency currency) {
@@ -278,6 +283,7 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     /**
      * Equivalent of {@link #getFormattedCapacity(Currency, boolean)} with {@code false} as {@code includeFull} parameter.
+     *
      * @param currency The currency to get the capacity of.
      * @return The formatted capacity string.
      */
@@ -287,7 +293,8 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     /**
      * Gets the user's capacity of the currency provided and formats it using {@link NumberUtil#format(Number)}.
-     * @param currency The currency to get the capacity of.
+     *
+     * @param currency    The currency to get the capacity of.
      * @param includeFull If the capacity is full and this option is set to true, appends {@code " **FULL**"} to the result.
      * @return The formatted capacity string.
      */

@@ -10,14 +10,14 @@ public class UserCommand extends SubCommandHolder {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("user")
-                .description("Actions that deal with a user")
-                .category(Category.INFORMATION)
-                .subCommandGroups(
-                        new SubCommandGroup("nickname", "Manages nickname actions",
-                                new UserNickGetSubCommand(),
-                                new UserNickSetSubCommand())
-                );
+            .name("user")
+            .description("Actions that deal with a user")
+            .category(Category.INFORMATION)
+            .subCommandGroups(
+                new SubCommandGroup("nickname", "Manages nickname actions",
+                    new UserNickGetSubCommand(),
+                    new UserNickSetSubCommand())
+            );
     }
 
 }

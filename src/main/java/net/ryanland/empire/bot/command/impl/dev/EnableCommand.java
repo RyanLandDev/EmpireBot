@@ -18,19 +18,19 @@ public class EnableCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("enable")
-                .description("Re-enables a globally disabled command.")
-                .category(Category.DEVELOPER)
-                .permission(Permission.DEVELOPER)
-                .flags(Flag.NO_DISABLE);
+            .name("enable")
+            .description("Re-enables a globally disabled command.")
+            .category(Category.DEVELOPER)
+            .permission(Permission.DEVELOPER)
+            .flags(Flag.NO_DISABLE);
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new CommandArgument()
-                    .id("command")
-                    .description("Command to enable")
+            new CommandArgument()
+                .id("command")
+                .description("Command to enable")
         );
     }
 
@@ -40,8 +40,8 @@ public class EnableCommand extends Command {
         DisabledCommandHandler.getInstance().enable(command);
 
         event.performReply(
-                new PresetBuilder(PresetType.SUCCESS,
-                        "Re-enabled the `"+command.getName()+"` command.")
+            new PresetBuilder(PresetType.SUCCESS,
+                "Re-enabled the `" + command.getName() + "` command.")
         ).queue();
     }
 }

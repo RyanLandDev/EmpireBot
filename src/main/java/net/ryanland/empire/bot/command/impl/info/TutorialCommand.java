@@ -13,17 +13,17 @@ public class TutorialCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("tutorial")
-                .description("A set of tutorials explaining the mechanics of the bot.")
-                .category(Category.INFORMATION);
+            .name("tutorial")
+            .description("A set of tutorials explaining the mechanics of the bot.")
+            .category(Category.INFORMATION);
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new EnumArgument<>(Tutorial.class)
-                        .id("tutorial")
-                        .description("The name of the tutorial.")
+            new EnumArgument<>(Tutorial.class)
+                .id("tutorial")
+                .description("The name of the tutorial.")
         );
     }
 

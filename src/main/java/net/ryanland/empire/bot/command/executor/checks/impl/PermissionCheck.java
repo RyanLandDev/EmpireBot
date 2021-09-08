@@ -15,7 +15,7 @@ public class PermissionCheck extends CommandCheck {
     @Override
     public PresetBuilder buildMessage(CommandEvent event) {
         return new PresetBuilder(
-                PresetType.ERROR, "You do not have permission to execute this command.", "Insufficient Permissions"
+            PresetType.ERROR, "You do not have permission to execute this command.", "Insufficient Permissions"
         );
     }
 }

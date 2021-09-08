@@ -17,8 +17,7 @@ public enum BuildingType {
     RESOURCE_STORAGE("Storage", RESOURCE, "<:resource_storage:878654242204815400>"),
 
     DEFENSE_THORNED("Thorned", DEFENSE, "<:defense_thorned:878654523655200778>"),
-    DEFENSE_RANGED("Ranged", DEFENSE, "<:defense_ranged:878654639774523403>")
-    ;
+    DEFENSE_RANGED("Ranged", DEFENSE, "<:defense_ranged:878654639774523403>");
 
     private final String name;
     private final String emoji;
@@ -52,13 +51,13 @@ public enum BuildingType {
 
     public PresetBuilder getEmbed(@NotNull Profile profile) {
         return new PresetBuilder()
-                .setTitle(getEmoji() + " Building Shop")
-                .setDescription(String.format("You have %s and %s.\nYou can buy items using `/buy <name>`.",
-                        profile.getGold().format(), profile.getCrystals().format()))
-                .addFields(Arrays.stream(Building.BUILDINGS)
-                        .filter(building -> building.getType() == this)
-                        .map(Building::getEmbedField)
-                        .toArray(MessageEmbed.Field[]::new));
+            .setTitle(getEmoji() + " Building Shop")
+            .setDescription(String.format("You have %s and %s.\nYou can buy items using `/buy <name>`.",
+                profile.getGold().format(), profile.getCrystals().format()))
+            .addFields(Arrays.stream(Building.BUILDINGS)
+                .filter(building -> building.getType() == this)
+                .map(Building::getEmbedField)
+                .toArray(MessageEmbed.Field[]::new));
     }
 
     public boolean isBaseType() {

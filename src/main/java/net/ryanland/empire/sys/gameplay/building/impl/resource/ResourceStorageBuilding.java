@@ -16,11 +16,11 @@ public abstract class ResourceStorageBuilding extends ResourceBuilding {
     @Override
     public Price<Integer> getHolding() {
         List<ResourceStorageBuilding> buildings = getProfile().getBuildings().stream()
-                .filter(b -> b.isUsable()
-                        && b.getType() == BuildingType.RESOURCE_STORAGE
-                        && ((ResourceStorageBuilding) b).getEffectiveCurrency() == getEffectiveCurrency())
-                .map(b -> (ResourceStorageBuilding) b)
-                .collect(Collectors.toList());
+            .filter(b -> b.isUsable()
+                && b.getType() == BuildingType.RESOURCE_STORAGE
+                && ((ResourceStorageBuilding) b).getEffectiveCurrency() == getEffectiveCurrency())
+            .map(b -> (ResourceStorageBuilding) b)
+            .collect(Collectors.toList());
 
         int toStore = getEffectiveCurrency().get(getProfile()).amount();
 

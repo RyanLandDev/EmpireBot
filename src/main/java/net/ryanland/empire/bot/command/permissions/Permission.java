@@ -3,13 +3,13 @@ package net.ryanland.empire.bot.command.permissions;
 import net.dv8tion.jda.api.entities.Member;
 
 public enum Permission {
-    BANNED("Banned", "banned"){
+    BANNED("Banned", "banned") {
         @Override
         public boolean checkPermission(Member member) {
             return false;
         }
     },
-    USER("User", "user"){
+    USER("User", "user") {
         @Override
         public boolean checkPermission(Member member) {
             return true;

@@ -19,7 +19,7 @@ public record ClaimCommandInfo(String name, String receiveMessage, String failMe
                                                CommandPredicate<CommandEvent> check) {
         Collectible collectible = CollectibleHolder.get(name);
         return new ClaimCommandInfo(name, "Received " + collectible.format(), failMessage, check,
-                event -> collectible.receive(event.getProfile()));
+            event -> collectible.receive(event.getProfile()));
     }
 
     public static ClaimCommandInfo collectible(String name,

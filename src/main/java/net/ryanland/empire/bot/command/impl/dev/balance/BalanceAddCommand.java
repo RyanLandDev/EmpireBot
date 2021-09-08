@@ -20,25 +20,25 @@ public class BalanceAddCommand extends SubCommand {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("add")
-                .description("Adds the provided value to the provided balance.")
-                .permission(Permission.DEVELOPER)
-                ;
+            .name("add")
+            .description("Adds the provided value to the provided balance.")
+            .permission(Permission.DEVELOPER)
+            ;
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new EnumArgument<>(Balance.class)
-                        .description("Balance to modify.")
-                        .id("balance"),
-                new IntegerArgument()
-                        .description("Value to add.")
-                        .id("value"),
-                new UserArgument()
-                        .description("User to modify.")
-                        .id("user")
-                        .optional(CommandEvent::getUser)
+            new EnumArgument<>(Balance.class)
+                .description("Balance to modify.")
+                .id("balance"),
+            new IntegerArgument()
+                .description("Value to add.")
+                .id("value"),
+            new UserArgument()
+                .description("User to modify.")
+                .id("user")
+                .optional(CommandEvent::getUser)
         );
     }
 
@@ -55,9 +55,9 @@ public class BalanceAddCommand extends SubCommand {
         document.update();
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
-                .setDescription(String.format("Successfully added %s to %s's %s balance.",
-                        value, user.getAsMention(), balance))
-                .addLogo()
+            .setDescription(String.format("Successfully added %s to %s's %s balance.",
+                value, user.getAsMention(), balance))
+            .addLogo()
         );
     }
 }

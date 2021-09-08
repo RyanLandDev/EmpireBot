@@ -21,19 +21,19 @@ public class HelpCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("help")
-                .description("Get a list of all commands or information about a specific one.")
-                .category(Category.INFORMATION)
-                .cooldown(3);
+            .name("help")
+            .description("Get a list of all commands or information about a specific one.")
+            .category(Category.INFORMATION)
+            .cooldown(3);
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new CommandArgument()
-                    .id("command")
-                    .optional()
-                    .description("Command to get information of")
+            new CommandArgument()
+                .id("command")
+                .optional()
+                .description("Command to get information of")
         );
     }
 
@@ -54,17 +54,17 @@ public class HelpCommand extends Command {
 
         // Add home to menu
         PresetBuilder homePage = new PresetBuilder(
-                "Use the buttons below to navigate through all command categories.\n" +
-                        "You can get help for a specific command using "+HelpMaker.formattedUsageCode(event)
-                                + ".\n\nBot made by "+ Empire.RYANLAND)
-                .addLogo();
+            "Use the buttons below to navigate through all command categories.\n" +
+                "You can get help for a specific command using " + HelpMaker.formattedUsageCode(event)
+                + ".\n\nBot made by " + Empire.RYANLAND)
+            .addLogo();
         menu.addPage("Home", homePage, true);
 
         // Iterate over all command categories
         for (Category category : Category.getCategories()) {
             // Get all commands, and filter by category equal and player has sufficient permissions
             List<Command> commands = CommandHandler.getCommands().stream().filter(c ->
-                    c.getCategory() == category &&
+                c.getCategory() == category &&
                     c.getPermission().hasPermission(event.getMember())
             ).collect(Collectors.toList());
 
@@ -76,7 +76,7 @@ public class HelpCommand extends Command {
 
             // Add this category to the menu
             menu.addPage(category.getName(), new PresetBuilder(category.getDescription() +
-                    "\n\n" + HelpMaker.formattedQuickCommandList(commands))
+                "\n\n" + HelpMaker.formattedQuickCommandList(commands))
                 .addLogo(), category.getEmoji());
         }
 

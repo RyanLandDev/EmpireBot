@@ -25,7 +25,7 @@ public abstract class AbstractClaimSubCommand extends SubCommand {
             if (info.check().check(event)) {
                 info.claim().accept(event);
                 event.reply(new PresetBuilder(PresetType.SUCCESS,
-                        String.format("You have claimed your %s.\n%s %s", info.name(), ARROW_RIGHT, info.receiveMessage())
+                    String.format("You have claimed your %s.\n%s %s", info.name(), ARROW_RIGHT, info.receiveMessage())
                 ));
             } else {
                 throw new CommandException("You cannot claim your %s.\n%s".formatted(info.name(), info.failMessage()));

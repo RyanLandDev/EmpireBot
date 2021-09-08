@@ -12,10 +12,10 @@ public class NewWaveCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("newwave")
-                .description("Starts a new enemy wave.")
-                .category(Category.COMBAT)
-                .requiresProfile();
+            .name("newwave")
+            .description("Starts a new enemy wave.")
+            .category(Category.COMBAT)
+            .requiresProfile();
     }
 
     @Override

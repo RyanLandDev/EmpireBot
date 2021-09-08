@@ -28,8 +28,8 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     public static final int DEFAULT_WAVE = 1;
     @SuppressWarnings("all")
     public static final List<List> DEFAULT_BUILDINGS = Arrays.asList(
-            Building.of(GoldMineBuilding.ID).defaults().serialize(),
-            Building.of(BankBuilding.ID).defaults().serialize()
+        Building.of(GoldMineBuilding.ID).defaults().serialize(),
+        Building.of(BankBuilding.ID).defaults().serialize()
     );
     @SuppressWarnings("all")
     public static final List<List> DEFAULT_COOLDOWNS = Collections.emptyList();

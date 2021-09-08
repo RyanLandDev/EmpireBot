@@ -8,8 +8,7 @@ public enum Boxes {
     HOURLY("Hourly", 1),
     DAILY("Daily", 2),
     MEMBER("Member", 3),
-    MYTHICAL("Mythical", 4)
-    ;
+    MYTHICAL("Mythical", 4);
 
     private final String name;
     private final int id;

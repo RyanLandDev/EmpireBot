@@ -19,11 +19,11 @@ public class CooldownCheck extends CommandCheck {
     @Override
     public PresetBuilder buildMessage(CommandEvent event) {
         return new PresetBuilder(
-                PresetType.ERROR,
-                "This command is currently on cooldown.\nTime left: " +
-                        DateUtil.formatRelative(new Date(
-                                CooldownHandler.getActiveCooldown(event).expires().getTime() - System.currentTimeMillis())),
-                "On Cooldown"
+            PresetType.ERROR,
+            "This command is currently on cooldown.\nTime left: " +
+                DateUtil.formatRelative(new Date(
+                    CooldownHandler.getActiveCooldown(event).expires().getTime() - System.currentTimeMillis())),
+            "On Cooldown"
         );
     }
 }

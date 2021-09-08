@@ -7,7 +7,6 @@ import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
-import net.ryanland.empire.util.DateUtil;
 
 public abstract class ResourceBuilding extends Building {
 
@@ -37,13 +36,13 @@ public abstract class ResourceBuilding extends Building {
     @Override
     public BuildingInfoBuilder getBuildingInfoBuilder() {
         return super.getBuildingInfoBuilder()
-                .insertSegment(1, new BuildingInfoSegmentBuilder()
-                        .addElement(BuildingInfoElement.capacitable("Holding", "👜",
-                                getHolding().currency(), getHolding(), getCapacity(),
-                                "Collect holding resources.", true))
-                        .addElement(BuildingInfoElement.upgradable("Capacity", ":bucket:",
-                                getEffectiveCurrency(), getCapacity(), getCapacity(stage + 1),
-                                "The maximum amount of resources this building can hold."))
-                );
+            .insertSegment(1, new BuildingInfoSegmentBuilder()
+                .addElement(BuildingInfoElement.capacitable("Holding", "👜",
+                    getHolding().currency(), getHolding(), getCapacity(),
+                    "Collect holding resources.", true))
+                .addElement(BuildingInfoElement.upgradable("Capacity", ":bucket:",
+                    getEffectiveCurrency(), getCapacity(), getCapacity(stage + 1),
+                    "The maximum amount of resources this building can hold."))
+            );
     }
 }

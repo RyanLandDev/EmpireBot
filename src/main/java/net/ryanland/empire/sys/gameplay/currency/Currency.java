@@ -11,10 +11,9 @@ import java.util.function.Function;
 public enum Currency implements Emojis {
 
     GOLD("Gold", Emojis.GOLD, 5000, 0.1f,
-            Profile::getGold, UserDocument::setGold),
+        Profile::getGold, UserDocument::setGold),
     CRYSTALS("Crystals", Emojis.CRYSTALS, 500, 2.3f,
-            Profile::getCrystals, UserDocument::setCrystals)
-    ;
+        Profile::getCrystals, UserDocument::setCrystals);
 
     private final String name;
     private final String emoji;
@@ -66,6 +65,7 @@ public enum Currency implements Emojis {
     /**
      * Updates a UserDocument's currency value.
      * <strong>WARNING:</strong> Does not call {@link UserDocument#update}.
+     *
      * @param document The UserDocument to apply this change to.
      * @param newValue The new value this currency will be set to.
      */

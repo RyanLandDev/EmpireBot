@@ -8,17 +8,17 @@ public class ClaimDailyCommand extends AbstractClaimSubCommand {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("daily")
-                .description("Claim your Daily package.")
-                .cooldown(86400)
-                .cooldownStorage(StorageType.EXTERNAL)
-                .requiresProfile();
+            .name("daily")
+            .description("Claim your Daily package.")
+            .cooldown(86400)
+            .cooldownStorage(StorageType.EXTERNAL)
+            .requiresProfile();
     }
 
     @Override
     public ClaimCommandInfo getClaimInfo() {
         return ClaimCommandInfo.collectible(
-                "Daily", event -> true
+            "Daily", event -> true
         );
     }
 }

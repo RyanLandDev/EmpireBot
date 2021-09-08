@@ -24,10 +24,10 @@ public class InventoryCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("inventory")
-                .description("View all the items in your inventory.")
-                .category(Category.ITEMS)
-                .requiresProfile();
+            .name("inventory")
+            .description("View all the items in your inventory.")
+            .category(Category.ITEMS)
+            .requiresProfile();
     }
 
     @Override
@@ -38,17 +38,17 @@ public class InventoryCommand extends Command {
     @Override
     public void run(CommandEvent event) throws CommandException {
         PresetBuilder embed = new PresetBuilder(
-                "Here is an overview of all the items in your inventory.\nYou can use an item with `/use <name>`.\n\u200b",
-                "Inventory");
+            "Here is an overview of all the items in your inventory.\nYou can use an item with `/use <name>`.\n\u200b",
+            "Inventory");
 
         // Add inventory items here
         embed.addFields(build(event.getProfile(),
-                new InventoryCategory("📦", "Boxes",
-                        InventoryItem.box(Boxes.HOURLY),
-                        InventoryItem.box(Boxes.DAILY),
-                        InventoryItem.box(Boxes.MEMBER),
-                        InventoryItem.box(Boxes.MYTHICAL)
-                )
+            new InventoryCategory("📦", "Boxes",
+                InventoryItem.box(Boxes.HOURLY),
+                InventoryItem.box(Boxes.DAILY),
+                InventoryItem.box(Boxes.MEMBER),
+                InventoryItem.box(Boxes.MYTHICAL)
+            )
         ));
 
         event.reply(embed);
@@ -56,13 +56,13 @@ public class InventoryCommand extends Command {
 
     private static MessageEmbed.Field[] build(Profile profile, InventoryCategory... categories) {
         MessageEmbed.Field[] fields = Arrays.stream(categories)
-                .map(category -> category.build(profile))
-                .filter(Objects::nonNull)
-                .toArray(MessageEmbed.Field[]::new);
+            .map(category -> category.build(profile))
+            .filter(Objects::nonNull)
+            .toArray(MessageEmbed.Field[]::new);
 
         if (fields.length == 0) {
             return new MessageEmbed.Field[]{
-                    new MessageEmbed.Field("*Empty*", "", true)
+                new MessageEmbed.Field("*Empty*", "", true)
             };
         } else {
             return fields;
@@ -73,17 +73,17 @@ public class InventoryCommand extends Command {
 
         MessageEmbed.Field build(Profile profile) {
             String value = Arrays.stream(items)
-                    .filter(item -> item.quantityGetter.apply(profile) > 0)
-                    .map(item -> item.build(profile))
-                    .collect(Collectors.joining("\n")
-                    );
+                .filter(item -> item.quantityGetter.apply(profile) > 0)
+                .map(item -> item.build(profile))
+                .collect(Collectors.joining("\n")
+                );
 
             if (value.isEmpty()) {
                 return null;
             } else {
                 return new MessageEmbed.Field(emoji + " " + name,
-                        value + "\n\u200b",
-                        true);
+                    value + "\n\u200b",
+                    true);
             }
         }
     }
@@ -96,9 +96,9 @@ public class InventoryCommand extends Command {
 
         static InventoryItem box(String name) {
             return new InventoryItem(name,
-                    profile -> (int) profile.getInventory().stream()
-                            .filter(item -> item instanceof Box && item.getName().equals(name))
-                            .count()
+                profile -> (int) profile.getInventory().stream()
+                    .filter(item -> item instanceof Box && item.getName().equals(name))
+                    .count()
             );
         }
 
@@ -107,9 +107,9 @@ public class InventoryCommand extends Command {
             int quantity = quantityGetter.apply(profile);
 
             return "%s %s %s".formatted(
-                    quantity == 1 ? AIR : "*" + quantity + "x* \u200b",
-                    item.getEmoji(),
-                    item.getName()
+                quantity == 1 ? AIR : "*" + quantity + "x* \u200b",
+                item.getEmoji(),
+                item.getName()
             );
         }
     }

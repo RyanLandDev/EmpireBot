@@ -15,10 +15,10 @@ public class ResetCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("reset")
-                .description("Reset everything.")
-                .category(Category.PROFILE)
-                .requiresProfile();
+            .name("reset")
+            .description("Reset everything.")
+            .category(Category.PROFILE)
+            .requiresProfile();
     }
 
     @Override
@@ -29,9 +29,9 @@ public class ResetCommand extends Command {
     @Override
     public void run(CommandEvent event) throws CommandException {
         event.reply(new ConfirmMenu(
-                "**Are you sure?**\n\nThis will reset __EVERYTHING__ and __CANNOT__ be undone.",
-                () -> DocumentCache.delete(event.getUser().getId(), UserDocument.class),
-                "Profile reset."
+            "**Are you sure?**\n\nThis will reset __EVERYTHING__ and __CANNOT__ be undone.",
+            () -> DocumentCache.delete(event.getUser().getId(), UserDocument.class),
+            "Profile reset."
         ));
     }
 }

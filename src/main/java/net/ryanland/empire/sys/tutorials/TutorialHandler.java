@@ -10,9 +10,9 @@ public class TutorialHandler {
 
     static {
         for (Tutorial tutorial : Tutorial.values()) {
-            if (tutorial.getTitle() == null || tutorial.getEmbedTitle() == null || tutorial.getDescription() == null || tutorial.getFields() == null ) {
+            if (tutorial.getTitle() == null || tutorial.getEmbedTitle() == null || tutorial.getDescription() == null || tutorial.getFields() == null) {
                 throw new IllegalStateException(tutorial.getClass().getName() +
-                        "- Tutorials must have at least an executor, name, description, and body.");
+                    "- Tutorials must have at least an executor, name, description, and body.");
             }
 
             EXECUTORS.put(tutorial.getTitle(), tutorial);

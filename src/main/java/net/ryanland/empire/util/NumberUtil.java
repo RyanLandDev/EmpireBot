@@ -5,12 +5,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Random;
 
 public class NumberUtil {
 
     /**
      * Equivalent of {@link NumberFormat#format(long)} with {@link Locale}{@code .US}.
+     *
      * @param number Number to format.
      * @return The formatted number string.
      */
@@ -28,11 +28,11 @@ public class NumberUtil {
         int unfilledBlocks = size - filledBlocks;
 
         return "[" +
-                Emojis.FILLED_BLOCK.repeat(
-                        clamp(filledBlocks, size)) +
-                Emojis.UNFILLED_BLOCK.repeat(
-                        clamp(unfilledBlocks, size))
-                + "]";
+            Emojis.FILLED_BLOCK.repeat(
+                clamp(filledBlocks, size)) +
+            Emojis.UNFILLED_BLOCK.repeat(
+                clamp(unfilledBlocks, size))
+            + "]";
     }
 
     public static Integer of(String formattedNumber) {

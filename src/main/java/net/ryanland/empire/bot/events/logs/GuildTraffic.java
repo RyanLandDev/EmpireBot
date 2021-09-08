@@ -36,23 +36,22 @@ public class GuildTraffic extends ListenerAdapter {
             header = "Join";
             action = "joined";
             color = PresetType.SUCCESS.getColor();
-        }
-        else {
+        } else {
             header = "Leave";
             action = "left";
             color = PresetType.ERROR.getColor();
         }
 
         WebhookEmbed embed = new WebhookEmbedBuilder()
-                .setColor(color)
-                .setTitle(new WebhookEmbed.EmbedTitle("Guild "+header, null))
-                .setThumbnailUrl(guild.getIconUrl())
-                .setTimestamp(Instant.now())
-                .setDescription(String.format("**%s** has __%s__ the following guild:\n\u200b", Empire.getSelfUser().getName(), action))
-                .addField(new WebhookEmbed.EmbedField(true, "Name", guild.getName()))
-                .addField(new WebhookEmbed.EmbedField(true, "ID", guild.getId()))
-                .addField(new WebhookEmbed.EmbedField(true, "Member Count", NumberUtil.format(guild.getMemberCount())))
-                .build();
+            .setColor(color)
+            .setTitle(new WebhookEmbed.EmbedTitle("Guild " + header, null))
+            .setThumbnailUrl(guild.getIconUrl())
+            .setTimestamp(Instant.now())
+            .setDescription(String.format("**%s** has __%s__ the following guild:\n\u200b", Empire.getSelfUser().getName(), action))
+            .addField(new WebhookEmbed.EmbedField(true, "Name", guild.getName()))
+            .addField(new WebhookEmbed.EmbedField(true, "ID", guild.getId()))
+            .addField(new WebhookEmbed.EmbedField(true, "Member Count", NumberUtil.format(guild.getMemberCount())))
+            .build();
 
         WEBHOOK_CLIENT.send(embed);
     }

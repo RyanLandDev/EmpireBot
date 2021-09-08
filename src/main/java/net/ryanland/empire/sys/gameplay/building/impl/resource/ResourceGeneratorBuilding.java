@@ -47,7 +47,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     @Override
     public List<?> serialize(@NotNull Building building) {
         return Arrays.asList(building.getId(), building.getStage(), building.getHealth(),
-                (Object) ((ResourceGeneratorBuilding) building).getLastCollect());
+            (Object) ((ResourceGeneratorBuilding) building).getLastCollect());
     }
 
     @Override
@@ -58,39 +58,39 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     @Override
     public BuildingInfoBuilder getBuildingInfoBuilder() {
         return super.getBuildingInfoBuilder().replaceSegment(1, segment -> segment
-                .insertElement(0, BuildingInfoElement.upgradable(
-                        getEffectiveCurrency().getName() + " per minute", "🏭", getEffectiveCurrency().getEmoji(),
-                        getUnitPerMin(), getUnitPerMin(stage + 1),
-                        "The resources this building makes per minute.\n" + AIR +
-                                " Time left to fill up: " +
-                                DateUtil.formatRelative(new Date(Math.max(0,
-                                        (long) (getCapacity().amount() / getUnitPerMs().amount()) -
-                                                (System.currentTimeMillis() - lastCollect.getTime()))))
-                ))
+            .insertElement(0, BuildingInfoElement.upgradable(
+                getEffectiveCurrency().getName() + " per minute", "🏭", getEffectiveCurrency().getEmoji(),
+                getUnitPerMin(), getUnitPerMin(stage + 1),
+                "The resources this building makes per minute.\n" + AIR +
+                    " Time left to fill up: " +
+                    DateUtil.formatRelative(new Date(Math.max(0,
+                        (long) (getCapacity().amount() / getUnitPerMs().amount()) -
+                            (System.currentTimeMillis() - lastCollect.getTime()))))
+            ))
         );
     }
 
     @Override
     public ActionMenuBuilder getActionMenuBuilder() throws CommandException {
         return super.getActionMenuBuilder()
-                .insertButton(2,
-                        Button.secondary("collect", "Collect" +
-                                        (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
-                                .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
-                                .withDisabled(!canCollect()),
-                        event -> {
-                            Price<Integer> holding = getHolding();
-                            int xp = getCollectXp();
+            .insertButton(2,
+                Button.secondary("collect", "Collect" +
+                        (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
+                    .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
+                    .withDisabled(!canCollect()),
+                event -> {
+                    Price<Integer> holding = getHolding();
+                    int xp = getCollectXp();
 
-                            executeButtonAction(event, () -> collect(xp, event, new PresetBuilder(PresetType.SUCCESS, String.format(
-                                    "Collected %s from %s.",
-                                    holding.format() + (xp > 0 ? String.format(" and %s %s", XP, NumberUtil.format(xp)) : ""),
-                                    format()
-                            )).build()));
+                    executeButtonAction(event, () -> collect(xp, event, new PresetBuilder(PresetType.SUCCESS, String.format(
+                        "Collected %s from %s.",
+                        holding.format() + (xp > 0 ? String.format(" and %s %s", XP, NumberUtil.format(xp)) : ""),
+                        format()
+                    )).build()));
 
-                            refreshMenu(event);
-                        }
-                );
+                    refreshMenu(event);
+                }
+            );
     }
 
     @Override
@@ -103,11 +103,10 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
         BROKEN("Broken", Building::isUsable),
         EMPTY("Empty", building -> ((ResourceGeneratorBuilding) building).getHolding().amount() > 0),
         CAPACITY_FULL("Capacity Full", building -> building.getProfile()
-                .roomFor(((ResourceGeneratorBuilding) building).getHolding())),
+            .roomFor(((ResourceGeneratorBuilding) building).getHolding())),
         NOT_EXISTING("Not Existing", Building::exists),
 
-        AVAILABLE("Available", building -> false)
-        ;
+        AVAILABLE("Available", building -> false);
 
         private final String name;
         private final Predicate<Building> check;
@@ -151,8 +150,8 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
     public int getCollectXp() {
         return (int) Math.floor(
-                (getHolding().amount() * getEffectiveCurrency().getCollectXpMultiplier())
-                        * RandomUtil.randomFloat(0.75f, 1.75f));
+            (getHolding().amount() * getEffectiveCurrency().getCollectXpMultiplier())
+                * RandomUtil.randomFloat(0.75f, 1.75f));
     }
 
     @Override

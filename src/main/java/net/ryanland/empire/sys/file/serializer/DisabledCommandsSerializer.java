@@ -18,14 +18,14 @@ public class DisabledCommandsSerializer implements Serializer<List<String>, List
     @Override
     public List<String> serialize(@NotNull List<Command> toSerialize) {
         return toSerialize.stream()
-                .map(Command::getName)
-                .collect(Collectors.toList());
+            .map(Command::getName)
+            .collect(Collectors.toList());
     }
 
     @Override
     public List<Command> deserialize(@NotNull List<String> toDeserialize) {
         return toDeserialize.stream()
-                .map(CommandHandler::getCommand)
-                .collect(Collectors.toList());
+            .map(CommandHandler::getCommand)
+            .collect(Collectors.toList());
     }
 }

@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 public class DateUtil {
 
     public static final SimpleDateFormat STANDARD_DATE_FORMAT =
-            new SimpleDateFormat("EEEE dd/MM/yyyy 'at' HH:mm 'UTC'");
+        new SimpleDateFormat("EEEE dd/MM/yyyy 'at' HH:mm 'UTC'");
     public static final SimpleDateFormat RELATIVE_DATE_FORMAT =
-            new SimpleDateFormat("D'd' H'h' m'm' s's'");
+        new SimpleDateFormat("D'd' H'h' m'm' s's'");
 
     public static final long TIMEZONE_OFFSET = -3600000;
 
@@ -28,7 +28,7 @@ public class DateUtil {
         Matcher matcher = Pattern.compile("^\\d+").matcher(formatted);
         while (matcher.find()) {
             formatted = formatted.replaceFirst("^\\d+",
-                    String.valueOf(Integer.parseInt(matcher.group()) - 1));
+                String.valueOf(Integer.parseInt(matcher.group()) - 1));
         }
 
         // This regex will remove all spaces and leading 0s, except the last leading 0

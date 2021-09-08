@@ -33,21 +33,21 @@ public class CooldownHandler {
     public static boolean isCooldownActive(CommandEvent event) {
         cleanCooldowns(event);
         return getActiveCooldowns(event).stream()
-                .anyMatch(cooldown -> cooldown.command().getName().equals(event.getCommand().getName()));
+            .anyMatch(cooldown -> cooldown.command().getName().equals(event.getCommand().getName()));
     }
 
     public static Cooldown getActiveCooldown(CommandEvent event) {
         if (!isCooldownActive(event)) return null;
         return getActiveCooldowns(event).stream()
-                .filter(cooldown -> cooldown.command().getName().equals(event.getCommand().getName()))
-                .collect(Collectors.toList())
-                .get(0);
+            .filter(cooldown -> cooldown.command().getName().equals(event.getCommand().getName()))
+            .collect(Collectors.toList())
+            .get(0);
     }
 
     public static void newCooldown(CommandEvent event) {
         cleanCooldowns(event);
         getCooldownManager(event).put(event.getUser(), new Cooldown(event.getCommand(),
-                new Date(System.currentTimeMillis() + event.getCommand().getCooldownInMs())));
+            new Date(System.currentTimeMillis() + event.getCommand().getCooldownInMs())));
     }
 
     public static List<Cooldown> getActiveCooldowns(CommandEvent event) {
@@ -58,8 +58,8 @@ public class CooldownHandler {
         Date date = new Date();
         List<Cooldown> activeCooldowns = getActiveCooldowns(event);
         List<Cooldown> cooldowns = activeCooldowns.stream()
-                .filter(cooldown -> date.before(cooldown.expires()))
-                .collect(Collectors.toList());
+            .filter(cooldown -> date.before(cooldown.expires()))
+            .collect(Collectors.toList());
 
         if (!activeCooldowns.equals(cooldowns)) {
             if (cooldowns.isEmpty()) {
@@ -73,8 +73,8 @@ public class CooldownHandler {
     public static void removeCooldown(CommandEvent event) {
         List<Cooldown> activeCooldowns = getActiveCooldowns(event);
         List<Cooldown> cooldowns = activeCooldowns.stream()
-                .filter(cooldown -> !cooldown.command().getName().equals(event.getCommand().getName()))
-                .collect(Collectors.toList());
+            .filter(cooldown -> !cooldown.command().getName().equals(event.getCommand().getName()))
+            .collect(Collectors.toList());
 
         if (!activeCooldowns.equals(cooldowns)) {
             if (cooldowns.isEmpty()) {

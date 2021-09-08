@@ -41,8 +41,8 @@ public record Price<T extends Number>(Currency currency, T amount) implements Fo
 
         if (!profile.canAfford(price)) {
             throw new CannotAffordException(
-                    "You cannot afford this. You need " + price.difference(currency.get(profile)).format() +
-                            " more.");
+                "You cannot afford this. You need " + price.difference(currency.get(profile)).format() +
+                    " more.");
         }
 
         currency.update(profile, currency.get(profile).amount() - amount.intValue());

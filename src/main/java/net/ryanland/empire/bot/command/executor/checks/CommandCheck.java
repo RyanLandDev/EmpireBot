@@ -11,10 +11,10 @@ public abstract class CommandCheck {
 
     @SuppressWarnings("all")
     private final static CommandCheck[] CHECKS = new CommandCheck[]{
-            new DisabledCheck(),
-            new PermissionCheck(),
-            new RequiresProfileCheck(),
-            new CooldownCheck()
+        new DisabledCheck(),
+        new PermissionCheck(),
+        new RequiresProfileCheck(),
+        new CooldownCheck()
     };
 
     public static CommandCheck[] getChecks() {

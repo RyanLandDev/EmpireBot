@@ -93,7 +93,7 @@ public class InfoValueCollection extends ArrayList<InfoValue> {
 
     public String build() {
         return stream()
-                .map(value -> value.type().getBuilder().apply(value))
-                .collect(Collectors.joining("\n"));
+            .map(value -> value.type().getBuilder().apply(value))
+            .collect(Collectors.joining("\n"));
     }
 }

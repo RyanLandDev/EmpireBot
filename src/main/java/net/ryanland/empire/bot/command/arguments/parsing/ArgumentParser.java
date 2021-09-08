@@ -51,7 +51,7 @@ public class ArgumentParser {
                 event.performReply(embed
                         .setDescription(e.getMessage(event, arg))
                         .setTitle("Invalid Argument")
-                , true).queue();
+                    , true).queue();
                 return false;
 
             } catch (ArgumentException ignored) {

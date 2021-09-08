@@ -19,25 +19,25 @@ public class BalanceSubtractCommand extends SubCommand {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("subtract")
-                .description("Subtracts the provided value from the provided balance.")
-                .permission(Permission.DEVELOPER)
-                ;
+            .name("subtract")
+            .description("Subtracts the provided value from the provided balance.")
+            .permission(Permission.DEVELOPER)
+            ;
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new EnumArgument<>(Balance.class)
-                        .description("Balance to modify.")
-                        .id("balance"),
-                new IntegerArgument()
-                        .description("Value to subtract.")
-                        .id("value"),
-                new UserArgument()
-                        .description("User to modify.")
-                        .id("user")
-                        .optional(CommandEvent::getUser)
+            new EnumArgument<>(Balance.class)
+                .description("Balance to modify.")
+                .id("balance"),
+            new IntegerArgument()
+                .description("Value to subtract.")
+                .id("value"),
+            new UserArgument()
+                .description("User to modify.")
+                .id("user")
+                .optional(CommandEvent::getUser)
         );
     }
 
@@ -54,9 +54,9 @@ public class BalanceSubtractCommand extends SubCommand {
         document.update();
 
         event.reply(new PresetBuilder(PresetType.SUCCESS)
-                .setDescription(String.format("Successfully subtracted %s from %s' %s balance.",
-                        value, user.getAsMention(),  balance))
-                .addLogo()
+            .setDescription(String.format("Successfully subtracted %s from %s' %s balance.",
+                value, user.getAsMention(), balance))
+            .addLogo()
         );
     }
 }

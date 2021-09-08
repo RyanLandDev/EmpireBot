@@ -9,8 +9,7 @@ public enum Balance implements EnumArgument.InputEnum {
 
     GOLD("gold", UserDocument::getGold, UserDocument::setGold),
     CRYSTALS("crystals", UserDocument::getCrystals, UserDocument::setCrystals),
-    XP("xp", UserDocument::getXp, UserDocument::setXp)
-    ;
+    XP("xp", UserDocument::getXp, UserDocument::setXp);
 
     private final String name;
     private final Function<UserDocument, Integer> getter;

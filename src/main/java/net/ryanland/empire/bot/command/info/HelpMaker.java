@@ -79,12 +79,12 @@ public class HelpMaker {
 
     public static PresetBuilder commandEmbed(CommandEvent event, Command command) {
         PresetBuilder embed = new PresetBuilder()
-                .setTitle(command.getUppercaseName() + " Command" +
-                         (command.isDisabled() ? " [Disabled]" : ""))
-                .setDescription(command.getDescription() + "\n\u200b")
-                .addLogo()
-                .addField("Category", command.getCategory().getName())
-                .addField("Usage", String.format("```html\n%s\n```", formattedUsage(event)));
+            .setTitle(command.getUppercaseName() + " Command" +
+                (command.isDisabled() ? " [Disabled]" : ""))
+            .setDescription(command.getDescription() + "\n\u200b")
+            .addLogo()
+            .addField("Category", command.getCategory().getName())
+            .addField("Usage", String.format("```html\n%s\n```", formattedUsage(event)));
 
         if (command.getPermission() != Permission.USER) {
             embed.addField("Permission", command.getPermission().getName());

@@ -18,19 +18,19 @@ public class DisableCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("disable")
-                .description("Disables a command globally.")
-                .category(Category.DEVELOPER)
-                .permission(Permission.DEVELOPER)
-                .flags(Flag.NO_DISABLE);
+            .name("disable")
+            .description("Disables a command globally.")
+            .category(Category.DEVELOPER)
+            .permission(Permission.DEVELOPER)
+            .flags(Flag.NO_DISABLE);
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new CommandArgument()
-                    .id("command")
-                    .description("Command to disable")
+            new CommandArgument()
+                .id("command")
+                .description("Command to disable")
         );
     }
 
@@ -40,8 +40,8 @@ public class DisableCommand extends Command {
         DisabledCommandHandler.getInstance().disable(command);
 
         event.performReply(
-                new PresetBuilder(PresetType.SUCCESS,
-                        "Disabled the `"+command.getName()+"` command.")
+            new PresetBuilder(PresetType.SUCCESS,
+                "Disabled the `" + command.getName() + "` command.")
         ).queue();
     }
 }

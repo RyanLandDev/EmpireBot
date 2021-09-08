@@ -10,26 +10,25 @@ import java.util.stream.Collectors;
 
 public enum ShopCategory implements EnumArgument.InputEnum, Emojis {
 
-    BUILDINGS("buildings", "🏘"){
+    BUILDINGS("buildings", "🏘") {
         @Override
         public TabMenuBuilder getTabMenuBuilder(CommandEvent event) {
             TabMenuBuilder builder = new TabMenuBuilder();
 
             for (BuildingType type :
-                    Arrays.stream(BuildingType.values())
+                Arrays.stream(BuildingType.values())
                     .filter(building -> !building.isBaseType())
                     .collect(Collectors.toList())
             ) {
                 builder.addPage(
-                        type.getFullName(),
-                        type.getEmbed(event.getProfile()), type.getEmoji()
+                    type.getFullName(),
+                    type.getEmbed(event.getProfile()), type.getEmoji()
                 );
             }
 
             return builder;
         }
-    }
-    ;
+    };
 
     private final String title;
     private final String emoji;

@@ -16,21 +16,21 @@ public class UserNickSetSubCommand extends SubCommand {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("set")
-                .description("Set the name of a guild member")
-                .permission(Permission.SERVER_ADMIN);
+            .name("set")
+            .description("Set the name of a guild member")
+            .permission(Permission.SERVER_ADMIN);
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-                new MemberArgument()
-                        .id("member")
-                        .description("The affected member"),
-                new StringArgument()
-                        .name("nickname")
-                        .id("nick")
-                        .description("That nickname will be applied to the given member")
+            new MemberArgument()
+                .id("member")
+                .description("The affected member"),
+            new StringArgument()
+                .name("nickname")
+                .id("nick")
+                .description("That nickname will be applied to the given member")
         );
     }
 

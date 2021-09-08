@@ -15,20 +15,20 @@ public class ShopCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("shop")
-                .description("The place to buy items.")
-                .category(Category.ITEMS)
-                .requiresProfile();
+            .name("shop")
+            .description("The place to buy items.")
+            .category(Category.ITEMS)
+            .requiresProfile();
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet()
-                .addArguments(
-                    new EnumArgument<>(ShopCategory.class)
-                        .id("category")
-                        .description("The shop category to view.")
-                );
+            .addArguments(
+                new EnumArgument<>(ShopCategory.class)
+                    .id("category")
+                    .description("The shop category to view.")
+            );
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ShopCommand extends Command {
         ShopCategory category = event.getArgument("category");
 
         event.reply(category.getTabMenuBuilder(event)
-                .insertPage(0, SHOP + " Shop",
+            .insertPage(0, SHOP + " Shop",
                 new PresetBuilder("Use the buttons below to navigate through the shop.\n\u200b"),
                 true)
         );

@@ -30,7 +30,7 @@ public class CommandHandler {
         for (Command command : commands) {
             if (command.getName() == null || command.getDescription() == null || command.getCategory() == null) {
                 throw new IllegalStateException(command.getClass().getName() +
-                        " - Commands must have at least a name, description and category.");
+                    " - Commands must have at least a name, description and category.");
             }
 
             COMMANDS.add(command);

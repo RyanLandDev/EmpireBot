@@ -13,7 +13,7 @@ public class RequiresProfileCheck extends CommandCheck {
     @Override
     public boolean check(CommandEvent event) {
         return event.getCommand().requiresProfile() &&
-                !hasProfile(event.getUser());
+            !hasProfile(event.getUser());
     }
 
     public static boolean hasProfile(User user) {
@@ -23,9 +23,9 @@ public class RequiresProfileCheck extends CommandCheck {
     @Override
     public PresetBuilder buildMessage(CommandEvent event) {
         return new PresetBuilder(
-                PresetType.ERROR,
-                "This command requires a profile! Create one using `/start`.",
-                "Requires Profile"
+            PresetType.ERROR,
+            "This command requires a profile! Create one using `/start`.",
+            "Requires Profile"
         );
     }
 }

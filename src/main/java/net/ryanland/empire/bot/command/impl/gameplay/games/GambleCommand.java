@@ -20,37 +20,37 @@ public class GambleCommand extends Command {
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
-                .name("gamble")
-                .description("Bet gold, and get double or nothing.")
-                .category(Category.GAMES)
-                .requiresProfile();
+            .name("gamble")
+            .description("Bet gold, and get double or nothing.")
+            .category(Category.GAMES)
+            .requiresProfile();
     }
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet()
-                .addArguments(
-                        new IntegerArgument(){
-                            @Override
-                            public OptionType getType() {
-                                return OptionType.STRING;
+            .addArguments(
+                new IntegerArgument() {
+                    @Override
+                    public OptionType getType() {
+                        return OptionType.STRING;
+                    }
+                }
+                    .min(1)
+                    .id("amount")
+                    .description("The amount to bet, or 'half'/'all'.")
+                    .fallback((options, event) -> {
+                        switch (options.pop().getAsString().toLowerCase()) {
+                            case "half" -> {
+                                return (int) Math.floor((float) event.getProfile().getGold().amount() / 2);
                             }
+                            case "all" -> {
+                                return event.getProfile().getGold().amount();
+                            }
+                            default -> throw new MalformedArgumentException("Invalid input.");
                         }
-                                .min(1)
-                                .id("amount")
-                                .description("The amount to bet, or 'half'/'all'.")
-                                .fallback((options, event) -> {
-                                    switch (options.pop().getAsString().toLowerCase()) {
-                                        case "half" -> {
-                                            return (int) Math.floor((float) event.getProfile().getGold().amount() / 2);
-                                        }
-                                        case "all" -> {
-                                            return event.getProfile().getGold().amount();
-                                        }
-                                        default -> throw new MalformedArgumentException("Invalid input.");
-                                    }
-                                })
-                );
+                    })
+            );
     }
 
     @Override
@@ -63,12 +63,12 @@ public class GambleCommand extends Command {
         // Lose
         if (RandomUtil.randomInt(0, 1) == 0) {
             event.reply(new PresetBuilder(PresetType.ERROR,
-                    "You have lost " + price.format() + ".", "Loss"));
-        // Win
+                "You have lost " + price.format() + ".", "Loss"));
+            // Win
         } else {
             price.give(event.getProfile());
             event.reply(new PresetBuilder(PresetType.SUCCESS,
-                    "You have won " + price.format() + ".", "Win"));
+                "You have won " + price.format() + ".", "Win"));
         }
 
         event.getProfile().getDocument().update();

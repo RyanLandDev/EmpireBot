@@ -13,11 +13,12 @@ import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildEx
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.dev.balance.BalanceCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.combat.NewWaveCommand;
+import net.ryanland.empire.bot.command.impl.gameplay.combat.WaveCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.games.GambleCommand;
-import net.ryanland.empire.bot.command.impl.info.*;
-import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.items.*;
 import net.ryanland.empire.bot.command.impl.gameplay.items.claim.ClaimCommand;
+import net.ryanland.empire.bot.command.impl.info.*;
+import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
 import net.ryanland.empire.bot.command.impl.profile.CooldownsCommand;
 import net.ryanland.empire.bot.command.impl.profile.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.profile.ResetCommand;
@@ -60,61 +61,62 @@ public class Empire {
 
         // Register commands
         CommandHandler.register(
-                // Information
-                new HelpCommand(),
-                new PingCommand(),
-                new UserCommand(),
-                new StatsCommand(),
+            // Information
+            new HelpCommand(),
+            new PingCommand(),
+            new UserCommand(),
+            new StatsCommand(),
 
-                // Developer
-                new MimicCommand(),
-                new EvalCommand(),
-                new TestCommand(),
-                new DisableCommand(),
-                new EnableCommand(),
-                new StopCommand(),
-                new GuildInfoCommand(),
-                new TutorialCommand(),
-                new BalanceCommand(),
+            // Developer
+            new MimicCommand(),
+            new EvalCommand(),
+            new TestCommand(),
+            new DisableCommand(),
+            new EnableCommand(),
+            new StopCommand(),
+            new GuildInfoCommand(),
+            new TutorialCommand(),
+            new BalanceCommand(),
 
-                // Profile
-                new StartCommand(),
-                new EmpireCommand(),
-                new ResetCommand(),
-                new CooldownsCommand(),
+            // Profile
+            new StartCommand(),
+            new EmpireCommand(),
+            new ResetCommand(),
+            new CooldownsCommand(),
 
-                // Items
-                new BuildingCommand(),
-                new MoveCommand(),
-                new ShopCommand(),
-                new BuyCommand(),
-                new ClaimCommand(),
-                new InventoryCommand(),
-                new UseCommand(),
+            // Items
+            new BuildingCommand(),
+            new MoveCommand(),
+            new ShopCommand(),
+            new BuyCommand(),
+            new ClaimCommand(),
+            new InventoryCommand(),
+            new UseCommand(),
 
-                // Combat
-                new NewWaveCommand(),
+            // Combat
+            new NewWaveCommand(),
+            new WaveCommand(),
 
-                // Games
-                new GambleCommand()
+            // Games
+            new GambleCommand()
         );
 
         // Build bot
         JDABuilder builder = JDABuilder.createDefault(config.getToken())
-                .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                .setStatus(OnlineStatus.ONLINE)
-                .setGatewayEncoding(GatewayEncoding.ETF)
-                .setActivity(Activity.watching("empires | /help"))
-                .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
-                .addEventListeners(
-        // Register events
-                    // General
-                    new MessageEvent(),
-                    new ButtonEvent(),
-                    new OnSlashCommandEvent(),
-                    // Logs
-                    new GuildTraffic()
-                );
+            .enableIntents(GatewayIntent.GUILD_MEMBERS)
+            .setStatus(OnlineStatus.ONLINE)
+            .setGatewayEncoding(GatewayEncoding.ETF)
+            .setActivity(Activity.watching("empires | /help"))
+            .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
+            .addEventListeners(
+                // Register events
+                // General
+                new MessageEvent(),
+                new ButtonEvent(),
+                new OnSlashCommandEvent(),
+                // Logs
+                new GuildTraffic()
+            );
 
         // Build-a-bot
         jda = builder.build();

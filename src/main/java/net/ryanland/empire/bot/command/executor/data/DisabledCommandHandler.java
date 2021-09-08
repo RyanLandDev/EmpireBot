@@ -42,8 +42,8 @@ public class DisabledCommandHandler {
         disabled.remove(command);
 
         Empire.getGlobalDocument()
-                .setDisabledCommandsRaw(disabled)
-                .update();
+            .setDisabledCommandsRaw(disabled)
+            .update();
     }
 
     public void disable(Command command) throws CommandException {
@@ -58,8 +58,8 @@ public class DisabledCommandHandler {
         disabled.add(command);
 
         Empire.getGlobalDocument()
-                .setDisabledCommandsRaw(disabled)
-                .update();
+            .setDisabledCommandsRaw(disabled)
+            .update();
     }
 
 }
