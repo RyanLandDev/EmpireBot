@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.items.claim;
+package net.ryanland.empire.bot.command.impl.gameplay.items.claim;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.executor.cooldown.CooldownHandler;

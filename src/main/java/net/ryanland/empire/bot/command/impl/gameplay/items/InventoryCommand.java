@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.items;
+package net.ryanland.empire.bot.command.impl.gameplay.items;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;

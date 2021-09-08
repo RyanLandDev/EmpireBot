@@ -12,11 +12,12 @@ import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.dev.balance.BalanceCommand;
-import net.ryanland.empire.bot.command.impl.games.GambleCommand;
+import net.ryanland.empire.bot.command.impl.gameplay.combat.NewWaveCommand;
+import net.ryanland.empire.bot.command.impl.gameplay.games.GambleCommand;
 import net.ryanland.empire.bot.command.impl.info.*;
 import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
-import net.ryanland.empire.bot.command.impl.items.*;
-import net.ryanland.empire.bot.command.impl.items.claim.ClaimCommand;
+import net.ryanland.empire.bot.command.impl.gameplay.items.*;
+import net.ryanland.empire.bot.command.impl.gameplay.items.claim.ClaimCommand;
 import net.ryanland.empire.bot.command.impl.profile.CooldownsCommand;
 import net.ryanland.empire.bot.command.impl.profile.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.profile.ResetCommand;
@@ -90,6 +91,9 @@ public class Empire {
                 new ClaimCommand(),
                 new InventoryCommand(),
                 new UseCommand(),
+
+                // Combat
+                new NewWaveCommand(),
 
                 // Games
                 new GambleCommand()

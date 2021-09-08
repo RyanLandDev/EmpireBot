@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
-import net.ryanland.empire.bot.command.impl.items.UseCommand;
+import net.ryanland.empire.bot.command.impl.gameplay.items.UseCommand;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;

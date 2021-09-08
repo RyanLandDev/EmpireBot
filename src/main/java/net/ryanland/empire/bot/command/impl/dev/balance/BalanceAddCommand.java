@@ -9,17 +9,21 @@ import net.ryanland.empire.bot.command.arguments.types.impl.number.IntegerArgume
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class BalanceAddCommand extends SubCommand {
+
     @Override
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("add")
-                .description("Adds the provided value to the provided balance.");
+                .description("Adds the provided value to the provided balance.")
+                .permission(Permission.DEVELOPER)
+                ;
     }
 
     @Override

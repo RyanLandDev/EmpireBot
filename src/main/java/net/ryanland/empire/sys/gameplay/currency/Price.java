@@ -27,7 +27,6 @@ public record Price<T extends Number>(Currency currency, T amount) implements Fo
         if (!profile.roomFor((Price<Integer>) this)) {
             throw new CommandException("You do not have enough capacity.");
         }
-        // TODO collect part of it.
 
         currency.update(profile, currency.get(profile).amount() + amount.intValue());
     }

@@ -1,7 +1,6 @@
-package net.ryanland.empire.bot.command.impl.items.claim;
+package net.ryanland.empire.bot.command.impl.gameplay.items.claim;
 
 import net.ryanland.empire.Empire;
-import net.ryanland.empire.bot.command.executor.cooldown.CooldownHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.sys.file.StorageType;
@@ -18,8 +17,7 @@ public class ClaimMemberCommand extends AbstractClaimSubCommand {
                 .name("member")
                 .description("Claim your Member package.")
                 .cooldown(86400)
-                .cooldownStorage(StorageType.EXTERNAL)
-                .requiresProfile();
+                .cooldownStorage(StorageType.EXTERNAL);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.items.claim;
+package net.ryanland.empire.bot.command.impl.gameplay.items.claim;
 
 import net.ryanland.empire.bot.command.executor.functional_interface.CommandPredicate;
 import net.ryanland.empire.bot.events.CommandEvent;
@@ -6,7 +6,6 @@ import net.ryanland.empire.sys.gameplay.collectible.Collectible;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public record ClaimCommandInfo(String name, String receiveMessage, String failMessage,
                                CommandPredicate<CommandEvent> check, Consumer<CommandEvent> claim) {

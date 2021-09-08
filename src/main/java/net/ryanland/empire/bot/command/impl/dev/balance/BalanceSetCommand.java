@@ -9,6 +9,7 @@ import net.ryanland.empire.bot.command.arguments.types.impl.number.IntegerArgume
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.SubCommand;
 import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.empire.bot.command.permissions.Permission;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
@@ -19,7 +20,9 @@ public class BalanceSetCommand extends SubCommand {
     public CommandInfo getInfo() {
         return new CommandInfo()
                 .name("set")
-                .description("Sets the provided balance to the provided value.");
+                .description("Sets the provided balance to the provided value.")
+                .permission(Permission.DEVELOPER)
+                ;
     }
 
     @Override

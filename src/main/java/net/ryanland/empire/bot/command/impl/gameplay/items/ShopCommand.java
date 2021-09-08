@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.items;
+package net.ryanland.empire.bot.command.impl.gameplay.items;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;

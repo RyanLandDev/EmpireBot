@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.impl.items;
+package net.ryanland.empire.bot.command.impl.gameplay.items;
 
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.arguments.types.impl.StringArgument;
@@ -9,8 +9,6 @@ import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class UseCommand extends Command {
 
