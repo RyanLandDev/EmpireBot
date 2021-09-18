@@ -24,7 +24,7 @@ public class NumberUtil {
 
     public static @NotNull String progressBar(int size, float current, float max) {
         float progress = current / max;
-        int filledBlocks = (int) Math.floor(progress * size);
+        int filledBlocks = (int) (progress * size);
         int unfilledBlocks = size - filledBlocks;
 
         return "[" +

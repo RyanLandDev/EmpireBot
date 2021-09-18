@@ -61,7 +61,7 @@ public abstract class DefenseRangedBuilding extends DefenseBuilding {
     protected abstract int getSpeed();
 
     public int getSpeedInMs() {
-        return Math.max((int) Math.floor(getSpeed()), 100);
+        return Math.max((int) (getSpeed()), 100);
     }
 
     public final int getSpeedInMs(int stage) {

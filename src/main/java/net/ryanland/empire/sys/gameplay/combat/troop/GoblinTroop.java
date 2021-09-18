@@ -1,34 +1,34 @@
 package net.ryanland.empire.sys.gameplay.combat.troop;
 
-public class RecruitTroop extends Troop {
+public class GoblinTroop extends Troop {
 
     @Override
     public String getName() {
-        return "Recruit";
+        return "Goblin";
     }
 
     @Override
     public String getEmoji() {
-        return "🤵";
+        return "👹";
     }
 
     @Override
     public int getMaxHealth() {
-        return (int) (Math.pow(stage, 1.3) * stage * 7 + 7);
+        return (int) (Math.pow(stage, 1.2) * stage * 4 + 6);
     }
 
     @Override
     public int getDamage() {
-        return (int) (2.5 * stage + 4);
+        return 2 * stage + 3;
     }
 
     @Override
     public int getSpeedInMs() {
-        return -180 * stage + 1100;
+        return -50 * stage + 600;
     }
 
     @Override
     public int getXp() {
-        return 13 * stage + 15;
+        return 4 * stage + 8;
     }
 }

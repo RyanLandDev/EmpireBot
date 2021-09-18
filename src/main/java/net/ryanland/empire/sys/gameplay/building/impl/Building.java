@@ -13,6 +13,7 @@ import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.MortarBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.thorned.WallBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
@@ -57,6 +58,7 @@ public abstract class Building
 
         // Defense Ranged
         ArcherBuilding.class,
+        MortarBuilding.class,
         // Defense Thorned
         WallBuilding.class,
 
@@ -383,12 +385,12 @@ public abstract class Building
 
     public Price<Integer> getSellPrice() {
         return new Price<>(getMainCurrency(),
-            (int) Math.floor(0.65f * stage * getPrice().amount()));
+            (int) (0.65f * stage * getPrice().amount()));
     }
 
     public Price<Integer> getRepairPrice() {
         return new Price<>(getMainCurrency(),
-            (int) Math.floor(((double) getMaxHealth() - health) / 100 * getSellPrice().amount() * 0.10f));
+            (int) (((double) getMaxHealth() - health) / 100 * getSellPrice().amount() * 0.10f));
     }
 
     public Price<Integer> getCrystalRepairPrice() {
@@ -398,7 +400,7 @@ public abstract class Building
 
     public Price<Integer> getUpgradePrice() {
         return new Price<>(getMainCurrency(),
-            (int) Math.floor(0.15 * (stage + 1) * getPrice().amount()));
+            (int) (0.15 * (stage + 1) * getPrice().amount()));
     }
 
     public enum SellState implements BuildingActionState {

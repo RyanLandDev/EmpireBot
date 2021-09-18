@@ -42,7 +42,7 @@ public class GambleCommand extends Command {
                     .fallback((options, event) -> {
                         switch (options.pop().getAsString().toLowerCase()) {
                             case "half" -> {
-                                return (int) Math.floor((float) event.getProfile().getGold().amount() / 2);
+                                return (int) ((float) event.getProfile().getGold().amount() / 2);
                             }
                             case "all" -> {
                                 return event.getProfile().getGold().amount();

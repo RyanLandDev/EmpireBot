@@ -107,7 +107,7 @@ public class NewWaveCommand extends Command {
                     System.out.println("msToKillTroop " + msToKillTroop);
 
                     // Damage this troop based on the amount of time passed
-                    int troopDamage = Math.min((int) Math.floor(msPassed / msToKillTroop * troop.getHealth()), troop.getHealth());
+                    int troopDamage = Math.min((int) (msPassed / msToKillTroop * troop.getHealth()), troop.getHealth());
                     damageDealt += troopDamage;
                     if (troopDamage == troop.getHealth()) {
                         troopsKilled++;
@@ -123,7 +123,7 @@ public class NewWaveCommand extends Command {
 
                 // Damage this building based on the amount of time passed
                 int buildingDamage =
-                    Math.min((int) Math.floor(msPassed / msToDestroyBuilding * building.getHealth()), building.getHealth());
+                    Math.min((int) (msPassed / msToDestroyBuilding * building.getHealth()), building.getHealth());
                 damageTaken += buildingDamage;
                 destroyed = buildingDamage == building.getHealth();
                 building.damage(buildingDamage);
@@ -191,13 +191,13 @@ public class NewWaveCommand extends Command {
             .addField(":drop_of_blood: Damage taken",
                 damageTaken + " health", true)
             .addField(":axe: Damage dealt",
-                (int) Math.floor(damageDealt) + " health", true)
+                (int) (damageDealt) + " health", true)
             .addField(":house_abandoned: Buildings destroyed",
                 buildingsDestroyed + " building" + (buildingsDestroyed == 1 ? "" : "s"), true)
             .addField(":skull: Troops killed",
                 troopsKilled + " kill" + (troopsKilled == 1 ? "" : "s"), true)
             .addField(":ribbon: Rewards",
-                XP + " **+" + (int) Math.floor(xpEarned) + "** XP" + (win ? " (x" + Wave.WAVE_WIN_XP_MULTIPLIER + ")" : "")
+                XP + " **+" + (int) (xpEarned) + "** XP" + (win ? " (x" + Wave.WAVE_WIN_XP_MULTIPLIER + ")" : "")
                     + " and " + goldEarned.format() + (notEnoughGoldCapacity ? " (Not enough capacity)" : ""), true);
 
         // Give the xp

@@ -149,7 +149,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     public int getCollectXp() {
-        return (int) Math.floor(
+        return (int) (
             (getHolding().amount() * getEffectiveCurrency().getCollectXpMultiplier())
                 * RandomUtil.randomFloat(0.75f, 1.75f));
     }
@@ -162,7 +162,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
         double unitPerMs = getUnitPerMs().amount();
         long msDiff = System.currentTimeMillis() - lastCollect.getTime();
-        int holding = (int) Math.floor(unitPerMs * msDiff);
+        int holding = (int) (unitPerMs * msDiff);
 
         return new Price<>(getEffectiveCurrency(), Math.min(holding, getCapacity().amount()));
     }

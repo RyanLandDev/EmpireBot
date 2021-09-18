@@ -97,7 +97,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public int getRequiredXp() {
-        return (int) Math.floor(8 * Math.pow(getLevel(), 2.2) + (30 * getLevel()) + 10);
+        return (int) (8 * Math.pow(getLevel(), 2.2) + (30 * getLevel()) + 10);
     }
 
     public String getFormattedRequiredXp() {
@@ -171,7 +171,7 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     public Price<Integer> getWaveGoldReward() {
         return new Price<>(Currency.GOLD,
-            (int) Math.floor(800 + (getWave() - 1) * 430 + 12 * Math.pow(getWave(), 2.1)));
+            (int) (800 + (getWave() - 1) * 430 + 12 * Math.pow(getWave(), 2.1)));
     }
 
     public List<Cooldown> getCooldowns() {
@@ -241,7 +241,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public static int getBuildingLimit(int level) {
-        return (int) Math.floor(level * 1.25 + 3);
+        return (int) (level * 1.25 + 3);
     }
 
     public int getBuildingStageLimit() {

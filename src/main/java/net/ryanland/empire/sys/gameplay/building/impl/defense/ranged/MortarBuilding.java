@@ -4,45 +4,45 @@ import net.ryanland.empire.sys.gameplay.building.impl.defense.DefenseRangedBuild
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 
-public class ArcherBuilding extends DefenseRangedBuilding {
+public class MortarBuilding extends DefenseRangedBuilding {
 
     @Override
     public int getId() {
-        return 21;
+        return 23;
     }
 
     @Override
     public String getName() {
-        return "Archer";
+        return "Mortar";
     }
 
     @Override
     public String getDescription() {
-        return "Shoots arrows.";
+        return "Made for abomination.";
     }
 
     @Override
     public String getEmoji() {
-        return "<:defense_ranged:878654639774523403>";
+        return "💣";
     }
 
     @Override
     public Price<Integer> getPrice() {
-        return new Price<>(Currency.GOLD, 750);
+        return new Price<>(Currency.GOLD, 4500);
     }
 
     @Override
     public int getRange() {
-        return (int) (0.17 * (stage - 1) + 3);
+        return (int) (1.1 * stage + 6);
     }
 
     @Override
     public int getDamage() {
-        return (int) (0.42 * (stage - 1) + 5);
+        return (int) (1.3 * stage + 12);
     }
 
     @Override
     protected int getSpeed() {
-        return -50 * (stage - 1) + 1000;
+        return -100 * stage + 5100;
     }
 }

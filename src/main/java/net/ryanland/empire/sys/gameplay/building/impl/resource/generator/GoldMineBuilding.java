@@ -35,7 +35,7 @@ public class GoldMineBuilding extends ResourceGeneratorBuilding {
 
     @Override
     public Price<Integer> getUnitPerMin() {
-        return new Price<>(Currency.GOLD, (int) Math.floor((stage - 1) * 2.75d + 24));
+        return new Price<>(Currency.GOLD, (int) ((stage - 1) * 2.75d + 24));
     }
 
     @Override
