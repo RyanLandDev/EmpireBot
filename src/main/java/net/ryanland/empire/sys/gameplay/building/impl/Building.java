@@ -206,7 +206,7 @@ public abstract class Building
 
     public boolean exists() {
         try {
-            return getProfile().getBuilding(layer).equals(this);
+            return getProfile().getDocument().getBuildings().get(getLayer() - 1).equals(serialize());
         } catch (IndexOutOfBoundsException e) {
             return false;
         }

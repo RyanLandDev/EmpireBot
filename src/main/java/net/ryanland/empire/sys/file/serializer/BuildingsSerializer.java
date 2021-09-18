@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -37,11 +38,17 @@ public class BuildingsSerializer implements Serializer<List<List>, List<Building
     }
 
     public List<Building> deserialize(@NotNull List<List> toDeserialize, @Nullable Profile profile) {
+        AtomicInteger i = new AtomicInteger();
+
         return toDeserialize.stream()
-            .map(e -> Building.of((Integer) e.get(0))
-                .deserialize(e)
-                .setLayer(toDeserialize.indexOf(e) + 1)
-                .setProfile(profile)
+            .map(e -> {
+                i.getAndIncrement();
+
+                return Building.of((Integer) e.get(0))
+                        .deserialize(e)
+                        .setLayer(i.get())
+                        .setProfile(profile);
+                }
             )
             .collect(Collectors.toList());
     }
