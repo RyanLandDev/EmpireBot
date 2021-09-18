@@ -45,10 +45,12 @@ public class EnumArgument<E extends Enum<E> & EnumArgument.InputEnum> extends Si
             + "`";
     }
 
-    protected interface InputEnum {
+    public interface InputEnum {
 
         String getTitle();
 
-        boolean isHidden();
+        default boolean isHidden() {
+            return false;
+        }
     }
 }

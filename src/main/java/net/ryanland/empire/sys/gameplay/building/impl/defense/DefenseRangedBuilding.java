@@ -24,11 +24,11 @@ public abstract class DefenseRangedBuilding extends DefenseBuilding {
                     getRange(), getRange(stage + 1),
                     "The amount of surrounding layers the building will defend."
                 ))
-                .addElement(BuildingInfoElement.upgradable("Damage", ":boom:",
+                .addElement(BuildingInfoElement.upgradable("Damage", DAMAGE,
                     getDamage(), getDamage(stage + 1),
                     "The amount of damage this building will deal per action."
                 ))
-                .addElement(BuildingInfoElement.upgradable("Speed", ":athletic_shoe:",
+                .addElement(BuildingInfoElement.upgradable("Speed", SPEED,
                     clean(NumberUtil.round(0.1, ((double) getSpeedInMs()) / 1000)) + "s",
                     clean(NumberUtil.round(0.1, ((double) getSpeedInMs(stage + 1)) / 1000)) + "s",
                 "The action cooldown.")));
@@ -37,41 +37,23 @@ public abstract class DefenseRangedBuilding extends DefenseBuilding {
     public abstract int getRange();
 
     public final int getRange(int stage) {
-        int originalStage = this.stage;
-        this.stage = stage;
-
-        int result = getRange();
-        this.stage = originalStage;
-
-        return result;
+        return getProperty(this::getRange, stage);
     }
 
     public abstract int getDamage();
 
     public final int getDamage(int stage) {
-        int originalStage = this.stage;
-        this.stage = stage;
-
-        int result = getDamage();
-        this.stage = originalStage;
-
-        return result;
+        return getProperty(this::getDamage, stage);
     }
 
     protected abstract int getSpeed();
 
     public int getSpeedInMs() {
-        return Math.max((int) (getSpeed()), 100);
+        return Math.max(getSpeed(), 100);
     }
 
     public final int getSpeedInMs(int stage) {
-        int originalStage = this.stage;
-        this.stage = stage;
-
-        int result = getSpeedInMs();
-        this.stage = originalStage;
-
-        return result;
+        return getProperty(this::getSpeedInMs, stage);
     }
 
     public double getSpeedInSec() {

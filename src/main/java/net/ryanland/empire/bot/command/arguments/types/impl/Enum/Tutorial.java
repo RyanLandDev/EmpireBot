@@ -30,11 +30,6 @@ public enum Tutorial implements EnumArgument.InputEnum {
         return title;
     }
 
-    @Override
-    public boolean isHidden() {
-        return false;
-    }
-
     public String getEmbedTitle() {
         return embedTitle;
     }

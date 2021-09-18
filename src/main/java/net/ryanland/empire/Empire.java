@@ -12,6 +12,7 @@ import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.dev.balance.BalanceCommand;
+import net.ryanland.empire.bot.command.impl.gameplay.combat.EnemyCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.combat.NewWaveCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.combat.WaveCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.games.GambleCommand;
@@ -61,6 +62,7 @@ public class Empire {
 
         // Register commands
         CommandHandler.register(
+
             // Information
             new HelpCommand(),
             new PingCommand(),
@@ -92,10 +94,12 @@ public class Empire {
             new ClaimCommand(),
             new InventoryCommand(),
             new UseCommand(),
+            new RepairCommand(),
 
             // Combat
             new NewWaveCommand(),
             new WaveCommand(),
+            new EnemyCommand(),
 
             // Games
             new GambleCommand()

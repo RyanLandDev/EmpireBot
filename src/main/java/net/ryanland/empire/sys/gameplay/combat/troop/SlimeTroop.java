@@ -14,7 +14,7 @@ public class SlimeTroop extends Troop {
 
     @Override
     public int getMaxHealth() {
-        return (int) (Math.pow(stage, 1.3) * stage * 9 + 16);
+        return (int) (Math.pow(stage, 1.3) * 9 + 16);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class SlimeTroop extends Troop {
     }
 
     @Override
-    public int getSpeedInMs() {
+    public int getSpeed() {
         return -140 * stage + 1600;
     }
 

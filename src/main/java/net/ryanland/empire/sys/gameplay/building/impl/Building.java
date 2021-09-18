@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public abstract class Building
@@ -186,14 +187,14 @@ public abstract class Building
         return getBuildingInfoBuilder().build();
     }
 
-    public strictfp BuildingInfoBuilder getBuildingInfoBuilder() {
+    public BuildingInfoBuilder getBuildingInfoBuilder() {
         return new BuildingInfoBuilder().setBuilding(this)
             .addSegment(new BuildingInfoSegmentBuilder()
                 .addElement("Layer", "🏘", getLayer(), String.format(
                     "Move this building to another layer using `/move %s <new layer>`.", getLayer()))
                 .addElement("Stage", "🧱", getStage(), String.format(
                     "Upgrade this building to __Stage %s__ for %s.", getStage() + 1, getUpgradePrice().format()))
-                .addElement(BuildingInfoElement.capacitable("Health", "❤",
+                .addElement(BuildingInfoElement.capacitable("Health", HEALTH,
                     getHealth(), getMaxHealth(),
                     isHealthMaxed() ? "The building's health may go down when under attack." : String.format(
                         "Repair this building for %s or %s.",
@@ -519,6 +520,16 @@ public abstract class Building
      */
     public int getMinimumAllowed() {
         return 0;
+    }
+
+    public final int getProperty(Supplier<Integer> getter, int stage) {
+        int originalStage = this.stage;
+        this.stage = stage;
+
+        int result = getter.get();
+        this.stage = originalStage;
+
+        return result;
     }
 
     public abstract int getId();

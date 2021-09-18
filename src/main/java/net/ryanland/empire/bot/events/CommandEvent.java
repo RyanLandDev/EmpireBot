@@ -137,7 +137,7 @@ public class CommandEvent {
     }
 
     public void reply(PresetBuilder embed) {
-        sendReply(embed).queue();
+        sendReply(embed, embed.isEphemeral()).queue();
     }
 
     public void reply(PresetBuilder embed, boolean ephemeral) {

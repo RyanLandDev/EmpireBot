@@ -14,7 +14,7 @@ public class GolemTroop extends Troop {
 
     @Override
     public int getMaxHealth() {
-        return (int) (Math.pow(stage, 1.5) * stage * 57 + 82);
+        return (int) (Math.pow(stage, 1.5) * 57 + 82);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class GolemTroop extends Troop {
     }
 
     @Override
-    public int getSpeedInMs() {
+    public int getSpeed() {
         return -760 * stage + 9000;
     }
 

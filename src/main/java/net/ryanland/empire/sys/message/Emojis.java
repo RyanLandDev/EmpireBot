@@ -18,6 +18,11 @@ public interface Emojis {
     String UPGRADE = "<:upgrade:878673810436534312>";
     String SELL = "<:sell:878674089542307892>";
 
+    String STAGE = ":bricks:";
+    String HEALTH = ":heart:";
+    String DAMAGE = ":boom:";
+    String SPEED = ":athletic_shoe:";
+
     String SHOP = "<:shop:878683905841037362>";
 
     String ONE = "<:number_one:836612644369989642>";

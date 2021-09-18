@@ -14,7 +14,7 @@ public class GoblinTroop extends Troop {
 
     @Override
     public int getMaxHealth() {
-        return (int) (Math.pow(stage, 1.2) * stage * 4 + 6);
+        return (int) (Math.pow(stage, 1.2) * 4 + 6);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class GoblinTroop extends Troop {
     }
 
     @Override
-    public int getSpeedInMs() {
+    public int getSpeed() {
         return -50 * stage + 600;
     }
 

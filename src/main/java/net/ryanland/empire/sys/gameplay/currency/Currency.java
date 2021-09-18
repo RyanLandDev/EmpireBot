@@ -1,5 +1,6 @@
 package net.ryanland.empire.sys.gameplay.currency;
 
+import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.Emojis;
@@ -8,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public enum Currency implements Emojis {
+public enum Currency implements Emojis, EnumArgument.InputEnum {
 
     GOLD("Gold", Emojis.GOLD, 5000, 0.1f,
         Profile::getGold, UserDocument::setGold),
@@ -81,4 +82,8 @@ public enum Currency implements Emojis {
         return getGetter().apply(profile);
     }
 
+    @Override
+    public String getTitle() {
+        return getName();
+    }
 }

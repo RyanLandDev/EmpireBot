@@ -1,15 +1,71 @@
 package net.ryanland.empire.sys.gameplay.combat.troop;
 
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.sys.message.Formattable;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public abstract class Troop implements Formattable {
+
+    private static final List<Class<? extends Troop>> TROOPS = Arrays.asList(
+        RecruitTroop.class,
+        SkeletonTroop.class,
+        GoblinTroop.class,
+        SlimeTroop.class,
+        GiantTroop.class,
+        GoblinTroop.class
+    );
+
+    public static List<Class<? extends Troop>> getTroops() {
+        return TROOPS;
+    }
+
+    public static Troop of(String name) throws ArgumentException {
+        try {
+            return TROOPS.stream()
+                .map(troop -> {
+                    try {
+                        return troop.getDeclaredConstructor().newInstance();
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                    throw new IllegalArgumentException();
+                })
+                .filter(troop -> troop.getName().equals(name))
+                .collect(Collectors.toList())
+                .get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new MalformedArgumentException("A troop with this name does not exist.");
+        }
+    }
+
+    public static Troop find(String name) throws ArgumentException {
+        try {
+            return TROOPS.stream()
+                .map(troop -> {
+                    try {
+                        return troop.getDeclaredConstructor().newInstance();
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                    throw new IllegalArgumentException();
+                })
+                .filter(troop -> troop.getName().replaceAll("[ _-]", "")
+                    .equalsIgnoreCase(name
+                        .replaceAll("[ _-]", "")))
+                .collect(Collectors.toList())
+                .get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new MalformedArgumentException("A troop with this name does not exist.");
+        }
+    }
 
     int stage = 1;
     int health = getMaxHealth();
@@ -89,33 +145,63 @@ public abstract class Troop implements Formattable {
         return getEmoji() + " **" + getName() + "**";
     }
 
+    public int getProperty(@NotNull Supplier<Integer> getter, int stage) {
+        int originalStage = this.stage;
+        this.stage = stage;
+
+        int result = getter.get();
+        this.stage = originalStage;
+
+        return result;
+    }
+
     /**
      * The amount of health this troop has by default, otherwise known as the maximum health.
      * In other words, the amount of damage this troop takes before it dies.
      */
     public abstract int getMaxHealth();
 
+    public final int getMaxHealth(int stage) {
+        return getProperty(this::getMaxHealth, stage);
+    }
+
     /**
      * The amount of damage this troop deals per hit.
      */
     public abstract int getDamage();
 
+    public final int getDamage(int stage) {
+        return getProperty(this::getDamage, stage);
+    }
+
     /**
      * The time between troop hits in milliseconds.
      */
-    public abstract int getSpeedInMs();
+    protected abstract int getSpeed();
+
+    public final int getSpeedInMs() {
+        return Math.max(getSpeed(), 100);
+    }
+
+    public final int getSpeedInMs(int stage) {
+        return getProperty(this::getSpeedInMs, stage);
+    }
 
     /**
      * The time between troop hits in seconds.
      */
-    public final int getSpeedInSec() {
-        return getSpeedInMs() * 1000;
+    public final double getSpeedInSec() {
+        return (double) getSpeedInMs() / 1000;
     }
 
     /**
      * The amount of XP the user gets if this troop is killed.
      */
     public abstract int getXp();
+
+    public final int getXp(int stage) {
+        return getProperty(this::getXp, stage);
+    }
 
     /**
      * The troop rating. This gives an average representation of the troop's power.

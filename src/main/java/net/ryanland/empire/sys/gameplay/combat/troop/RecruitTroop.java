@@ -14,7 +14,7 @@ public class RecruitTroop extends Troop {
 
     @Override
     public int getMaxHealth() {
-        return (int) (Math.pow(stage, 1.3) * stage * 7 + 7);
+        return (int) (Math.pow(stage, 1.3) * 7 + 7);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class RecruitTroop extends Troop {
     }
 
     @Override
-    public int getSpeedInMs() {
+    public int getSpeed() {
         return -180 * stage + 1100;
     }
 

@@ -134,12 +134,12 @@ public class Profile implements SnowflakeDocument, Emojis {
 
                         :homes: **Building limit:** *%s* %s %s
                         %s The maximum amount of buildings you can have.
-                        :bricks: **Building stage limit:** *%s* %3$s %s
+                        %s **Building stage limit:** *%s* %3$s %s
                         %5$s The maximum stage a building can be.
 
                         %3$s Received %s""",
                     newLevel, getBuildingLimit(), ARROW_RIGHT, getBuildingLimit(newLevel), AIR,
-                    getBuildingStageLimit(), getBuildingStageLimit(newLevel),
+                    STAGE, getBuildingStageLimit(), getBuildingStageLimit(newLevel),
                     Boxes.MYTHICAL.give(new Profile(interaction.getUser()))),
                 XP + " Level Up!")
                 .build(), embeds).setEphemeral(ephemeral).queue();

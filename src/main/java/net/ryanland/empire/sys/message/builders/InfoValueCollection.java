@@ -5,6 +5,10 @@ import java.util.stream.Collectors;
 
 public class InfoValueCollection extends ArrayList<InfoValue> {
 
+    public InfoValueCollection addEmpty() {
+        return addRegular("");
+    }
+
     // Regular ------------------------------------------
 
     public InfoValueCollection addRegular(String title, String emoji, String value) {

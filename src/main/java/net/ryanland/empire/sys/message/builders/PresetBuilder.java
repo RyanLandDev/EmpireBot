@@ -51,15 +51,15 @@ public class PresetBuilder {
     }
 
     public PresetBuilder(PresetType type, String description, String title, boolean showFooter) {
-        this.color = type.getColor();
+        color = type.getColor();
         this.description = description;
         this.title = title;
         if (showFooter) {
-            this.footer = Empire.getSelfUser().getName();
-            this.footerIconUrl = Empire.getLogo();
-            this.timestamp = Instant.now();
+            footer = Empire.getSelfUser().getName();
+            footerIconUrl = Empire.getLogo();
+            timestamp = Instant.now();
         }
-        this.isEphemeral = type.isEphemeral();
+        isEphemeral = type.isEphemeral();
     }
 
     public boolean isEphemeral() {
@@ -167,7 +167,7 @@ public class PresetBuilder {
      * @return {@code this}
      */
     public PresetBuilder addLogo() {
-        this.thumbnail = Empire.getLogo();
+        thumbnail = Empire.getLogo();
         return this;
     }
 
