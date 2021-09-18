@@ -25,6 +25,16 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
 
     @Contract("_, _, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement upgradable(String title, String emoji,
+                                                          String valueEmoji, String currentValue, String nextValue,
+                                                          String description) {
+        return new BuildingInfoElement(title, emoji,
+            new InfoValue(InfoValue.Type.UPGRADABLE, valueEmoji, currentValue, nextValue).buildUpgradable(),
+            description
+        );
+    }
+
+    @Contract("_, _, _, _, _, _ -> new")
+    public static @NotNull BuildingInfoElement upgradable(String title, String emoji,
                                                           String valueEmoji, @NotNull Price<?> currentPrice, @NotNull Price<?> nextPrice,
                                                           String description) {
         return upgradable(title, emoji, valueEmoji, currentPrice.amount(), nextPrice.amount(), description);
@@ -40,6 +50,13 @@ public record BuildingInfoElement(String title, String emoji, String value, Stri
     @Contract("_, _, _, _, _ -> new")
     public static @NotNull BuildingInfoElement upgradable(String title, String emoji,
                                                           Number currentValue, Number nextValue,
+                                                          String description) {
+        return upgradable(title, emoji, "", currentValue, nextValue, description);
+    }
+
+    @Contract("_, _, _, _, _ -> new")
+    public static @NotNull BuildingInfoElement upgradable(String title, String emoji,
+                                                          String currentValue, String nextValue,
                                                           String description) {
         return upgradable(title, emoji, "", currentValue, nextValue, description);
     }

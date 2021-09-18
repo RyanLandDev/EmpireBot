@@ -11,6 +11,7 @@ import net.ryanland.empire.sys.gameplay.combat.wave.Wave;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class WaveCommand extends Command {
@@ -32,7 +33,7 @@ public class WaveCommand extends Command {
     @Override
     public void run(CommandEvent event) throws CommandException {
         int wave = event.getProfile().getWave();
-        Troop[] troops = Wave.getTroops(wave);
+        List<Troop> troops = Wave.getTroops(wave);
 
         event.reply(new PresetBuilder(
             """
@@ -45,15 +46,26 @@ public class WaveCommand extends Command {
             .addField("🤺 Troops", genTroopsOverview(troops) + "\n\u200b"));
     }
 
-    private static String genTroopsOverview(Troop[] troops) {
-        List<String> overview = new ArrayList<>();
+    private static String genTroopsOverview(List<Troop> troops) {
 
+        // Get quantities
+        HashMap<String, Integer> quantities = new HashMap<>();
         for (Troop troop : troops) {
-            overview.add("%s %s %s".formatted(
-                troop.getQuantity() == 1 ? AIR : "*" + troop.getQuantity() + "x* \u200b",
-                troop.getEmoji(),
-                troop.getName()
-            ));
+            String format = "%s %s %s".formatted(troop.getEmoji(), troop.getName(), troop.getStage());
+
+            quantities.putIfAbsent(format, 0);
+            quantities.put(format, quantities.get(format) + 1);
+        }
+
+        // Generate
+        List<String> overview = new ArrayList<>();
+        for (String key : quantities.keySet()) {
+            int quantity = quantities.get(key);
+
+            overview.add(
+                (quantity == 1 ? AIR : "*" + quantity + "x* \u200b")
+                    + " " + key
+            );
         }
 
         return String.join("\n", overview);

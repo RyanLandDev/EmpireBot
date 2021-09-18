@@ -2,51 +2,82 @@ package net.ryanland.empire.sys.gameplay.combat.troop;
 
 import net.ryanland.empire.sys.message.Formattable;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Troop implements Formattable {
 
-    @SuppressWarnings("all")
-    private final static Troop[] TROOPS = new Troop[]{
-        new RecruitTroop()
-    };
+    int stage = 1;
+    int health = getMaxHealth();
 
-    private final static Map<String, Troop> NAME_TROOPS = new HashMap<>(
-        Arrays.stream(TROOPS)
-            .collect(Collectors.toMap(Troop::getName, Function.identity()))
-    );
-
-    public static Troop of(String name) {
-        return NAME_TROOPS.get(name);
+    public Troop set(int stage, int health) {
+        return setStage(stage).setHealth(health);
     }
 
-    int stage;
-    int quantity = 1;
+    public Troop set(int stage) {
+        return setStage(stage);
+    }
 
     public Troop setStage(int stage) {
         this.stage = stage;
         return this;
     }
 
-    public Troop setQuantity(int quantity) {
-        this.quantity = quantity;
+    public Troop setHealth(int health) {
+        this.health = health;
         return this;
     }
 
-    public Troop set(int stage, int quantity) {
-        return setStage(stage).setQuantity(quantity);
+    public TroopBuilder getBuilder() {
+        return new TroopBuilder(getClass(), stage, 1);
+    }
+
+    public static List<Troop> of(TroopBuilder... troops) {
+        return Arrays.stream(troops)
+            .map(Troop::of)
+            .collect(ArrayList::new, ArrayList::addAll, ArrayList::addAll);
+    }
+
+    public static List<Troop> of(Class<? extends Troop> type, int stage, int quantity) {
+        return of(new TroopBuilder(type, stage, quantity));
+    }
+
+    public static List<Troop> of(TroopBuilder troop) {
+        List<Troop> result = new ArrayList<>();
+        try {
+            for (int i = 0; i < troop.quantity; i++) {
+                result.add(troop.type.getDeclaredConstructor().newInstance()
+                    .setStage(troop.stage)
+                );
+            }
+        } catch (InstantiationException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public record TroopBuilder(Class<? extends Troop> type, int stage, int quantity) {
+
+    }
+
+    public void damage(int amount) {
+        health -= amount;
     }
 
     public int getStage() {
         return stage;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getHealth() {
+        return health;
+    }
+
+    public boolean isActive() {
+        return health > 0;
     }
 
     public abstract String getName();
@@ -59,10 +90,10 @@ public abstract class Troop implements Formattable {
     }
 
     /**
-     * The amount of health this troop has.
+     * The amount of health this troop has by default, otherwise known as the maximum health.
      * In other words, the amount of damage this troop takes before it dies.
      */
-    public abstract int getHealth();
+    public abstract int getMaxHealth();
 
     /**
      * The amount of damage this troop deals per hit.

@@ -35,6 +35,10 @@ public class NumberUtil {
             + "]";
     }
 
+    public static String clean(Number number) {
+        return String.valueOf(number).replaceFirst("0+[1-9]+$", "");
+    }
+
     public static Integer of(String formattedNumber) {
         return Integer.parseInt(formattedNumber.replaceAll(",", ""));
     }
@@ -53,6 +57,13 @@ public class NumberUtil {
 
     public static boolean withinRange(int number, int min, int max) {
         return number > min && number < max;
+    }
+
+    /**
+     * Rounds to the nearest multiple provided.
+     */
+    public static double round(double multiple, double value) {
+        return multiple * (Math.round(value / multiple));
     }
 
 }

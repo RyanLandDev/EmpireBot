@@ -54,7 +54,7 @@ public enum BuildingType {
             .setTitle(getEmoji() + " Building Shop")
             .setDescription(String.format("You have %s and %s.\nYou can buy items using `/buy <name>`.",
                 profile.getGold().format(), profile.getCrystals().format()))
-            .addFields(Arrays.stream(Building.BUILDINGS)
+            .addFields(Building.getBuildingsInstances().stream()
                 .filter(building -> building.getType() == this)
                 .map(Building::getEmbedField)
                 .toArray(MessageEmbed.Field[]::new));

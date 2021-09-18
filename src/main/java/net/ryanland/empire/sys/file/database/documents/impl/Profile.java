@@ -108,13 +108,17 @@ public class Profile implements SnowflakeDocument, Emojis {
         return NumberUtil.progressBar(10, getXp(), getRequiredXp());
     }
 
+    public void giveXp(int xp, Interaction interaction, MessageEmbed... embeds) {
+        giveXp(xp, interaction, true, embeds);
+    }
+
     /**
      * Increases the profile's xp by the provided value and accounts for level ups.
      * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
      *
      * @param xp The amount of XP to give to the profile.
      */
-    public void giveXp(int xp, Interaction interaction, MessageEmbed... embeds) {
+    public void giveXp(int xp, Interaction interaction, boolean ephemeral, MessageEmbed... embeds) {
         int newXp = getXp() + xp;
 
         // Level up
@@ -138,9 +142,9 @@ public class Profile implements SnowflakeDocument, Emojis {
                     getBuildingStageLimit(), getBuildingStageLimit(newLevel),
                     Boxes.MYTHICAL.give(new Profile(interaction.getUser()))),
                 XP + " Level Up!")
-                .build(), embeds).setEphemeral(true).queue();
+                .build(), embeds).setEphemeral(ephemeral).queue();
         } else {
-            interaction.replyEmbeds(Arrays.asList(embeds)).setEphemeral(true).queue();
+            interaction.replyEmbeds(Arrays.asList(embeds)).setEphemeral(ephemeral).queue();
         }
 
         // Update xp
@@ -163,6 +167,11 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     public Integer getWave() {
         return document.getWave();
+    }
+
+    public Price<Integer> getWaveGoldReward() {
+        return new Price<>(Currency.GOLD,
+            (int) Math.floor(800 + (getWave() - 1) * 430 + 12 * Math.pow(getWave(), 2.1)));
     }
 
     public List<Cooldown> getCooldowns() {
@@ -325,4 +334,5 @@ public class Profile implements SnowflakeDocument, Emojis {
 
         return String.join("\n", rows);
     }
+
 }

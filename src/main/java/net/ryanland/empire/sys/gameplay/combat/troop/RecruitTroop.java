@@ -13,22 +13,22 @@ public class RecruitTroop extends Troop {
     }
 
     @Override
-    public int getHealth() {
-        return 10;
+    public int getMaxHealth() {
+        return (int) Math.floor(Math.pow(stage, 1.3) * stage * 7 + 7);
     }
 
     @Override
     public int getDamage() {
-        return (int) (1.25 * (stage - 1) + 4);
+        return (int) (2.5 * stage + 4);
     }
 
     @Override
     public int getSpeedInMs() {
-        return -120 * (stage - 1) + 1100;
+        return -180 * stage + 1100;
     }
 
     @Override
     public int getXp() {
-        return (int) (8.3 * (stage - 1) + 25);
+        return 13 * stage + 15;
     }
 }

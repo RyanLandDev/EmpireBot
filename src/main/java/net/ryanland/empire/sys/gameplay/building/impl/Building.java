@@ -35,6 +35,7 @@ import net.ryanland.empire.sys.message.interactions.menu.confirm.ConfirmMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,28 +53,55 @@ public abstract class Building
     public static final int LAYOUT_DISPLAY_PER_ROW = 7;
 
     @SuppressWarnings("all")
-    public static final Building[] BUILDINGS = new Building[]{
+    public static final List<Class<? extends Building>> BUILDINGS = Arrays.asList(
 
         // Defense Ranged
-        new ArcherBuilding(),
+        ArcherBuilding.class,
         // Defense Thorned
-        new WallBuilding(),
+        WallBuilding.class,
 
         // Resource Generator
-        new GoldMineBuilding(),
+        GoldMineBuilding.class,
         // Resource Storage
-        new BankBuilding()
+        BankBuilding.class
 
-    };
-
-    private static final HashMap<String, Building> NAME_BUILDINGS = new HashMap<>(
-        Arrays.stream(BUILDINGS)
-            .collect(Collectors.toMap(Building::getName, Function.identity()))
     );
 
-    private static final HashMap<Integer, Building> ID_BUILDINGS = new HashMap<>(
-        Arrays.stream(BUILDINGS)
-            .collect(Collectors.toMap(Building::getId, Function.identity()))
+    public static List<Building> getBuildingsInstances() {
+        return BUILDINGS.stream()
+            .map(buildingClass -> {
+                try {
+                    return buildingClass.getDeclaredConstructor().newInstance();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                throw new IllegalArgumentException();
+            })
+            .collect(Collectors.toList());
+    }
+
+    private static final HashMap<String, Class<? extends Building>> NAME_BUILDINGS = new HashMap<>(
+        BUILDINGS.stream()
+            .collect(Collectors.toMap(buildingClass -> {
+                try {
+                    return buildingClass.getDeclaredConstructor().newInstance().getName();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                throw new IllegalArgumentException();
+            }, Function.identity()))
+    );
+
+    private static final HashMap<Integer, Class<? extends Building>> ID_BUILDINGS = new HashMap<>(
+        BUILDINGS.stream()
+            .collect(Collectors.toMap(buildingClass -> {
+                try {
+                    return buildingClass.getDeclaredConstructor().newInstance().getId();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                throw new IllegalArgumentException();
+            }, Function.identity()))
     );
 
     protected int stage;
@@ -114,6 +142,16 @@ public abstract class Building
         return this;
     }
 
+    public final Building setHealth(int health) {
+        this.health = health;
+        return this;
+    }
+
+    public final Building damage(int amount) {
+        health -= amount;
+        return this;
+    }
+
     public int getStage() {
         return stage;
     }
@@ -146,7 +184,7 @@ public abstract class Building
         return getBuildingInfoBuilder().build();
     }
 
-    public BuildingInfoBuilder getBuildingInfoBuilder() {
+    public strictfp BuildingInfoBuilder getBuildingInfoBuilder() {
         return new BuildingInfoBuilder().setBuilding(this)
             .addSegment(new BuildingInfoSegmentBuilder()
                 .addElement("Layer", "🏘", getLayer(), String.format(
@@ -499,16 +537,26 @@ public abstract class Building
     }
 
     public static Building of(int id) {
-        return ID_BUILDINGS.get(id);
+        try {
+            return ID_BUILDINGS.get(id).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException();
     }
 
     public static Building of(String name) {
-        return NAME_BUILDINGS.get(name);
+        try {
+            return NAME_BUILDINGS.get(name).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException();
     }
 
     public static Building find(String name) throws CommandException {
         try {
-            return Arrays.stream(BUILDINGS)
+            return getBuildingsInstances().stream()
                 .filter(building -> building.getName()
                     .replaceAll("[ _-]", "")
                     .equalsIgnoreCase(name
