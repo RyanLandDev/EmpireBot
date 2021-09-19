@@ -7,6 +7,7 @@ import net.ryanland.empire.sys.gameplay.collectible.box.impl.MemberBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.box.impl.MythicalBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsReceivable;
+import net.ryanland.empire.sys.gameplay.collectible.potion.DefenseBuildingDamagePotion;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -17,7 +18,6 @@ import java.util.stream.Collectors;
 
 public class CollectibleHolder {
 
-    @SuppressWarnings("all")
     private static final List<Class<? extends Collectible>> COLLECTIBLES = Arrays.asList(
 
         // Box
@@ -28,7 +28,10 @@ public class CollectibleHolder {
 
         // Item
         PocketOfCrystalsReceivable.class,
-        PileOfCrystalsReceivable.class
+        PileOfCrystalsReceivable.class,
+
+        // Potion
+        DefenseBuildingDamagePotion.class
 
     );
 
