@@ -2,7 +2,11 @@ package net.ryanland.empire.sys.gameplay.collectible;
 
 import net.ryanland.empire.sys.file.database.MongoDB;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.message.Formattable;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
 
 public interface Collectible extends Formattable {
 

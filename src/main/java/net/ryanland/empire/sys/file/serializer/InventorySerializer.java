@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InventorySerializer implements Serializer<List<Integer>, List<Item>> {
+public class InventorySerializer implements Serializer<List<String>, List<Item>> {
 
     private static final InventorySerializer instance = new InventorySerializer();
 
@@ -16,16 +16,20 @@ public class InventorySerializer implements Serializer<List<Integer>, List<Item>
     }
 
     @Override
-    public List<Integer> serialize(@NotNull List<Item> toSerialize) {
+    public List<String> serialize(@NotNull List<Item> toSerialize) {
         return toSerialize.stream()
-            .map(Item::getId)
+            .map(Item::serialize)
             .collect(Collectors.toList());
     }
 
     @Override
-    public List<Item> deserialize(@NotNull List<Integer> toDeserialize) {
+    public List<Item> deserialize(@NotNull List<String> toDeserialize) {
         return toDeserialize.stream()
-            .map(CollectibleHolder::getItem)
+            .map(item -> {
+                String[] data = item.split(";");
+                return CollectibleHolder.getItem(Integer.parseInt(data[0]))
+                    .deserialize(item);
+            })
             .collect(Collectors.toList());
     }
 }

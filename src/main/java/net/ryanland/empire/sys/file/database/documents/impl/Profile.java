@@ -11,11 +11,13 @@ import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
 import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
 import net.ryanland.empire.sys.file.serializer.CooldownsSerializer;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
+import net.ryanland.empire.sys.file.serializer.PotionsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
+import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
@@ -182,6 +184,13 @@ public class Profile implements SnowflakeDocument, Emojis {
         return InventorySerializer.getInstance().deserialize(document.getInventory());
     }
 
+    /**
+     * Gets all <strong>currently active</strong> potions.
+     */
+    public List<Potion> getPotions() {
+        return PotionsSerializer.getInstance().deserialize(document.getPotions());
+    }
+
     public List<Building> getBuildings() {
         return BuildingsSerializer.getInstance().deserialize(document.getBuildings(), this);
     }
@@ -316,7 +325,7 @@ public class Profile implements SnowflakeDocument, Emojis {
         List<String> rows = new ArrayList<>();
 
         int i = 0;
-        Partition<Building> buildingPartition = Partition.ofSize(getBuildings(), Building.LAYOUT_DISPLAY_PER_ROW);
+        Partition<Building> buildingPartition = new Partition<>(getBuildings(), Building.LAYOUT_DISPLAY_PER_ROW);
 
         for (List<Building> buildings : buildingPartition) {
             List<String> layerRow = new ArrayList<>();

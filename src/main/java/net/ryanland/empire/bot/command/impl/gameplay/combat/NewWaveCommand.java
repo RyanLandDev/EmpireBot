@@ -8,9 +8,12 @@ import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
+import net.ryanland.empire.sys.gameplay.action.BuffedAction;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.DefenseRangedBuilding;
+import net.ryanland.empire.sys.gameplay.collectible.potion.DefenseBuildingDamagePotion;
+import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 import net.ryanland.empire.sys.gameplay.combat.team.Team;
 import net.ryanland.empire.sys.gameplay.combat.troop.Troop;
 import net.ryanland.empire.sys.gameplay.combat.wave.Wave;
@@ -20,9 +23,6 @@ import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.util.NumberUtil;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class NewWaveCommand extends Command {
@@ -217,13 +217,23 @@ public class NewWaveCommand extends Command {
     }
 
     private static double getDefenseDmgPerMs(int layer, List<Building> buildings) {
-        return buildings.stream()
-            .filter(building -> building.getType() == BuildingType.DEFENSE_RANGED && building.isUsable())
-            .map(building -> (DefenseRangedBuilding) building)
-            .filter(building -> NumberUtil.inRange(layer,
-                building.getLayer() - building.getRange(), building.getLayer() + building.getRange()))
-            .mapToDouble(building -> (double) building.getDamage() / building.getSpeedInMs())
-            .sum();
+        return new BuffedAction<Double>() {
+            @Override
+            public Potion getPotion() {
+                return new DefenseBuildingDamagePotion();
+            }
+
+            @Override
+            public Double run() {
+                return buildings.stream()
+                    .filter(building -> building.getType() == BuildingType.DEFENSE_RANGED && building.isUsable())
+                    .map(building -> (DefenseRangedBuilding) building)
+                    .filter(building -> NumberUtil.inRange(layer,
+                        building.getLayer() - building.getRange(), building.getLayer() + building.getRange()))
+                    .mapToDouble(building -> (double) building.getDamage() / building.getSpeedInMs())
+                    .sum() * multiplier;
+            }
+        }.perform();
     }
 
 }

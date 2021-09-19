@@ -8,72 +8,131 @@ import net.ryanland.empire.sys.gameplay.collectible.box.impl.MythicalBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsReceivable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CollectibleHolder {
 
     @SuppressWarnings("all")
-    private static final Collectible[] COLLECTIBLES = new Collectible[]{
+    private static final List<Class<? extends Collectible>> COLLECTIBLES = Arrays.asList(
 
         // Box
-        new HourlyBoxItem(),
-        new DailyBoxItem(),
-        new MemberBoxItem(),
-        new MythicalBoxItem(),
+        HourlyBoxItem.class,
+        DailyBoxItem.class,
+        MemberBoxItem.class,
+        MythicalBoxItem.class,
 
         // Item
-        new PocketOfCrystalsReceivable(),
-        new PileOfCrystalsReceivable()
+        PocketOfCrystalsReceivable.class,
+        PileOfCrystalsReceivable.class
 
-    };
-
-    private static final HashMap<String, Collectible> NAME_COLLECTIBLES = new HashMap<>(
-        Arrays.stream(COLLECTIBLES)
-            .collect(Collectors.toMap(Collectible::getName, Function.identity()))
     );
 
-    private static final HashMap<Integer, Collectible> ID_COLLECTIBLES = new HashMap<>(
-        Arrays.stream(COLLECTIBLES)
-            .collect(Collectors.toMap(Collectible::getId, Function.identity()))
+    private static final HashMap<String, Class<? extends Collectible>> NAME_COLLECTIBLES = new HashMap<>(
+        COLLECTIBLES.stream()
+            .collect(Collectors.toMap(collectible -> {
+                try {
+                    return collectible.getDeclaredConstructor().newInstance().getName();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                throw new IllegalArgumentException();
+            }, Function.identity()))
     );
 
-    private static final Item[] ITEMS = Arrays.stream(COLLECTIBLES)
-        .filter(c -> c instanceof Item)
-        .map(c -> (Item) c)
-        .toArray(Item[]::new);
-
-    private static final HashMap<String, Item> NAME_ITEMS = new HashMap<>(
-        Arrays.stream(ITEMS)
-            .collect(Collectors.toMap(Item::getName, Function.identity()))
+    private static final HashMap<Integer, Class<? extends Collectible>> ID_COLLECTIBLES = new HashMap<>(
+        COLLECTIBLES.stream()
+            .collect(Collectors.toMap(collectible -> {
+                try {
+                    return collectible.getDeclaredConstructor().newInstance().getId();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                throw new IllegalArgumentException();
+            }, Function.identity()))
     );
 
-    private static final HashMap<Integer, Item> ID_ITEMS = new HashMap<>(
-        Arrays.stream(ITEMS)
-            .collect(Collectors.toMap(Item::getId, Function.identity()))
+    @SuppressWarnings("unchecked")
+    private static final List<Class<Item>> ITEMS = COLLECTIBLES.stream()
+        .filter(c -> c.isAssignableFrom(Item.class))
+        .map(c -> (Class<Item>) c)
+        .collect(Collectors.toList());
+
+    private static final HashMap<String, Class<Item>> NAME_ITEMS = new HashMap<>(
+        ITEMS.stream()
+            .collect(Collectors.toMap(item -> {
+                try {
+                    return item.getDeclaredConstructor().newInstance().getName();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                throw new IllegalArgumentException();
+            }, Function.identity()))
+    );
+
+    private static final HashMap<Integer, Class<Item>> ID_ITEMS = new HashMap<>(
+        ITEMS.stream()
+            .collect(Collectors.toMap(item -> {
+                try {
+                    return item.getDeclaredConstructor().newInstance().getId();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                throw new IllegalArgumentException();
+            }, Function.identity()))
     );
 
     public static Collectible get(String name) {
-        return NAME_COLLECTIBLES.get(name);
+        try {
+            return NAME_COLLECTIBLES.get(name).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException();
     }
 
     public static Collectible get(int id) {
-        return ID_COLLECTIBLES.get(id);
+        try {
+            return ID_COLLECTIBLES.get(id).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException();
     }
 
     public static Item getItem(String name) {
-        return NAME_ITEMS.get(name);
+        try {
+            return NAME_ITEMS.get(name).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException();
     }
 
     public static Item getItem(int id) {
-        return ID_ITEMS.get(id);
+        try {
+            return ID_ITEMS.get(id).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException();
     }
 
     public static Item findItem(String name) throws CommandException {
         try {
-            return Arrays.stream(ITEMS)
+            return ITEMS.stream()
+                .map(itemClass -> {
+                    try {
+                        return itemClass.getDeclaredConstructor().newInstance();
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                    throw new IllegalArgumentException();
+                })
                 .filter(item -> item.getName()
                     .replaceAll("[ _-]", "")
                     .equalsIgnoreCase(name

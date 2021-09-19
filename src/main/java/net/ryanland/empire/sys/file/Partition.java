@@ -14,10 +14,6 @@ public final class Partition<T> extends AbstractList<List<T>> {
         this.chunkSize = chunkSize;
     }
 
-    public static <T> Partition<T> ofSize(List<T> list, int chunkSize) {
-        return new Partition<>(list, chunkSize);
-    }
-
     @Override
     public List<T> get(int index) {
         int start = index * chunkSize;

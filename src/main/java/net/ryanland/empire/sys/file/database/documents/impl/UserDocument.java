@@ -33,7 +33,9 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     );
     @SuppressWarnings("all")
     public static final List<List> DEFAULT_COOLDOWNS = Collections.emptyList();
-    public static final List<Integer> DEFAULT_INVENTORY = Collections.emptyList();
+    public static final List<String> DEFAULT_INVENTORY = Collections.emptyList();
+    @SuppressWarnings("all")
+    public static final List<List> DEFAULT_POTIONS = Collections.emptyList();
 
     public UserDocument(Document document) {
         super(document);
@@ -49,7 +51,9 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private Date created = getCreated();
     @SuppressWarnings("all")
     private List<List> cooldowns = getCooldowns();
-    private List<Integer> inventory = getInventory();
+    private List<String> inventory = getInventory();
+    @SuppressWarnings("all")
+    private List<List> potions = getPotions();
 
     @Override
     public void updated(List<Bson> updates) {
@@ -62,6 +66,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         checkUpdate(updates, created, getCreated(), "cr");
         checkUpdate(updates, cooldowns, getCooldowns(), "cd");
         checkUpdate(updates, inventory, getInventory(), "inv");
+        checkUpdate(updates, potions, getPotions(), "pot");
 
         performUpdate(DocumentCache.USER_COLLECTION, Filters.eq("id", getId()), updates);
     }
@@ -121,8 +126,14 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return setCooldownsRaw(CooldownsSerializer.getInstance().serialize(cooldowns));
     }
 
-    public UserDocument setInventory(List<Integer> inventory) {
+    public UserDocument setInventory(List<String> inventory) {
         this.inventory = inventory;
+        return this;
+    }
+
+    @SuppressWarnings("all")
+    public UserDocument setPotions(List<List> potions) {
+        this.potions = potions;
         return this;
     }
 
@@ -165,8 +176,13 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return getList("cd", List.class, DEFAULT_COOLDOWNS);
     }
 
-    public List<Integer> getInventory() {
-        return getList("inv", Integer.class, DEFAULT_INVENTORY);
+    public List<String> getInventory() {
+        return getList("inv", String.class, DEFAULT_INVENTORY);
+    }
+
+    @SuppressWarnings("all")
+    public List<List> getPotions() {
+        return getList("pot", List.class, DEFAULT_POTIONS);
     }
 
 }

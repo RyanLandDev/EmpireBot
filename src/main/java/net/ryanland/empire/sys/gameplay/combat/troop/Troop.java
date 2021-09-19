@@ -29,7 +29,7 @@ public abstract class Troop implements Formattable {
 
     public static Troop of(String name) throws ArgumentException {
         try {
-            return TROOPS.stream()
+            return getTroops().stream()
                 .map(troop -> {
                     try {
                         return troop.getDeclaredConstructor().newInstance();
@@ -48,7 +48,7 @@ public abstract class Troop implements Formattable {
 
     public static Troop find(String name) throws ArgumentException {
         try {
-            return TROOPS.stream()
+            return getTroops().stream()
                 .map(troop -> {
                     try {
                         return troop.getDeclaredConstructor().newInstance();
