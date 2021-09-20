@@ -1,18 +1,18 @@
 package net.ryanland.empire.sys.gameplay.collectible.potion;
 
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.file.serializer.PotionSerializer;
+import net.ryanland.empire.sys.file.serializer.PotionsSerializer;
 import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.PresetType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,7 +30,43 @@ public abstract class Potion implements Item {
 
     @Override
     public PresetBuilder use(Profile profile) {
-        return null;//TODO
+        List<Item> inventory = new ArrayList<>(profile.getInventory());
+        inventory.removeIf(potion -> ((Potion) potion).equals(this));
+        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
+
+        List<Potion> userPotions = new ArrayList<>(profile.getUserPotions());
+        userPotions.add(this);
+        profile.getDocument().setPotions(PotionsSerializer.getInstance().serialize(userPotions));
+
+        profile.getDocument().update();
+
+        return new PresetBuilder(PresetType.SUCCESS,
+            "Used " + format(), "Potion");
+    }
+
+    //TODO override format method to include properties
+
+    /**
+     * Checks if the type of this potion is equal to another.
+     * This only checks for the ID, not the other potion properties!
+     * @param potion The potion to compare to
+     * @return A boolean indicating the result
+     */
+    public final boolean compare(Potion potion) {
+        return getId() == potion.getId();
+    }
+
+    /**
+     * Checks if the type of this potion and all of its properties is equal to another.
+     */
+    @Override
+    public final boolean equals(Item item) {
+        Potion potion = (Potion) item;
+        return getId() == potion.getId() &&
+            getMultiplier() == potion.getMultiplier() &&
+            getLength() == potion.getLength() &&
+            getScope() == potion.getScope() &&
+            getExpires() == potion.getExpires();
     }
 
     private Multiplier multiplier;
@@ -98,7 +134,7 @@ public abstract class Potion implements Item {
             return name;
         }
 
-        public float getMultiplier() {
+        public float getMultiplicand() {
             return multiplier;
         }
 
@@ -166,7 +202,7 @@ public abstract class Potion implements Item {
     public enum Scope {
 
         USER(0, "User"),
-        GUILD(1, "Server"),
+        CLAN(1, "Clan"),
         GLOBAL(2, "Global")
         ;
 

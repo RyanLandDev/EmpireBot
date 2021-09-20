@@ -95,6 +95,7 @@ public class Empire {
             new InventoryCommand(),
             new UseCommand(),
             new RepairCommand(),
+            new PotionsCommand(),
 
             // Combat
             new NewWaveCommand(),

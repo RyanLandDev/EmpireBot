@@ -61,8 +61,8 @@ public class CollectibleHolder {
 
     @SuppressWarnings("unchecked")
     private static final List<Class<Item>> ITEMS = COLLECTIBLES.stream()
-        .filter(c -> c.isAssignableFrom(Item.class))
-        .map(c -> (Class<Item>) c)
+        .filter(Item.class::isAssignableFrom)
+        .map(clazz -> (Class<Item>) clazz)
         .collect(Collectors.toList());
 
     private static final HashMap<String, Class<Item>> NAME_ITEMS = new HashMap<>(

@@ -1,5 +1,6 @@
 package net.ryanland.empire.sys.gameplay.action;
 
+import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 
 /**
@@ -7,12 +8,15 @@ import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
  */
 public abstract class BuffedAction<R> implements Action<R> {
 
-    protected float multiplier = Potion.Multiplier.NORMAL.getMultiplier();
+    protected float multiplier = Potion.Multiplier.NORMAL.getMultiplicand();
 
     @Override
-    public R perform() {
-        //TODO calculate multiplier
-        return run();
+    public R perform(Profile profile) {
+        multiplier = (float) profile.getPotions().stream()
+            .filter(potion -> potion.compare(getPotion()))
+            .mapToDouble(potion -> potion.getMultiplier().getMultiplicand())
+            .reduce(1, (a, b) -> a * b);
+        return run(profile);
     }
 
     public abstract Potion getPotion();

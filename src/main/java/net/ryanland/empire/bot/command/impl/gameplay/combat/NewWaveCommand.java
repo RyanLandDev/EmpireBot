@@ -77,7 +77,7 @@ public class NewWaveCommand extends Command {
         for (Building building : buildings) {
 
             // Amount of damage defense deals per millisecond
-            double defenseDmgPerMs = getDefenseDmgPerMs(building.getLayer(), buildings);
+            double defenseDmgPerMs = getDefenseDmgPerMs(building.getLayer(), buildings, profile);
             // Whether the building has been destroyed or not
             boolean destroyed;
 
@@ -216,7 +216,7 @@ public class NewWaveCommand extends Command {
             .sum();
     }
 
-    private static double getDefenseDmgPerMs(int layer, List<Building> buildings) {
+    private static double getDefenseDmgPerMs(int layer, List<Building> buildings, Profile profile) {
         return new BuffedAction<Double>() {
             @Override
             public Potion getPotion() {
@@ -224,7 +224,7 @@ public class NewWaveCommand extends Command {
             }
 
             @Override
-            public Double run() {
+            public Double run(Profile profile) {
                 return buildings.stream()
                     .filter(building -> building.getType() == BuildingType.DEFENSE_RANGED && building.isUsable())
                     .map(building -> (DefenseRangedBuilding) building)
@@ -233,7 +233,7 @@ public class NewWaveCommand extends Command {
                     .mapToDouble(building -> (double) building.getDamage() / building.getSpeedInMs())
                     .sum() * multiplier;
             }
-        }.perform();
+        }.perform(profile);
     }
 
 }

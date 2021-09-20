@@ -12,6 +12,8 @@ import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.gameplay.collectible.box.Box;
 import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
+import net.ryanland.empire.sys.gameplay.collectible.potion.DefenseBuildingDamagePotion;
+import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.Arrays;
@@ -48,7 +50,9 @@ public class InventoryCommand extends Command {
                 InventoryItem.box(Boxes.DAILY),
                 InventoryItem.box(Boxes.MEMBER),
                 InventoryItem.box(Boxes.MYTHICAL)
-            )
+            ),
+            new InventoryCategory(POTION, "Potions",
+                InventoryItem.potion(new DefenseBuildingDamagePotion()))
         ));
 
         event.reply(embed);
@@ -98,6 +102,14 @@ public class InventoryCommand extends Command {
             return new InventoryItem(name,
                 profile -> (int) profile.getInventory().stream()
                     .filter(item -> item instanceof Box && item.getName().equals(name))
+                    .count()
+            );
+        }
+
+        static InventoryItem potion(Potion potion) {
+            return new InventoryItem(potion.getName(),//TODO include properties
+                profile -> (int) profile.getInventory().stream()
+                    .filter(item -> item.equals(potion))
                     .count()
             );
         }

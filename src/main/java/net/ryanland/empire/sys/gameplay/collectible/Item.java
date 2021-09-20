@@ -23,6 +23,16 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
         return serialize(this);
     }
 
+    /**
+     * Checks if this item is equal to another using its ID.
+     * Override this method if the item has more properties!
+     * @param item The item to compare to
+     * @return A boolean indicating the result
+     */
+    default boolean equals(Item item) {
+        return getId() == item.getId();
+    }
+
     @Override
     default String serialize(@NotNull Item item) {
         return getSerializer().serialize(item);
@@ -52,9 +62,9 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
     }
 
     /**
-     * jfojweoij//TODO
-     * @param profile
-     * @return
+     * Triggered when the player uses this item using the {@link UseCommand}.
+     * @param profile The profile associated with this action.
+     * @return The {@link PresetBuilder} to send back to the user when the item has been used.
      */
     PresetBuilder use(Profile profile);
 

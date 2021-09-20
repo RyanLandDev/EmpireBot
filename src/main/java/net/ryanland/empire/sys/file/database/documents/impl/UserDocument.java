@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDocument extends BaseDocument implements SnowflakeDocument {
 
@@ -183,6 +184,22 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     @SuppressWarnings("all")
     public List<List> getPotions() {
         return getList("pot", List.class, DEFAULT_POTIONS);
+    }
+
+    @SuppressWarnings("all")
+    public void cleanPotions() {
+        List<List> potions = getPotions();
+        List<List> newPotions = potions.stream()
+            .filter(potion -> {
+                Date expires = (Date) potion.get(1);
+                return System.currentTimeMillis() > expires.getTime();
+            })
+            .collect(Collectors.toList());
+
+        if (potions.size() != newPotions.size()) {
+            setPotions(newPotions);
+            update();
+        }
     }
 
 }

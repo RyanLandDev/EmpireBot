@@ -23,6 +23,7 @@ public interface Emojis {
     String DAMAGE = ":boom:";
     String SPEED = ":athletic_shoe:";
 
+    String POTION = "<:potion:889575486475350016>";
     String SHOP = "<:shop:878683905841037362>";
 
     String ONE = "<:number_one:836612644369989642>";

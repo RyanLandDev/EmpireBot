@@ -185,10 +185,47 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     /**
-     * Gets all <strong>currently active</strong> potions.
+     * Gets all <strong>currently active</strong> potions of all scopes.
+     * @see #getUserPotions()
+     * @see #getClanPotions()
+     * @see #getGlobalPotions()
      */
     public List<Potion> getPotions() {
+        List<Potion> potions = new ArrayList<>(getUserPotions());
+        //potions.addAll(getClanPotions()); TODO
+        //potions.addAll(getGlobalPotions());
+        return potions;
+    }
+
+    /**
+     * Gets all <strong>currently active</strong> potions with {@link Potion.Scope#USER}.
+     * @see #getPotions()
+     * @see #getClanPotions()
+     * @see #getGlobalPotions()
+     */
+    public List<Potion> getUserPotions() {
+        document.cleanPotions();
         return PotionsSerializer.getInstance().deserialize(document.getPotions());
+    }
+
+    /**
+     * Gets all <strong>currently active</strong> potions with {@link Potion.Scope#CLAN}
+     * @see #getPotions()
+     * @see #getUserPotions()
+     * @see #getGlobalPotions()
+     */
+    public List<Potion> getClanPotions() {
+        return null;//TODO
+    }
+
+    /**
+     * Gets all <strong>currently active</strong> potions with {@link Potion.Scope#GLOBAL}
+     * @see #getPotions()
+     * @see #getUserPotions()
+     * @see #getClanPotions()
+     */
+    public List<Potion> getGlobalPotions() {
+        return null;//TODO
     }
 
     public List<Building> getBuildings() {
