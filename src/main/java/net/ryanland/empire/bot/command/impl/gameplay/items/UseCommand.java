@@ -32,7 +32,7 @@ public class UseCommand extends Command {
     @Override
     public void run(CommandEvent event) throws CommandException {
         Item item = CollectibleHolder.findItem(event.getArgument("item"));
-        if (event.getProfile().getInventory().stream().noneMatch(invItem -> invItem.equals(item))) {
+        if (event.getProfile().getInventory().stream().noneMatch(invItem -> invItem.typeEquals(item))) {
             throw new CommandException("You do not have this item in your inventory.");
         }
 

@@ -6,6 +6,7 @@ import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.file.serializer.ItemSerializer;
 import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -24,12 +25,31 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
     }
 
     /**
-     * Checks if this item is equal to another using its ID.
+     * The name to use in the {@link CollectibleHolder#findItem(String)} method.
+     * Note: This string will go through the {@link StringUtil#convertToFind(String)} function first.
+     */
+    default String getFindName() {
+        return getName();
+    }
+
+    /**
+     * Checks if this item is exactly equal to another using its ID.
      * Override this method if the item has more properties!
      * @param item The item to compare to
      * @return A boolean indicating the result
      */
     default boolean equals(Item item) {
+        return getId() == item.getId();
+    }
+
+    /**
+     * Checks if the type of this item is equal to another item using its ID.
+     * Override this method if the item has more properties!
+     * This method should not check for properties that could change per instance, such as an expiration date.
+     * @param item The item to compare to
+     * @return A boolean indicating the result
+     */
+    default boolean typeEquals(Item item) {
         return getId() == item.getId();
     }
 

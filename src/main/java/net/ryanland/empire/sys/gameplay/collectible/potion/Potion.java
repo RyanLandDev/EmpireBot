@@ -44,7 +44,24 @@ public abstract class Potion implements Item {
             "Used " + format(), "Potion");
     }
 
-    //TODO override format method to include properties
+    @Override
+    public String format() {
+        return "%s **%s%s %s %s (%s)**".formatted(
+            getEmoji(),
+            getScope().isIncluded() ? getScope().getName() : "",
+            getMultiplier().getName(),
+            getName(),
+            getHeadName(),
+            getLength().getName()
+        );
+    }
+
+    @Override
+    public String getFindName() {
+        // Important note: This should closely resemble the above defined format function
+        return (getScope().isIncluded() ? getScope().getName() : "") +
+            getMultiplier().getName() + getName() + getHeadName() + getLength().getName();
+    }
 
     /**
      * Checks if the type of this potion is equal to another.
@@ -58,15 +75,30 @@ public abstract class Potion implements Item {
 
     /**
      * Checks if the type of this potion and all of its properties is equal to another.
+     * @see #typeEquals(Item)
      */
     @Override
     public final boolean equals(Item item) {
-        Potion potion = (Potion) item;
+        if (!(item instanceof Potion potion))
+            return false;
+
         return getId() == potion.getId() &&
             getMultiplier() == potion.getMultiplier() &&
             getLength() == potion.getLength() &&
             getScope() == potion.getScope() &&
             getExpires() == potion.getExpires();
+    }
+
+    /**
+     * Checks if the type of this potion and all of its properties, except expires, is equal to another.
+     */
+    @Override
+    public final boolean typeEquals(Item item) {
+        Potion potion = (Potion) item;
+        return getId() == potion.getId() &&
+            getMultiplier() == potion.getMultiplier() &&
+            getLength() == potion.getLength() &&
+            getScope() == potion.getScope();
     }
 
     private Multiplier multiplier;
@@ -201,17 +233,23 @@ public abstract class Potion implements Item {
 
     public enum Scope {
 
-        USER(0, "User"),
+        USER(0, "User", false),
         CLAN(1, "Clan"),
         GLOBAL(2, "Global")
         ;
 
         private final int id;
         private final String name;
+        private final boolean include;
 
-        Scope(int id, String name) {
+        Scope(int id, String name, boolean include) {
             this.id = id;
             this.name = name;
+            this.include = include;
+        }
+
+        Scope(int id, String name) {
+            this(id, name, true);
         }
 
         private final static HashMap<Integer, Scope> ID_SCOPES = new HashMap<>(
@@ -225,6 +263,13 @@ public abstract class Potion implements Item {
 
         public String getName() {
             return name;
+        }
+
+        /**
+         * If this scope's name should be included in certain strings
+         */
+        public boolean isIncluded() {
+            return include;
         }
 
         public static Scope of(int id) {

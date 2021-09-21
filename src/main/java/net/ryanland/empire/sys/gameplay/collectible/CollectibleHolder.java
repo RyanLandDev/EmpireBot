@@ -8,6 +8,7 @@ import net.ryanland.empire.sys.gameplay.collectible.box.impl.MythicalBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.potion.DefenseBuildingDamagePotion;
+import net.ryanland.empire.util.StringUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -126,6 +127,7 @@ public class CollectibleHolder {
     }
 
     public static Item findItem(String name) throws CommandException {
+        //TODO some kind of way to parse a find string into an item with properties...
         try {
             return ITEMS.stream()
                 .map(itemClass -> {
@@ -136,10 +138,8 @@ public class CollectibleHolder {
                     }
                     throw new IllegalArgumentException();
                 })
-                .filter(item -> item.getName()
-                    .replaceAll("[ _-]", "")
-                    .equalsIgnoreCase(name
-                        .replaceAll("[ _-]", "")))
+                .filter(item -> StringUtil.convertToFind(item.getFindName())
+                    .equals(StringUtil.convertToFind(name)))
                 .collect(Collectors.toList())
                 .get(0);
         } catch (IndexOutOfBoundsException e) {

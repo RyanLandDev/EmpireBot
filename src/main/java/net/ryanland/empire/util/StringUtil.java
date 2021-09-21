@@ -15,6 +15,10 @@ public class StringUtil implements Emojis {
         return (" \u200b").repeat(amount);
     }
 
+    public static String convertToFind(String input) {
+        return input.toLowerCase().replaceAll("[() _-]", "");
+    }
+
     @NotNull
     public static String getNumberEmoji(@Range(min = 1, max = 15) int number) {
         switch (number) {

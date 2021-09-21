@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.utils.MarkdownSanitizer;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
@@ -15,6 +16,9 @@ import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
 import net.ryanland.empire.sys.gameplay.collectible.potion.DefenseBuildingDamagePotion;
 import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -52,7 +56,8 @@ public class InventoryCommand extends Command {
                 InventoryItem.box(Boxes.MYTHICAL)
             ),
             new InventoryCategory(POTION, "Potions",
-                InventoryItem.potion(new DefenseBuildingDamagePotion()))
+                InventoryItem.item(new DefenseBuildingDamagePotion()
+                    .set(Potion.Multiplier.ONE_AND_A_HALF, Potion.Length.FIVE_MINUTES, Potion.Scope.USER)))
         ));
 
         event.reply(embed);
@@ -75,7 +80,7 @@ public class InventoryCommand extends Command {
 
     private record InventoryCategory(String emoji, String name, InventoryItem... items) {
 
-        MessageEmbed.Field build(Profile profile) {
+        MessageEmbed.@Nullable Field build(Profile profile) {
             String value = Arrays.stream(items)
                 .filter(item -> item.quantityGetter.apply(profile) > 0)
                 .map(item -> item.build(profile))
@@ -92,37 +97,27 @@ public class InventoryCommand extends Command {
         }
     }
 
-    private record InventoryItem(String itemName, Function<Profile, Integer> quantityGetter) {
+    private record InventoryItem(Item item, Function<Profile, Integer> quantityGetter) {
 
-        static InventoryItem box(Boxes box) {
-            return box(box.getName());
+        @Contract("_ -> new")
+        static @NotNull InventoryItem box(Boxes box) {
+            return item(CollectibleHolder.getItem(box.getId()));
         }
 
-        static InventoryItem box(String name) {
-            return new InventoryItem(name,
+        @Contract("_ -> new")
+        static @NotNull InventoryItem item(Item item) {
+            return new InventoryItem(item,
                 profile -> (int) profile.getInventory().stream()
-                    .filter(item -> item instanceof Box && item.getName().equals(name))
-                    .count()
-            );
-        }
-
-        static InventoryItem potion(Potion potion) {
-            return new InventoryItem(potion.getName(),//TODO include properties
-                profile -> (int) profile.getInventory().stream()
-                    .filter(item -> item.equals(potion))
+                    .filter(invItem -> invItem.equals(item))
                     .count()
             );
         }
 
         String build(Profile profile) {
-            Item item = CollectibleHolder.getItem(itemName);
             int quantity = quantityGetter.apply(profile);
 
-            return "%s %s %s".formatted(
-                quantity == 1 ? AIR : "*" + quantity + "x* \u200b",
-                item.getEmoji(),
-                item.getName()
-            );
+            return (quantity == 1 ? AIR : "*" + quantity + "x* \u200b") +
+                " " + MarkdownSanitizer.sanitize(item.format());
         }
     }
 

@@ -33,6 +33,7 @@ import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenu;
 import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
 import net.ryanland.empire.sys.message.interactions.menu.confirm.ConfirmMenu;
+import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -570,10 +571,8 @@ public abstract class Building
     public static Building find(String name) throws CommandException {
         try {
             return getBuildingsInstances().stream()
-                .filter(building -> building.getName()
-                    .replaceAll("[ _-]", "")
-                    .equalsIgnoreCase(name
-                        .replaceAll("[ _-]", "")))
+                .filter(building -> StringUtil.convertToFind(building.getName())
+                    .equals(StringUtil.convertToFind(name)))
                 .collect(Collectors.toList())
                 .get(0);
         } catch (IndexOutOfBoundsException e) {

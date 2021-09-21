@@ -3,6 +3,7 @@ package net.ryanland.empire.sys.gameplay.combat.troop;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.sys.message.Formattable;
+import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
@@ -57,9 +58,8 @@ public abstract class Troop implements Formattable {
                     }
                     throw new IllegalArgumentException();
                 })
-                .filter(troop -> troop.getName().replaceAll("[ _-]", "")
-                    .equalsIgnoreCase(name
-                        .replaceAll("[ _-]", "")))
+                .filter(troop -> StringUtil.convertToFind(troop.getName())
+                    .equals(StringUtil.convertToFind(name)))
                 .collect(Collectors.toList())
                 .get(0);
         } catch (IndexOutOfBoundsException e) {
