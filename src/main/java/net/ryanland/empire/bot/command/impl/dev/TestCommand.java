@@ -17,7 +17,7 @@ public class TestCommand extends Command {
      * @param event The associated {@link CommandEvent}.
      */
     private void performTest(CommandEvent event) {
-
+        debug("hi");
     }
 
     @Override

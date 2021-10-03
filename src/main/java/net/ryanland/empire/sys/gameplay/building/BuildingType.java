@@ -52,7 +52,7 @@ public enum BuildingType {
     public PresetBuilder getEmbed(@NotNull Profile profile) {
         return new PresetBuilder()
             .setTitle(getEmoji() + " Building Shop")
-            .setDescription(String.format("You have %s and %s.\nYou can buy items using `/buy <name>`.",
+            .setDescription(String.format("You have %s and %s.\nYou can buy items using `/buy <id>`.",
                 profile.getGold().format(), profile.getCrystals().format()))
             .addFields(Building.getBuildingsInstances().stream()
                 .filter(building -> building.getType() == this)

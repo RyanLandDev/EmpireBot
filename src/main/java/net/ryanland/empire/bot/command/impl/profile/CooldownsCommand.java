@@ -38,6 +38,7 @@ public class CooldownsCommand extends Command {
     @Override
     public void run(CommandEvent event) throws CommandException {
         CooldownManager manager = CooldownHandler.getCooldownManager(StorageType.EXTERNAL);
+        CooldownHandler.cleanCooldowns(manager, event.getUser());
         Map<String, Cooldown> cooldowns = manager.get(event.getUser()).stream()
             .collect(Collectors.toMap(cooldown -> cooldown.command().getName(), Function.identity()));
 

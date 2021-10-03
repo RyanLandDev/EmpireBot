@@ -42,7 +42,9 @@ public class Empire {
     public static final String RYANLAND = "RyanLand#0001";
     public static final String SUPPORT_GUILD = "832384230331252816";
 
+    // Settings
     public static final boolean useTestGuild = true;
+    public static final boolean debugMode = true;
 
     // Constant links
     public static final String BOT_INVITE_LINK = "https://discord.com/oauth2/authorize?client_id=832988155355070555&permissions=8&scope=bot";

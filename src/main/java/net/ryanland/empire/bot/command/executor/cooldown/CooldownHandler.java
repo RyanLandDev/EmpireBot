@@ -1,8 +1,10 @@
 package net.ryanland.empire.bot.command.executor.cooldown;
 
+import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.executor.cooldown.manager.CooldownManager;
 import net.ryanland.empire.bot.command.executor.cooldown.manager.ExternalCooldownManager;
 import net.ryanland.empire.bot.command.executor.cooldown.manager.MemoryCooldownManager;
+import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.StorageType;
 
@@ -50,39 +52,56 @@ public class CooldownHandler {
             new Date(System.currentTimeMillis() + event.getCommand().getCooldownInMs())));
     }
 
+    public static List<Cooldown> getActiveCooldowns(CooldownManager manager, User user) {
+        return manager.get(user);
+    }
+
     public static List<Cooldown> getActiveCooldowns(CommandEvent event) {
         return getCooldownManager(event).get(event.getUser());
     }
 
     public static void cleanCooldowns(CommandEvent event) {
+        cleanCooldowns(getCooldownManager(event.getCommand().getCooldownStorageType()), event.getUser());
+    }
+
+    public static void cleanCooldowns(CooldownManager manager, User user) {
         Date date = new Date();
-        List<Cooldown> activeCooldowns = getActiveCooldowns(event);
+        List<Cooldown> activeCooldowns = getActiveCooldowns(manager, user);
         List<Cooldown> cooldowns = activeCooldowns.stream()
             .filter(cooldown -> date.before(cooldown.expires()))
             .collect(Collectors.toList());
 
         if (!activeCooldowns.equals(cooldowns)) {
             if (cooldowns.isEmpty()) {
-                purgeCooldowns(event);
+                purgeCooldowns(manager, user);
             } else {
-                getCooldownManager(event).put(event.getUser(), cooldowns);
+                manager.put(user, cooldowns);
             }
         }
     }
 
     public static void removeCooldown(CommandEvent event) {
-        List<Cooldown> activeCooldowns = getActiveCooldowns(event);
+        removeCooldown(getCooldownManager(event.getCommand().getCooldownStorageType()),
+            event.getUser(), event.getCommand());
+    }
+
+    public static void removeCooldown(CooldownManager manager, User user, Command command) {
+        List<Cooldown> activeCooldowns = getActiveCooldowns(manager, user);
         List<Cooldown> cooldowns = activeCooldowns.stream()
-            .filter(cooldown -> !cooldown.command().getName().equals(event.getCommand().getName()))
+            .filter(cooldown -> !cooldown.command().getName().equals(command.getName()))
             .collect(Collectors.toList());
 
         if (!activeCooldowns.equals(cooldowns)) {
             if (cooldowns.isEmpty()) {
-                purgeCooldowns(event);
+                purgeCooldowns(manager, user);
             } else {
-                getCooldownManager(event).put(event.getUser(), cooldowns);
+                manager.put(user, cooldowns);
             }
         }
+    }
+
+    public static void purgeCooldowns(CooldownManager manager, User user) {
+        manager.purge(user);
     }
 
     public static void purgeCooldowns(CommandEvent event) {

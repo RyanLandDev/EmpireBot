@@ -192,7 +192,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         List<List> newPotions = potions.stream()
             .filter(potion -> {
                 Date expires = (Date) potion.get(1);
-                return System.currentTimeMillis() > expires.getTime();
+                return expires.getTime() > System.currentTimeMillis();
             })
             .collect(Collectors.toList());
 

@@ -316,8 +316,8 @@ public abstract class Building
 
     public MessageEmbed.Field getEmbedField() {
         return new MessageEmbed.Field("\u200b",
-            String.format("%s\n%s\n**Price:** %s\n\u200b",
-                format(true), getDescription(), getPrice().format()),
+            String.format("%s\n%s\n**Price:** %s\n**ID:** `%s`\n\u200b",
+                format(true), getDescription(), getPrice().format(), getId()),
             true);
     }
 
@@ -555,6 +555,7 @@ public abstract class Building
             return ID_BUILDINGS.get(id).getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
+        } catch (NullPointerException ignored) {
         }
         throw new IllegalArgumentException();
     }
@@ -566,18 +567,6 @@ public abstract class Building
             e.printStackTrace();
         }
         throw new IllegalArgumentException();
-    }
-
-    public static Building find(String name) throws CommandException {
-        try {
-            return getBuildingsInstances().stream()
-                .filter(building -> StringUtil.convertToFind(building.getName())
-                    .equals(StringUtil.convertToFind(name)))
-                .collect(Collectors.toList())
-                .get(0);
-        } catch (IndexOutOfBoundsException e) {
-            throw new CommandException("A building with the name `" + name + "` was not found.");
-        }
     }
 
 }

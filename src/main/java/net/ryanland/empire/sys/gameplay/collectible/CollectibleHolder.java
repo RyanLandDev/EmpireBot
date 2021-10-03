@@ -1,5 +1,6 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.sys.gameplay.collectible.box.impl.DailyBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.box.impl.HourlyBoxItem;
@@ -122,29 +123,14 @@ public class CollectibleHolder {
             return ID_ITEMS.get(id).getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
+        } catch (NullPointerException ignored) {
         }
         throw new IllegalArgumentException();
     }
 
-    public static Item findItem(String name) throws CommandException {
-        //TODO some kind of way to parse a find string into an item with properties...
-        try {
-            return ITEMS.stream()
-                .map(itemClass -> {
-                    try {
-                        return itemClass.getDeclaredConstructor().newInstance();
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                        e.printStackTrace();
-                    }
-                    throw new IllegalArgumentException();
-                })
-                .filter(item -> StringUtil.convertToFind(item.getFindName())
-                    .equals(StringUtil.convertToFind(name)))
-                .collect(Collectors.toList())
-                .get(0);
-        } catch (IndexOutOfBoundsException e) {
-            throw new CommandException("An item with the name `" + name + "` was not found.");
-        }
+    public static Item findItem(String input) throws ArgumentException {
+        String[] values = input.split(" ");
+        return getItem(Integer.parseInt(values[0]))
+            .parseFindValues(values);
     }
-
 }

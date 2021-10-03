@@ -38,9 +38,7 @@ public abstract class Box implements Item {
 
     @Override
     public PresetBuilder use(Profile profile) {
-        List<Item> inventory = new ArrayList<>(profile.getInventory());
-        inventory.remove(this);
-        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
+        removeThisFromInventory(profile);
 
         Collectible collectible = getItems().pick();
 

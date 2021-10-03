@@ -1,7 +1,13 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.ryanland.empire.bot.command.arguments.ArgumentSet;
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
+import net.ryanland.empire.bot.command.arguments.types.NumberArgument;
 import net.ryanland.empire.bot.command.arguments.types.impl.StringArgument;
+import net.ryanland.empire.bot.command.arguments.types.impl.number.IntegerArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.info.Category;
@@ -27,15 +33,29 @@ public class BuyCommand extends Command {
     public ArgumentSet getArguments() {
         return new ArgumentSet()
             .addArguments(
-                new StringArgument()
+                new NumberArgument<Building>() {
+                    @Override
+                    public OptionType getType() {
+                        return OptionType.INTEGER;
+                    }
+
+                    @Override
+                    public Building parsed(OptionMapping argument, CommandEvent event) throws ArgumentException {
+                        try {
+                            return Building.of((int) argument.getAsLong());
+                        } catch (IllegalArgumentException e) {
+                            throw new MalformedArgumentException("A building with the ID `" + argument.getAsLong() + "` was not found.");
+                        }
+                    }
+                }
                     .id("building")
-                    .description("The name of the building to purchase.")
+                    .description("The ID of the building to purchase.")
             );
     }
 
     @Override
     public void run(CommandEvent event) throws CommandException {
-        Building building = Building.find(event.getArgument("building"));
+        Building building = event.getArgument("building");
         Profile profile = event.getProfile();
 
         building.getPrice().buy(profile);

@@ -43,7 +43,7 @@ public class NewWaveCommand extends Command {
 
     @Override
     public void run(CommandEvent event) throws CommandException {
-        System.out.println(System.currentTimeMillis());
+        debug(System.currentTimeMillis());
 
         // Get the user's profile
         Profile profile = event.getProfile();
@@ -101,10 +101,10 @@ public class NewWaveCommand extends Command {
                     double msToKillTroop = troop.getHealth() / defenseDmgPerMs;
                     msPassed += msToKillTroop;
 
-                    System.out.println("attackDmgPerMs " + attackDmgPerMs);
-                    System.out.println("defenseDmgPerMs " + defenseDmgPerMs);
-                    System.out.println("msToDestroyBuilding " + msToDestroyBuilding);
-                    System.out.println("msToKillTroop " + msToKillTroop);
+                    debug("attackDmgPerMs " + attackDmgPerMs);
+                    debug("defenseDmgPerMs " + defenseDmgPerMs);
+                    debug("msToDestroyBuilding " + msToDestroyBuilding);
+                    debug("msToKillTroop " + msToKillTroop);
 
                     // Damage this troop based on the amount of time passed
                     int troopDamage = Math.min((int) (msPassed / msToKillTroop * troop.getHealth()), troop.getHealth());
@@ -112,9 +112,9 @@ public class NewWaveCommand extends Command {
                     if (troopDamage == troop.getHealth()) {
                         troopsKilled++;
                         xpEarned += troop.getXp();
-                        System.out.println("TROOP KILLED");
+                        debug("TROOP KILLED");
                     }
-                    System.out.println("troopDamage " + troopDamage);
+                    debug("troopDamage " + troopDamage);
                     troop.damage(troopDamage);
                 }
 
@@ -127,9 +127,9 @@ public class NewWaveCommand extends Command {
                 damageTaken += buildingDamage;
                 destroyed = buildingDamage == building.getHealth();
                 building.damage(buildingDamage);
-                System.out.println("buildingDamage " + buildingDamage);
+                debug("buildingDamage " + buildingDamage);
                 if (destroyed) {
-                    System.out.println("BUILDING DESTROYED");
+                    debug("BUILDING DESTROYED");
                     buildingsDestroyed++;
                     // The building can't be destroyed twice, so break the loop and move on to the next building
                     break;
@@ -207,7 +207,7 @@ public class NewWaveCommand extends Command {
         profile.getDocument().setBuildingsRaw(BuildingsSerializer.getInstance().serialize(buildings));
         profile.getDocument().update();
 
-        System.out.println(System.currentTimeMillis());
+        debug(System.currentTimeMillis());
     }
 
     private static double getAttackDmgPerMs(List<Troop> troops) {

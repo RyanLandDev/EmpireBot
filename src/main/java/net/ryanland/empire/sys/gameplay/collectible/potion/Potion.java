@@ -1,5 +1,7 @@
 package net.ryanland.empire.sys.gameplay.collectible.potion;
 
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.file.serializer.PotionSerializer;
@@ -30,11 +32,14 @@ public abstract class Potion implements Item {
 
     @Override
     public PresetBuilder use(Profile profile) {
-        List<Item> inventory = new ArrayList<>(profile.getInventory());
-        inventory.removeIf(potion -> ((Potion) potion).equals(this));
-        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
+        if (getScope() != Scope.USER) {
+            throw new IllegalArgumentException("Unimplemented.");
+        }
+
+        removeThisFromInventory(profile);
 
         List<Potion> userPotions = new ArrayList<>(profile.getUserPotions());
+        setExpires(new Date(System.currentTimeMillis() + getLength().getDuration().toMillis()));
         userPotions.add(this);
         profile.getDocument().setPotions(PotionsSerializer.getInstance().serialize(userPotions));
 
@@ -54,13 +59,6 @@ public abstract class Potion implements Item {
             getHeadName(),
             getLength().getName()
         );
-    }
-
-    @Override
-    public String getFindName() {
-        // Important note: This should closely resemble the above defined format function
-        return (getScope().isIncluded() ? getScope().getName() : "") +
-            getMultiplier().getName() + getName() + getHeadName() + getLength().getName();
     }
 
     /**
@@ -101,6 +99,30 @@ public abstract class Potion implements Item {
             getScope() == potion.getScope();
     }
 
+    @Override
+    public Item parseFindValues(String[] values) throws ArgumentException {
+        Integer[] data = Arrays.stream(values)
+            .map(Integer::parseInt)
+            .toArray(Integer[]::new);
+
+        if (data.length < 4) {
+            throw new MalformedArgumentException("Please use the full ID!\nExample: `/use 51 3 5 1`.");
+        }
+
+        setMultiplier(Multiplier.of(data[1]));
+        setLength(Length.of(data[2]));
+        setScope(Scope.of(data[3]));
+
+        return this;
+    }
+
+    @Override
+    public String getIdentifier() {
+        return "%s %s %s %s".formatted(
+            getId(), getMultiplier().getId(), getLength().getId(), getScope().getId()
+        );
+    }
+
     private Multiplier multiplier;
     private Length length;
     private Scope scope;
@@ -137,10 +159,10 @@ public abstract class Potion implements Item {
 
     public enum Multiplier {
 
-        NORMAL(-1, "1x", 1f),
-        ONE_AND_A_HALF(1, "1.5x", 1.5f),
-        DOUBLE(3, "2x", 2f),
-        TWO_AND_A_HALF(5, "2.5x", 2.5f),
+        NORMAL(1, "1x", 1f),
+        ONE_AND_A_HALF(3, "1.5x", 1.5f),
+        DOUBLE(5, "2x", 2f),
+        TWO_AND_A_HALF(7, "2.5x", 2.5f),
         ;
 
         private final int id;
@@ -233,9 +255,9 @@ public abstract class Potion implements Item {
 
     public enum Scope {
 
-        USER(0, "User", false),
-        CLAN(1, "Clan"),
-        GLOBAL(2, "Global")
+        USER(1, "User", false),
+        CLAN(2, "Clan"),
+        GLOBAL(3, "Global")
         ;
 
         private final int id;

@@ -1,10 +1,17 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
+import net.ryanland.empire.bot.command.impl.gameplay.items.InventoryCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.items.UseCommand;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.file.serializer.ItemSerializer;
 import net.ryanland.empire.sys.file.serializer.Serializer;
+import net.ryanland.empire.sys.finder.Checker;
+import net.ryanland.empire.sys.finder.CheckerResult;
+import net.ryanland.empire.sys.finder.Finder;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -22,14 +29,6 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
 
     default String serialize() {
         return serialize(this);
-    }
-
-    /**
-     * The name to use in the {@link CollectibleHolder#findItem(String)} method.
-     * Note: This string will go through the {@link StringUtil#convertToFind(String)} function first.
-     */
-    default String getFindName() {
-        return getName();
     }
 
     /**
@@ -51,6 +50,24 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
      */
     default boolean typeEquals(Item item) {
         return getId() == item.getId();
+    }
+
+    /**
+     * Sets an item's properties using the provided values appropriately.
+     * Not applicable to items without any additional properties.
+     * @return this
+     */
+    default Item parseFindValues(String[] values) throws ArgumentException {
+        return this;
+    }
+
+    /**
+     * How this item should be identified by users when picking one.
+     * @see InventoryCommand
+     * @see UseCommand
+     */
+    default String getIdentifier() {
+        return String.valueOf(getId());
     }
 
     @Override
@@ -79,6 +96,24 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
         profile.getDocument().update();
 
         return format();
+    }
+
+    /**
+     * Removes this item from the provided profile's inventory.
+     * Does not call {@link UserDocument#update}!
+     * @param profile The inventory of this profile will be affected.
+     */
+    default void removeThisFromInventory(Profile profile) {
+        List<Item> inventory = new ArrayList<>(profile.getInventory());
+        int i = 0;
+        for (Item item : inventory) {
+            if (item.equals(this)) {
+                inventory.remove(i);
+                break;
+            }
+            i++;
+        }
+        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
     }
 
     /**

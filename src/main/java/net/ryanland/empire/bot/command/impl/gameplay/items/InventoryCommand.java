@@ -44,7 +44,7 @@ public class InventoryCommand extends Command {
     @Override
     public void run(CommandEvent event) throws CommandException {
         PresetBuilder embed = new PresetBuilder(
-            "Here is an overview of all the items in your inventory.\nYou can use an item with `/use <name>`.\n\u200b",
+            "Here is an overview of all the items in your inventory.\nYou can use an item with `/use <id>`.\n\u200b",
             "Inventory");
 
         // Add inventory items here
@@ -71,7 +71,7 @@ public class InventoryCommand extends Command {
 
         if (fields.length == 0) {
             return new MessageEmbed.Field[]{
-                new MessageEmbed.Field("*Empty*", "", true)
+                new MessageEmbed.Field("*Empty*", "", false)
             };
         } else {
             return fields;
@@ -92,7 +92,7 @@ public class InventoryCommand extends Command {
             } else {
                 return new MessageEmbed.Field(emoji + " " + name,
                     value + "\n\u200b",
-                    true);
+                    false);
             }
         }
     }
@@ -117,7 +117,8 @@ public class InventoryCommand extends Command {
             int quantity = quantityGetter.apply(profile);
 
             return (quantity == 1 ? AIR : "*" + quantity + "x* \u200b") +
-                " " + MarkdownSanitizer.sanitize(item.format());
+                " " + MarkdownSanitizer.sanitize(item.format()) +
+                "\n" + AIR + " ID: `" + item.getIdentifier() + "`";
         }
     }
 
