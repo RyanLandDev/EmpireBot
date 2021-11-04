@@ -27,7 +27,7 @@ public class StopCommand extends Command {
 
     @Override
     public void run(CommandEvent event) {
-        event.performReply(new PresetBuilder(PresetType.NOTIFICATION, "Bot shutting down...", "Shutdown")).queue();
+        event.reply(new PresetBuilder(PresetType.NOTIFICATION, "Bot shutting down...", "Shutdown"));
         System.exit(0);
     }
 }

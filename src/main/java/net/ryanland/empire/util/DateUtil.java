@@ -15,7 +15,7 @@ public class DateUtil {
     public static final SimpleDateFormat RELATIVE_DATE_FORMAT =
         new SimpleDateFormat("D'd' H'h' m'm' s's'");
 
-    public static final long TIMEZONE_OFFSET = -3600000;
+    public static final long TIMEZONE_OFFSET = 0;
 
     public static String format(Date date) {
         return STANDARD_DATE_FORMAT.format(date);
