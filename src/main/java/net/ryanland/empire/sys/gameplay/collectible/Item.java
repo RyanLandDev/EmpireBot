@@ -1,7 +1,6 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.impl.gameplay.items.InventoryCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.items.UseCommand;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
@@ -9,17 +8,12 @@ import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.file.serializer.ItemSerializer;
 import net.ryanland.empire.sys.file.serializer.Serializer;
-import net.ryanland.empire.sys.finder.Checker;
-import net.ryanland.empire.sys.finder.CheckerResult;
-import net.ryanland.empire.sys.finder.Finder;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * An {@link Item} will be stored in the {@link Profile}'s inventory once received with {@link #receive(Profile)}.<br>
@@ -116,11 +110,17 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
         if (profile.getInventory().stream().noneMatch(item -> item.equals(this)))
             throw new IllegalStateException("This item is not in the profile's inventory.");
 
-        profile.getDocument()
-            .setInventory(InventorySerializer.getInstance()
-                .serialize(profile.getInventory().stream()
-                    .filter(item -> !item.equals(this))
-                    .collect(Collectors.toList())));
+        int i = 0;
+        List<Item> inventory = profile.getInventory();
+        for (Item item : inventory) {
+            if (item.equals(this)) {
+                inventory.remove(i);
+                break;
+            }
+            i++;
+        }
+
+        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
     }
 
     /**

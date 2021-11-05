@@ -1,9 +1,13 @@
 package net.ryanland.empire.sys.gameplay.building.impl.defense;
 
+import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.gameplay.action.BuffedAction;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoSegmentBuilder;
+import net.ryanland.empire.sys.gameplay.collectible.potion.DefenseBuildingDamagePotion;
+import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 import net.ryanland.empire.util.NumberUtil;
 
 import static net.ryanland.empire.util.NumberUtil.clean;
@@ -25,7 +29,22 @@ public abstract class DefenseRangedBuilding extends DefenseBuilding {
                     "The amount of surrounding layers the building will defend."
                 ))
                 .addElement(BuildingInfoElement.upgradable("Damage", DAMAGE,
-                    getDamage(), getDamage(stage + 1),
+                    new BuffedAction<String>() {
+                        @Override
+                        public Potion getPotion() {
+                            return new DefenseBuildingDamagePotion();
+                        }
+
+                        @Override
+                        public String run(Profile profile) {
+                            if (multiplier == 1)
+                                return String.valueOf(getDamage(stage));
+                            else
+                                return "***%s*** (x%s)"
+                                    .formatted(String.valueOf(getDamage(stage) * multiplier).replaceAll(".0$", ""),
+                                        multiplier);
+                        }
+                    }.perform(profile), String.valueOf(getDamage(stage + 1)),
                     "The amount of damage this building will deal per action."
                 ))
                 .addElement(BuildingInfoElement.upgradable("Speed", SPEED,

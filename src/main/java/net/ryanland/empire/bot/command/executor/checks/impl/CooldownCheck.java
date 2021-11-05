@@ -13,7 +13,8 @@ public class CooldownCheck extends CommandCheck {
 
     @Override
     public boolean check(CommandEvent event) {
-        return event.getCommand().hasCooldown() && CooldownHandler.isCooldownActive(event);
+        return false;
+        //TODO return event.getCommand().hasCooldown() && CooldownHandler.isCooldownActive(event);
     }
 
     @Override
