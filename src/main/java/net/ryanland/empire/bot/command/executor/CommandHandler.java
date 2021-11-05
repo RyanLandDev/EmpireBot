@@ -56,9 +56,14 @@ public class CommandHandler {
 
     public static void upsertAll() throws InvalidSupportGuildException {
         Guild testGuild = Empire.getJda().getGuildById(Empire.SUPPORT_GUILD);
-        if (testGuild == null) {
+        if (testGuild == null)
             throw new InvalidSupportGuildException("Bot is not on test guild or provided guild ID is invalid!");
-        }
+
+        if (Empire.useTestGuild)
+            testGuild.updateCommands().queue();
+        else
+            Empire.getJda().updateCommands().queue();
+
 
         for (Command command : COMMANDS) {
             CommandInfo cmdInfo = command.getInfo();

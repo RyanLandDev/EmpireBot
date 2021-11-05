@@ -28,7 +28,18 @@ public enum ShopCategory implements EnumArgument.InputEnum, Emojis {
 
             return builder;
         }
-    };
+    },
+    PERKS("Perks", "✨") {
+        @Override
+        public TabMenuBuilder getTabMenuBuilder(CommandEvent event) {
+            TabMenuBuilder builder = new TabMenuBuilder();
+
+            for ()
+
+            return builder;
+        }
+    }
+    ;
 
     private final String title;
     private final String emoji;

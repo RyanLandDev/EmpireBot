@@ -37,6 +37,8 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     public static final List<String> DEFAULT_INVENTORY = Collections.emptyList();
     @SuppressWarnings("all")
     public static final List<List> DEFAULT_POTIONS = Collections.emptyList();
+    @SuppressWarnings("all")
+    public static final List<List> DEFAULT_PERKS = Collections.emptyList();
 
     public UserDocument(Document document) {
         super(document);
@@ -55,6 +57,8 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     private List<String> inventory = getInventory();
     @SuppressWarnings("all")
     private List<List> potions = getPotions();
+    @SuppressWarnings("all")
+    private List<List> perks = getPerks();
 
     @Override
     public void updated(List<Bson> updates) {
@@ -68,6 +72,7 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         checkUpdate(updates, cooldowns, getCooldowns(), "cd");
         checkUpdate(updates, inventory, getInventory(), "inv");
         checkUpdate(updates, potions, getPotions(), "pot");
+        checkUpdate(updates, perks, getPerks(), "prk");
 
         performUpdate(DocumentCache.USER_COLLECTION, Filters.eq("id", getId()), updates);
     }
@@ -138,6 +143,12 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
         return this;
     }
 
+    @SuppressWarnings("all")
+    public UserDocument setPerks(List<List> perks) {
+        this.perks = perks;
+        return this;
+    }
+
     @Override
     public String getId() {
         return getString("id");
@@ -184,6 +195,11 @@ public class UserDocument extends BaseDocument implements SnowflakeDocument {
     @SuppressWarnings("all")
     public List<List> getPotions() {
         return getList("pot", List.class, DEFAULT_POTIONS);
+    }
+
+    @SuppressWarnings("all")
+    public List<List> getPerks() {
+        return getList("prk", List.class, DEFAULT_PERKS);
     }
 
     @SuppressWarnings("all")

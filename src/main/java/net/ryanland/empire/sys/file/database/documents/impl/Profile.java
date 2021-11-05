@@ -20,6 +20,7 @@ import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
 import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
+import net.ryanland.empire.sys.gameplay.collectible.perk.Perk;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
@@ -182,6 +183,10 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     public List<Item> getInventory() {
         return InventorySerializer.getInstance().deserialize(document.getInventory());
+    }
+
+    public List<Perk> getPerks() {
+        return PerksSerializer.getInstance().deserialize(document.getPerks());
     }
 
     /**

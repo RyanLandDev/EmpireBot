@@ -36,7 +36,6 @@ public interface Collectible extends Formattable {
 
     /**
      * Code executed when the {@link Collectible} is received
-     *
      * @return Formatted received {@link String}
      */
     String receive(Profile profile);
