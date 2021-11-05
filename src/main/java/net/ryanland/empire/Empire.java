@@ -44,7 +44,7 @@ public class Empire {
 
     // Settings
     public static final boolean useTestGuild = true;
-    public static final boolean debugMode = true;
+    public static final boolean debugMode = false;
 
     // Constant links
     public static final String BOT_INVITE_LINK = "https://discord.com/oauth2/authorize?client_id=832988155355070555&permissions=8&scope=bot";
@@ -109,7 +109,7 @@ public class Empire {
         );
 
         // Build bot
-        JDABuilder builder = JDABuilder.createDefault(config.getToken())
+        JDABuilder builder = JDABuilder.createDefault(config.usesDevBot() ? config.getDevToken() : config.getToken())
             .enableIntents(GatewayIntent.GUILD_MEMBERS)
             .setStatus(OnlineStatus.ONLINE)
             .setGatewayEncoding(GatewayEncoding.ETF)

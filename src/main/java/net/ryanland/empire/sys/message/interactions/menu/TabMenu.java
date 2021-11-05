@@ -1,6 +1,7 @@
-package net.ryanland.empire.sys.message.interactions.menu.tab;
+package net.ryanland.empire.sys.message.interactions.menu;
 
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.Interaction;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.Button;
@@ -9,7 +10,6 @@ import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.interactions.ButtonClickContainer;
 import net.ryanland.empire.sys.message.interactions.ButtonHandler;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
-import net.ryanland.empire.sys.message.interactions.menu.InteractionMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,14 +67,71 @@ public class TabMenu implements InteractionMenu {
             .complete();
 
         // Add a listener for when a button is clicked
-        ButtonHandler.addListener(hook,
-            buttonEvent -> new ButtonHandler.ButtonListener(
+        ButtonHandler.addListener(hook, buttonEvent -> new ButtonHandler.ButtonListener(
                 interaction.getUser().getIdLong(),
                 clickEvent -> new ButtonClickContainer(
                     event -> {
                         event.deferEdit().queue();
 
                         hook.editOriginalEmbeds(pageMap.get(event.getComponentId())
+                                .getEmbed().build())
+                            .setActionRows(
+                                InteractionUtil.of(buttons.stream()
+                                    .map(button -> button.equals(event.getButton()) ?
+                                        button.withStyle(ButtonStyle.SUCCESS).asDisabled() :
+                                        button.withStyle(ButtonStyle.SECONDARY).asEnabled())
+                                    .collect(Collectors.toList())
+                                ))
+                            .queue();
+                    })));
+    }
+
+    @Override
+    public void send(Message message) {
+        // Set all embed titles to match the category name
+        for (TabMenuPage page : pages) {
+            PresetBuilder embed = page.getEmbed();
+
+            if (embed.getTitle() == null) {
+                embed.setTitle(page.getName());
+            }
+        }
+
+        // Init vars
+        HashMap<String, TabMenuPage> pageMap = new HashMap<>(pages.length);
+        List<Button> buttons = new ArrayList<>();
+
+        // Iterate over all pages
+        for (TabMenuPage page : pages) {
+            // Skip if this page should be hidden
+            if (page.isHidden()) {
+                continue;
+            }
+
+            // Create the Button
+            Button button = Button.secondary(page.getName(), page.getName());
+            if (page.getEmoji() != null) {
+                button = button.withEmoji(Emoji.fromMarkdown(page.getEmoji()));
+            }
+
+            // Put the page and buttons in their respective data structures
+            pageMap.put(button.getId(), page);
+            buttons.add(button);
+        }
+
+        // Send the message and set the action rows
+        Message msg = message.replyEmbeds(pages[0].getEmbed().build())
+            .setActionRows(InteractionUtil.of(buttons))
+            .complete();
+
+        // Add a listener for when a button is clicked
+        ButtonHandler.addListener(msg, buttonEvent -> new ButtonHandler.ButtonListener(
+                message.getAuthor().getIdLong(),
+                clickEvent -> new ButtonClickContainer(
+                    event -> {
+                        event.deferEdit().queue();
+
+                        msg.editMessageEmbeds(pageMap.get(event.getComponentId())
                                 .getEmbed().build())
                             .setActionRows(
                                 InteractionUtil.of(buttons.stream()

@@ -10,7 +10,7 @@ import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.info.HelpMaker;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.interactions.menu.tab.TabMenuBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.TabMenuBuilder;
 
 import java.util.Comparator;
 import java.util.List;

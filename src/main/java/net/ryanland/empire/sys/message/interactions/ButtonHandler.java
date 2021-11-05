@@ -1,5 +1,6 @@
 package net.ryanland.empire.sys.message.interactions;
 
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
@@ -16,15 +17,24 @@ public class ButtonHandler {
 
     private static final HashMap<Long, Function<ButtonClickEvent, ButtonListener>> BUTTON_LISTENERS = new HashMap<>();
 
+    public static void addListener(Long msgId, Runnable actionRowEmptier,
+                                   Function<ButtonClickEvent, ButtonListener> buttonListener) {
+        BUTTON_LISTENERS.put(msgId, buttonListener);
+        ExecutorUtil.schedule(actionRowEmptier, 2, TimeUnit.MINUTES);
+    }
+
     public static void addListener(InteractionHook hook,
                                    Function<ButtonClickEvent, ButtonListener> buttonListener) {
-        Long hookId = hook.retrieveOriginal().complete().getIdLong();
-
-        BUTTON_LISTENERS.put(hookId, buttonListener);
-
-        ExecutorUtil.schedule(
+        addListener(hook.retrieveOriginal().complete().getIdLong(),
             () -> hook.editOriginal("").setActionRows(Collections.emptyList()).queue(),
-            2, TimeUnit.MINUTES);
+            buttonListener);
+    }
+
+    public static void addListener(Message message,
+                                   Function<ButtonClickEvent, ButtonListener> buttonListener) {
+        addListener(message.getIdLong(),
+            () -> message.editMessage("").setActionRows(Collections.emptyList()).queue(),
+            buttonListener);
     }
 
     public static void handleEvent(ButtonClickEvent event) throws CommandException {
@@ -51,7 +61,6 @@ public class ButtonHandler {
     }
 
     public record ButtonListener(long userId, Function<ButtonClickEvent, ButtonClickContainer> container) {
-
     }
 
 }

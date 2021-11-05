@@ -45,7 +45,6 @@ public class CommandHandler {
     }
 
     private static final BiConsumer<SubCommand, CommandData> UPSERT_CONSUMER = (command, data) -> {
-
         SubcommandData subCmdData = new SubcommandData(command.getName(), command.getDescription());
 
         for (Argument<?> arg : command.getArguments()) {
@@ -56,7 +55,6 @@ public class CommandHandler {
     };
 
     public static void upsertAll() throws InvalidSupportGuildException {
-
         Guild testGuild = Empire.getJda().getGuildById(Empire.SUPPORT_GUILD);
         if (testGuild == null) {
             throw new InvalidSupportGuildException("Bot is not on test guild or provided guild ID is invalid!");
@@ -88,13 +86,11 @@ public class CommandHandler {
                 }
             }
 
-
             if (Empire.useTestGuild) {
                 testGuild.upsertCommand(slashCmdData).queue();
             } else {
                 Empire.getJda().upsertCommand(slashCmdData).queue();
             }
-
 
         }
     }

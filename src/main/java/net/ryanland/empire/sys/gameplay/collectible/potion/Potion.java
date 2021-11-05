@@ -42,7 +42,6 @@ public abstract class Potion implements Item {
         setExpires(new Date(System.currentTimeMillis() + getLength().getDuration().toMillis()));
         userPotions.add(this);
         profile.getDocument().setPotions(PotionsSerializer.getInstance().serialize(userPotions));
-
         profile.getDocument().update();
 
         return new PresetBuilder(PresetType.SUCCESS,
@@ -61,20 +60,17 @@ public abstract class Potion implements Item {
         );
     }
 
-    /**
-     * Checks if the type of this potion is equal to another.
-     * This only checks for the ID, not the other potion properties!
-     * @param potion The potion to compare to
-     * @return A boolean indicating the result
-     */
-    public final boolean compare(Potion potion) {
-        return getId() == potion.getId();
+    @Override
+    public final boolean typeEquals(Item item) {
+        if (!(item instanceof Potion potion))
+            return false;
+
+        return getId() == potion.getId() &&
+            getMultiplier() == potion.getMultiplier() &&
+            getLength() == potion.getLength() &&
+            getScope() == potion.getScope();
     }
 
-    /**
-     * Checks if the type of this potion and all of its properties is equal to another.
-     * @see #typeEquals(Item)
-     */
     @Override
     public final boolean equals(Item item) {
         if (!(item instanceof Potion potion))
@@ -85,18 +81,6 @@ public abstract class Potion implements Item {
             getLength() == potion.getLength() &&
             getScope() == potion.getScope() &&
             getExpires() == potion.getExpires();
-    }
-
-    /**
-     * Checks if the type of this potion and all of its properties, except expires, is equal to another.
-     */
-    @Override
-    public final boolean typeEquals(Item item) {
-        Potion potion = (Potion) item;
-        return getId() == potion.getId() &&
-            getMultiplier() == potion.getMultiplier() &&
-            getLength() == potion.getLength() &&
-            getScope() == potion.getScope();
     }
 
     @Override
@@ -134,7 +118,7 @@ public abstract class Potion implements Item {
     }
 
     /**
-     * Returns the {@link Date} of when this potion will expire.
+     * Returns the {@link Date} of when this potion will expire.<br>
      * This value will be {@link Nullable} if the potion is still in the profile's inventory,
      * and {@link NotNull} if in the profile's active potions' container.
      */

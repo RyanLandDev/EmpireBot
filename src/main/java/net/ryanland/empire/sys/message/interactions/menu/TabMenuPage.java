@@ -1,4 +1,4 @@
-package net.ryanland.empire.sys.message.interactions.menu.tab;
+package net.ryanland.empire.sys.message.interactions.menu;
 
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 

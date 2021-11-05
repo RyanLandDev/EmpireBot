@@ -19,10 +19,11 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * An {@link Item} will be stored in the {@link Profile}'s inventory once received with {@link #receive(Profile)}.
- * When the user uses this {@link Item} with {@link UseCommand} the {@link #use(Profile)} method will activate.
+ * An {@link Item} will be stored in the {@link Profile}'s inventory once received with {@link #receive(Profile)}.<br>
+ * When the user uses this {@link Item} with {@link UseCommand} the {@link #use(Profile)} method will activate.<br>
  * The returned {@link PresetBuilder} of {@link #use(Profile)} is sent to the user upon triggering the {@link UseCommand}.
  */
 public interface Item extends Collectible, Serializable, Serializer<String, Item> {
@@ -32,8 +33,16 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
     }
 
     /**
-     * Checks if this item is exactly equal to another using its ID.
-     * Override this method if the item has more properties!
+     * Checks if the ID of this item is equal to another item's ID.
+     * @param item The item to compare to
+     * @return A boolean indicating the result
+     */
+    default boolean idEquals(Item item) {
+        return getId() == item.getId();
+    }
+
+    /**
+     * Checks if the type of this item and all of its properties are exactly equal to another item's type and properties.
      * @param item The item to compare to
      * @return A boolean indicating the result
      */
@@ -42,9 +51,9 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
     }
 
     /**
-     * Checks if the type of this item is equal to another item using its ID.
-     * Override this method if the item has more properties!
-     * This method should not check for properties that could change per instance, such as an expiration date.
+     * Checks if the type of this item is equal to another item by comparing properties that do NOT vary per instance.
+     * <br>Will check if for example the item ID and potion scope of the item both resemble the values on the other item.
+     * <br>Properties that vary per instance, such as an expiration date, are not checked for.
      * @param item The item to compare to
      * @return A boolean indicating the result
      */
@@ -99,21 +108,19 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
     }
 
     /**
-     * Removes this item from the provided profile's inventory.
+     * Removes this item from the provided profile's inventory.<br>
      * Does not call {@link UserDocument#update}!
      * @param profile The inventory of this profile will be affected.
      */
     default void removeThisFromInventory(Profile profile) {
-        List<Item> inventory = new ArrayList<>(profile.getInventory());
-        int i = 0;
-        for (Item item : inventory) {
-            if (item.equals(this)) {
-                inventory.remove(i);
-                break;
-            }
-            i++;
-        }
-        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
+        if (profile.getInventory().stream().noneMatch(item -> item.equals(this)))
+            throw new IllegalStateException("This item is not in the profile's inventory.");
+
+        profile.getDocument()
+            .setInventory(InventorySerializer.getInstance()
+                .serialize(profile.getInventory().stream()
+                    .filter(item -> !item.equals(this))
+                    .collect(Collectors.toList())));
     }
 
     /**

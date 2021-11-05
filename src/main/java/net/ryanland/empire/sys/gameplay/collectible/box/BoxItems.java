@@ -14,7 +14,8 @@ public class BoxItems {
 
     public BoxItems add(BoxItem item) {
         items.add(item);
-        if (item.probabilityUntil() > maxProbability) maxProbability = item.probabilityUntil();
+        if (item.probabilityUntil() > maxProbability)
+            maxProbability = item.probabilityUntil();
         return this;
     }
 
@@ -24,8 +25,7 @@ public class BoxItems {
 
     /**
      * Randomly picks a {@link Collectible} in the list based on the probabilities.
-     *
-     * @return The randomly picked {@link Collectible}
+     * @return The picked {@link Collectible}
      */
     public Collectible pick() {
         int index = RandomUtil.randomInt(1, maxProbability);
@@ -35,13 +35,12 @@ public class BoxItems {
             if (NumberUtil.inRange(index, min, item.probabilityUntil)) {
                 return item.collectible;
             }
-            min = item.probabilityUntil;
+            min = item.probabilityUntil + 1;
         }
 
-        throw new RuntimeException("Invalid items provided");
+        throw new IllegalArgumentException("Invalid items provided");
     }
 
     private record BoxItem(int probabilityUntil, Collectible collectible) {
-
     }
 }

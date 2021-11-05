@@ -13,7 +13,7 @@ import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
-import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.ActionMenuBuilder;
 import net.ryanland.empire.util.DateUtil;
 import net.ryanland.empire.util.NumberUtil;
 import net.ryanland.empire.util.RandomUtil;
@@ -73,7 +73,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     @Override
     public ActionMenuBuilder getActionMenuBuilder() throws CommandException {
         return super.getActionMenuBuilder()
-            .insertButton(2,
+            .insertButton(0, 2,
                 Button.secondary("collect", "Collect" +
                         (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
                     .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
@@ -169,12 +169,30 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
     @Override
     public void repair() throws CommandException {
-        if (!canRepair()) {
+        if (!canRepair())
             throw new CommandException("You cannot repair this building.");
-        }
 
-        if (!isUsable()) lastCollect = new Date();
-        super.repair();
+        if (!isUsable())
+            lastCollect = new Date();
+
+        getRepairPrice().buy(profile);
+        health = getMaxHealth();
+        profile.setBuilding(this);
+        profile.getDocument().update();
+    }
+
+    @Override
+    public void crystalRepair() throws CommandException {
+        if (!canCrystalRepair())
+            throw new CommandException("You cannot repair this building.");
+
+        if (!isUsable())
+            lastCollect = new Date();
+
+        getCrystalRepairPrice().buy(profile);
+        health = getMaxHealth();
+        profile.setBuilding(this);
+        profile.getDocument().update();
     }
 
     public Date getLastCollect() {

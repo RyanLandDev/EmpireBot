@@ -8,7 +8,7 @@ import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
-import net.ryanland.empire.sys.message.interactions.menu.confirm.ConfirmMenu;
+import net.ryanland.empire.sys.message.interactions.menu.ConfirmMenu;
 
 public class ResetCommand extends Command {
 

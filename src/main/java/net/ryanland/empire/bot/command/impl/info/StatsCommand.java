@@ -13,7 +13,7 @@ import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.ActionMenuBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

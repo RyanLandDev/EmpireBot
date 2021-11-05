@@ -39,9 +39,7 @@ public abstract class Box implements Item {
     @Override
     public PresetBuilder use(Profile profile) {
         removeThisFromInventory(profile);
-
         Collectible collectible = getItems().pick();
-
         return new PresetBuilder(PresetType.SUCCESS,
             "You got " + collectible.receive(profile),
             "Opened " + format()

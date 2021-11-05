@@ -13,7 +13,7 @@ public abstract class BuffedAction<R> implements Action<R> {
     @Override
     public R perform(Profile profile) {
         multiplier = (float) profile.getPotions().stream()
-            .filter(potion -> potion.compare(getPotion()))
+            .filter(potion -> potion.idEquals(getPotion()))
             .mapToDouble(potion -> potion.getMultiplier().getMultiplicand())
             .reduce(1, (a, b) -> a * b);
         return run(profile);

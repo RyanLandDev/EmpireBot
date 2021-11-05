@@ -1,7 +1,6 @@
-package net.ryanland.empire.sys.message.interactions.menu.tab;
+package net.ryanland.empire.sys.message.interactions.menu;
 
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 
 import java.util.ArrayList;
 import java.util.Comparator;

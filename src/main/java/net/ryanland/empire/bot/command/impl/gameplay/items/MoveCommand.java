@@ -48,19 +48,20 @@ public class MoveCommand extends Command {
         Integer newLayer = (Integer) event.getArgument("layer") - 1;
 
         // Check if the building is at max health
-        if (!building.isHealthMaxed()) {
-            throw new CommandException("Buildings can only be moved at max health. Repair your building using `/building`.");
-        }
+        if (!building.isHealthMaxed())
+            throw new CommandException(
+                "Buildings can only be moved at max health. Repair your building using `/building` or `/repair`.");
 
         // Check if the position is valid
-        if (newLayer < 0 || newLayer > profile.getBuildings().size()) {
+        if (newLayer < 0 || newLayer >= profile.getBuildings().size())
             throw new CommandException(String.format("`%s` is an invalid position.", newLayer + 1));
-        }
+        if (building.getLayer() == newLayer)
+            throw new CommandException("The building was already at this position.");
 
         // Update the building data
         List<List> buildings = profile.getDocument().getBuildings();
         buildings.remove(building.getLayer() - 1);
-        buildings.add(building.getLayer() > newLayer ? newLayer : newLayer - 1, building.serialize());
+        buildings.add(newLayer, building.serialize());
         profile.getDocument().setBuildingsRaw(buildings).update();
 
         // Send success message

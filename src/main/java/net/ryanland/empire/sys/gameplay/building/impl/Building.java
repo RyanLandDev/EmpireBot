@@ -28,12 +28,10 @@ import net.ryanland.empire.sys.message.Formattable;
 import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.sys.message.interactions.InteractionUtil;
+import net.ryanland.empire.sys.message.interactions.menu.ActionMenu;
+import net.ryanland.empire.sys.message.interactions.menu.ActionMenuBuilder;
+import net.ryanland.empire.sys.message.interactions.menu.ConfirmMenu;
 import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
-import net.ryanland.empire.sys.message.interactions.menu.action.ActionButton;
-import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenu;
-import net.ryanland.empire.sys.message.interactions.menu.action.ActionMenuBuilder;
-import net.ryanland.empire.sys.message.interactions.menu.confirm.ConfirmMenu;
-import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -286,6 +284,26 @@ public abstract class Building
             event -> executeButtonAction(event, () -> sell(event))
         );
 
+        // Previous/next building buttons
+        builder.putQueue();
+        builder.addButton(
+            Button.primary("previous", "Previous")
+                .withEmoji(Emoji.fromUnicode("◀"))
+                .withDisabled(getLayer() == 1),
+            event -> {
+                event.deferEdit().queue();
+                getProfile().getBuilding(getLayer() - 1).getMenuBuilder().build().edit(event);
+            }
+        ).addButton(
+            Button.primary("next", "Next")
+                .withEmoji(Emoji.fromUnicode("▶"))
+                .withDisabled(getLayer() == getProfile().getBuildings().size()),
+            event -> {
+                event.deferEdit().queue();
+                getProfile().getBuilding(getLayer() + 1).getMenuBuilder().build().edit(event);
+            }
+        );
+
         return builder;
     }
 
@@ -307,9 +325,7 @@ public abstract class Building
 
     public void refreshMenu(Message menuMessage) throws CommandException {
         menuMessage.editMessageEmbeds(((ActionMenuBuilder) getMenuBuilder()).getEmbed().build()).setActionRows(
-            exists() ? InteractionUtil.of(getActionMenuBuilder().getButtons().stream()
-                .map(ActionButton::button)
-                .collect(Collectors.toList()))
+            exists() ? InteractionUtil.of(getActionMenuBuilder().getLayout().getButtons())
                 : Collections.emptyList()
         ).queue();
     }
@@ -331,9 +347,8 @@ public abstract class Building
     }
 
     public void repair() throws CommandException {
-        if (!canRepair()) {
+        if (!canRepair())
             throw new CommandException("You cannot repair this building.");
-        }
 
         getRepairPrice().buy(profile);
         health = getMaxHealth();
@@ -342,9 +357,8 @@ public abstract class Building
     }
 
     public void crystalRepair() throws CommandException {
-        if (!canCrystalRepair()) {
+        if (!canCrystalRepair())
             throw new CommandException("You cannot repair this building.");
-        }
 
         getCrystalRepairPrice().buy(profile);
         health = getMaxHealth();

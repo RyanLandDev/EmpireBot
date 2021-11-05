@@ -32,7 +32,6 @@ public class BuildingCommand extends Command {
     @Override
     public void run(CommandEvent event) throws CommandException {
         Building building = event.getArgument("building");
-
         event.reply(building.getMenuBuilder());
     }
 
