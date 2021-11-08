@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,6 +20,10 @@ public class DateUtil {
 
     public static String format(Date date) {
         return STANDARD_DATE_FORMAT.format(date);
+    }
+
+    public static String formatRelative(Duration duration) {
+        return formatRelative(new Date(duration.toMillis()));
     }
 
     public static String formatRelative(Date date) {

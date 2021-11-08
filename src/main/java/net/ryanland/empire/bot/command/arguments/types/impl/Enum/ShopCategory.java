@@ -34,7 +34,7 @@ public enum ShopCategory implements EnumArgument.InputEnum, Emojis {
         public TabMenuBuilder getTabMenuBuilder(CommandEvent event) {
             TabMenuBuilder builder = new TabMenuBuilder();
 
-            for ()
+            for ()//TODO
 
             return builder;
         }
