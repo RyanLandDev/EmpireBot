@@ -3,10 +3,7 @@ package net.ryanland.empire.sys.gameplay.building;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 
 public enum BuildingType {
 

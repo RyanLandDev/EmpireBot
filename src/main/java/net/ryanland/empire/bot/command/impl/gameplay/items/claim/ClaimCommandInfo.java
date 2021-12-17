@@ -1,7 +1,6 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items.claim;
 
 import net.ryanland.empire.bot.command.executor.functional_interface.CommandPredicate;
-import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.gameplay.collectible.Collectible;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 

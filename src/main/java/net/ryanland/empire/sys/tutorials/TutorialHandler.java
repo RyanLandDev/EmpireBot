@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.tutorials;
 
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Tutorial;
+import net.ryanland.empire.bot.command.arguments.Enum.Tutorial;
 
 import java.util.HashMap;
 

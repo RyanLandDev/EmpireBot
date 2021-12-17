@@ -1,29 +1,22 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.impl.CommandArgument;
-import net.ryanland.empire.bot.command.executor.data.DisabledCommandHandler;
-import net.ryanland.empire.bot.command.executor.data.Flag;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.impl.Command;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.permissions.Permission;
-import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
-import net.ryanland.empire.sys.message.builders.PresetType;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.Command;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.types.CommandArgument;
+import net.ryanland.colossus.command.executor.DisabledCommandHandler;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 
-public class DisableCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("disable")
-            .description("Disables a command globally.")
-            .category(Category.DEVELOPER)
-            .permission(Permission.DEVELOPER)
-            .flags(Flag.NO_DISABLE);
-    }
+@CommandBuilder(
+    name = "disable",
+    description = "Disables a command globally."
+)//TODO immune to disabling flag
+//TODO make guildOnly true by default
+public class DisableCommand extends DeveloperCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -35,13 +28,10 @@ public class DisableCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         Command command = event.getArgument("command");
         DisabledCommandHandler.getInstance().disable(command);
-
-        event.performReply(
-            new PresetBuilder(PresetType.SUCCESS,
-                "Disabled the `" + command.getName() + "` command.")
-        ).queue();
+        event.reply(new PresetBuilder(DefaultPresetType.SUCCESS,
+                "Disabled the `" + command.getName() + "` command."));
     }
 }

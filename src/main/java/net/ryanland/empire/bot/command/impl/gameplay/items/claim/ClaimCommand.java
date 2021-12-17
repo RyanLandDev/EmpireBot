@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items.claim;
 
-import net.ryanland.empire.bot.command.impl.SubCommandHolder;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 

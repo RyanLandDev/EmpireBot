@@ -19,19 +19,21 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.github.RyanLandDev:Colossus:38320e13f5'
+
     // mongo database
-    implementation 'org.mongodb:mongodb-driver-sync:4.3.0'
+    implementation 'org.mongodb:mongodb-driver-sync:4.4.0'
 
     // log
-    implementation 'ch.qos.logback:logback-classic:1.2.5'
+    implementation 'ch.qos.logback:logback-classic:1.2.8'
 
     // jda
     implementation 'net.dv8tion:JDA:4.3.0_309'
     implementation group: 'club.minnced', name: 'discord-webhooks', version: '0.5.8'
 
     // json
-    implementation 'org.json:json:20210307'
-    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'org.json:json:20211205'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
     // eval
     implementation group: 'org.codehaus.groovy', name: 'groovy-jsr223', version: '3.0.8'

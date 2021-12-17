@@ -1,14 +1,10 @@
 package net.ryanland.empire.bot.command.impl.gameplay.combat;
 
-import net.ryanland.empire.bot.command.arguments.ArgumentSet;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.gameplay.combat.troop.Troop;
 import net.ryanland.empire.sys.gameplay.combat.wave.Wave;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

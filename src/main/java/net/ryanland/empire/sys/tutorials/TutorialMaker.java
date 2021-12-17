@@ -1,9 +1,7 @@
 package net.ryanland.empire.sys.tutorials;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.Tutorial;
-import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
+import net.ryanland.empire.bot.command.arguments.Enum.Tutorial;
 
 public class TutorialMaker {
 

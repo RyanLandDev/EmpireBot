@@ -1,17 +1,13 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
 import net.dv8tion.jda.api.entities.User;
-import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.impl.ProfileArgument;
-import net.ryanland.empire.bot.command.impl.Command;
+import net.ryanland.empire.bot.command.arguments.ProfileArgument;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 public class EmpireCommand extends Command {
     @Override

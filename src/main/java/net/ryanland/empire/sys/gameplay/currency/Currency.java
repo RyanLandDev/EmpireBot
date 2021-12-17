@@ -1,6 +1,5 @@
 package net.ryanland.empire.sys.gameplay.currency;
 
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
 import net.ryanland.empire.sys.file.database.documents.impl.Profile;
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.message.Emojis;

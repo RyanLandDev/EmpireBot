@@ -1,7 +1,5 @@
 package net.ryanland.empire.sys.finder;
 
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
-
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;

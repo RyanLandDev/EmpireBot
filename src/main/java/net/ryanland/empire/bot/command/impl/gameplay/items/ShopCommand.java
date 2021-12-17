@@ -1,14 +1,9 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
-import net.ryanland.empire.bot.command.arguments.ArgumentSet;
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.EnumArgument;
-import net.ryanland.empire.bot.command.arguments.types.impl.Enum.ShopCategory;
+import net.ryanland.empire.bot.command.arguments.Enum.ShopCategory;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.impl.Command;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.events.CommandEvent;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
 
 public class ShopCommand extends Command {
 

@@ -8,7 +8,6 @@ import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.file.serializer.ItemSerializer;
 import net.ryanland.empire.sys.file.serializer.Serializer;
-import net.ryanland.empire.sys.message.builders.PresetBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;

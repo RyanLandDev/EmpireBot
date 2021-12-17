@@ -1,6 +1,5 @@
-package net.ryanland.empire.bot.command.arguments.types.impl.Enum;
+package net.ryanland.empire.bot.command.arguments.Enum;
 
-import net.ryanland.empire.bot.events.CommandEvent;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.interactions.menu.TabMenuBuilder;
@@ -34,7 +33,7 @@ public enum ShopCategory implements EnumArgument.InputEnum, Emojis {
         public TabMenuBuilder getTabMenuBuilder(CommandEvent event) {
             TabMenuBuilder builder = new TabMenuBuilder();
 
-            for ()//TODO
+            //for ()//TODO
 
             return builder;
         }

@@ -1,4 +1,4 @@
-package net.ryanland.empire.bot.command.arguments.types.impl.Enum;
+package net.ryanland.empire.bot.command.arguments.Enum;
 
 import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
 

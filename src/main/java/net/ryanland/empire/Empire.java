@@ -2,12 +2,13 @@ package net.ryanland.empire;
 
 import net.dv8tion.jda.api.GatewayEncoding;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.SelfUser;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import net.ryanland.colossus.Colossus;
+import net.ryanland.colossus.ColossusBuilder;
 import net.ryanland.empire.bot.command.executor.CommandHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
 import net.ryanland.empire.bot.command.impl.dev.*;
@@ -24,11 +25,8 @@ import net.ryanland.empire.bot.command.impl.profile.CooldownsCommand;
 import net.ryanland.empire.bot.command.impl.profile.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.profile.ResetCommand;
 import net.ryanland.empire.bot.command.impl.profile.StartCommand;
-import net.ryanland.empire.bot.events.ButtonEvent;
-import net.ryanland.empire.bot.events.MessageEvent;
 import net.ryanland.empire.bot.events.OnSlashCommandEvent;
 import net.ryanland.empire.bot.events.logs.GuildTraffic;
-import net.ryanland.empire.sys.file.config.Config;
 import net.ryanland.empire.sys.file.config.ConfigHandler;
 import net.ryanland.empire.sys.file.database.DocumentCache;
 import net.ryanland.empire.sys.file.database.documents.impl.GlobalDocument;
@@ -61,72 +59,63 @@ public class Empire {
     }
 
     private static void initialize(Config config) throws LoginException, InterruptedException, InvalidSupportGuildException {
+        Colossus colossus = new ColossusBuilder("src/config")
+            .registerCommands(
+                // Information
+                new HelpCommand(),
+                new PingCommand(),
+                new UserCommand(),
+                new StatsCommand(),
 
-        // Register commands
-        CommandHandler.register(
+                // Developer
+                new MimicCommand(),
+                new EvalCommand(),
+                new TestCommand(),
+                new DisableCommand(),
+                new EnableCommand(),
+                new StopCommand(),
+                new GuildInfoCommand(),
+                new TutorialCommand(),
+                new BalanceCommand(),
 
-            // Information
-            new HelpCommand(),
-            new PingCommand(),
-            new UserCommand(),
-            new StatsCommand(),
+                // Profile
+                new StartCommand(),
+                new EmpireCommand(),
+                new ResetCommand(),
+                new CooldownsCommand(),
 
-            // Developer
-            new MimicCommand(),
-            new EvalCommand(),
-            new TestCommand(),
-            new DisableCommand(),
-            new EnableCommand(),
-            new StopCommand(),
-            new GuildInfoCommand(),
-            new TutorialCommand(),
-            new BalanceCommand(),
+                // Items
+                new BuildingCommand(),
+                new MoveCommand(),
+                new ShopCommand(),
+                new BuyCommand(),
+                new ClaimCommand(),
+                new InventoryCommand(),
+                new UseCommand(),
+                new RepairCommand(),
+                new PotionsCommand(),
 
-            // Profile
-            new StartCommand(),
-            new EmpireCommand(),
-            new ResetCommand(),
-            new CooldownsCommand(),
+                // Combat
+                new NewWaveCommand(),
+                new WaveCommand(),
+                new EnemyCommand(),
 
-            // Items
-            new BuildingCommand(),
-            new MoveCommand(),
-            new ShopCommand(),
-            new BuyCommand(),
-            new ClaimCommand(),
-            new InventoryCommand(),
-            new UseCommand(),
-            new RepairCommand(),
-            new PotionsCommand(),
-
-            // Combat
-            new NewWaveCommand(),
-            new WaveCommand(),
-            new EnemyCommand(),
-
-            // Games
-            new GambleCommand()
-        );
-
-        // Build bot
-        JDABuilder builder = JDABuilder.createDefault(config.usesDevBot() ? config.getDevToken() : config.getToken())
-            .enableIntents(GatewayIntent.GUILD_MEMBERS)
-            .setStatus(OnlineStatus.ONLINE)
-            .setGatewayEncoding(GatewayEncoding.ETF)
-            .setActivity(Activity.watching("empires | /help"))
-            .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
-            .addEventListeners(
-                // Register events
-                // General
-                new MessageEvent(),
-                new ButtonEvent(),
-                new OnSlashCommandEvent(),
-                // Logs
-                new GuildTraffic()
-            );
+                // Games
+                new GambleCommand()
+            )
+            .setJDABuilder(builder -> builder
+                .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                .setStatus(OnlineStatus.ONLINE)
+                .setGatewayEncoding(GatewayEncoding.ETF)
+                .setActivity(Activity.watching("empires | /help"))
+                .disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
+                .addEventListeners(
+                    // Register events
+                    // Logs
+                    new GuildTraffic()
+                )).build();
 
         // Build-a-bot
-        jda = builder.build();
         jda.awaitReady();
         CommandHandler.upsertAll();
     }
