@@ -15,7 +15,6 @@ import net.ryanland.colossus.sys.message.PresetBuilder;
     name = "disable",
     description = "Disables a command globally."
 )//TODO immune to disabling flag
-//TODO make guildOnly true by default
 public class DisableCommand extends DeveloperCommand implements CombinedCommand {
 
     @Override

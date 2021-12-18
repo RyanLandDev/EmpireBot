@@ -1,9 +1,11 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.ryanland.empire.bot.command.executor.data.Flag;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.permissions.Permission;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.types.primitive.StringArgument;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -12,17 +14,11 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EvalCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("eval")
-            .description("Evaluate Java code.")
-            .category(Category.DEVELOPER)
-            .permission(Permission.DEVELOPER)
-            .flags(Flag.NO_DISABLE);
-    }
+@CommandBuilder(
+    name = "eval",
+    description = "Evaluate Java code."
+)
+public class EvalCommand extends DeveloperCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -44,7 +40,7 @@ public class EvalCommand extends Command {
     );
 
     @Override
-    public void run(CommandEvent event) {
+    public void execute(CommandEvent event) {
         String code = event.getArgument("code");
 
         PresetBuilder builder = new PresetBuilder()
@@ -63,7 +59,7 @@ public class EvalCommand extends Command {
 
             builder.setTitle("Eval Result")
                 .addField("Object Returned:", String.format("```js\n%s```", object), false);
-            event.performReply(builder).queue();
+            event.reply(builder);
 
         } catch (Throwable e) {
             StringWriter sw = new StringWriter();
@@ -71,7 +67,7 @@ public class EvalCommand extends Command {
             String sStackTrace = sw.toString();
 
             builder.setTitle("Eval failed!");
-            event.performReply(builder).queue();
+            event.reply(builder);
             event.getChannel().sendMessage(String.format("```%s```",
                 sStackTrace.length() >= 1500 ? sStackTrace.substring(0, 1500) : sStackTrace
             )).queue();
