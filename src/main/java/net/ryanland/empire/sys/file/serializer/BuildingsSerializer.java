@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.file.serializer;
 
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.ryanland.empire.bot.command.arguments.ProfileArgument;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;

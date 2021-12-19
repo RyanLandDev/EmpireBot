@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.RyanLandDev:Colossus:3b09884f47'
+    implementation 'com.github.RyanLandDev:Colossus:a5599faab7'
 
     // mongo database
     implementation 'org.mongodb:mongodb-driver-sync:4.4.0'

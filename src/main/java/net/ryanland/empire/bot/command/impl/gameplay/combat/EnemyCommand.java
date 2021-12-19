@@ -1,11 +1,18 @@
 package net.ryanland.empire.bot.command.impl.gameplay.combat;
 
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
-import net.ryanland.empire.bot.command.arguments.number.IntegerArgument;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.Argument;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.colossus.command.arguments.types.primitive.IntegerArgument;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.events.MessageCommandEvent;
+import net.ryanland.colossus.events.SlashEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.gameplay.combat.troop.Troop;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
 import net.ryanland.empire.util.NumberUtil;
@@ -14,23 +21,30 @@ import java.util.Deque;
 
 import static net.ryanland.empire.util.NumberUtil.clean;
 
-public class EnemyCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("enemy")
-            .description("Displays information about an enemy.")
-            .category(Category.COMBAT);
-    }
+@CommandBuilder(
+    name = "enemy",
+    description = "Displays information about an enemy."
+)
+public class EnemyCommand extends CombatCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
             new Argument<Troop>() {
                 @Override
-                public Troop parseArg(Deque<OptionMapping> arguments, CommandEvent event) throws ArgumentException {
-                    String name = arguments.pop().getAsString();
+                public OptionType getSlashCommandOptionType() {
+                    return OptionType.STRING;
+                }
+
+                @Override
+                public Troop resolveSlashCommandArgument(Deque<OptionMapping> args, SlashEvent event) throws ArgumentException {
+                    String name = args.pop().getAsString();
+                    return Troop.find(name);
+                }
+
+                @Override
+                public Troop resolveMessageCommandArgument(Deque<String> args, MessageCommandEvent event) throws ArgumentException {
+                    String name = args.pop();
                     return Troop.find(name);
                 }
             }
@@ -44,7 +58,7 @@ public class EnemyCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         Troop troop = event.getArgument("troop");
         troop.set(event.getArgument("stage"));
 

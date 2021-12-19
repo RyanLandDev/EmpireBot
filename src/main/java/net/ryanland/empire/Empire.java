@@ -28,8 +28,6 @@ import net.ryanland.empire.bot.command.impl.profile.StartCommand;
 import net.ryanland.empire.bot.events.OnSlashCommandEvent;
 import net.ryanland.empire.bot.events.logs.GuildTraffic;
 import net.ryanland.empire.sys.file.config.ConfigHandler;
-import net.ryanland.empire.sys.file.database.DocumentCache;
-import net.ryanland.empire.sys.file.database.documents.impl.GlobalDocument;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -103,6 +101,7 @@ public class Empire {
                 // Games
                 new GambleCommand()
             )
+            .disableHelpCommand()
             .setJDABuilder(builder -> builder
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
                 .setStatus(OnlineStatus.ONLINE)

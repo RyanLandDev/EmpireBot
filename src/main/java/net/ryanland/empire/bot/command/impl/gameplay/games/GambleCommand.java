@@ -8,7 +8,6 @@ import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
-import net.ryanland.empire.sys.message.builders.PresetType;
 import net.ryanland.empire.util.RandomUtil;
 
 public class GambleCommand extends Command {

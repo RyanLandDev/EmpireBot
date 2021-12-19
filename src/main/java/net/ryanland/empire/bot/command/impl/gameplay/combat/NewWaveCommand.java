@@ -1,9 +1,12 @@
 package net.ryanland.empire.bot.command.impl.gameplay.combat;
 
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.action.BuffedAction;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
@@ -16,21 +19,16 @@ import net.ryanland.empire.sys.gameplay.combat.troop.Troop;
 import net.ryanland.empire.sys.gameplay.combat.wave.Wave;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
-import net.ryanland.empire.sys.message.builders.PresetType;
+import net.ryanland.empire.sys.message.builders.Preset;
 import net.ryanland.empire.util.NumberUtil;
 
 import java.util.List;
 
-public class NewWaveCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("newwave")
-            .description("Starts a new enemy wave.")
-            .category(Category.COMBAT)
-            .requiresProfile();
-    }
+@CommandBuilder(
+    name = "newwave",
+    description = "Starts a new enemy wave."
+)
+public class NewWaveCommand extends CombatCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -38,11 +36,11 @@ public class NewWaveCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         debug(System.currentTimeMillis());
 
         // Get the user's profile
-        Profile profile = event.getProfile();
+        Profile profile = getProfile(event);
 
         // Get the profile's wave
         int wave = profile.getWave();
@@ -175,7 +173,7 @@ public class NewWaveCommand extends Command {
         }
 
         // Build embed
-        PresetBuilder embed = new PresetBuilder(win ? PresetType.SUCCESS : PresetType.ERROR,
+        PresetBuilder embed = new PresetBuilder(win ? Preset.SUCCESS : Preset.ERROR,
             "You have **" + (win ? "won" : "lost") + "** the match!\n\u200b")
 
             .setEphemeral(false)

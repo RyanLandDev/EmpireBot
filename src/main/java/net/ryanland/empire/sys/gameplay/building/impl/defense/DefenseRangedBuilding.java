@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.gameplay.building.impl.defense;
 
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.action.BuffedAction;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;

@@ -1,27 +1,24 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.permissions.Permission;
-import net.ryanland.empire.sys.message.builders.PresetType;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.Preset;
 
-public class TestCommand extends Command {
+@CommandBuilder(
+    name = "test",
+    description = "Developer command used for testing stuff."
+)
+public class TestCommand extends DeveloperCommand implements CombinedCommand {
 
     /**
      * Put testing code here.
      * @param event The associated {@link CommandEvent}.
      */
     private void performTest(CommandEvent event) {
-        debug("hi");
-    }
 
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("test")
-            .description("Developer command used for testing stuff.")
-            .permission(Permission.DEVELOPER)
-            .category(Category.DEVELOPER);
     }
 
     @Override
@@ -32,8 +29,8 @@ public class TestCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) {
+    public void execute(CommandEvent event) {
         performTest(event);
-        event.reply(new PresetBuilder(PresetType.SUCCESS, "", "Test finished."));
+        event.reply(new PresetBuilder(Preset.SUCCESS, "", "Test finished."));
     }
 }

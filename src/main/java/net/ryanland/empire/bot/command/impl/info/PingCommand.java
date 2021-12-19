@@ -1,17 +1,16 @@
 package net.ryanland.empire.bot.command.impl.info;
 
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 
-public class PingCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("ping")
-            .description("Gets the current bot ping.")
-            .category(Category.INFORMATION);
-    }
+@CommandBuilder(
+    name = "ping",
+    description = "Gets the current bot ping."
+)
+public class PingCommand extends InformationCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -19,11 +18,8 @@ public class PingCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) {
-        event.performReply(
-            new PresetBuilder(
-                "Ping: " + event.getJDA().getRestPing().complete() + "ms."
-            )
-        ).queue();
+    public void execute(CommandEvent event) {
+        event.reply(new PresetBuilder(
+                "Ping: " + event.getJDA().getRestPing().complete() + "ms."));
     }
 }

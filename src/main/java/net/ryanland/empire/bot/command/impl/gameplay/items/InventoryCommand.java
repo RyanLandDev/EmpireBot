@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.utils.MarkdownSanitizer;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;

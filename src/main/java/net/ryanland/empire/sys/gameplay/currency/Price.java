@@ -1,8 +1,8 @@
 package net.ryanland.empire.sys.gameplay.currency;
 
-import net.ryanland.empire.bot.command.executor.exceptions.CannotAffordException;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.empire.bot.command.exceptions.CannotAffordException;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.message.Formattable;
 import net.ryanland.empire.util.NumberUtil;
 import org.jetbrains.annotations.NotNull;

@@ -1,20 +1,17 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.permissions.Permission;
-import net.ryanland.empire.sys.message.builders.PresetType;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.Preset;
 
-public class StopCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("stop")
-            .description("Stops the bot.")
-            .category(Category.DEVELOPER)
-            .permission(Permission.DEVELOPER);
-    }
+@CommandBuilder(
+    name = "stop",
+    description = "Stops the bot."
+)//TODO cant be disabled
+public class StopCommand extends DeveloperCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -22,8 +19,8 @@ public class StopCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) {
-        event.reply(new PresetBuilder(PresetType.NOTIFICATION, "Bot shutting down...", "Shutdown"));
+    public void execute(CommandEvent event) {
+        event.reply(new PresetBuilder(Preset.NOTIFICATION, "Bot shutting down...", "Shutdown"));
         System.exit(0);
     }
 }

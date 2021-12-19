@@ -1,14 +1,17 @@
-package net.ryanland.empire.sys.file.database.documents.impl;
+package net.ryanland.empire.sys.file.database;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.Interaction;
-import net.ryanland.empire.bot.command.executor.cooldown.Cooldown;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.cooldown.Cooldown;
+import net.ryanland.colossus.sys.file.serializer.CooldownsSerializer;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.Partition;
-import net.ryanland.empire.sys.file.database.DocumentCache;
-import net.ryanland.empire.sys.file.database.documents.SnowflakeDocument;
-import net.ryanland.empire.sys.file.serializer.*;
+import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
+import net.ryanland.empire.sys.file.serializer.InventorySerializer;
+import net.ryanland.empire.sys.file.serializer.PerksSerializer;
+import net.ryanland.empire.sys.file.serializer.PotionsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
@@ -19,7 +22,7 @@ import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
-import net.ryanland.empire.sys.message.builders.PresetType;
+import net.ryanland.empire.sys.message.builders.Preset;
 import net.ryanland.empire.util.DateUtil;
 import net.ryanland.empire.util.NumberUtil;
 import net.ryanland.empire.util.StringUtil;
@@ -127,7 +130,7 @@ public class Profile implements SnowflakeDocument, Emojis {
             int newLevel = getLevel() + 1;
             document.setLevel(newLevel);
 
-            interaction.replyEmbeds(new PresetBuilder(PresetType.NOTIFICATION,
+            interaction.replyEmbeds(new PresetBuilder(Preset.NOTIFICATION,
                 String.format("""
                         You have leveled up to **Level %s**!
 

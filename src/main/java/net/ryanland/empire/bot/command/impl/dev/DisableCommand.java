@@ -8,8 +8,8 @@ import net.ryanland.colossus.command.arguments.ArgumentSet;
 import net.ryanland.colossus.command.arguments.types.CommandArgument;
 import net.ryanland.colossus.command.executor.DisabledCommandHandler;
 import net.ryanland.colossus.events.CommandEvent;
-import net.ryanland.colossus.sys.message.DefaultPresetType;
 import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.sys.message.builders.Preset;
 
 @CommandBuilder(
     name = "disable",
@@ -30,7 +30,7 @@ public class DisableCommand extends DeveloperCommand implements CombinedCommand 
     public void execute(CommandEvent event) throws CommandException {
         Command command = event.getArgument("command");
         DisabledCommandHandler.getInstance().disable(command);
-        event.reply(new PresetBuilder(DefaultPresetType.SUCCESS,
+        event.reply(new PresetBuilder(Preset.SUCCESS,
                 "Disabled the `" + command.getName() + "` command."));
     }
 }

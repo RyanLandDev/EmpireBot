@@ -7,7 +7,7 @@ import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentExce
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.bot.command.arguments.SingleArgument;
 import net.ryanland.empire.bot.command.executor.checks.impl.RequiresProfileCheck;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 
 public class ProfileArgument extends SingleArgument<Profile> {
 

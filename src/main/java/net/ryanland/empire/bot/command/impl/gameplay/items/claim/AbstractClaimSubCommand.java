@@ -2,7 +2,6 @@ package net.ryanland.empire.bot.command.impl.gameplay.items.claim;
 
 import net.ryanland.empire.bot.command.executor.cooldown.CooldownHandler;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.sys.message.builders.PresetType;
 
 public abstract class AbstractClaimSubCommand extends Command {
 

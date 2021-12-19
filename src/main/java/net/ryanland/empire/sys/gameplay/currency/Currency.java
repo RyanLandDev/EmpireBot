@@ -1,7 +1,6 @@
 package net.ryanland.empire.sys.gameplay.currency;
 
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
-import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.message.Emojis;
 import org.jetbrains.annotations.NotNull;
 

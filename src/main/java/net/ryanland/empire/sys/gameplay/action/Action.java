@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.gameplay.action;
 
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 
 /**
  * Helper class to perform actions and optionally return a result.

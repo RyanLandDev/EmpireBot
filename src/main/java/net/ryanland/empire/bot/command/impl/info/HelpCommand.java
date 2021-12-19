@@ -1,26 +1,28 @@
 package net.ryanland.empire.bot.command.impl.info;
 
-import net.ryanland.empire.Empire;
-import net.ryanland.empire.bot.command.executor.CommandHandler;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.info.HelpMaker;
-import net.ryanland.empire.sys.message.interactions.menu.TabMenuBuilder;
+import net.ryanland.colossus.command.Category;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.Command;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.types.CommandArgument;
+import net.ryanland.colossus.command.executor.CommandHandler;
+import net.ryanland.colossus.command.info.HelpMaker;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.interactions.menu.TabMenuBuilder;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HelpCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("help")
-            .description("Get a list of all commands or information about a specific one.")
-            .category(Category.INFORMATION)
-            .cooldown(3);
-    }
+@CommandBuilder(
+    name = "help",
+    description = "Get a list of all commands or information about a specific one.",
+    guildOnly = false
+)
+public class HelpCommand extends InformationCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -33,17 +35,15 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) {
+    public void execute(CommandEvent event) throws CommandException {
         Command command = event.getArgument("command");
-
-        if (command == null) {
+        if (command == null)
             supplyCommandList(event);
-        } else {
+        else
             supplyCommandHelp(event, command);
-        }
     }
 
-    private void supplyCommandList(CommandEvent event) {
+    private void supplyCommandList(CommandEvent event) throws CommandException {
         // Init menu
         TabMenuBuilder menu = new TabMenuBuilder();
 
@@ -51,16 +51,15 @@ public class HelpCommand extends Command {
         PresetBuilder homePage = new PresetBuilder(
             "Use the buttons below to navigate through all command categories.\n" +
                 "You can get help for a specific command using " + HelpMaker.formattedUsageCode(event)
-                + ".\n\nBot made by " + Empire.RYANLAND)
+                + ".")
             .addLogo();
         menu.addPage("Home", homePage, true);
 
         // Iterate over all command categories
-        for (Category category : Category.getCategories()) {
+        for (Category category : CommandHandler.getCategories()) {
             // Get all commands, and filter by category equal and player has sufficient permissions
             List<Command> commands = CommandHandler.getCommands().stream().filter(c ->
-                c.getCategory() == category &&
-                    c.getPermission().hasPermission(event.getMember())
+                c.getCategory().equals(category) && c.memberHasPermission(event.getMember())
             ).collect(Collectors.toList());
 
             // If no commands were left after the filter, do not include this category in the menu
@@ -70,16 +69,16 @@ public class HelpCommand extends Command {
             commands.sort(Comparator.comparing(Command::getName));
 
             // Add this category to the menu
-            menu.addPage(category.getName(), new PresetBuilder(category.getDescription() +
+            menu.addPage(category.name(), new PresetBuilder(category.description() +
                 "\n\n" + HelpMaker.formattedQuickCommandList(commands))
-                .addLogo(), category.getEmoji());
+                .addLogo(), category.emoji());
         }
 
         // Build and send the menu
-        menu.build().send(event.getInteraction());
+        menu.build().send(event);
     }
 
     private void supplyCommandHelp(CommandEvent event, Command command) {
-        event.performReply(HelpMaker.commandEmbed(event, command)).queue();
+        event.reply(HelpMaker.commandEmbed(command));
     }
 }

@@ -1,29 +1,27 @@
 package net.ryanland.empire.bot.command.impl.info;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.components.Button;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.interactions.menu.ActionMenuBuilder;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.Empire;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.permissions.Permission;
-import net.ryanland.empire.bot.command.permissions.RankHandler;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
-import net.ryanland.empire.sys.message.interactions.menu.ActionMenuBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StatsCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("stats")
-            .description("Returns a bunch of statistics about the bot.")
-            .category(Category.INFORMATION);
-    }
+@CommandBuilder(
+    name = "stats",
+    description = "Returns a bunch of statistics about the bot."
+)
+public class StatsCommand extends InformationCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -31,7 +29,7 @@ public class StatsCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         // Gets a hashmap of all the user IDs with ranks
         // DOES NOT WORK IF RankHandler'S HASHMAP IS OUT OF ORDER.
         HashMap<Long, Permission> userRanks = RankHandler.getUserRanks();

@@ -6,8 +6,6 @@ import net.ryanland.empire.bot.command.arguments.number.IntegerArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.bot.command.permissions.Permission;
-import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
-import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class BalanceSubtractCommand extends Command {
     @Override

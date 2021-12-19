@@ -1,7 +1,5 @@
 package net.ryanland.empire.bot.command.arguments.Enum;
 
-import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
-
 import java.util.function.BiFunction;
 import java.util.function.Function;
 

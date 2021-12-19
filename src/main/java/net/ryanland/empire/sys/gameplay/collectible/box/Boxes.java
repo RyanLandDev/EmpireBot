@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.gameplay.collectible.box;
 
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 
 public enum Boxes {

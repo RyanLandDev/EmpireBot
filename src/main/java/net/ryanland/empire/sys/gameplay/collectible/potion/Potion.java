@@ -2,12 +2,10 @@ package net.ryanland.empire.sys.gameplay.collectible.potion;
 
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.file.serializer.PotionSerializer;
 import net.ryanland.empire.sys.file.serializer.PotionsSerializer;
-import net.ryanland.empire.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
-import net.ryanland.empire.sys.message.builders.PresetType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;

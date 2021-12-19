@@ -3,11 +3,9 @@ package net.ryanland.empire.sys.gameplay.collectible;
 import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.bot.command.impl.gameplay.items.InventoryCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.items.UseCommand;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
-import net.ryanland.empire.sys.file.database.documents.impl.UserDocument;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.file.serializer.ItemSerializer;
-import net.ryanland.empire.sys.file.serializer.Serializer;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;

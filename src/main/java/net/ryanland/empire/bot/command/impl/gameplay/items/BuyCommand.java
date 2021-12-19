@@ -8,9 +8,8 @@ import net.ryanland.empire.bot.command.arguments.NumberArgument;
 import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
 import net.ryanland.empire.bot.command.info.Category;
 import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
-import net.ryanland.empire.sys.message.builders.PresetType;
 
 public class BuyCommand extends Command {
 

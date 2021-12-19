@@ -6,10 +6,14 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.executor.functional_interface.CommandRunnable;
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
-import net.ryanland.empire.sys.file.serializer.Serializer;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.executor.functional_interface.CommandRunnable;
+import net.ryanland.colossus.sys.interactions.InteractionUtil;
+import net.ryanland.colossus.sys.interactions.menu.ActionMenu;
+import net.ryanland.colossus.sys.interactions.menu.ActionMenuBuilder;
+import net.ryanland.colossus.sys.interactions.menu.InteractionMenuBuilder;
+import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.defense.ranged.ArcherBuilding;
@@ -25,12 +29,8 @@ import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.Formattable;
-import net.ryanland.empire.sys.message.builders.PresetType;
-import net.ryanland.empire.sys.message.interactions.InteractionUtil;
-import net.ryanland.empire.sys.message.interactions.menu.ActionMenu;
-import net.ryanland.empire.sys.message.interactions.menu.ActionMenuBuilder;
+import net.ryanland.empire.sys.message.builders.Preset;
 import net.ryanland.empire.sys.message.interactions.menu.ConfirmMenu;
-import net.ryanland.empire.sys.message.interactions.menu.InteractionMenuBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -229,7 +229,7 @@ public abstract class Building
                     executeButtonAction(event, this::repair);
                     refreshMenu(event);
 
-                    event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                    event.replyEmbeds(new PresetBuilder(Preset.SUCCESS, String.format(
                         "Repaired your %s for %s.", format(), repairPrice.format()
                     )).build()).setEphemeral(true).queue();
                 }
@@ -245,7 +245,7 @@ public abstract class Building
                     executeButtonAction(event, this::crystalRepair);
                     refreshMenu(event);
 
-                    event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                    event.replyEmbeds(new PresetBuilder(Preset.SUCCESS, String.format(
                         "Repaired your %s for %s.", format(), crystalRepairPrice.format()
                     )).build()).setEphemeral(true).queue();
                 }
@@ -271,7 +271,7 @@ public abstract class Building
                 executeButtonAction(event, this::upgrade);
                 refreshMenu(event);
 
-                event.replyEmbeds(new PresetBuilder(PresetType.SUCCESS, String.format(
+                event.replyEmbeds(new PresetBuilder(Preset.SUCCESS, String.format(
                     "Upgraded your %s for %s.", format(), upgradePrice.format()
                 )).build()).setEphemeral(true).queue();
             }

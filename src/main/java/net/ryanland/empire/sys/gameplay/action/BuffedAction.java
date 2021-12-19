@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.gameplay.action;
 
-import net.ryanland.empire.sys.file.database.documents.impl.Profile;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
 
 /**
