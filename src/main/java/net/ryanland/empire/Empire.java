@@ -1,16 +1,12 @@
 package net.ryanland.empire;
 
 import net.dv8tion.jda.api.GatewayEncoding;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.SelfUser;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.colossus.Colossus;
 import net.ryanland.colossus.ColossusBuilder;
-import net.ryanland.empire.bot.command.executor.CommandHandler;
-import net.ryanland.empire.bot.command.executor.exceptions.InvalidSupportGuildException;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.dev.balance.BalanceCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.combat.EnemyCommand;
@@ -19,27 +15,22 @@ import net.ryanland.empire.bot.command.impl.gameplay.combat.WaveCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.games.GambleCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.items.*;
 import net.ryanland.empire.bot.command.impl.gameplay.items.claim.ClaimCommand;
-import net.ryanland.empire.bot.command.impl.info.*;
-import net.ryanland.empire.bot.command.impl.info.user.UserCommand;
+import net.ryanland.empire.bot.command.impl.info.HelpCommand;
+import net.ryanland.empire.bot.command.impl.info.PingCommand;
+import net.ryanland.empire.bot.command.impl.info.StatsCommand;
 import net.ryanland.empire.bot.command.impl.profile.CooldownsCommand;
 import net.ryanland.empire.bot.command.impl.profile.EmpireCommand;
 import net.ryanland.empire.bot.command.impl.profile.ResetCommand;
 import net.ryanland.empire.bot.command.impl.profile.StartCommand;
-import net.ryanland.empire.bot.events.OnSlashCommandEvent;
+import net.ryanland.empire.bot.command.inhibitor.RequiresProfileInhibitor;
 import net.ryanland.empire.bot.events.logs.GuildTraffic;
-import net.ryanland.empire.sys.file.config.ConfigHandler;
-
-import javax.security.auth.login.LoginException;
-import java.io.IOException;
 
 
 public class Empire {
 
-    public static final String RYANLAND = "RyanLand#0001";
     public static final String SUPPORT_GUILD = "832384230331252816";
 
     // Settings
-    public static final boolean useTestGuild = true;
     public static final boolean debugMode = false;
 
     // Constant links
@@ -47,22 +38,16 @@ public class Empire {
     public static final String SERVER_INVITE_LINK = "https://discord.gg/D7SARkP7pA";
     public static final String GITHUB_LINK = "https://github.com/RyanLandDev/EmpireBot";
 
-    private static JDA jda;
-    private static Config config;
-
-    public static void main(String[] args) throws IOException, LoginException, InterruptedException, InvalidSupportGuildException {
-
-        config = ConfigHandler.loadConfig();
-        initialize(config);
+    public static void main(String[] args) {
+        initialize();
     }
 
-    private static void initialize(Config config) throws LoginException, InterruptedException, InvalidSupportGuildException {
+    private static void initialize() {
         Colossus colossus = new ColossusBuilder("src/config")
             .registerCommands(
                 // Information
                 new HelpCommand(),
                 new PingCommand(),
-                new UserCommand(),
                 new StatsCommand(),
 
                 // Developer
@@ -72,8 +57,6 @@ public class Empire {
                 new DisableCommand(),
                 new EnableCommand(),
                 new StopCommand(),
-                new GuildInfoCommand(),
-                new TutorialCommand(),
                 new BalanceCommand(),
 
                 // Profile
@@ -101,6 +84,9 @@ public class Empire {
                 // Games
                 new GambleCommand()
             )
+            .registerInhibitors(
+                new RequiresProfileInhibitor()
+            )
             .disableHelpCommand()
             .setJDABuilder(builder -> builder
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
@@ -114,30 +100,6 @@ public class Empire {
                     new GuildTraffic()
                 )).build();
 
-        // Build-a-bot
-        jda.awaitReady();
-        CommandHandler.upsertAll();
-    }
-
-    // Utility methods ------------------------------
-
-    public static JDA getJda() {
-        return jda;
-    }
-
-    public static SelfUser getSelfUser() {
-        return jda.getSelfUser();
-    }
-
-    public static String getLogo() {
-        return getSelfUser().getAvatarUrl();
-    }
-
-    public static Config getConfig() {
-        return config;
-    }
-
-    public static GlobalDocument getGlobalDocument() {
-        return DocumentCache.getGlobal();
+        colossus.initialize();
     }
 }

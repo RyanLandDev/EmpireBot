@@ -8,9 +8,11 @@ import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateE
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.colossus.command.CommandException;
 import net.ryanland.colossus.command.executor.functional_interface.CommandRunnable;
+import net.ryanland.colossus.sys.file.serializer.Serializer;
 import net.ryanland.colossus.sys.interactions.InteractionUtil;
 import net.ryanland.colossus.sys.interactions.menu.ActionMenu;
 import net.ryanland.colossus.sys.interactions.menu.ActionMenuBuilder;
+import net.ryanland.colossus.sys.interactions.menu.ConfirmMenu;
 import net.ryanland.colossus.sys.interactions.menu.InteractionMenuBuilder;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
@@ -30,7 +32,6 @@ import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.sys.message.Emojis;
 import net.ryanland.empire.sys.message.Formattable;
 import net.ryanland.empire.sys.message.builders.Preset;
-import net.ryanland.empire.sys.message.interactions.menu.ConfirmMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -207,7 +208,7 @@ public abstract class Building
 
     public boolean exists() {
         try {
-            return getProfile().getDocument().getBuildings().get(getLayer() - 1).equals(serialize());
+            return getProfile().getBuildings().get(getLayer() - 1).serialize().equals(serialize());
         } catch (IndexOutOfBoundsException e) {
             return false;
         }
@@ -284,7 +285,7 @@ public abstract class Building
         );
 
         // Previous/next building buttons
-        builder.putQueue();
+        builder.putQueuedButtons();
         builder.addButton(
             Button.primary("previous", "Previous")
                 .withEmoji(Emoji.fromUnicode("◀"))
@@ -352,7 +353,7 @@ public abstract class Building
         getRepairPrice().buy(profile);
         health = getMaxHealth();
         profile.setBuilding(this);
-        profile.getDocument().update();
+        profile.update();
     }
 
     public void crystalRepair() throws CommandException {
@@ -362,33 +363,31 @@ public abstract class Building
         getCrystalRepairPrice().buy(profile);
         health = getMaxHealth();
         profile.setBuilding(this);
-        profile.getDocument().update();
+        profile.update();
     }
 
     public void upgrade() throws CommandException {
-        if (!canUpgrade()) {
+        if (!canUpgrade())
             throw new CommandException("You cannot upgrade this building.");
-        }
 
         getUpgradePrice().buy(profile);
         stage += 1;
         health = getMaxHealth();
 
         profile.setBuilding(this);
-        profile.getDocument().update();
+        profile.update();
     }
 
     @SuppressWarnings("all")
     public void sell(GenericComponentInteractionCreateEvent event) throws CommandException {
-        if (!canSell()) {
+        if (!canSell())
             throw new CommandException("You cannot sell this building.");
-        }
 
         new ConfirmMenu("Are you sure you want to sell this building?", () -> {
             getSellPrice().give(profile);
 
             profile.removeBuilding(layer);
-            profile.getDocument().update();
+            profile.update();
 
             refreshMenu(event.getMessage());
 

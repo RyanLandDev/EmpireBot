@@ -7,7 +7,6 @@ import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.message.Emojis;
 
 public abstract class GameCommand extends DefaultCommand implements Emojis {
-    //TODO requires profile
 
     public void debug(Object msg) {
         if (Empire.debugMode)
@@ -15,6 +14,6 @@ public abstract class GameCommand extends DefaultCommand implements Emojis {
     }//TODO change to match old debug method
 
     public Profile getProfile(CommandEvent event) {
-        return new Profile(event.getUser());
+        return Profile.of(event);
     }
 }

@@ -1,12 +1,16 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
-import net.ryanland.empire.bot.command.executor.cooldown.Cooldown;
-import net.ryanland.empire.bot.command.executor.cooldown.CooldownHandler;
-import net.ryanland.empire.bot.command.executor.cooldown.manager.CooldownManager;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.sys.file.StorageType;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.cooldown.Cooldown;
+import net.ryanland.colossus.command.cooldown.CooldownHandler;
+import net.ryanland.colossus.command.cooldown.CooldownManager;
+import net.ryanland.colossus.command.cooldown.ExternalCooldownManager;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.bot.command.RequiresProfile;
 import net.ryanland.empire.util.DateUtil;
 
 import java.util.Date;
@@ -16,15 +20,11 @@ import java.util.stream.Collectors;
 
 import static net.ryanland.empire.util.StringUtil.genTrimProofSpaces;
 
-public class CooldownsCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("cooldowns")
-            .description("Gives the time remaining on command cooldowns.")
-            .category(Category.PROFILE);
-    }
+@CommandBuilder(
+    name = "cooldowns",
+    description = "Gives the time remaining on command cooldowns."
+)
+public class CooldownsCommand extends ProfileCommand implements CombinedCommand, RequiresProfile {
 
     @Override
     public ArgumentSet getArguments() {
@@ -32,8 +32,8 @@ public class CooldownsCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
-        CooldownManager manager = CooldownHandler.getCooldownManager(StorageType.EXTERNAL);
+    public void execute(CommandEvent event) throws CommandException {
+        CooldownManager manager = ExternalCooldownManager.getInstance();
         CooldownHandler.cleanCooldowns(manager, event.getUser());
         Map<String, Cooldown> cooldowns = manager.get(event.getUser()).stream()
             .collect(Collectors.toMap(cooldown -> cooldown.command().getName(), Function.identity()));

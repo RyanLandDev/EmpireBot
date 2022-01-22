@@ -3,8 +3,11 @@ package net.ryanland.empire.sys.file.database;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.Interaction;
+import net.ryanland.colossus.Colossus;
 import net.ryanland.colossus.command.CommandException;
 import net.ryanland.colossus.command.cooldown.Cooldown;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.file.database.Table;
 import net.ryanland.colossus.sys.file.serializer.CooldownsSerializer;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.Partition;
@@ -15,6 +18,8 @@ import net.ryanland.empire.sys.file.serializer.PotionsSerializer;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.impl.resource.ResourceBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.resource.generator.GoldMineBuilding;
+import net.ryanland.empire.sys.gameplay.building.impl.resource.storage.BankBuilding;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.gameplay.collectible.box.Boxes;
 import net.ryanland.empire.sys.gameplay.collectible.perk.Perk;
@@ -28,42 +33,75 @@ import net.ryanland.empire.util.NumberUtil;
 import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class Profile implements SnowflakeDocument, Emojis {
+public class Profile extends Table<User> implements Emojis {
 
-    private final User user;
-    private final UserDocument document;
+    public final static String LEVEL_KEY = "lvl";
+    public final static String XP_KEY = "xp";
+    public final static String GOLD_KEY = "gold";
+    public final static String CRYSTALS_KEY = "crys";
+    public final static String WAVE_KEY = "wv";
+    public final static String BUILDINGS_KEY = "blds";
+    public final static String CREATION_DATE_KEY = "cr";
+    public final static String COOLDOWNS_KEY = "cd";
+    public final static String INVENTORY_KEY = "inv";
+    public final static String POTIONS_KEY = "pot";
+    public final static String PERKS_KEY = "prk";
 
-    public Profile(User user) {
-        this.user = user;
-        document = DocumentCache.get(user, UserDocument.class);
+    public static final int DEFAULT_LEVEL = 1;
+    public static final int DEFAULT_XP = 0;
+    public static final int DEFAULT_GOLD = 1000;
+    public static final int DEFAULT_CRYSTALS = 100;
+    public static final int DEFAULT_WAVE = 1;
+    @SuppressWarnings("all")
+    public static final List<List> DEFAULT_BUILDINGS = Arrays.asList(
+        Building.of(GoldMineBuilding.ID).defaults().serialize(),
+        Building.of(BankBuilding.ID).defaults().serialize()
+    );
+    @SuppressWarnings("all")
+    public static final List<List> DEFAULT_COOLDOWNS = Collections.emptyList();
+    public static final List<String> DEFAULT_INVENTORY = Collections.emptyList();
+    @SuppressWarnings("all")
+    public static final List<List> DEFAULT_POTIONS = Collections.emptyList();
+    @SuppressWarnings("all")
+    public static final List<List> DEFAULT_PERKS = Collections.emptyList();
+
+    // -------------------------------------------------------------------------
+
+    private User user;
+
+    public Profile(String clientId) {
+        super(clientId);
     }
 
-    public UserDocument getDocument() {
-        return document;
+    public Profile(String clientId, Map<String, Object> data) {
+        super(clientId, data);
     }
 
-    // ---------------------------------------
+    public static Profile of(CommandEvent event) {
+        return of(event.getUser());
+    }
+
+    public static Profile of(User user) {
+        Profile profile = (Profile) Colossus.getDatabaseDriver().get(user);
+        profile.user = user;
+        return profile;
+    }
 
     public User getUser() {
         return user;
     }
 
-    @Override
-    public String getId() {
-        return document.getId();
-    }
+    // ------------------------------------------------------------------------
 
     public Integer getLevel() {
-        return document.getLevel();
+        return get(LEVEL_KEY, DEFAULT_LEVEL);
     }
 
     public Price<Integer> getCrystals() {
-        return new Price<>(Currency.CRYSTALS, document.getCrystals());
+        return new Price<>(Currency.CRYSTALS, get(CRYSTALS_KEY, DEFAULT_CRYSTALS));
     }
 
     public String getFormattedCrystals() {
@@ -75,7 +113,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public Price<Integer> getGold() {
-        return new Price<>(Currency.GOLD, document.getGold());
+        return new Price<>(Currency.GOLD, get(GOLD_KEY, DEFAULT_GOLD));
     }
 
     public String getFormattedGold() {
@@ -87,7 +125,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public Integer getXp() {
-        return document.getXp();
+        return get(XP_KEY, DEFAULT_XP);
     }
 
     public String getFormattedXp() {
@@ -116,7 +154,7 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     /**
      * Increases the profile's xp by the provided value and accounts for level ups.
-     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     * <strong>WARNING:</strong> Does not call {@link #update()}
      *
      * @param xp The amount of XP to give to the profile.
      */
@@ -128,7 +166,7 @@ public class Profile implements SnowflakeDocument, Emojis {
             newXp -= getRequiredXp();
 
             int newLevel = getLevel() + 1;
-            document.setLevel(newLevel);
+            put(LEVEL_KEY, newLevel);
 
             interaction.replyEmbeds(new PresetBuilder(Preset.NOTIFICATION,
                 String.format("""
@@ -142,7 +180,7 @@ public class Profile implements SnowflakeDocument, Emojis {
                         %3$s Received %s""",
                     newLevel, getBuildingLimit(), ARROW_RIGHT, getBuildingLimit(newLevel), AIR,
                     STAGE, getBuildingStageLimit(), getBuildingStageLimit(newLevel),
-                    Boxes.MYTHICAL.give(new Profile(interaction.getUser()))),
+                    Boxes.MYTHICAL.give(of(interaction.getUser()))),
                 XP + " Level Up!")
                 .build(), embeds).setEphemeral(ephemeral).queue();
         } else {
@@ -150,7 +188,7 @@ public class Profile implements SnowflakeDocument, Emojis {
         }
 
         // Update xp
-        document.setXp(newXp);
+        put(XP_KEY, newXp);
     }
 
     public boolean canAfford(@NotNull Price<Integer> price) {
@@ -168,7 +206,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public Integer getWave() {
-        return document.getWave();
+        return get(WAVE_KEY, DEFAULT_WAVE);
     }
 
     public Price<Integer> getWaveGoldReward() {
@@ -177,15 +215,15 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public List<Cooldown> getCooldowns() {
-        return CooldownsSerializer.getInstance().deserialize(document.getCooldowns());
+        return CooldownsSerializer.getInstance().deserialize(get(COOLDOWNS_KEY, DEFAULT_COOLDOWNS));
     }
 
     public List<Item> getInventory() {
-        return InventorySerializer.getInstance().deserialize(document.getInventory());
+        return InventorySerializer.getInstance().deserialize(get(INVENTORY_KEY, DEFAULT_INVENTORY));
     }
 
     public List<Perk> getPerks() {
-        return PerksSerializer.getInstance().deserialize(document.getPerks());
+        return PerksSerializer.getInstance().deserialize(get(PERKS_KEY, DEFAULT_PERKS));
     }
 
     /**
@@ -201,6 +239,29 @@ public class Profile implements SnowflakeDocument, Emojis {
         return potions;
     }
 
+    @SuppressWarnings("all")
+    public void cleanPotions() {
+        List<Potion> potions = getUserPotions();
+        List<Potion> newPotions = potions.stream()
+            .filter(potion -> {
+                return potion.getExpires().getTime() > System.currentTimeMillis();
+            })
+            .collect(Collectors.toList());
+
+        if (potions.size() != newPotions.size()) {
+            setUserPotions(newPotions);
+            update();
+        }
+    }
+
+    /**
+     * Sets the user's potions.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public void setUserPotions(List<Potion> potions) {
+        put(POTIONS_KEY, PotionsSerializer.getInstance().serialize(potions));
+    }
+
     /**
      * Gets all <strong>currently active</strong> potions with {@link Potion.Scope#USER}.
      * @see #getPotions()
@@ -208,8 +269,8 @@ public class Profile implements SnowflakeDocument, Emojis {
      * @see #getGlobalPotions()
      */
     public List<Potion> getUserPotions() {
-        document.cleanPotions();
-        return PotionsSerializer.getInstance().deserialize(document.getPotions());
+        cleanPotions();
+        return PotionsSerializer.getInstance().deserialize(get(POTIONS_KEY, DEFAULT_POTIONS));
     }
 
     /**
@@ -233,7 +294,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public List<Building> getBuildings() {
-        return BuildingsSerializer.getInstance().deserialize(document.getBuildings(), this);
+        return BuildingsSerializer.getInstance().deserialize(get(BUILDINGS_KEY, DEFAULT_BUILDINGS), this);
     }
 
     public Building getBuilding(int position) {
@@ -242,48 +303,55 @@ public class Profile implements SnowflakeDocument, Emojis {
 
     /**
      * Sets a building at a specific layer.
-     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     * <strong>WARNING:</strong> Does not call {@link #update()}
      *
      * @param building The building to set. This building's {@code layer} field will be used.
      */
     @SuppressWarnings("all")
     public void setBuilding(Building building) {
-        List<List> newBuildings = new ArrayList<>(document.getBuildings());
+        List<Building> newBuildings = new ArrayList<>(getBuildings());
 
         newBuildings.remove(building.getLayer() - 1);
-        newBuildings.add(building.getLayer() - 1, building.serialize());
+        newBuildings.add(building.getLayer() - 1, building);
 
-        getDocument().setBuildingsRaw(newBuildings);
+        setBuildings(newBuildings);
+    }
+
+    /**
+     * Sets the user's buildings.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public void setBuildings(List<Building> buildings) {
+        put(BUILDINGS_KEY, BuildingsSerializer.getInstance().serialize(buildings));
     }
 
     /**
      * Adds a building to the profile's empire.
-     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     * <strong>WARNING:</strong> Does not call {@link #update()}
      *
      * @param building The building to add.
      */
     @SuppressWarnings("all")
     public void addBuilding(Building building) throws CommandException {
-        List<List> newBuildings = new ArrayList<>(document.getBuildings());
+        List<Building> newBuildings = getBuildings();
 
-        if (newBuildings.size() + 1 > getBuildingLimit()) {
+        if (newBuildings.size() + 1 > getBuildingLimit())
             throw new CommandException("You have hit the **Building Limit**!\nLevel up to increase this limit.");
-        }
 
-        newBuildings.add(building.defaults().serialize());
-        getDocument().setBuildingsRaw(newBuildings);
+        newBuildings.add(building.defaults());
+        setBuildings(newBuildings);
     }
 
     /**
      * Removes a building at a specific layer.
-     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}
+     * <strong>WARNING:</strong> Does not call {@link #update()}
      *
      * @param layer The layer the building is at to remove.
      */
     public void removeBuilding(int layer) {
         List<Building> newBuildings = getBuildings();
         newBuildings.remove(layer - 1);
-        getDocument().setBuildings(newBuildings);
+        setBuildings(newBuildings);
     }
 
     public int getBuildingLimit() {
@@ -303,7 +371,7 @@ public class Profile implements SnowflakeDocument, Emojis {
     }
 
     public Date getCreated() {
-        return document.getCreated();
+        return get("cr");
     }
 
     public String getFormattedCreated() {
@@ -383,6 +451,13 @@ public class Profile implements SnowflakeDocument, Emojis {
         }
 
         return String.join("\n", rows);
+    }
+
+    /**
+     * Updates this profile to the database.
+     */
+    public void update() {
+        Colossus.getDatabaseDriver().updateTable(user, this);
     }
 
 }

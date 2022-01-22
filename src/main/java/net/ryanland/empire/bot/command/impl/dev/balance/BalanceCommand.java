@@ -1,8 +1,6 @@
 package net.ryanland.empire.bot.command.impl.dev.balance;
 
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.permissions.Permission;
+import net.ryanland.colossus.command.SubCommandHolder;
 
 public class BalanceCommand extends SubCommandHolder {
 

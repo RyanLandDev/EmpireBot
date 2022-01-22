@@ -1,19 +1,21 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.bot.command.inhibitor.RequiresProfileInhibitor;
+import net.ryanland.empire.sys.file.database.Profile;
 
 import java.util.Date;
 
-public class StartCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("start")
-            .description("Start your Empire adventure.")
-            .category(Category.PROFILE);
-    }
+@CommandBuilder(
+    name = "start",
+    description = "Start your Empire adventure."
+)
+public class StartCommand extends ProfileCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -21,24 +23,20 @@ public class StartCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) {
-        UserDocument document = DocumentCache.get(event.getUser(), UserDocument.class, true);
+    public void execute(CommandEvent event) {
+        Profile profile = Profile.of(event);
 
-        if (document != null) {
-            event.reply(
-                new PresetBuilder(PresetType.ERROR, "You already have a profile.")
-                    .addLogo()
-            );
-
+        if (!RequiresProfileInhibitor.hasProfile(event.getUser())) {
+            event.reply(new PresetBuilder(DefaultPresetType.ERROR, "You already have a profile.").addLogo());
         } else {
-            event.getUserDocument()
-                .setCreated(new Date())
-                .setBuildingsRaw(UserDocument.DEFAULT_BUILDINGS)
+            ((Profile) profile
+                .put(Profile.CREATION_DATE_KEY, new Date())
+                .put(Profile.BUILDINGS_KEY, Profile.DEFAULT_BUILDINGS))
                 .update();
 
             event.reply(
                 new PresetBuilder(
-                    PresetType.SUCCESS,
+                    DefaultPresetType.SUCCESS,
                     "Your profile has been created! Good luck!\n*It is recommended to use the /tutorial.*",
                     "Profile created")
                     .addLogo()

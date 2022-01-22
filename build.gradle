@@ -19,13 +19,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.RyanLandDev:Colossus:a5599faab7'
+    implementation 'com.github.RyanLandDev:Colossus:5adc7638dc'
 
     // mongo database
-    implementation 'org.mongodb:mongodb-driver-sync:4.4.0'
+    implementation 'org.mongodb:mongodb-driver-sync:4.4.1'
 
     // log
-    implementation 'ch.qos.logback:logback-classic:1.2.8'
+    implementation 'ch.qos.logback:logback-classic:1.2.10'
 
     // jda
     implementation 'net.dv8tion:JDA:4.3.0_309'

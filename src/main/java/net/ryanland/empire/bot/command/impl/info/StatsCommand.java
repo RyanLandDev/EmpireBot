@@ -1,6 +1,5 @@
 package net.ryanland.empire.bot.command.impl.info;
 
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.ryanland.colossus.command.CombinedCommand;
@@ -12,10 +11,6 @@ import net.ryanland.colossus.sys.interactions.menu.ActionMenuBuilder;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @CommandBuilder(
     name = "stats",
@@ -30,26 +25,6 @@ public class StatsCommand extends InformationCommand implements CombinedCommand 
 
     @Override
     public void execute(CommandEvent event) throws CommandException {
-        // Gets a hashmap of all the user IDs with ranks
-        // DOES NOT WORK IF RankHandler'S HASHMAP IS OUT OF ORDER.
-        HashMap<Long, Permission> userRanks = RankHandler.getUserRanks();
-        // List to construct the final output
-        List<String> devListBuilder = new ArrayList<>();
-
-        Permission oldValue = null;
-        // Iterates through hashmap keys and adds the developers to the list
-        for (Long id : userRanks.keySet()) {
-            Permission value = userRanks.get(id);
-            if (value.equals(oldValue)) {
-                devListBuilder.add(String.format("• <@%s>", id));
-            } else {
-                // Automatically creates a new category when a new permission level is reached.
-                devListBuilder.add(String.format("\n**%s**", value.getName()));
-                devListBuilder.add(String.format("• <@%s>", id));
-                oldValue = value;
-            }
-        }
-
         InfoValueCollection infoValues = new InfoValueCollection()
             .addRegular("🏓 Ping", "", String.format("`%s` ms",
                 event.getJDA().getRestPing().complete()))
@@ -67,7 +42,12 @@ public class StatsCommand extends InformationCommand implements CombinedCommand 
                     "\u200b\n" + infoValues.build() + "\n\u200b",
                     true
                 ).addField("__**Credits**__\n\u200b\n\n",
-                    String.join("\n", devListBuilder),
+                    """
+                        **Owner**
+                        • ryan_#2156
+                        **Developer**
+                        • Erobus#7861
+                        """,
                     true
                 ))
             .addButton(Button.link(Empire.BOT_INVITE_LINK, "Bot Invite")
