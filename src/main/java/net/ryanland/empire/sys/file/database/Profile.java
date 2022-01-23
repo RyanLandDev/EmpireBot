@@ -1,5 +1,6 @@
 package net.ryanland.empire.sys.file.database;
 
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.Interaction;
@@ -100,8 +101,26 @@ public class Profile extends Table<User> implements Emojis {
         return get(LEVEL_KEY, DEFAULT_LEVEL);
     }
 
+    /**
+     * Sets the user's level.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public Profile setLevel(int level) {
+        put(LEVEL_KEY, level);
+        return this;
+    }
+
     public Price<Integer> getCrystals() {
         return new Price<>(Currency.CRYSTALS, get(CRYSTALS_KEY, DEFAULT_CRYSTALS));
+    }
+
+    /**
+     * Sets the user's crystals.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public Profile setCrystals(int crystals) {
+        put(CRYSTALS_KEY, crystals);
+        return this;
     }
 
     public String getFormattedCrystals() {
@@ -114,6 +133,15 @@ public class Profile extends Table<User> implements Emojis {
 
     public Price<Integer> getGold() {
         return new Price<>(Currency.GOLD, get(GOLD_KEY, DEFAULT_GOLD));
+    }
+
+    /**
+     * Sets the user's gold.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public Profile setGold(int gold) {
+        put(GOLD_KEY, gold);
+        return this;
     }
 
     public String getFormattedGold() {
@@ -166,7 +194,7 @@ public class Profile extends Table<User> implements Emojis {
             newXp -= getRequiredXp();
 
             int newLevel = getLevel() + 1;
-            put(LEVEL_KEY, newLevel);
+            setLevel(newLevel);
 
             interaction.replyEmbeds(new PresetBuilder(Preset.NOTIFICATION,
                 String.format("""
@@ -188,7 +216,55 @@ public class Profile extends Table<User> implements Emojis {
         }
 
         // Update xp
-        put(XP_KEY, newXp);
+        setXp(newXp);
+    }
+
+    /**
+     * Increases the profile's xp by the provided value and accounts for level ups.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     *
+     * @param xp The amount of XP to give to the profile.
+     */
+    public void giveXp(int xp, Message message, MessageEmbed... embeds) {
+        int newXp = getXp() + xp;
+
+        // Level up
+        if (newXp >= getRequiredXp()) {
+            newXp -= getRequiredXp();
+
+            int newLevel = getLevel() + 1;
+            setLevel(newLevel);
+
+            message.replyEmbeds(new PresetBuilder(Preset.NOTIFICATION,
+                String.format("""
+                        You have leveled up to **Level %s**!
+
+                        :homes: **Building limit:** *%s* %s %s
+                        %s The maximum amount of buildings you can have.
+                        %s **Building stage limit:** *%s* %3$s %s
+                        %5$s The maximum stage a building can be.
+
+                        %3$s Received %s""",
+                    newLevel, getBuildingLimit(), ARROW_RIGHT, getBuildingLimit(newLevel), AIR,
+                    STAGE, getBuildingStageLimit(), getBuildingStageLimit(newLevel),
+                    Boxes.MYTHICAL.give(of(message.getAuthor()))),
+                XP + " Level Up!")
+                .build(), embeds).queue();
+        } else {
+            message.replyEmbeds(Arrays.asList(embeds)).queue();
+        }
+
+        // Update xp
+        setXp(newXp);
+    }
+
+    /**
+     * Sets the user's XP.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public Profile setXp(int xp) {
+        put(XP_KEY, xp);
+        return this;
     }
 
     public boolean canAfford(@NotNull Price<Integer> price) {
@@ -207,6 +283,15 @@ public class Profile extends Table<User> implements Emojis {
 
     public Integer getWave() {
         return get(WAVE_KEY, DEFAULT_WAVE);
+    }
+
+    /**
+     * Sets the user's wave.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public Profile setWave(int wave) {
+        put(WAVE_KEY, wave);
+        return this;
     }
 
     public Price<Integer> getWaveGoldReward() {
@@ -258,8 +343,9 @@ public class Profile extends Table<User> implements Emojis {
      * Sets the user's potions.
      * <strong>WARNING:</strong> Does not call {@link #update()}
      */
-    public void setUserPotions(List<Potion> potions) {
+    public Profile setUserPotions(List<Potion> potions) {
         put(POTIONS_KEY, PotionsSerializer.getInstance().serialize(potions));
+        return this;
     }
 
     /**
@@ -308,21 +394,32 @@ public class Profile extends Table<User> implements Emojis {
      * @param building The building to set. This building's {@code layer} field will be used.
      */
     @SuppressWarnings("all")
-    public void setBuilding(Building building) {
+    public Profile setBuilding(Building building) {
         List<Building> newBuildings = new ArrayList<>(getBuildings());
 
         newBuildings.remove(building.getLayer() - 1);
         newBuildings.add(building.getLayer() - 1, building);
 
         setBuildings(newBuildings);
+        return this;
     }
 
     /**
      * Sets the user's buildings.
      * <strong>WARNING:</strong> Does not call {@link #update()}
      */
-    public void setBuildings(List<Building> buildings) {
+    public Profile setBuildings(List<Building> buildings) {
         put(BUILDINGS_KEY, BuildingsSerializer.getInstance().serialize(buildings));
+        return this;
+    }
+
+    /**
+     * Sets the user's inventory.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public Profile setInventory(List<Item> inventory) {
+        put(INVENTORY_KEY, InventorySerializer.getInstance().serialize(inventory));
+        return this;
     }
 
     /**
@@ -332,7 +429,7 @@ public class Profile extends Table<User> implements Emojis {
      * @param building The building to add.
      */
     @SuppressWarnings("all")
-    public void addBuilding(Building building) throws CommandException {
+    public Profile addBuilding(Building building) throws CommandException {
         List<Building> newBuildings = getBuildings();
 
         if (newBuildings.size() + 1 > getBuildingLimit())
@@ -340,6 +437,7 @@ public class Profile extends Table<User> implements Emojis {
 
         newBuildings.add(building.defaults());
         setBuildings(newBuildings);
+        return this;
     }
 
     /**
@@ -348,10 +446,11 @@ public class Profile extends Table<User> implements Emojis {
      *
      * @param layer The layer the building is at to remove.
      */
-    public void removeBuilding(int layer) {
+    public Profile removeBuilding(int layer) {
         List<Building> newBuildings = getBuildings();
         newBuildings.remove(layer - 1);
         setBuildings(newBuildings);
+        return this;
     }
 
     public int getBuildingLimit() {

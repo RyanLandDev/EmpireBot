@@ -2,9 +2,12 @@ package net.ryanland.empire.bot.command.impl.gameplay.items;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.utils.MarkdownSanitizer;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
@@ -20,16 +23,11 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class InventoryCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("inventory")
-            .description("View all the items in your inventory.")
-            .category(Category.ITEMS)
-            .requiresProfile();
-    }
+@CommandBuilder(
+    name = "inventory",
+    description = "View all the items in your inventory."
+)
+public class InventoryCommand extends ItemsCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -37,13 +35,13 @@ public class InventoryCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         PresetBuilder embed = new PresetBuilder(
             "Here is an overview of all the items in your inventory.\nYou can use an item with `/use <id>`.\n\u200b",
             "Inventory");
 
         // Add inventory items here
-        embed.addFields(build(event.getProfile(),
+        embed.addFields(build(Profile.of(event),
             new InventoryCategory("📦", "Boxes",
                 InventoryItem.box(Boxes.HOURLY),
                 InventoryItem.box(Boxes.DAILY),

@@ -1,25 +1,24 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.types.primitive.IntegerArgument;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.bot.command.arguments.BuildingArgument;
-import net.ryanland.empire.bot.command.arguments.number.IntegerArgument;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 
 import java.util.List;
 
-public class MoveCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("move")
-            .description("Moves a building.")
-            .category(Category.ITEMS)
-            .requiresProfile();
-    }
+@CommandBuilder(
+    name = "move",
+    description = "Moves a building."
+)
+public class MoveCommand extends ItemsCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -36,9 +35,9 @@ public class MoveCommand extends Command {
 
     @Override
     @SuppressWarnings("all")
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         // Get params
-        Profile profile = event.getProfile();
+        Profile profile = Profile.of(event);
         Building building = event.getArgument("building");
         Integer newLayer = (Integer) event.getArgument("layer") - 1;
 
@@ -54,13 +53,14 @@ public class MoveCommand extends Command {
             throw new CommandException("The building was already at this position.");
 
         // Update the building data
-        List<List> buildings = profile.getDocument().getBuildings();
+        List<Building> buildings = profile.getBuildings();
         buildings.remove(building.getLayer() - 1);
-        buildings.add(newLayer, building.serialize());
-        profile.getDocument().setBuildingsRaw(buildings).update();
+        buildings.add(newLayer, building);
+        profile.setBuildings(buildings);
+        profile.update();
 
         // Send success message
-        event.reply(new PresetBuilder(PresetType.SUCCESS, String.format(
+        event.reply(new PresetBuilder(DefaultPresetType.SUCCESS, String.format(
             "Moved your %s from layer `%s` to `%s`.", building.format(), building.getLayer(), newLayer + 1
         )));
     }

@@ -5,9 +5,10 @@ import net.ryanland.colossus.command.CommandException;
 import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
 import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.events.MessageCommandEvent;
+import net.ryanland.colossus.events.SlashEvent;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
-import net.ryanland.empire.sys.file.serializer.BuildingsSerializer;
 import net.ryanland.empire.sys.gameplay.action.BuffedAction;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
@@ -145,7 +146,7 @@ public class NewWaveCommand extends CombatCommand implements CombinedCommand {
 
         // Increase the profile's wave number if the game was won
         if (win) {
-            profile.getDocument().setWave(wave + 1);
+            profile.setWave(wave + 1);
         }
 
         // Reward gold
@@ -195,11 +196,13 @@ public class NewWaveCommand extends CombatCommand implements CombinedCommand {
                     + " and " + goldEarned.format() + (notEnoughGoldCapacity ? " (Not enough capacity)" : ""), true);
 
         // Give the xp
-        profile.giveXp((int) xpEarned, event.getInteraction(), false, embed.build());
+        if (event instanceof MessageCommandEvent)
+            profile.giveXp((int) xpEarned, ((MessageCommandEvent) event).getMessage(), embed.build());
+        else
+            profile.giveXp((int) xpEarned, ((SlashEvent) event).getInteraction(), false, embed.build());
 
         // Update user document
-        profile.getDocument().setBuildingsRaw(BuildingsSerializer.getInstance().serialize(buildings));
-        profile.getDocument().update();
+        profile.setBuildings(buildings).update();
 
         debug(System.currentTimeMillis());
     }

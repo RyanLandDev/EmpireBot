@@ -1,8 +1,13 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.types.EnumArgument;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
@@ -11,16 +16,11 @@ import net.ryanland.empire.sys.gameplay.currency.Price;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RepairCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("repair")
-            .description("Repairs all buildings with the provided currency.")
-            .category(Category.ITEMS)
-            .requiresProfile();
-    }
+@CommandBuilder(
+    name = "repair",
+    description = "Repairs all buildings with the provided currency."
+)
+public class RepairCommand extends ItemsCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -32,11 +32,11 @@ public class RepairCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
-        Profile profile = event.getProfile();
+    public void execute(CommandEvent event) throws CommandException {
+        Profile profile = Profile.of(event);
         Currency currency = event.getArgument("currency");
 
-        List<Building> buildingsToRepair = event.getProfile().getBuildings().stream()
+        List<Building> buildingsToRepair = profile.getBuildings().stream()
             .filter(building -> !building.isHealthMaxed() && building.exists() &&
                 (currency == Currency.CRYSTALS || currency == building.getRepairPrice().currency()))
             .collect(Collectors.toList());
@@ -64,18 +64,18 @@ public class RepairCommand extends Command {
         }
 
         if (buildingsRepaired == 0 && buildingsToRepair.size() > 0) {
-            event.reply(new PresetBuilder(PresetType.ERROR,
+            event.reply(new PresetBuilder(DefaultPresetType.ERROR,
                 "You do not have enough " + currency.getName() + " to repair any building.", "Repair"));
         } else if (buildingsRepaired == 0) {
-            event.reply(new PresetBuilder(PresetType.ERROR,
+            event.reply(new PresetBuilder(DefaultPresetType.ERROR,
                 "No buildings can currently be repaired using " + currency.getName() + ".", "Repair"));
         } else {
-            event.reply(new PresetBuilder(PresetType.SUCCESS,
+            event.reply(new PresetBuilder(DefaultPresetType.SUCCESS,
                 "Repaired %s building%s for %s.".formatted(
                     buildingsRepaired, buildingsRepaired == 1 ? "" : "s",
                     new Price<>(currency, capital - owned).format()),
                 "Repair"));
-            profile.getDocument().update();
+            profile.update();
         }
     }
 }

@@ -1,71 +1,69 @@
 package net.ryanland.empire.bot.command.impl.gameplay.games;
 
-import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
-import net.ryanland.empire.bot.command.arguments.number.IntegerArgument;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.MalformedArgumentException;
+import net.ryanland.colossus.command.arguments.types.primitive.ArgumentStringResolver;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.currency.Currency;
 import net.ryanland.empire.sys.gameplay.currency.Price;
 import net.ryanland.empire.util.RandomUtil;
 
-public class GambleCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("gamble")
-            .description("Bet gold, and get double or nothing.")
-            .category(Category.GAMES)
-            .requiresProfile();
-    }
+@CommandBuilder(
+    name = "gamble",
+    description = "Bet gold, and get double or nothing."
+)
+public class GambleCommand extends GamesCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
-        return new ArgumentSet()
-            .addArguments(
-                new IntegerArgument() {
+        return new ArgumentSet().addArguments(
+                new ArgumentStringResolver<Integer>() {
                     @Override
-                    public OptionType getType() {
-                        return OptionType.STRING;
+                    public Integer resolve(String input, CommandEvent event) throws ArgumentException {
+                        if (input.equals("half"))
+                            return (int) ((float) Profile.of(event).getGold().amount() / 2);
+                        else if (input.equals("all"))
+                            return Profile.of(event).getGold().amount();
+                        else {
+                            try {
+                                return Integer.parseInt(input);
+                            } catch (NumberFormatException e) {
+                                throw new MalformedArgumentException("Invalid input. Must be a valid amount, 'half' or 'all'.");
+                            }
+                        }
                     }
                 }
-                    .min(1)
                     .id("amount")
                     .description("The amount to bet, or 'half'/'all'.")
-                    .fallback((options, event) -> {
-                        switch (options.pop().getAsString().toLowerCase()) {
-                            case "half" -> {
-                                return (int) ((float) event.getProfile().getGold().amount() / 2);
-                            }
-                            case "all" -> {
-                                return event.getProfile().getGold().amount();
-                            }
-                            default -> throw new MalformedArgumentException("Invalid input.");
-                        }
-                    })
             );
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         int amount = event.getArgument("amount");
         Price<Integer> price = new Price<>(Currency.GOLD, amount);
+        Profile profile = Profile.of(event);
 
-        price.buy(event.getProfile());
+        price.buy(profile);
 
         // Lose
         if (RandomUtil.randomInt(0, 1) == 0) {
-            event.reply(new PresetBuilder(PresetType.ERROR,
+            event.reply(new PresetBuilder(DefaultPresetType.ERROR,
                 "You have lost " + price.format() + ".", "Loss"));
             // Win
         } else {
-            price.give(event.getProfile());
-            event.reply(new PresetBuilder(PresetType.SUCCESS,
+            price.give(profile);
+            event.reply(new PresetBuilder(DefaultPresetType.SUCCESS,
                 "You have won " + price.format() + ".", "Win"));
         }
 
-        event.getProfile().getDocument().update();
+        profile.update();
     }
 }

@@ -24,9 +24,8 @@ public record Price<T extends Number>(Currency currency, T amount) implements Fo
 
     @SuppressWarnings("unchecked")
     public void give(Profile profile) throws CommandException {
-        if (!profile.roomFor((Price<Integer>) this)) {
+        if (!profile.roomFor((Price<Integer>) this))
             throw new CommandException("You do not have enough capacity.");
-        }
 
         currency.update(profile, currency.get(profile).amount() + amount.intValue());
     }

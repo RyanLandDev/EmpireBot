@@ -1,5 +1,6 @@
 package net.ryanland.empire.sys.file.serializer;
 
+import net.ryanland.colossus.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import org.jetbrains.annotations.NotNull;

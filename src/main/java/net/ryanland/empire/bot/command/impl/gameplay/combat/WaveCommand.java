@@ -1,8 +1,12 @@
 package net.ryanland.empire.bot.command.impl.gameplay.combat;
 
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.sys.message.PresetBuilder;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.combat.troop.Troop;
 import net.ryanland.empire.sys.gameplay.combat.wave.Wave;
 
@@ -10,16 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class WaveCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("wave")
-            .description("View information about the current wave.")
-            .category(Category.COMBAT)
-            .requiresProfile();
-    }
+@CommandBuilder(
+    name = "wave",
+    description = "View information about the current wave."
+)
+public class WaveCommand extends CombatCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -27,8 +26,8 @@ public class WaveCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
-        int wave = event.getProfile().getWave();
+    public void execute(CommandEvent event) throws CommandException {
+        int wave = Profile.of(event).getWave();
         List<Troop> troops = Wave.getTroops(wave);
 
         event.reply(new PresetBuilder(
@@ -43,7 +42,6 @@ public class WaveCommand extends Command {
     }
 
     private static String genTroopsOverview(List<Troop> troops) {
-
         // Get quantities
         HashMap<String, Integer> quantities = new HashMap<>();
         for (Troop troop : troops) {
@@ -57,7 +55,6 @@ public class WaveCommand extends Command {
         List<String> overview = new ArrayList<>();
         for (String key : quantities.keySet()) {
             int quantity = quantities.get(key);
-
             overview.add(
                 (quantity == 1 ? AIR : "*" + quantity + "x* \u200b")
                     + " " + key

@@ -1,22 +1,25 @@
 package net.ryanland.empire.bot.command.arguments.Enum;
 
+import net.ryanland.colossus.command.arguments.types.EnumArgument;
+import net.ryanland.empire.sys.file.database.Profile;
+
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public enum Balance implements EnumArgument.InputEnum {
 
-    GOLD("gold", UserDocument::getGold, UserDocument::setGold),
-    CRYSTALS("crystals", UserDocument::getCrystals, UserDocument::setCrystals),
-    XP("xp", UserDocument::getXp, UserDocument::setXp);
+    GOLD("gold", profile -> profile.getGold().amount(), Profile::setGold),
+    CRYSTALS("crystals", profile -> profile.getCrystals().amount(), Profile::setCrystals),
+    XP("xp", Profile::getXp, Profile::setXp);
 
     private final String name;
-    private final Function<UserDocument, Integer> getter;
-    private final BiFunction<UserDocument, Integer, UserDocument> setter;
+    private final Function<Profile, Integer> getter;
+    private final BiFunction<Profile, Integer, Profile> setter;
     private final boolean hidden;
 
     Balance(String name,
-            Function<UserDocument, Integer> getter,
-            BiFunction<UserDocument, Integer, UserDocument> setter,
+            Function<Profile, Integer> getter,
+            BiFunction<Profile, Integer, Profile> setter,
             boolean hidden) {
         this.name = name;
         this.getter = getter;
@@ -25,8 +28,8 @@ public enum Balance implements EnumArgument.InputEnum {
     }
 
     Balance(String name,
-            Function<UserDocument, Integer> getter,
-            BiFunction<UserDocument, Integer, UserDocument> setter) {
+            Function<Profile, Integer> getter,
+            BiFunction<Profile, Integer, Profile> setter) {
         this(name, getter, setter, false);
     }
 
@@ -40,11 +43,11 @@ public enum Balance implements EnumArgument.InputEnum {
         return hidden;
     }
 
-    public Function<UserDocument, Integer> getGetter() {
+    public Function<Profile, Integer> getGetter() {
         return getter;
     }
 
-    public BiFunction<UserDocument, Integer, UserDocument> getSetter() {
+    public BiFunction<Profile, Integer, Profile> getSetter() {
         return setter;
     }
 }

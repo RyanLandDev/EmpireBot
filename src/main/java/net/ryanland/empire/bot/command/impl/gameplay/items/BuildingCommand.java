@@ -1,21 +1,18 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.events.CommandEvent;
 import net.ryanland.empire.bot.command.arguments.BuildingArgument;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 
-public class BuildingCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("building")
-            .description("Gets information about a specific building in your Empire.")
-            .category(Category.ITEMS)
-            .requiresProfile();
-    }
+@CommandBuilder(
+    name = "building",
+    description = "Gets information about a specific building in your Empire."
+)
+public class BuildingCommand extends ItemsCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -27,7 +24,7 @@ public class BuildingCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         Building building = event.getArgument("building");
         event.reply(building.getMenuBuilder());
     }

@@ -1,8 +1,8 @@
 package net.ryanland.empire.sys.gameplay.currency;
 
+import net.ryanland.colossus.command.arguments.types.EnumArgument;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.message.Emojis;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -10,9 +10,9 @@ import java.util.function.Function;
 public enum Currency implements Emojis, EnumArgument.InputEnum {
 
     GOLD("Gold", Emojis.GOLD, 5000, 0.1f,
-        Profile::getGold, UserDocument::setGold),
+        Profile::getGold, Profile::setGold),
     CRYSTALS("Crystals", Emojis.CRYSTALS, 500, 2.3f,
-        Profile::getCrystals, UserDocument::setCrystals);
+        Profile::getCrystals, Profile::setCrystals);
 
     private final String name;
     private final String emoji;
@@ -20,10 +20,10 @@ public enum Currency implements Emojis, EnumArgument.InputEnum {
     private final float collectXpMultiplier;
 
     private final Function<Profile, Price<Integer>> getter;
-    private final BiConsumer<UserDocument, Integer> setter;
+    private final BiConsumer<Profile, Integer> setter;
 
     Currency(String name, String emoji, int defaultCapacity, float collectXpMultiplier,
-             Function<Profile, Price<Integer>> getter, BiConsumer<UserDocument, Integer> setter) {
+             Function<Profile, Price<Integer>> getter, BiConsumer<Profile, Integer> setter) {
         this.name = name;
         this.emoji = emoji;
         this.defaultCapacity = defaultCapacity;
@@ -57,22 +57,18 @@ public enum Currency implements Emojis, EnumArgument.InputEnum {
         return getter;
     }
 
-    public void update(@NotNull Profile profile, Integer newValue) {
-        update(profile.getDocument(), newValue);
-    }
-
     /**
-     * Updates a UserDocument's currency value.
-     * <strong>WARNING:</strong> Does not call {@link UserDocument#update}.
+     * Updates a profile's currency value.
+     * <strong>WARNING:</strong> Does not call {@link Profile#update}.
      *
-     * @param document The UserDocument to apply this change to.
+     * @param profile The Profile to apply this change to.
      * @param newValue The new value this currency will be set to.
      */
-    public void update(UserDocument document, Integer newValue) {
-        getSetter().accept(document, newValue);
+    public void update(Profile profile, Integer newValue) {
+        getSetter().accept(profile, newValue);
     }
 
-    public BiConsumer<UserDocument, Integer> getSetter() {
+    public BiConsumer<Profile, Integer> getSetter() {
         return setter;
     }
 

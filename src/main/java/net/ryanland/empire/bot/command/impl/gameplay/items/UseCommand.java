@@ -1,35 +1,33 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
-import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
-import net.ryanland.empire.bot.command.arguments.SingleArgument;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.Category;
-import net.ryanland.empire.bot.command.info.CommandInfo;
+import net.ryanland.colossus.command.CombinedCommand;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.annotations.CommandBuilder;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.MalformedArgumentException;
+import net.ryanland.colossus.command.arguments.types.primitive.ArgumentStringResolver;
+import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 
-public class UseCommand extends Command {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("use")
-            .description("Use an item from your /inventory.")
-            .category(Category.ITEMS);
-    }
+@CommandBuilder(
+    name = "use",
+    description = "Use an item from your /inventory."
+)
+public class UseCommand extends ItemsCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
-            new SingleArgument<Item>() {
+            new ArgumentStringResolver<Item>() {
                 @Override
-                public Item parsed(OptionMapping argument, CommandEvent event) throws ArgumentException {
+                public Item resolve(String arg, CommandEvent event) throws ArgumentException {
                     try {
-                        return CollectibleHolder.findItem(argument.getAsString());
+                        return CollectibleHolder.findItem(arg);
                     } catch (IllegalArgumentException e) {
-                        throw new MalformedArgumentException("An item with the ID `" + argument.getAsString() + "` was not found.");
+                        throw new MalformedArgumentException("An item with the ID `" + arg + "` was not found.");
                     }
                 }
             }
@@ -39,13 +37,10 @@ public class UseCommand extends Command {
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         Item item = event.getArgument("item");
-
-        if (event.getProfile().getInventory().stream().noneMatch(invItem -> invItem.typeEquals(item))) {
+        if (Profile.of(event).getInventory().stream().noneMatch(invItem -> invItem.typeEquals(item)))
             throw new CommandException("You do not have this item in your inventory.");
-        }
-
-        event.reply(item.use(event.getProfile()));
+        event.reply(item.use(Profile.of(event)));
     }
 }

@@ -1,10 +1,11 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.colossus.sys.file.serializer.Serializer;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.bot.command.impl.gameplay.items.InventoryCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.items.UseCommand;
 import net.ryanland.empire.sys.file.database.Profile;
-import net.ryanland.empire.sys.file.serializer.InventorySerializer;
 import net.ryanland.empire.sys.file.serializer.ItemSerializer;
 import org.jetbrains.annotations.NotNull;
 
@@ -92,15 +93,15 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
         List<Item> inventory = new ArrayList<>(profile.getInventory());
         inventory.add(this);
 
-        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
-        profile.getDocument().update();
+        profile.setInventory(inventory);
+        profile.update();
 
         return format();
     }
 
     /**
      * Removes this item from the provided profile's inventory.<br>
-     * Does not call {@link UserDocument#update}!
+     * Does not call {@link Profile#update()}!
      * @param profile The inventory of this profile will be affected.
      */
     default void removeThisFromInventory(Profile profile) {
@@ -117,7 +118,7 @@ public interface Item extends Collectible, Serializable, Serializer<String, Item
             i++;
         }
 
-        profile.getDocument().setInventory(InventorySerializer.getInstance().serialize(inventory));
+        profile.setInventory(inventory);
     }
 
     /**
