@@ -1,10 +1,12 @@
 package net.ryanland.empire.sys.gameplay.collectible.potion;
 
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.MalformedArgumentException;
+import net.ryanland.colossus.sys.file.serializer.Serializer;
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.file.serializer.PotionSerializer;
-import net.ryanland.empire.sys.file.serializer.PotionsSerializer;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,10 +39,9 @@ public abstract class Potion implements Item {
         List<Potion> userPotions = new ArrayList<>(profile.getUserPotions());
         setExpires(new Date(System.currentTimeMillis() + getLength().getDuration().toMillis()));
         userPotions.add(this);
-        profile.getDocument().setPotions(PotionsSerializer.getInstance().serialize(userPotions));
-        profile.getDocument().update();
+        profile.setUserPotions(userPotions).update();
 
-        return new PresetBuilder(PresetType.SUCCESS,
+        return new PresetBuilder(DefaultPresetType.SUCCESS,
             "Used " + format(), "Potion");
     }
 

@@ -4,14 +4,16 @@ import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.interactions.Interaction;
 import net.dv8tion.jda.api.interactions.components.Button;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.sys.interactions.menu.ActionMenuBuilder;
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.gameplay.building.impl.Building;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoBuilder;
 import net.ryanland.empire.sys.gameplay.building.info.BuildingInfoElement;
 import net.ryanland.empire.sys.gameplay.currency.Price;
-import net.ryanland.empire.sys.message.interactions.menu.ActionMenuBuilder;
 import net.ryanland.empire.util.DateUtil;
 import net.ryanland.empire.util.NumberUtil;
 import net.ryanland.empire.util.RandomUtil;
@@ -80,7 +82,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
                     Price<Integer> holding = getHolding();
                     int xp = getCollectXp();
 
-                    executeButtonAction(event, () -> collect(xp, event, new PresetBuilder(PresetType.SUCCESS, String.format(
+                    executeButtonAction(event, () -> collect(xp, event, new PresetBuilder(DefaultPresetType.SUCCESS, String.format(
                         "Collected %s from %s.",
                         holding.format() + (xp > 0 ? String.format(" and %s %s", XP, NumberUtil.format(xp)) : ""),
                         format()
@@ -142,8 +144,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
         profile.giveXp(xp, interaction, embeds);
 
         lastCollect = new Date();
-        profile.setBuilding(this);
-        profile.getDocument().update();
+        profile.setBuilding(this).update();
     }
 
     public int getCollectXp() {
@@ -175,8 +176,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
         getRepairPrice().buy(profile);
         health = getMaxHealth();
-        profile.setBuilding(this);
-        profile.getDocument().update();
+        profile.setBuilding(this).update();
     }
 
     @Override
@@ -189,8 +189,7 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
 
         getCrystalRepairPrice().buy(profile);
         health = getMaxHealth();
-        profile.setBuilding(this);
-        profile.getDocument().update();
+        profile.setBuilding(this).update();
     }
 
     public Date getLastCollect() {

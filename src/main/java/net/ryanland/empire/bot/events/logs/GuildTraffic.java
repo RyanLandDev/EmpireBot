@@ -7,7 +7,8 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.ryanland.empire.Empire;
+import net.ryanland.colossus.Colossus;
+import net.ryanland.empire.sys.message.builders.Preset;
 import net.ryanland.empire.sys.message.webhooks.WebhookHandler;
 import net.ryanland.empire.util.NumberUtil;
 
@@ -34,11 +35,11 @@ public class GuildTraffic extends ListenerAdapter {
         if (joined) {
             header = "Join";
             action = "joined";
-            color = PresetType.SUCCESS.getColor();
+            color = Preset.SUCCESS.getColor();
         } else {
             header = "Leave";
             action = "left";
-            color = PresetType.ERROR.getColor();
+            color = Preset.ERROR.getColor();
         }
 
         WebhookEmbed embed = new WebhookEmbedBuilder()
@@ -46,7 +47,7 @@ public class GuildTraffic extends ListenerAdapter {
             .setTitle(new WebhookEmbed.EmbedTitle("Guild " + header, null))
             .setThumbnailUrl(guild.getIconUrl())
             .setTimestamp(Instant.now())
-            .setDescription(String.format("**%s** has __%s__ the following guild:\n\u200b", Empire.getSelfUser().getName(), action))
+            .setDescription(String.format("**%s** has __%s__ the following guild:\n\u200b", Colossus.getSelfUser().getName(), action))
             .addField(new WebhookEmbed.EmbedField(true, "Name", guild.getName()))
             .addField(new WebhookEmbed.EmbedField(true, "ID", guild.getId()))
             .addField(new WebhookEmbed.EmbedField(true, "Member Count", NumberUtil.format(guild.getMemberCount())))

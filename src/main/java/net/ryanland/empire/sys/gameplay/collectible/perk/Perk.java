@@ -1,7 +1,8 @@
 package net.ryanland.empire.sys.gameplay.collectible.perk;
 
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
-import net.ryanland.empire.sys.file.serializer.PerksSerializer;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.util.DateUtil;
 
@@ -45,10 +46,9 @@ public abstract class Perk implements Item {
         List<Perk> perks = new ArrayList<>(profile.getPerks());
         setExpires(new Date(System.currentTimeMillis() + getDuration().toMillis()));
         perks.add(this);
-        profile.getDocument().setPotions(PerksSerializer.getInstance().serialize(perks));
-        profile.getDocument().update();
+        profile.setPerks(perks).update();
 
-        return new PresetBuilder(PresetType.SUCCESS,
+        return new PresetBuilder(DefaultPresetType.SUCCESS,
             "Used " + format(), "Perk");
     }
 

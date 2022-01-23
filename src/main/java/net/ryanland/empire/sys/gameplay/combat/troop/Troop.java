@@ -1,7 +1,7 @@
 package net.ryanland.empire.sys.gameplay.combat.troop;
 
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.MalformedArgumentException;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.empire.sys.message.Formattable;
 import net.ryanland.empire.util.StringUtil;
 import org.jetbrains.annotations.NotNull;

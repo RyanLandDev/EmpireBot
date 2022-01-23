@@ -23,8 +23,7 @@ public abstract class CrystalsReceivable implements Receivable {
     public String receive(Profile profile) {
         int receivedCrystals = RandomUtil.randomInt(getMinimum(), getMaximum());
 
-        profile.getDocument().setCrystals(profile.getCrystals().amount() + receivedCrystals);
-        profile.getDocument().update();
+        profile.setCrystals(profile.getCrystals().amount() + receivedCrystals).update();
 
         return new Price<>(Currency.CRYSTALS, receivedCrystals).format();
     }

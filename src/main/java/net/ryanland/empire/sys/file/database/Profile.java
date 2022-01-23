@@ -312,6 +312,15 @@ public class Profile extends Table<User> implements Emojis {
     }
 
     /**
+     * Sets the user's perks.
+     * <strong>WARNING:</strong> Does not call {@link #update()}
+     */
+    public Profile setPerks(List<Perk> perks) {
+        put(PERKS_KEY, PerksSerializer.getInstance().serialize(perks));
+        return this;
+    }
+
+    /**
      * Gets all <strong>currently active</strong> potions of all scopes.
      * @see #getUserPotions()
      * @see #getClanPotions()

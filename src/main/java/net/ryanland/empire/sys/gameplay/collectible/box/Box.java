@@ -1,5 +1,7 @@
 package net.ryanland.empire.sys.gameplay.collectible.box;
 
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.Collectible;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
@@ -34,8 +36,8 @@ public abstract class Box implements Item {
     public PresetBuilder use(Profile profile) {
         removeThisFromInventory(profile);
         Collectible collectible = getItems().pick();
-        profile.getDocument().update();
-        return new PresetBuilder(PresetType.SUCCESS,
+        profile.update();
+        return new PresetBuilder(DefaultPresetType.SUCCESS,
             "You got " + collectible.receive(profile),
             "Opened " + format()
         );

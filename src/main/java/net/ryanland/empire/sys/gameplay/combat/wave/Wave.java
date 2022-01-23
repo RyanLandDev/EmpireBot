@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.gameplay.combat.wave;
 
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.colossus.command.CommandException;
 import net.ryanland.empire.sys.gameplay.combat.troop.RecruitTroop;
 import net.ryanland.empire.sys.gameplay.combat.troop.Troop;
 import net.ryanland.empire.util.RandomUtil;

@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.colossus.Colossus;
 import net.ryanland.colossus.ColossusBuilder;
+import net.ryanland.colossus.sys.file.LocalFileBuilder;
+import net.ryanland.colossus.sys.file.LocalFileType;
 import net.ryanland.empire.bot.command.impl.dev.*;
 import net.ryanland.empire.bot.command.impl.dev.balance.BalanceCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.combat.EnemyCommand;
@@ -86,6 +88,16 @@ public class Empire {
             )
             .registerInhibitors(
                 new RequiresProfileInhibitor()
+            )
+            .registerLocalFiles(
+                new LocalFileBuilder()
+                    .setName("webhooks")
+                    .setFileType(LocalFileType.JSON)
+                    .setDefaultContent("""
+                        {
+                            "guild_traffic": ""
+                        }""")
+                    .buildFile()
             )
             .disableHelpCommand()
             .setJDABuilder(builder -> builder

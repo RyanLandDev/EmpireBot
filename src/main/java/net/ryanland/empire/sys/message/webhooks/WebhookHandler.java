@@ -1,7 +1,7 @@
 package net.ryanland.empire.sys.message.webhooks;
 
 import com.google.gson.JsonObject;
-import net.ryanland.empire.sys.file.local.LocalFiles;
+import net.ryanland.colossus.Colossus;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ public class WebhookHandler {
 
     static {
         try {
-            JsonObject rawJson = LocalFiles.WEBHOOKS.parseJson();
+            JsonObject rawJson = Colossus.getLocalFile("webhooks").parseJson();
             WEBHOOKS = new Webhook(rawJson);
         } catch (IOException e) {
             e.printStackTrace();

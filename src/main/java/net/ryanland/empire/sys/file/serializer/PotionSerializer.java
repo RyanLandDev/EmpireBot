@@ -1,6 +1,6 @@
 package net.ryanland.empire.sys.file.serializer;
 
-import net.ryanland.empire.sys.gameplay.collectible.Collectible;
+import net.ryanland.colossus.sys.file.serializer.Serializer;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 import net.ryanland.empire.sys.gameplay.collectible.Item;
 import net.ryanland.empire.sys.gameplay.collectible.potion.Potion;
