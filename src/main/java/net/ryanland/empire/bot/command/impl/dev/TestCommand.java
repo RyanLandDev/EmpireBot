@@ -1,9 +1,9 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.ryanland.colossus.command.CombinedCommand;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
-import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.message.builders.Preset;
 

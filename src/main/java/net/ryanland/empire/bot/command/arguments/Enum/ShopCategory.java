@@ -1,8 +1,9 @@
 package net.ryanland.empire.bot.command.arguments.Enum;
 
 import net.ryanland.colossus.command.arguments.types.EnumArgument;
-import net.ryanland.colossus.events.CommandEvent;
-import net.ryanland.colossus.sys.interactions.menu.TabMenuBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
+import net.ryanland.colossus.sys.interactions.menu.tab.TabMenuBuilder;
+import net.ryanland.colossus.sys.interactions.menu.tab.TabMenuPage;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.building.BuildingType;
 import net.ryanland.empire.sys.message.Emojis;
@@ -22,10 +23,9 @@ public enum ShopCategory implements EnumArgument.InputEnum, Emojis {
                     .filter(building -> !building.isBaseType())
                     .collect(Collectors.toList())
             ) {
-                builder.addPage(
-                    type.getFullName(),
-                    type.getEmbed(Profile.of(event)), type.getEmoji()
-                );
+                builder.addPages(new TabMenuPage(type.getFullName(),
+                    type.getEmbed(Profile.of(event)), type.getEmoji(), false
+                ));
             }
 
             return builder;

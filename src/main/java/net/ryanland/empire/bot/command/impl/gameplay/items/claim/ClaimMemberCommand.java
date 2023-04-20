@@ -1,24 +1,19 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items.claim;
 
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.regular.CommandBuilder;
 import net.ryanland.empire.Empire;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.sys.file.StorageType;
 import net.ryanland.empire.util.DateUtil;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
 
+@CommandBuilder(
+    name = "member",
+    description = "Claim your Member package.",
+    cooldown = 24*60*60
+)
 public class ClaimMemberCommand extends AbstractClaimSubCommand {
-
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("member")
-            .description("Claim your Member package.")
-            .cooldown(86400)
-            .cooldownStorage(StorageType.EXTERNAL);
-    }
 
     @Override
     public ClaimCommandInfo getClaimInfo() {

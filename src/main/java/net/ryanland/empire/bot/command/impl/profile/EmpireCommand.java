@@ -1,10 +1,10 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
 import net.dv8tion.jda.api.entities.User;
-import net.ryanland.colossus.command.CombinedCommand;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
-import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.bot.command.RequiresProfile;
 import net.ryanland.empire.bot.command.arguments.ProfileArgument;
@@ -24,7 +24,7 @@ public class EmpireCommand extends ProfileCommand implements CombinedCommand, Re
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
             new ProfileArgument()
-                .id("profile")
+                .name("profile")
                 .description("User to view Empire of")
                 .optional(Profile::of)
         );
@@ -37,12 +37,12 @@ public class EmpireCommand extends ProfileCommand implements CombinedCommand, Re
 
         InfoValueCollection infoValues = new InfoValueCollection()
             .addRegular("Level", profile.getLevel())
-            .addCapacitable("Level XP", XP, profile.getXp(), profile.getRequiredXp())
+            .addCapacitable("Level XP", Emojis.XP, profile.getXp(), profile.getRequiredXp())
             .addRegular("Level progress", profile.getXpProgressBar() + "\n")
             .addRegular("Created", profile.getTimestampCreated())
-            .addCapacitable("Gold", GOLD,
+            .addCapacitable("Gold", Emojis.GOLD,
                 profile.getGold().formatAmount(), profile.getFormattedCapacity(Currency.GOLD, true))
-            .addCapacitable("Crystals", CRYSTALS,
+            .addCapacitable("Crystals", Emojis.CRYSTALS,
                 profile.getCrystals().formatAmount(), profile.getFormattedCapacity(Currency.CRYSTALS, true));
 
         String possessiveAdjective = event.getUser().equals(user) ? "your" : "their";

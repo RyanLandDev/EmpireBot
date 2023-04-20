@@ -1,11 +1,11 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
-import net.ryanland.colossus.command.CombinedCommand;
 import net.ryanland.colossus.command.CommandException;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
 import net.ryanland.colossus.command.arguments.types.EnumArgument;
-import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
 import net.ryanland.colossus.sys.message.DefaultPresetType;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
@@ -26,7 +26,7 @@ public class RepairCommand extends ItemsCommand implements CombinedCommand {
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
             new EnumArgument<>(Currency.class)
-                .id("currency")
+                .name("currency")
                 .description("The currency to repair with.")
         );
     }

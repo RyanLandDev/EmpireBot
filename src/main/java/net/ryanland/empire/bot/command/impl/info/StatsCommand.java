@@ -1,13 +1,13 @@
 package net.ryanland.empire.bot.command.impl.info;
 
-import net.dv8tion.jda.api.entities.Emoji;
-import net.dv8tion.jda.api.interactions.components.Button;
-import net.ryanland.colossus.command.CombinedCommand;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.ryanland.colossus.command.BaseCommand;
 import net.ryanland.colossus.command.CommandException;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
-import net.ryanland.colossus.events.CommandEvent;
-import net.ryanland.colossus.sys.interactions.menu.ActionMenuBuilder;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.Empire;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
@@ -16,7 +16,7 @@ import net.ryanland.empire.sys.message.builders.InfoValueCollection;
     name = "stats",
     description = "Returns a bunch of statistics about the bot."
 )
-public class StatsCommand extends InformationCommand implements CombinedCommand {
+public class StatsCommand extends BaseCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
@@ -33,8 +33,7 @@ public class StatsCommand extends InformationCommand implements CombinedCommand 
             .addRegular("💻 Current Shard",
                 "`N/A`");
 
-        event.reply(new ActionMenuBuilder()
-            .setEmbed(new PresetBuilder()
+        event.reply(new PresetBuilder()
                 .setTitle("Statistics")
                 .addLogo()
                 .setDescription("Here's some information about the bot.  \n\u200b")
@@ -49,13 +48,9 @@ public class StatsCommand extends InformationCommand implements CombinedCommand 
                         • Erobus#7861
                         """,
                     true
-                ))
-            .addButton(Button.link(Empire.BOT_INVITE_LINK, "Bot Invite")
-                .withEmoji(Emoji.fromMarkdown("📧")))
-            .addButton(Button.link(Empire.SERVER_INVITE_LINK, "Support Server")
-                .withEmoji(Emoji.fromMarkdown("⛑")))
-            .addButton(Button.link(Empire.GITHUB_LINK, "GitHub Repository")
-                .withEmoji(Emoji.fromMarkdown("👨‍💻"))
+                ).addButtons(Button.link(Empire.BOT_INVITE_LINK, "Bot Invite").withEmoji(Emoji.fromUnicode("📧")),
+                Button.link(Empire.SERVER_INVITE_LINK, "Support Server").withEmoji(Emoji.fromUnicode("⛑")),
+                Button.link(Empire.GITHUB_LINK, "GitHub Repository").withEmoji(Emoji.fromUnicode("👨‍💻"))
             ));
     }
 }

@@ -1,7 +1,6 @@
 package net.ryanland.empire.sys.gameplay.collectible;
 
-import net.ryanland.empire.bot.command.arguments.parsing.exceptions.ArgumentException;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
+import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.empire.sys.gameplay.collectible.box.impl.DailyBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.box.impl.HourlyBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.box.impl.MemberBoxItem;
@@ -9,7 +8,6 @@ import net.ryanland.empire.sys.gameplay.collectible.box.impl.MythicalBoxItem;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PileOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.crystals.PocketOfCrystalsReceivable;
 import net.ryanland.empire.sys.gameplay.collectible.potion.DefenseBuildingDamagePotion;
-import net.ryanland.empire.util.StringUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;

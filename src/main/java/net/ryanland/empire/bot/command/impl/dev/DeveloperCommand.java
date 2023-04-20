@@ -1,22 +1,13 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.ryanland.colossus.command.Category;
-import net.ryanland.colossus.command.DefaultCommand;
-import net.ryanland.colossus.command.permissions.PermissionBuilder;
-import net.ryanland.colossus.command.permissions.PermissionHolder;
+import net.ryanland.colossus.command.BaseCommand;
+import net.ryanland.colossus.command.permission.PermissionHolder;
 import net.ryanland.empire.bot.command.permission.DeveloperRequirement;
 
-public abstract class DeveloperCommand extends DefaultCommand {
+public abstract class DeveloperCommand extends BaseCommand {
 
     @Override
     public PermissionHolder getPermission() {
-        return new PermissionBuilder()
-            .addRequirement(new DeveloperRequirement())
-            .build();
-    }
-
-    @Override
-    public Category getCategory() {
-        return new Category("Developer", "Utility commands for bot developers only.", "💻");
+        return new PermissionHolder(new DeveloperRequirement());
     }
 }

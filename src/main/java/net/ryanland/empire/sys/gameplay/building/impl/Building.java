@@ -1,19 +1,15 @@
 package net.ryanland.empire.sys.gameplay.building.impl;
 
-import net.dv8tion.jda.api.entities.Emoji;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateEvent;
-import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.ryanland.colossus.command.CommandException;
 import net.ryanland.colossus.command.executor.functional_interface.CommandRunnable;
-import net.ryanland.colossus.sys.file.serializer.Serializer;
-import net.ryanland.colossus.sys.interactions.InteractionUtil;
-import net.ryanland.colossus.sys.interactions.menu.ActionMenu;
-import net.ryanland.colossus.sys.interactions.menu.ActionMenuBuilder;
+import net.ryanland.colossus.events.ButtonClickEvent;
+import net.ryanland.colossus.sys.interactions.button.BaseButton;
+import net.ryanland.colossus.sys.interactions.button.ButtonLayout;
+import net.ryanland.colossus.sys.interactions.button.ButtonRow;
 import net.ryanland.colossus.sys.interactions.menu.ConfirmMenu;
-import net.ryanland.colossus.sys.interactions.menu.InteractionMenuBuilder;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
@@ -34,10 +30,9 @@ import net.ryanland.empire.sys.message.Formattable;
 import net.ryanland.empire.sys.message.builders.Preset;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
@@ -45,8 +40,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public abstract class Building
-    implements Serializable, Serializer<List<?>, Building>, Formattable, Emojis {
+public abstract class Building implements Formattable, Emojis {
 
     public static final int BUILDING_START_STAGE = 1;
     public static final int BASE_MAX_HEALTH = 100;
@@ -214,14 +208,14 @@ public abstract class Building
         }
     }
 
-    public ActionMenuBuilder getActionMenuBuilder() throws CommandException {
-        ActionMenuBuilder builder = new ActionMenuBuilder();
+    protected ButtonLayout getMenuButtonLayout() throws CommandException {
+        ButtonRow row1 = new ButtonRow();
 
         if (canRepairAny()) {
-            builder.addButton(
+            row1.add(new BaseButton(
                 Button.success("repairMain", String.format("Repair (%s)",
                         canRepair() ? getRepairPrice().currency().getName() : "Not Enough"))
-                    .withEmoji(Emoji.fromMarkdown(getMainCurrency().getEmoji()))
+                    .withEmoji(Emoji.fromUnicode(getMainCurrency().getEmoji()))
                     .withDisabled(!canRepair()),
 
                 event -> {
@@ -230,14 +224,13 @@ public abstract class Building
                     executeButtonAction(event, this::repair);
                     refreshMenu(event);
 
-                    event.replyEmbeds(new PresetBuilder(Preset.SUCCESS, String.format(
+                    event.reply(new PresetBuilder(Preset.SUCCESS, String.format(
                         "Repaired your %s for %s.", format(), repairPrice.format()
-                    )).build()).setEphemeral(true).queue();
-                }
-            ).addButton(
+                    )).setEphemeral(true));
+                }), new BaseButton(
                 Button.success("repairCrystal", String.format("Repair (%s)",
                         canCrystalRepair() ? getCrystalRepairPrice().currency().getName() : "Not Enough"))
-                    .withEmoji(Emoji.fromMarkdown(getCrystalRepairPrice().currency().getEmoji()))
+                    .withEmoji(Emoji.fromUnicode(getCrystalRepairPrice().currency().getEmoji()))
                     .withDisabled(!canCrystalRepair()),
 
                 event -> {
@@ -246,24 +239,20 @@ public abstract class Building
                     executeButtonAction(event, this::crystalRepair);
                     refreshMenu(event);
 
-                    event.replyEmbeds(new PresetBuilder(Preset.SUCCESS, String.format(
+                    event.reply(new PresetBuilder(Preset.SUCCESS, String.format(
                         "Repaired your %s for %s.", format(), crystalRepairPrice.format()
-                    )).build()).setEphemeral(true).queue();
-                }
-            );
+                    )).setEphemeral(true));
+                }));
         } else {
-            builder.addButton(
+            row1.add(new BaseButton(
                 Button.secondary("repair", "Repair (Maxed)")
-                    .withEmoji(Emoji.fromMarkdown(REPAIR))
-                    .asDisabled(),
-                event -> {
-                }
-            );
+                    .withEmoji(Emoji.fromUnicode(REPAIR))
+                    .asDisabled()));
         }
 
-        builder.addButton(
+        row1.add(new BaseButton(
             Button.secondary("upgrade", "Upgrade" + (canUpgrade() ? "" : " (%s)".formatted(getUpgradeState().getName())))
-                .withEmoji(Emoji.fromMarkdown(UPGRADE))
+                .withEmoji(Emoji.fromUnicode(UPGRADE))
                 .withDisabled(!canUpgrade()),
 
             event -> {
@@ -272,62 +261,46 @@ public abstract class Building
                 executeButtonAction(event, this::upgrade);
                 refreshMenu(event);
 
-                event.replyEmbeds(new PresetBuilder(Preset.SUCCESS, String.format(
+                event.reply(new PresetBuilder(Preset.SUCCESS, String.format(
                     "Upgraded your %s for %s.", format(), upgradePrice.format()
-                )).build()).setEphemeral(true).queue();
-            }
-        ).addButton(
+                )).setEphemeral(true));
+            }), new BaseButton(
             Button.secondary("sell", "Sell" + (canSell() ? "" : " (%s)".formatted(getSellState().getName())))
-                .withEmoji(Emoji.fromMarkdown(SELL))
+                .withEmoji(Emoji.fromUnicode(SELL))
                 .withDisabled(!canSell()),
 
             event -> executeButtonAction(event, () -> sell(event))
-        );
+        ));
 
         // Previous/next building buttons
-        builder.putQueuedButtons();
-        builder.addButton(
-            Button.primary("previous", "Previous")
-                .withEmoji(Emoji.fromUnicode("◀"))
-                .withDisabled(getLayer() == 1),
-            event -> {
-                event.deferEdit().queue();
-                getProfile().getBuilding(getLayer() - 1).getMenuBuilder().build().edit(event);
-            }
-        ).addButton(
-            Button.primary("next", "Next")
-                .withEmoji(Emoji.fromUnicode("▶"))
-                .withDisabled(getLayer() == getProfile().getBuildings().size()),
-            event -> {
-                event.deferEdit().queue();
-                getProfile().getBuilding(getLayer() + 1).getMenuBuilder().build().edit(event);
-            }
+        ButtonRow row2 = new ButtonRow(
+            new BaseButton(
+                Button.primary("previous", "Previous")
+                    .withEmoji(Emoji.fromUnicode("◀"))
+                    .withDisabled(getLayer() == 1),
+                event -> event.reply(getProfile().getBuilding(getLayer() - 1).getMenu())),
+            new BaseButton(
+                Button.primary("next", "Next")
+                    .withEmoji(Emoji.fromUnicode("▶"))
+                    .withDisabled(getLayer() == getProfile().getBuildings().size()),
+                event -> event.reply(getProfile().getBuilding(getLayer() + 1).getMenu()))
         );
 
-        return builder;
+        return new ButtonLayout(row1, row2);
     }
 
-    public InteractionMenuBuilder<ActionMenu> getMenuBuilder() throws CommandException {
+    public PresetBuilder getMenu() throws CommandException {
         if (!exists()) {
-            return new ActionMenuBuilder()
-                .setEmbed(new PresetBuilder("This building does not exist anymore."));
+            return new PresetBuilder("This building does not exist anymore.");
         }
-        return getActionMenuBuilder()
-            .setEmbed(getBuildingInfo().build()
-                .setTitle(String.format("%s %s (%s)", getEmoji(), getName(), getType().getFullName()))
-            );
+        return getBuildingInfo().build()
+            .setTitle(String.format("%s %s (%s)", getEmoji(), getName(), getType().getFullName()))
+            .setButtonLayout(getMenuButtonLayout());
     }
 
     @SuppressWarnings("all")
     public void refreshMenu(ButtonClickEvent event) throws CommandException {
-        refreshMenu(event.getMessage());
-    }
-
-    public void refreshMenu(Message menuMessage) throws CommandException {
-        menuMessage.editMessageEmbeds(((ActionMenuBuilder) getMenuBuilder()).getEmbed().build()).setActionRows(
-            exists() ? InteractionUtil.of(getActionMenuBuilder().getLayout().getButtons())
-                : Collections.emptyList()
-        ).queue();
+        event.reply(getMenu());
     }
 
     public MessageEmbed.Field getEmbedField() {
@@ -339,7 +312,7 @@ public abstract class Building
 
     public void executeButtonAction(ButtonClickEvent event, CommandRunnable action) throws CommandException {
         try {
-            action.execute();
+            action.run();
         } catch (CommandException e) {
             refreshMenu(event);
             throw e;
@@ -379,21 +352,19 @@ public abstract class Building
     }
 
     @SuppressWarnings("all")
-    public void sell(GenericComponentInteractionCreateEvent event) throws CommandException {
+    public void sell(ButtonClickEvent event) throws CommandException {
         if (!canSell())
             throw new CommandException("You cannot sell this building.");
 
-        new ConfirmMenu("Are you sure you want to sell this building?", () -> {
-            getSellPrice().give(profile);
+        new ConfirmMenu("Are you sure you want to sell this building?",
+            String.format("Sold your %s for %s.", format(), getSellPrice().format()), true, evt -> {
+                getSellPrice().give(profile);
 
-            profile.removeBuilding(layer);
-            profile.update();
+                profile.removeBuilding(layer);
+                profile.update();
 
-            refreshMenu(event.getMessage());
-
-        }, String.format(
-            "Sold your %s for %s.", format(), getSellPrice().format()
-        )).send(event);
+                refreshMenu(event);
+        }).send(event);
     }
 
 

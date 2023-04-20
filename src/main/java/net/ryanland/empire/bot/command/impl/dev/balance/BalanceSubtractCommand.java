@@ -1,51 +1,56 @@
 package net.ryanland.empire.bot.command.impl.dev.balance;
 
 import net.dv8tion.jda.api.entities.User;
+import net.ryanland.colossus.command.CommandException;
+import net.ryanland.colossus.command.arguments.ArgumentSet;
+import net.ryanland.colossus.command.arguments.types.EnumArgument;
+import net.ryanland.colossus.command.arguments.types.primitive.IntegerArgument;
+import net.ryanland.colossus.command.arguments.types.snowflake.UserArgument;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.command.regular.SubCommand;
+import net.ryanland.colossus.events.command.CommandEvent;
+import net.ryanland.colossus.sys.message.DefaultPresetType;
+import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.bot.command.arguments.Enum.Balance;
-import net.ryanland.empire.bot.command.arguments.number.IntegerArgument;
-import net.ryanland.empire.bot.command.executor.exceptions.CommandException;
-import net.ryanland.empire.bot.command.info.CommandInfo;
-import net.ryanland.empire.bot.command.permissions.Permission;
+import net.ryanland.empire.bot.command.impl.dev.DeveloperCommand;
+import net.ryanland.empire.sys.file.database.Profile;
 
-public class BalanceSubtractCommand extends Command {
-    @Override
-    public CommandInfo getInfo() {
-        return new CommandInfo()
-            .name("subtract")
-            .description("Subtracts the provided value from the provided balance.")
-            .permission(Permission.DEVELOPER)
-            ;
-    }
+@CommandBuilder(
+    name = "subtract",
+    description = "Subtracts the provided value from the provided balance."
+)
+public class BalanceSubtractCommand extends DeveloperCommand implements SubCommand, CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
             new EnumArgument<>(Balance.class)
                 .description("Balance to modify.")
-                .id("balance"),
+                .name("balance"),
             new IntegerArgument()
                 .description("Value to subtract.")
-                .id("value"),
+                .name("value"),
             new UserArgument()
                 .description("User to modify.")
-                .id("user")
+                .name("user")
                 .optional(CommandEvent::getUser)
         );
     }
 
     @Override
-    public void run(CommandEvent event) throws CommandException {
+    public void execute(CommandEvent event) throws CommandException {
         User user = event.getArgument("user");
-        UserDocument document = event.getUserDocument(user);
+        Profile profile = Profile.of(event);
 
         Balance balance = event.getArgument("balance");
         int value = event.getArgument("value");
 
-        int currentValue = balance.getGetter().apply(document);
-        balance.getSetter().apply(document, currentValue - value);
-        document.update();
+        int currentValue = balance.getGetter().apply(profile);
+        balance.getSetter().apply(profile, currentValue - value);
+        profile.update();
 
-        event.reply(new PresetBuilder(PresetType.SUCCESS)
+        event.reply(new PresetBuilder(DefaultPresetType.SUCCESS)
             .setDescription(String.format("Successfully subtracted %s from %s' %s balance.",
                 value, user.getAsMention(), balance))
             .addLogo()

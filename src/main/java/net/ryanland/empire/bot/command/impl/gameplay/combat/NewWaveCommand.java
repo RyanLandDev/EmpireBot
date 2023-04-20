@@ -1,12 +1,12 @@
 package net.ryanland.empire.bot.command.impl.gameplay.combat;
 
-import net.ryanland.colossus.command.CombinedCommand;
 import net.ryanland.colossus.command.CommandException;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
-import net.ryanland.colossus.events.CommandEvent;
-import net.ryanland.colossus.events.MessageCommandEvent;
-import net.ryanland.colossus.events.SlashEvent;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
+import net.ryanland.colossus.events.command.MessageCommandEvent;
+import net.ryanland.colossus.events.command.SlashCommandEvent;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.action.BuffedAction;
@@ -197,9 +197,9 @@ public class NewWaveCommand extends CombatCommand implements CombinedCommand {
 
         // Give the xp
         if (event instanceof MessageCommandEvent)
-            profile.giveXp((int) xpEarned, ((MessageCommandEvent) event).getMessage(), embed.build());
+            profile.giveXp((int) xpEarned, ((MessageCommandEvent) event).getMessage(), embed.embed());
         else
-            profile.giveXp((int) xpEarned, ((SlashEvent) event).getInteraction(), false, embed.build());
+            profile.giveXp((int) xpEarned, ((SlashCommandEvent) event).getInteraction(), false, embed.embed());
 
         // Update user document
         profile.setBuildings(buildings).update();

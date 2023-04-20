@@ -1,6 +1,7 @@
 package net.ryanland.empire.bot.command.arguments.Enum;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.ryanland.colossus.command.arguments.types.EnumArgument;
 import net.ryanland.empire.Empire;
 
 public enum Tutorial implements EnumArgument.InputEnum {

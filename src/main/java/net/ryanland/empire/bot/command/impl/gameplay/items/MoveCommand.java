@@ -1,11 +1,11 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items;
 
-import net.ryanland.colossus.command.CombinedCommand;
 import net.ryanland.colossus.command.CommandException;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
 import net.ryanland.colossus.command.arguments.types.primitive.IntegerArgument;
-import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
 import net.ryanland.colossus.sys.message.DefaultPresetType;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.bot.command.arguments.BuildingArgument;
@@ -22,15 +22,14 @@ public class MoveCommand extends ItemsCommand implements CombinedCommand {
 
     @Override
     public ArgumentSet getArguments() {
-        return new ArgumentSet()
-            .addArguments(
-                new BuildingArgument()
-                    .id("building")
-                    .description("The position of the building to move."),
-                new IntegerArgument()
-                    .id("layer")
-                    .description("Layer to move the building to.")
-            );
+        return new ArgumentSet().addArguments(
+            new BuildingArgument()
+                .name("building")
+                .description("The position of the building to move."),
+            new IntegerArgument()
+                .name("layer")
+                .description("Layer to move the building to.")
+        );
     }
 
     @Override

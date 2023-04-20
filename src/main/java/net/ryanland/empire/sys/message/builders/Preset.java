@@ -73,6 +73,12 @@ public enum Preset implements PresetType {
 
     @Nullable
     @Override
+    public String getContent() {
+        return null;
+    }
+
+    @Nullable
+    @Override
     public String getTitle() {
         return title.get();
     }

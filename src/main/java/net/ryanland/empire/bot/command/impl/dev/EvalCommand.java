@@ -1,10 +1,10 @@
 package net.ryanland.empire.bot.command.impl.dev;
 
-import net.ryanland.colossus.command.CombinedCommand;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
 import net.ryanland.colossus.command.arguments.types.primitive.StringArgument;
-import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 
 import javax.script.ScriptEngine;
@@ -24,7 +24,7 @@ public class EvalCommand extends DeveloperCommand implements CombinedCommand {
     public ArgumentSet getArguments() {
         return new ArgumentSet().addArguments(
             new StringArgument()
-                .id("code")
+                .name("code")
                 .description("Code to execute")
         );
     }

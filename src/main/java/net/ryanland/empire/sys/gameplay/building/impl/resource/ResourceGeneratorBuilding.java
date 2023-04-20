@@ -1,11 +1,12 @@
 package net.ryanland.empire.sys.gameplay.building.impl.resource;
 
-import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.interactions.Interaction;
-import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.ryanland.colossus.command.CommandException;
-import net.ryanland.colossus.sys.interactions.menu.ActionMenuBuilder;
+import net.ryanland.colossus.sys.interactions.button.BaseButton;
+import net.ryanland.colossus.sys.interactions.button.ButtonLayout;
 import net.ryanland.colossus.sys.message.DefaultPresetType;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.gameplay.building.BuildingActionState;
@@ -71,26 +72,26 @@ public abstract class ResourceGeneratorBuilding extends ResourceBuilding {
     }
 
     @Override
-    public ActionMenuBuilder getActionMenuBuilder() throws CommandException {
-        return super.getActionMenuBuilder()
-            .insertButton(0, 2,
+    protected ButtonLayout getMenuButtonLayout() throws CommandException {
+        return super.getMenuButtonLayout()
+            .insertButton(0, 2, new BaseButton(
                 Button.secondary("collect", "Collect" +
                         (canCollect() ? "" : String.format(" (%s)", getCollectState().getName())))
-                    .withEmoji(Emoji.fromMarkdown(getEffectiveCurrency().getEmoji()))
+                    .withEmoji(Emoji.fromUnicode(getEffectiveCurrency().getEmoji()))
                     .withDisabled(!canCollect()),
                 event -> {
                     Price<Integer> holding = getHolding();
                     int xp = getCollectXp();
 
-                    executeButtonAction(event, () -> collect(xp, event, new PresetBuilder(DefaultPresetType.SUCCESS, String.format(
+                    executeButtonAction(event, () -> collect(xp, event.getEvent().getInteraction(), new PresetBuilder(DefaultPresetType.SUCCESS, String.format(
                         "Collected %s from %s.",
                         holding.format() + (xp > 0 ? String.format(" and %s %s", XP, NumberUtil.format(xp)) : ""),
                         format()
-                    )).build()));
+                    )).embed()));
 
                     refreshMenu(event);
                 }
-            );
+            ));
     }
 
     @Override

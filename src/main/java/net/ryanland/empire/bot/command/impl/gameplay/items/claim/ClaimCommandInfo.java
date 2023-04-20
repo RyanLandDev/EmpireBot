@@ -1,6 +1,8 @@
 package net.ryanland.empire.bot.command.impl.gameplay.items.claim;
 
-import net.ryanland.empire.bot.command.executor.functional_interface.CommandPredicate;
+import net.ryanland.colossus.command.executor.functional_interface.CommandPredicate;
+import net.ryanland.colossus.events.command.CommandEvent;
+import net.ryanland.empire.sys.file.database.Profile;
 import net.ryanland.empire.sys.gameplay.collectible.Collectible;
 import net.ryanland.empire.sys.gameplay.collectible.CollectibleHolder;
 
@@ -18,7 +20,7 @@ public record ClaimCommandInfo(String name, String receiveMessage, String failMe
                                                CommandPredicate<CommandEvent> check) {
         Collectible collectible = CollectibleHolder.get(name);
         return new ClaimCommandInfo(name, "Received " + collectible.format(), failMessage, check,
-            event -> collectible.receive(event.getProfile()));
+            event -> collectible.receive(Profile.of(event)));
     }
 
     public static ClaimCommandInfo collectible(String name,

@@ -1,13 +1,13 @@
 package net.ryanland.empire.bot.command.impl.gameplay.games;
 
-import net.ryanland.colossus.command.CombinedCommand;
 import net.ryanland.colossus.command.CommandException;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
 import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.colossus.command.arguments.parsing.exceptions.MalformedArgumentException;
 import net.ryanland.colossus.command.arguments.types.primitive.ArgumentStringResolver;
-import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
 import net.ryanland.colossus.sys.message.DefaultPresetType;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.file.database.Profile;
@@ -40,7 +40,7 @@ public class GambleCommand extends GamesCommand implements CombinedCommand {
                         }
                     }
                 }
-                    .id("amount")
+                    .name("amount")
                     .description("The amount to bet, or 'half'/'all'.")
             );
     }

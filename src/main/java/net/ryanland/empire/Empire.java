@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.ryanland.colossus.Colossus;
 import net.ryanland.colossus.ColossusBuilder;
+import net.ryanland.colossus.command.Category;
+import net.ryanland.colossus.command.executor.CommandHandler;
 import net.ryanland.colossus.sys.file.LocalFileBuilder;
 import net.ryanland.colossus.sys.file.LocalFileType;
 import net.ryanland.empire.bot.command.impl.dev.*;
@@ -17,7 +19,6 @@ import net.ryanland.empire.bot.command.impl.gameplay.combat.WaveCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.games.GambleCommand;
 import net.ryanland.empire.bot.command.impl.gameplay.items.*;
 import net.ryanland.empire.bot.command.impl.gameplay.items.claim.ClaimCommand;
-import net.ryanland.empire.bot.command.impl.info.HelpCommand;
 import net.ryanland.empire.bot.command.impl.info.PingCommand;
 import net.ryanland.empire.bot.command.impl.info.StatsCommand;
 import net.ryanland.empire.bot.command.impl.profile.CooldownsCommand;
@@ -45,46 +46,35 @@ public class Empire {
     }
 
     private static void initialize() {
+        Category informationCategory = new Category("Information", "Commands to get general information.", "📋",
+            new PingCommand(), new StatsCommand());
+        Category developerCategory = new Category("Developer", "Utility commands for bot developers only.", "💻",
+            new MimicCommand(), new EvalCommand(), new TestCommand(), new StopCommand(), new BalanceCommand());
+
         Colossus colossus = new ColossusBuilder("src/config")
-            .registerCommands(
+            .registerCategories(
                 // Information
-                new HelpCommand(),
-                new PingCommand(),
-                new StatsCommand(),
+                informationCategory,
 
                 // Developer
-                new MimicCommand(),
-                new EvalCommand(),
-                new TestCommand(),
-                new DisableCommand(),
-                new EnableCommand(),
-                new StopCommand(),
-                new BalanceCommand(),
+                developerCategory,
 
                 // Profile
-                new StartCommand(),
-                new EmpireCommand(),
-                new ResetCommand(),
-                new CooldownsCommand(),
+                new Category("Profile", "Commands that concern the user profile.", "🏰",
+                    new StartCommand(), new EmpireCommand(), new ResetCommand(), new CooldownsCommand()),
 
                 // Items
-                new BuildingCommand(),
-                new MoveCommand(),
-                new ShopCommand(),
-                new BuyCommand(),
-                new ClaimCommand(),
-                new InventoryCommand(),
-                new UseCommand(),
-                new RepairCommand(),
-                new PotionsCommand(),
+                new Category("Items", "Commands regarding items in your empire.", "🏠",
+                    new BuildingCommand(), new MoveCommand(), new ShopCommand(), new BuyCommand(), new ClaimCommand(),
+                    new InventoryCommand(), new UseCommand(), new RepairCommand(), new PotionsCommand()),
 
                 // Combat
-                new NewWaveCommand(),
-                new WaveCommand(),
-                new EnemyCommand(),
+                new Category("Combat", "Get out on the field and combat enemies.", "⚔",
+                    new NewWaveCommand(), new WaveCommand(), new EnemyCommand()),
 
                 // Games
-                new GambleCommand()
+                new Category("Games", "Play a few games and you may get lucky.", "🎯",
+                    new GambleCommand())
             )
             .registerInhibitors(
                 new RequiresProfileInhibitor()
@@ -99,7 +89,6 @@ public class Empire {
                         }""")
                     .buildFile()
             )
-            .disableHelpCommand()
             .setJDABuilder(builder -> builder
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
                 .setStatus(OnlineStatus.ONLINE)
@@ -111,6 +100,10 @@ public class Empire {
                     // Logs
                     new GuildTraffic()
                 )).build();
+
+        CommandHandler.getCommand("help").setCategory(informationCategory);
+        CommandHandler.getCommand("disable").setCategory(developerCategory);
+        CommandHandler.getCommand("enable").setCategory(developerCategory);
 
         colossus.initialize();
     }

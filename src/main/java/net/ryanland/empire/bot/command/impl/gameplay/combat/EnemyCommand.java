@@ -2,16 +2,16 @@ package net.ryanland.empire.bot.command.impl.gameplay.combat;
 
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.ryanland.colossus.command.CombinedCommand;
 import net.ryanland.colossus.command.CommandException;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.Argument;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
 import net.ryanland.colossus.command.arguments.parsing.exceptions.ArgumentException;
 import net.ryanland.colossus.command.arguments.types.primitive.IntegerArgument;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
 import net.ryanland.colossus.events.CommandEvent;
-import net.ryanland.colossus.events.MessageCommandEvent;
-import net.ryanland.colossus.events.SlashEvent;
+import net.ryanland.colossus.events.command.MessageCommandEvent;
+import net.ryanland.colossus.events.command.SlashCommandEvent;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.sys.gameplay.combat.troop.Troop;
 import net.ryanland.empire.sys.message.builders.InfoValueCollection;
@@ -37,7 +37,7 @@ public class EnemyCommand extends CombatCommand implements CombinedCommand {
                 }
 
                 @Override
-                public Troop resolveSlashCommandArgument(Deque<OptionMapping> args, SlashEvent event) throws ArgumentException {
+                public Troop resolveSlashCommandArgument(Deque<OptionMapping> args, SlashCommandEvent event) throws ArgumentException {
                     String name = args.pop().getAsString();
                     return Troop.find(name);
                 }

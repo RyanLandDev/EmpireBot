@@ -1,13 +1,13 @@
 package net.ryanland.empire.bot.command.permission;
 
-import net.dv8tion.jda.api.entities.Member;
-import net.ryanland.colossus.command.permissions.BotOwnerRequirement;
-import net.ryanland.colossus.command.permissions.PermissionRequirement;
+import net.ryanland.colossus.command.permission.PermissionRequirement;
+import net.ryanland.colossus.command.permission.impl.BotOwnerRequirement;
+import net.ryanland.colossus.events.command.BasicCommandEvent;
 
 public class DeveloperRequirement implements PermissionRequirement {
 
     @Override
-    public boolean check(Member member) {
+    public boolean check(BasicCommandEvent member) {
         return new BotOwnerRequirement().check(member);
         //TODO
     }

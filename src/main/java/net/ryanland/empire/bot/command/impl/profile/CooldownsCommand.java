@@ -1,14 +1,14 @@
 package net.ryanland.empire.bot.command.impl.profile;
 
-import net.ryanland.colossus.command.CombinedCommand;
 import net.ryanland.colossus.command.CommandException;
-import net.ryanland.colossus.command.annotations.CommandBuilder;
 import net.ryanland.colossus.command.arguments.ArgumentSet;
 import net.ryanland.colossus.command.cooldown.Cooldown;
 import net.ryanland.colossus.command.cooldown.CooldownHandler;
 import net.ryanland.colossus.command.cooldown.CooldownManager;
-import net.ryanland.colossus.command.cooldown.ExternalCooldownManager;
-import net.ryanland.colossus.events.CommandEvent;
+import net.ryanland.colossus.command.cooldown.DatabaseCooldownManager;
+import net.ryanland.colossus.command.regular.CombinedCommand;
+import net.ryanland.colossus.command.regular.CommandBuilder;
+import net.ryanland.colossus.events.command.CommandEvent;
 import net.ryanland.colossus.sys.message.PresetBuilder;
 import net.ryanland.empire.bot.command.RequiresProfile;
 import net.ryanland.empire.util.DateUtil;
@@ -33,7 +33,7 @@ public class CooldownsCommand extends ProfileCommand implements CombinedCommand,
 
     @Override
     public void execute(CommandEvent event) throws CommandException {
-        CooldownManager manager = ExternalCooldownManager.getInstance();
+        CooldownManager manager = DatabaseCooldownManager.getInstance();
         CooldownHandler.cleanCooldowns(manager, event.getUser());
         Map<String, Cooldown> cooldowns = manager.get(event.getUser()).stream()
             .collect(Collectors.toMap(cooldown -> cooldown.command().getName(), Function.identity()));

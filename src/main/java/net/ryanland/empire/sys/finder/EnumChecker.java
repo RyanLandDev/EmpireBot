@@ -1,5 +1,7 @@
 package net.ryanland.empire.sys.finder;
 
+import net.ryanland.colossus.command.arguments.types.EnumArgument;
+
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
